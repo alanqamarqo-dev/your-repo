@@ -1,0 +1,14 @@
+{
+  "ts": "2025-11-06T22:50:39.028816+00:00",
+  "model_signals": {},
+  "run_signal": {},
+  "fusion_weights": {
+    "mathematical_brain": 1.0,
+    "quantum_processor": 0.6,
+    "code_generator": 1.2,
+    "protocol_designer": 0.6
+  },
+  "kb_version": "G.1",
+  "kb_count": 0,
+  "status": "ok"
+}

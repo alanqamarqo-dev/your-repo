@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "ts": "2025-11-06T18:59:54.215793Z",
+    "has_system": false,
+    "budget_seconds_learning": 180
+  },
+  "raw": {
+    "creative": {
+      "answer": "{\"detail\": \"Not Found\"}"
+    },
+    "learning": {
+      "grammar": "",
+      "translation": "{\"detail\": \"Not Found\"}",
+      "new_sentences": [],
+      "explain": ""
+    },
+    "problem": {
+      "plan": "{\"detail\": \"Not Found\"}"
+    },
+    "timing": {
+      "creative_seconds": 0.2418076992034912,
+      "learning_seconds": 0.04156303405761719,
+      "problem_seconds": 0.05027508735656738
+    }
+  },
+  "scores": {
+    "الإبداع_والأصالة": 4.0,
+    "العمق_العلمي": 3.0,
+    "التكامل_المعرفي": 0.0,
+    "الجدوى_العملية": 2.0,
+    "سرعة_المعالجة": 10.0,
+    "weights": {
+      "creative": 0.3,
+      "science": 0.25,
+      "integrate": 0.2,
+      "feasible": 0.15,
+      "speed": 0.1
+    }
+  },
+  "total": 3.25
+}

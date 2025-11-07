@@ -1,0 +1,23 @@
+{
+  "quality": {
+    "n_traces": 168,
+    "n_memory_entries": 0,
+    "by_type": {
+      "self_engineer.diagnose": 28,
+      "self_engineer.propose": 28,
+      "self_engineer.fit_and_score": 84,
+      "self_engineer.select": 28
+    },
+    "conf_mean": -2.6856250000000004,
+    "conf_median": 0.925,
+    "conf_std": 6.253785947078378,
+    "contradictions": 0,
+    "domain_counts": {},
+    "low_conf_frac": 0.25,
+    "analyzed_at": 1762478441.2624807,
+    "textual_contradictions": 0,
+    "textual_conflict_examples": [],
+    "graph_issues": []
+  },
+  "plan": []
+}
