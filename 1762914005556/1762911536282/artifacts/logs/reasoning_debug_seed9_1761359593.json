@@ -1,0 +1,164 @@
+{
+  "seed": "9",
+  "nlp_res": {
+    "text": "(neutral) التمساح أكل الطفل لأنه كان جائعاً. من كان جائعاً؟",
+    "intent": {
+      "label": "qa",
+      "slots": {},
+      "confidence": 0.6
+    },
+    "emotion": {
+      "sentiment": "neutral",
+      "tone": "neutral",
+      "confidence": 0.5
+    },
+    "context_used": "التمساح أكل الطفل لأنه كان جائعاً. من كان جائعاً؟",
+    "style": {
+      "lang": "ar",
+      "tone": "neutral",
+      "formal": false,
+      "brevity": "short"
+    },
+    "confidence": {
+      "emotion": 0.5,
+      "intent": 0.6
+    }
+  },
+  "nlp_ctx": {
+    "dominant_lang": "ar",
+    "entities": [
+      "التمساح",
+      "أكل",
+      "الطفل",
+      "لأنه",
+      "كان",
+      "جائعاً",
+      "كان",
+      "جائعاً؟"
+    ],
+    "chars": 49
+  },
+  "entities": [
+    "التمساح",
+    "أكل",
+    "الطفل",
+    "لأنه",
+    "كان",
+    "جائعاً",
+    "كان",
+    "جائعاً؟"
+  ],
+  "initial_facts": [
+    {
+      "text": "(LLM error) 'Chat' object has no attribute 'create'",
+      "source": "llm_coref",
+      "confidence": 0.95
+    },
+    {
+      "text": "التمساح أكل الطفل لأنه كان جائعاً. من كان جائعاً؟",
+      "source": "query",
+      "confidence": 0.9
+    },
+    {
+      "text": "التمساح أكل الطفل لأنه كان جائعاً. من كان جائعاً؟",
+      "source": "nlp_summary",
+      "confidence": 0.8
+    },
+    {
+      "text": "التمساح",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "أكل",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "الطفل",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "لأنه",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "كان",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "جائعاً",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    }
+  ],
+  "llm_prompt": "حدد بدقة من المرجع الضميري في الجملة التالية وأعد الإجابة بكلمة واحدة فقط (اسم/كلمة):\n\nالتمساح أكل الطفل لأنه كان جائعاً. من كان جائعاً؟\n\nأعد فقط الاسم أو الكلمة التي يشير إليها الضمير (باللغة العربية).",
+  "llm_response": "(LLM error) 'Chat' object has no attribute 'create'",
+  "llm_backend": "openai",
+  "run_cycle_result_summary": null,
+  "accepted_hypotheses": [
+    {
+      "id": "f048c2f7382446169a96b90bcbf1228c",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'التمساح' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "b8fe80838c124d1298876540dfaebaa4",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'أكل' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "db2caec099de4c15bd37213902695ac8",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'الطفل' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "4659e3e954b749ff8508dbee0c4f0136",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'لأنه' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "fde8d52a3d0f4ec58835584d28025472",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'كان' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "b8acda08e16542cfa37ec9b3e8c64647",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'جائعاً' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    }
+  ]
+}

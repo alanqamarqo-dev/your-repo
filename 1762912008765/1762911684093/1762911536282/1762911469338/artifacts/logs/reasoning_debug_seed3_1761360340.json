@@ -1,0 +1,304 @@
+{
+  "seed": "3",
+  "nlp_res": {
+    "text": "(explanatory) تفصيل: جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\" س: من كان مثقلا؟ الخيارات: [فتح, امام, بالحقائب, الباب, علي, سامي, مثقلا] أجب باسم واحد حرفيًا من الخيارات. أجب بخيار واحد فقط دون شرح.",
+    "intent": {
+      "label": "explain",
+      "slots": {},
+      "confidence": 0.85
+    },
+    "emotion": {
+      "sentiment": "neutral",
+      "tone": "explanatory",
+      "confidence": 0.5
+    },
+    "context_used": "جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيارات: [فتح, امام, بالحقائب, الباب, علي, سامي, مثقلا]\nأجب باسم واحد حرفيًا من الخيارات. أجب بخيار واحد فقط دون شرح.",
+    "style": {
+      "lang": "ar",
+      "tone": "explanatory",
+      "formal": true,
+      "brevity": "detailed"
+    },
+    "confidence": {
+      "emotion": 0.5,
+      "intent": 0.85
+    }
+  },
+  "nlp_ctx": {
+    "dominant_lang": "ar",
+    "entities": [
+      "جملة",
+      "فتح",
+      "سامي",
+      "الباب",
+      "امام",
+      "علي",
+      "لانه",
+      "كان"
+    ],
+    "chars": 194
+  },
+  "entities": [
+    "جملة",
+    "فتح",
+    "سامي",
+    "الباب",
+    "امام",
+    "علي",
+    "لانه",
+    "كان"
+  ],
+  "initial_facts": [
+    {
+      "text": "(LLM error) 'Chat' object has no attribute 'create'",
+      "source": "llm_coref",
+      "confidence": 0.95
+    },
+    {
+      "text": "جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيارات: [فتح, امام, بالحقائب, الباب, علي, سامي, مثقلا]\nأجب باسم واحد حرفيًا من الخيارات. أجب بخيار واحد فقط دون شرح.\n ",
+      "source": "query",
+      "confidence": 0.9
+    },
+    {
+      "text": "جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيارات: [فتح, امام, بالحقائب, الباب, علي, سامي, مثقلا]\nأجب باسم واحد حرفيًا من الخيارات. أجب بخيار واحد فقط دون شرح.",
+      "source": "nlp_summary",
+      "confidence": 0.8
+    },
+    {
+      "text": "جملة",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "فتح",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "سامي",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "الباب",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "امام",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "علي",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    }
+  ],
+  "llm_prompt": "حدد بدقة من المرجع الضميري في الجملة التالية وأعد الإجابة بكلمة واحدة فقط (اسم/كلمة):\n\nجملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيارات: [فتح, امام, بالحقائب, الباب, علي, سامي, مثقلا]\nأجب باسم واحد حرفيًا من الخيارات. أجب بخيار واحد فقط دون شرح.\n \n\nأعد فقط الاسم أو الكلمة التي يشير إليها الضمير (باللغة العربية).",
+  "llm_response": "(LLM error) 'Chat' object has no attribute 'create'",
+  "llm_backend": "openai",
+  "run_cycle_result_summary": null,
+  "accepted_hypotheses": [
+    {
+      "id": "23ba9ec09bfe493a919102ac0fe944d2",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e7a3218f6216428792dcd9632d04349f",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "f1f90b9dd971498d965363015a7b4135",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'جملة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "61de050c8dc5434f81fbd8196ece5fc0",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'فتح' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e51810bc1062413f911463445dee8116",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'سامي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "4869b7ea2f1d4e8c9aa664a80aaca3e5",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'الباب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "c852898f0c2441678ec94f232f1a33aa",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'امام' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "4516405b7f034274b522f0d0495bb8ed",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'علي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "263949c266974f3ea1b87366e705f792",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "939b3e24eab8419887d43d62dc740a76",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'جملة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "783069456f8243dca7e1dd454039ae5d",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'فتح' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "93fd8874a2874f29a3fe1219b32874e2",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'سامي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "33e886e3b44e4ed5b5f06f038cd26d17",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'الباب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e52bb14c7d034a34806332033f8151f0",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'امام' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e70425e43d1c45b7acdfcad86c5b1bed",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'علي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e0681be5fbcb4ea1ba0815456b03bd89",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'جملة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "b2b67a2e64794734be0151e2c49c5954",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'فتح' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "24fb0b31a51a45f987f951b892b71211",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'سامي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "56295977a6c04955b1dadfe1f31193a2",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'الباب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "31e97e6de81f4f269ff73bd5aa9800f6",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'جملة: \"فتح سامي الباب امام علي لانه كان مثقلا بالحقائب.\"\nس: من كان مثقلا؟\nالخيار' مع 'امام' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    }
+  ]
+}

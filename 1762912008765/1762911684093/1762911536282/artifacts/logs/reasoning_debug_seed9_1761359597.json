@@ -1,0 +1,304 @@
+{
+  "seed": "9",
+  "nlp_res": {
+    "text": "(neutral) أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟",
+    "intent": {
+      "label": "qa",
+      "slots": {},
+      "confidence": 0.6
+    },
+    "emotion": {
+      "sentiment": "neutral",
+      "tone": "neutral",
+      "confidence": 0.5
+    },
+    "context_used": "أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟",
+    "style": {
+      "lang": "ar",
+      "tone": "neutral",
+      "formal": false,
+      "brevity": "short"
+    },
+    "confidence": {
+      "emotion": 0.5,
+      "intent": 0.6
+    }
+  },
+  "nlp_ctx": {
+    "dominant_lang": "ar",
+    "entities": [
+      "أخذت",
+      "المعلمة",
+      "القلم",
+      "الطالب",
+      "لأنها",
+      "كانت",
+      "مشغولة",
+      "كانت"
+    ],
+    "chars": 63
+  },
+  "entities": [
+    "أخذت",
+    "المعلمة",
+    "القلم",
+    "الطالب",
+    "لأنها",
+    "كانت",
+    "مشغولة",
+    "كانت"
+  ],
+  "initial_facts": [
+    {
+      "text": "(LLM error) 'Chat' object has no attribute 'create'",
+      "source": "llm_coref",
+      "confidence": 0.95
+    },
+    {
+      "text": "أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟",
+      "source": "query",
+      "confidence": 0.9
+    },
+    {
+      "text": "أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟",
+      "source": "nlp_summary",
+      "confidence": 0.8
+    },
+    {
+      "text": "أخذت",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "المعلمة",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "القلم",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "الطالب",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "لأنها",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "كانت",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    }
+  ],
+  "llm_prompt": "حدد بدقة من المرجع الضميري في الجملة التالية وأعد الإجابة بكلمة واحدة فقط (اسم/كلمة):\n\nأخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟\n\nأعد فقط الاسم أو الكلمة التي يشير إليها الضمير (باللغة العربية).",
+  "llm_response": "(LLM error) 'Chat' object has no attribute 'create'",
+  "llm_backend": "openai",
+  "run_cycle_result_summary": null,
+  "accepted_hypotheses": [
+    {
+      "id": "ab79cc734a5e45d797233434c9ae08d5",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e6378878864f400baef5cf7ed570ad8d",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "baf422e85a12470b89894d69ea167261",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'أخذت' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "2c726526d18b40a5848e9d5844d4fd33",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'المعلمة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "7b7393110a0b45d8b3fef9d267239aaa",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'القلم' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "440a87d4fe59457bb6f3c62f72fcd62f",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'الطالب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "848ced51395a41f3b6b99b751f61f9de",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'لأنها' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "5e37a2d749d14ac9a1eeb5a9900f43ba",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'كانت' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "eeeea090aa4f4ad9a44cca80102c7ff4",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "90c2ff21658b48a0a9546c13ac9a57f7",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'أخذت' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "997174fcb12b440fb809c3318cf9579e",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'المعلمة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "ab66cd6baff84ac09599118b7daaa846",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'القلم' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "fee5f935bbb84f469fe889b6169f3bb5",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'الطالب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e6eda1742ce24ade8edac6ff23fca3a4",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'لأنها' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "ecaca86b1d484fe89cbda3c12538c5ef",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'كانت' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "132a70bf57424391bbd9a122b2646295",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'أخذت' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "66c62b60943c4abaacc61d14b95211a3",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'المعلمة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "6f0a740c274b4539963f2c0452a0d623",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'القلم' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "556f0a89f34942fb843f9f24d7aa6766",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'الطالب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "4fb980f8b4114136a3aec03931004146",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'أخذت المعلمة القلم من الطالب لأنها كانت مشغولة. من كانت مشغولة؟' مع 'لأنها' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    }
+  ]
+}

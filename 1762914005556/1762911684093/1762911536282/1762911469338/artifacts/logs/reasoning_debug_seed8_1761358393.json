@@ -1,0 +1,304 @@
+{
+  "seed": "8",
+  "nlp_res": {
+    "text": "(neutral) وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟",
+    "intent": {
+      "label": "qa",
+      "slots": {},
+      "confidence": 0.6
+    },
+    "emotion": {
+      "sentiment": "neutral",
+      "tone": "neutral",
+      "confidence": 0.5
+    },
+    "context_used": "وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟",
+    "style": {
+      "lang": "ar",
+      "tone": "neutral",
+      "formal": false,
+      "brevity": "short"
+    },
+    "confidence": {
+      "emotion": 0.5,
+      "intent": 0.6
+    }
+  },
+  "nlp_ctx": {
+    "dominant_lang": "ar",
+    "entities": [
+      "وضعت",
+      "التفاحة",
+      "الوعاء",
+      "لأنه",
+      "كان",
+      "ناضجاً",
+      "كان",
+      "ناضجاً؟"
+    ],
+    "chars": 54
+  },
+  "entities": [
+    "وضعت",
+    "التفاحة",
+    "الوعاء",
+    "لأنه",
+    "كان",
+    "ناضجاً",
+    "كان",
+    "ناضجاً؟"
+  ],
+  "initial_facts": [
+    {
+      "text": "(LLM error) 'Chat' object has no attribute 'create'",
+      "source": "llm_coref",
+      "confidence": 0.95
+    },
+    {
+      "text": "وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟",
+      "source": "query",
+      "confidence": 0.9
+    },
+    {
+      "text": "وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟",
+      "source": "nlp_summary",
+      "confidence": 0.8
+    },
+    {
+      "text": "وضعت",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "التفاحة",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "الوعاء",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "لأنه",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "كان",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "ناضجاً",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    }
+  ],
+  "llm_prompt": "حدد بدقة من المرجع الضميري في الجملة التالية وأعد الإجابة بكلمة واحدة فقط (اسم/كلمة):\n\nوضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟\n\nأعد فقط الاسم أو الكلمة التي يشير إليها الضمير (باللغة العربية).",
+  "llm_response": "(LLM error) 'Chat' object has no attribute 'create'",
+  "llm_backend": "openai",
+  "run_cycle_result_summary": null,
+  "accepted_hypotheses": [
+    {
+      "id": "ccdeec146f37432fbb36348582338fb2",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "141b5ecffcfb43c782cc1769bc690601",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "55dfd243f8cf42c1a70e74de8f71eb2a",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'وضعت' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "86d3f58ebe4c43babad16fec9ff199fe",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'التفاحة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "b7d31dc3ac864fb488ae95ccd306a1e5",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'الوعاء' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "0db97a6d1623412882e0b957445401f6",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'لأنه' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "d4d4faf7bfea4230b5d9bdf8ecf9de84",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'كان' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "1efb9307eaab402ba050328712cda1ac",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'ناضجاً' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "8fa3509b1a774306bd8fd7a4f11dbcef",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e5461dc3c11248faa497d4609e2b72e7",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'وضعت' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "4fccfe5c02c347b3b6570c26ba289df6",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'التفاحة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "be998c9ff078437db61dd7caf9dcd7ef",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'الوعاء' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "9b61b5d7c71d417ea3ec71b8cf9f1d32",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'لأنه' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e2815638a72442e1823b8e99784d9ccf",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'كان' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "a818fb616e43450b870ec628410085cf",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'ناضجاً' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "fdc1e8dc8f304738bcd1f7faf5649da6",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'وضعت' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "d539023669d541ab852fe1e58ea0c9bd",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'التفاحة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "8caf0584476d40969792a8ed4bb56573",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'الوعاء' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "06b387ca04d04a60976ca09c77cf269a",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'لأنه' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "718d502079144dabb9846c5f8b1f0b57",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'وضعت التفاحة في الوعاء لأنه كان ناضجاً. ما كان ناضجاً؟' مع 'كان' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    }
+  ]
+}

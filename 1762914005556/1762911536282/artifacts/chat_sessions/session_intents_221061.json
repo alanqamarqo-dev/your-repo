@@ -1,0 +1,18 @@
+{
+  "id": "intents_221061",
+  "created_at": "2025-11-06T22:50:34.156357+00:00",
+  "history": [
+    {
+      "ts": "2025-11-06T22:50:34.159328+00:00",
+      "user": "ما هو قانون نيوتن؟",
+      "agent": {
+        "ok": true,
+        "intent": "ask_info",
+        "engine": "General_Knowledge",
+        "text": "(neutral) ما هو قانون نيوتن؟",
+        "reply_text": "(neutral) ما هو قانون نيوتن؟",
+        "note": "used_nlp_fallback_due_to_low_relevance"
+      }
+    }
+  ]
+}

@@ -1,0 +1,304 @@
+{
+  "seed": "8",
+  "nlp_res": {
+    "text": "(neutral) فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟",
+    "intent": {
+      "label": "qa",
+      "slots": {},
+      "confidence": 0.6
+    },
+    "emotion": {
+      "sentiment": "neutral",
+      "tone": "neutral",
+      "confidence": 0.5
+    },
+    "context_used": "فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟",
+    "style": {
+      "lang": "ar",
+      "tone": "neutral",
+      "formal": false,
+      "brevity": "short"
+    },
+    "confidence": {
+      "emotion": 0.5,
+      "intent": 0.6
+    }
+  },
+  "nlp_ctx": {
+    "dominant_lang": "ar",
+    "entities": [
+      "فتح",
+      "سامي",
+      "الباب",
+      "أمام",
+      "علي",
+      "لأنه",
+      "كان",
+      "مثقلاً"
+    ],
+    "chars": 64
+  },
+  "entities": [
+    "فتح",
+    "سامي",
+    "الباب",
+    "أمام",
+    "علي",
+    "لأنه",
+    "كان",
+    "مثقلاً"
+  ],
+  "initial_facts": [
+    {
+      "text": "(LLM error) 'Chat' object has no attribute 'create'",
+      "source": "llm_coref",
+      "confidence": 0.95
+    },
+    {
+      "text": "فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟",
+      "source": "query",
+      "confidence": 0.9
+    },
+    {
+      "text": "فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟",
+      "source": "nlp_summary",
+      "confidence": 0.8
+    },
+    {
+      "text": "فتح",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "سامي",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "الباب",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "أمام",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "علي",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "لأنه",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    }
+  ],
+  "llm_prompt": "حدد بدقة من المرجع الضميري في الجملة التالية وأعد الإجابة بكلمة واحدة فقط (اسم/كلمة):\n\nفتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟\n\nأعد فقط الاسم أو الكلمة التي يشير إليها الضمير (باللغة العربية).",
+  "llm_response": "(LLM error) 'Chat' object has no attribute 'create'",
+  "llm_backend": "openai",
+  "run_cycle_result_summary": null,
+  "accepted_hypotheses": [
+    {
+      "id": "66b6efb5ca3b4d578f8d4b216536a887",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "134117ef413940399952ef86f64bed46",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "0552f5a9c5b6481aa653962ab890d07b",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'فتح' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "9ec50041a93d40e99065b6154984e3ff",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'سامي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "a80cb0c1bdf542fd9d234c796b7212d3",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'الباب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "deb32ae49b8243bcbd0ec162f475855b",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'أمام' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e0a7936d44f342dc9bb97c84bb724121",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'علي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "4010ef2d81ff4f7b96e89f1b6bd93797",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'لأنه' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "438ddc15a40045279df975d9afcb800d",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "b266a3a784ef4b57b00e18a5593daa5b",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'فتح' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "a6d85c3ff2034fcbb257042faa0a5392",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'سامي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "1ac44e59847944da80f68f57619b9afb",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'الباب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "4c0c0248bb044e07af106167d82d8d11",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'أمام' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "c980135a1f6c40fc96783aa39a0faeab",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'علي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e6bfe89b24f44548ad919a500afef57a",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'لأنه' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "039030b49d494cc0b9b78e74470f0bd3",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'فتح' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "1717a35246ad41ba85737dc4337455d7",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'سامي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "c233055161c7446c8a2a557e7e55923e",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'الباب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "15625cb213f24c1a8e4731c6b7dcb691",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'أمام' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "b81eb6c0802647419f06c649d835d945",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مثقلاً بالحقائب. من كان مثقلاً؟' مع 'علي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    }
+  ]
+}

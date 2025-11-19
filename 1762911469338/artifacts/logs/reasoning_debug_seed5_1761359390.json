@@ -1,0 +1,304 @@
+{
+  "seed": "5",
+  "nlp_res": {
+    "text": "(neutral) فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟",
+    "intent": {
+      "label": "qa",
+      "slots": {},
+      "confidence": 0.6
+    },
+    "emotion": {
+      "sentiment": "neutral",
+      "tone": "neutral",
+      "confidence": 0.5
+    },
+    "context_used": "فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟",
+    "style": {
+      "lang": "ar",
+      "tone": "neutral",
+      "formal": false,
+      "brevity": "short"
+    },
+    "confidence": {
+      "emotion": 0.5,
+      "intent": 0.6
+    }
+  },
+  "nlp_ctx": {
+    "dominant_lang": "ar",
+    "entities": [
+      "فتح",
+      "سامي",
+      "الباب",
+      "أمام",
+      "علي",
+      "لأنه",
+      "كان",
+      "مشغولاً"
+    ],
+    "chars": 57
+  },
+  "entities": [
+    "فتح",
+    "سامي",
+    "الباب",
+    "أمام",
+    "علي",
+    "لأنه",
+    "كان",
+    "مشغولاً"
+  ],
+  "initial_facts": [
+    {
+      "text": "(LLM error) 'Chat' object has no attribute 'create'",
+      "source": "llm_coref",
+      "confidence": 0.95
+    },
+    {
+      "text": "فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟",
+      "source": "query",
+      "confidence": 0.9
+    },
+    {
+      "text": "فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟",
+      "source": "nlp_summary",
+      "confidence": 0.8
+    },
+    {
+      "text": "فتح",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "سامي",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "الباب",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "أمام",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "علي",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "لأنه",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    }
+  ],
+  "llm_prompt": "حدد بدقة من المرجع الضميري في الجملة التالية وأعد الإجابة بكلمة واحدة فقط (اسم/كلمة):\n\nفتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟\n\nأعد فقط الاسم أو الكلمة التي يشير إليها الضمير (باللغة العربية).",
+  "llm_response": "(LLM error) 'Chat' object has no attribute 'create'",
+  "llm_backend": "openai",
+  "run_cycle_result_summary": null,
+  "accepted_hypotheses": [
+    {
+      "id": "c233d84d00424b0793c71f2282a41642",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "ccd9ecd776ba405bb64a793b76b0a06b",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "1f32934a82ff443e8664ed62d960a026",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'فتح' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "0c4b46dfd5ae4158be13d9affa30d3f2",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'سامي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "07e657200a83471186a2e35416912981",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'الباب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "bf93bb7e7e794ee59f9051efebd81dd8",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'أمام' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "8fd2063a155c430db7a5bff9d521fd2c",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'علي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "9cbf3fa3bdf147fcba4de09330a0e369",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'لأنه' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "6b985025403b49229108b8748842f738",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "840d87e3a50d4d2e9f43a21976631e93",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'فتح' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "df43e72455d2418f8dbd073f3182c77a",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'سامي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "3d332e6bb68d412b8aef0ba5b4a4e8f6",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'الباب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "7eba47000dd241608e9c7b380269aec0",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'أمام' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "7bb438028fb1467da14e0511f29c2e4e",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'علي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "36eae776cd9245a38b15278b2d3a3a59",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'لأنه' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "d8909272b7a94b57aa39eec2bbd66ec5",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'فتح' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "b67ef827411b436c885c5c7b8efa60ac",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'سامي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "230580cba13143c1b3ffe755971ea1c7",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'الباب' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "18438b433a5848a8b0d2eb4fa1a2702b",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'أمام' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "7ac2a06642da4ea093d37d2d7fd01653",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'فتح سامي الباب أمام علي لأنه كان مشغولاً. من كان مشغولاً؟' مع 'علي' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    }
+  ]
+}

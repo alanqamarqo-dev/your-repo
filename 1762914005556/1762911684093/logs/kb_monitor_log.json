@@ -1,0 +1,50 @@
+[
+  {
+    "t": 1760757805.0987618,
+    "evt": "start",
+    "path": "{'modules': ['tests.test_ensemble_selector']}",
+    "info": null
+  },
+  {
+    "t": 1760757805.0988946,
+    "evt": "kb_initial_exists",
+    "path": "False",
+    "info": null
+  },
+  {
+    "t": 1760757805.100181,
+    "evt": "poll_snapshot",
+    "path": "{'exists': False, 'listing': ['Domain_Expertise.py', 'Improvement_History.py', 'Law_Facts.py', 'Law_Formulas.py', 'Learned_Patterns.json.new', 'Learned_Patterns.lock.json', 'Learned_Patterns.py', '__init__.py', '__pycache__', 'law_facts.json', 'seed_formulas.py', 'tagged']}",
+    "info": null
+  },
+  {
+    "t": 1760757805.5524879,
+    "evt": "os.unlink",
+    "path": "C:\\Users\\Hossam\\AppData\\Local\\Temp\\ckmwuhhk",
+    "info": null
+  },
+  {
+    "t": 1760757805.5561905,
+    "evt": "shutil.rmtree",
+    "path": "C:\\Users\\Hossam\\AppData\\Local\\Temp\\tmpieb39clh",
+    "info": null
+  },
+  {
+    "t": 1760757805.5567434,
+    "evt": "os.unlink",
+    "path": "C:\\Users\\Hossam\\AppData\\Local\\Temp\\tmpieb39clh\\artifacts\\models\\poly2_D\\results.json",
+    "info": null
+  },
+  {
+    "t": 1760757805.5583766,
+    "evt": "unittest_result",
+    "path": "{'testsRun': 3, 'failures': 0, 'errors': 0}",
+    "info": null
+  },
+  {
+    "t": 1760757805.5606923,
+    "evt": "kb_final_exists",
+    "path": "False",
+    "info": null
+  }
+]

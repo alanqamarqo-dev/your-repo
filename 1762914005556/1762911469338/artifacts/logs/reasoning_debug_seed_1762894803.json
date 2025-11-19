@@ -1,0 +1,255 @@
+{
+  "seed": "",
+  "nlp_res": {
+    "text": "(neutral) اختبار تتبع الفكرة: اذكر خطوات ربط",
+    "intent": {
+      "label": "chitchat",
+      "slots": {},
+      "confidence": 0.5
+    },
+    "emotion": {
+      "sentiment": "neutral",
+      "tone": "neutral",
+      "confidence": 0.5
+    },
+    "context_used": "اختبار تتبع الفكرة: اذكر خطوات ربط",
+    "style": {
+      "lang": "ar",
+      "tone": "neutral",
+      "formal": false,
+      "brevity": "short"
+    },
+    "confidence": {
+      "emotion": 0.5,
+      "intent": 0.5
+    }
+  },
+  "nlp_ctx": {
+    "dominant_lang": "ar",
+    "entities": [
+      "اختبار",
+      "تتبع",
+      "الفكرة",
+      "اذكر",
+      "خطوات",
+      "ربط"
+    ],
+    "chars": 34
+  },
+  "entities": [
+    "اختبار",
+    "تتبع",
+    "الفكرة",
+    "اذكر",
+    "خطوات",
+    "ربط"
+  ],
+  "initial_facts": [
+    {
+      "text": "اختبار تتبع الفكرة: اذكر خطوات ربط",
+      "source": "query",
+      "confidence": 0.9
+    },
+    {
+      "text": "اختبار تتبع الفكرة: اذكر خطوات ربط",
+      "source": "nlp_summary",
+      "confidence": 0.8
+    },
+    {
+      "text": "اختبار",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "تتبع",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "الفكرة",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "اذكر",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "خطوات",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "ربط",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    }
+  ],
+  "llm_prompt": null,
+  "llm_response": null,
+  "llm_backend": null,
+  "run_cycle_result_summary": null,
+  "accepted_hypotheses": [
+    {
+      "id": "f4f40bba097840cb88b2a512af744c9a",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'اختبار تتبع الفكرة: اذكر خطوات ربط' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "5756653cc0104a1ebcb34051232593bc",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'اختبار' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "804e6f9a49a240299a01aa5d3a8bfe1c",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'تتبع' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "c3a0bf19fe59442599cade1db707f97c",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'الفكرة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "d4324836c0d940d18177449a71c5e6e3",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'اذكر' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e64591cfd34f412889b37689079932ea",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'خطوات' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "bf14d8d157af492bb6404f69454d9767",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'ربط' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "dd6761093e944dd0b93fce8d4deb453c",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'اختبار' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "bdb98cfc223841b8974b217e86abe54f",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'تتبع' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "6044287d43a54351b374797d79484099",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'الفكرة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "ade1d912773f416fb257b3ce1415d9e8",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'اذكر' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "b0e198b1e1634951b7fc9dda4d6ff5fb",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'خطوات' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "1187a7c4becd467da5866d64c8b9cfb5",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار تتبع الفكرة: اذكر خطوات ربط' مع 'ربط' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "5d8b2b2f57694c58bdc4faf467f6393d",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار' مع 'تتبع' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "013cb3ca6313442c9d89dc26e2bd38f1",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار' مع 'الفكرة' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "0d1e2c3d621e40fd9a03dd9f3e43ef67",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'اختبار' مع 'اذكر' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{"ts": "2025-11-03T00:12:21.885220Z", "event": "daemon_start", "ok": true, "info": {"pid": 23252}, "err": null}
+{"ts": "2025-11-03T00:12:21.886050Z", "event": "reasoning_cycle", "ok": true, "info": {"result": {"error": "reasoning_impl_missing", "exc": "No module named 'AGL'"}}, "err": null}
+{"ts": "2025-11-03T00:12:21.886662Z", "event": "live_training", "ok": true, "info": {"result": {"error": "live_training_impl_missing", "exc": "No module named 'scripts'"}}, "err": null}
+{"ts": "2025-11-03T00:12:21.887294Z", "event": "memory_sync", "ok": true, "info": {"result": {"error": "memory_sync_impl_missing", "exc": "No module named 'AGL'"}}, "err": null}
+{"ts": "2025-11-03T00:12:43.402125Z", "event": "daemon_start", "ok": true, "info": {"pid": 5800}, "err": null}
+{"ts": "2025-11-03T00:12:43.405963Z", "event": "reasoning_cycle", "ok": true, "info": {"result": {"error": "reasoning_impl_missing", "exc": "No module named 'AGL'"}}, "err": null}
+{"ts": "2025-11-03T00:12:43.406634Z", "event": "live_training", "ok": true, "info": {"result": {"error": "live_training_impl_missing", "exc": "No module named 'scripts'"}}, "err": null}
+{"ts": "2025-11-03T00:12:43.407300Z", "event": "memory_sync", "ok": true, "info": {"result": {"error": "memory_sync_impl_missing", "exc": "No module named 'AGL'"}}, "err": null}
+{"ts": "2025-11-03T00:20:02.243886Z", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T00:22:16.107441Z", "event": "daemon_stop", "ok": true, "info": {"reason": "keyboard_interrupt"}, "err": null}
+{"ts": "2025-11-03T00:25:48.966975+00:00", "event": "daemon_start", "ok": true, "info": {"pid": 23384}, "err": null}
+{"ts": "2025-11-03T00:25:48.973091+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T00:25:48.975551+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T00:25:48.978811+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-03T00:27:01.184006+00:00", "event": "daemon_start", "ok": true, "info": {"pid": 21524}, "err": null}
+{"ts": "2025-11-03T00:27:01.185577+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T00:27:01.186431+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T00:27:01.187227+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-03T00:30:01.290929+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T00:33:24.058314+00:00", "event": "daemon_start", "ok": true, "info": {"pid": 3188}, "err": null}
+{"ts": "2025-11-03T00:33:24.060727+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T00:33:24.061607+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T00:33:24.062300+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-03T00:33:51.488698+00:00", "event": "daemon_stop", "ok": true, "info": {"reason": "keyboard_interrupt"}, "err": null}
+{"ts": "2025-11-03T03:12:23.698095Z", "event": "reasoning_cycle", "ok": true, "info": {"result": {"error": "reasoning_impl_missing", "exc": "No module named 'AGL'"}}, "err": null}
+{"ts": "2025-11-03T15:49:28.225138+00:00", "event": "daemon_start", "ok": true, "info": {"pid": 10060}, "err": null}
+{"ts": "2025-11-03T15:49:28.232794+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T15:49:28.235358+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T15:49:28.237867+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-03T16:04:24.684142+00:00", "event": "daemon_start", "ok": true, "info": {"pid": 3972}, "err": null}
+{"ts": "2025-11-03T16:04:24.698116+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T16:04:24.704958+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T16:04:24.715402+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-03T16:20:00.621313+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T16:30:01.122650+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T16:40:01.470587+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T16:50:01.859782+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T17:23:03.457934+00:00", "event": "daemon_start", "ok": true, "info": {"pid": 25036}, "err": null}
+{"ts": "2025-11-03T17:23:03.464614+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T17:23:03.468325+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T17:23:03.470759+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-03T17:25:20.769441+00:00", "event": "daemon_start", "ok": true, "info": {"pid": 17080}, "err": null}
+{"ts": "2025-11-03T17:25:20.775745+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T17:25:20.779031+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T17:25:20.781448+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-03T17:26:00.707544+00:00", "event": "daemon_start", "ok": true, "info": {"pid": 3200}, "err": null}
+{"ts": "2025-11-03T17:26:00.713370+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T17:26:00.717559+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T17:26:00.719829+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-03T17:30:00.967278+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T17:30:01.044485+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T17:40:01.046263+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T17:40:01.151150+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T17:50:01.221574+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T17:50:01.299402+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:00:01.356846+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:00:01.469251+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:10:01.457952+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:10:01.662075+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:20:01.628724+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:20:02.011295+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:30:01.812935+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:34:44.555694+00:00", "event": "daemon_start", "ok": true, "info": {"pid": 13984}, "err": null}
+{"ts": "2025-11-03T18:34:44.560259+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T18:34:44.563171+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T18:34:44.564703+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-03T18:40:00.595971+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:40:01.916222+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:49:29.576639+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T18:50:00.541819+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T18:50:00.919645+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:00:00.647857+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:00:01.008153+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:04:27.978219+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T19:10:00.778890+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:10:01.096647+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:20:00.944349+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:20:01.218508+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:30:01.088510+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:30:01.331143+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:40:01.225409+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:40:01.466261+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:50:00.093246+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:50:01.345266+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T19:50:01.624110+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:00:00.169838+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:00:01.508467+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:00:01.750758+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:10:00.263725+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:10:01.644376+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:10:01.905505+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:20:00.559478+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:20:01.410303+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:23:04.407153+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T20:25:21.471937+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T20:26:04.691248+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T20:30:00.657235+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:30:01.595696+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:40:00.764789+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:50:00.074858+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T20:50:00.848511+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:00:00.254116+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:00:00.926567+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:10:00.390449+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:10:00.996203+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:20:00.040956+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:20:00.492336+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:20:01.086376+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:30:00.113682+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:30:00.603989+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:30:01.155600+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:34:44.991637+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T21:40:00.127358+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:40:00.182447+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:40:00.745739+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:40:01.235770+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:49:32.978924+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T21:49:32.986265+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T21:50:00.201729+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:50:00.234314+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:50:00.865198+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T21:50:01.287767+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:00:00.311918+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:00:00.323422+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:00:00.995998+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:00:01.353079+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:04:26.386783+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T22:04:31.401610+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T22:10:00.418682+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:10:00.442679+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:10:01.209036+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:10:01.451659+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:20:00.497105+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:20:00.555875+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:20:01.309245+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:20:01.531516+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:30:00.618180+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:30:00.884744+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:30:01.504125+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:30:01.609253+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:40:00.736113+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:40:01.032164+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:40:01.689796+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T22:40:01.704442+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-03T23:32:53.160033+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T23:32:53.218795+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T23:32:53.222568+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T23:32:53.353065+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-03T23:32:53.221750+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-03T23:32:53.521387+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.122292+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.121530+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.206822+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.209857+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.216389+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.347079+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+l}
+{"ts": "2025-11-04T19:28:56.199141+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.203790+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.423900+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.200384+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.674239+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:56.797359+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:57.339247+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:57.366858+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:28:57.406538+00:00", "event": "memory_sync", "ok": true, "info": {"result": {"ok": true, "note": "memory sync stub ran"}}, "err": null}
+{"ts": "2025-11-04T19:30:01.241790+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T19:30:01.440368+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T19:30:01.515017+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T19:40:01.345873+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T19:40:01.536617+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T19:40:01.607138+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T19:50:01.452406+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T19:50:01.628389+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T19:50:01.691526+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:00:01.580039+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:00:01.734457+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:00:01.787667+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:10:01.691831+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:10:01.826350+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:10:01.878987+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:20:01.773873+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:20:01.897289+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:20:01.959994+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:30:01.847365+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:30:01.964590+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:40:01.925212+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T20:50:01.997791+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T21:50:00.125202+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T22:00:00.374242+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T22:00:00.384272+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T22:10:00.137100+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T22:10:00.639932+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T22:10:00.645679+00:00", "event": "health", "ok": true, "info": {"ok": true, "engines": {}}, "err": null}
+{"ts": "2025-11-04T22:28:58.603457+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T22:28:58.605165+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T22:28:58.616267+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T22:28:59.013762+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T22:28:59.015829+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T22:28:59.024410+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-04T23:30:02.083643+00:00", "event": "health", "ok": false, "info": {}, "err": "timed out"}
+{"ts": "2025-11-04T23:40:02.168372+00:00", "event": "health", "ok": false, "info": {}, "err": "timed out"}
+{"ts": "2025-11-05T01:28:58.476702+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-05T01:28:58.609769+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-05T01:28:59.774128+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T01:28:59.778959+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-05T01:28:59.784701+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T01:28:59.785694+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T01:28:59.789254+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-05T01:28:59.790164+00:00", "event": "live_training", "ok": true, "info": {"result": {"ok": true, "note": "live training stub ran"}}, "err": null}
+{"ts": "2025-11-05T01:29:03.482272+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T01:29:03.618160+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T01:29:03.617618+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T02:20:02.048080+00:00", "event": "health", "ok": false, "info": {}, "err": "timed out"}
+{"ts": "2025-11-05T02:20:02.060199+00:00", "event": "health", "ok": false, "info": {}, "err": "timed out"}
+{"ts": "2025-11-05T02:20:02.060902+00:00", "event": "health", "ok": false, "info": {}, "err": "timed out"}
+{"ts": "2025-11-05T03:40:02.156771+00:00", "event": "health", "ok": false, "info": {}, "err": "timed out"}
+{"ts": "2025-11-05T03:40:02.172174+00:00", "event": "health", "ok": false, "info": {}, "err": "timed out"}
+{"ts": "2025-11-05T04:00:02.042376+00:00", "event": "health", "ok": false, "info": {}, "err": "timed out"}
+{"ts": "2025-11-05T04:29:02.664504+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T04:29:02.665970+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T04:29:02.668432+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T04:29:07.390902+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T04:29:07.691188+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}
+{"ts": "2025-11-05T04:29:07.708070+00:00", "event": "reasoning_cycle", "ok": true, "info": {"result": {"ok": true, "note": "reasoning stub ran"}}, "err": null}

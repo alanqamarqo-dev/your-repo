@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.dist/
+build/
+dist/
+
+# Virtual envs
+.venv/
+env/
+venv/
+
+# Local secrets
+.env
+.env.*
+
+# Coverage & test outputs
+.coverage
+htmlcov/
+coverage.xml
+.pytest_cache/
+
+# Logs & reports (keep baseline only)
+logs/
+reports/*.json
+!reports/baselines/
+!baselines/
+
+# Local artifacts (keep last 3 locally or enable cleanup policy)
+artifacts/*.py
+artifacts/__pycache__/
+
+# Notebooks, temp
+*.ipynb_checkpoints
+tmp_*/
+**/tmp_*.*
+# Additional ignores recommended by the PR clean-up
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dll
+*.dylib
+*.egg-info/
+.env
+.venv/
+.vscode/
+.last_task.json
+*.log
+.DS_Store
+Thumbs.db
+!reports/module_reference_report.json
+
+# Runtime artifacts & session data (keep out of repo)
+artifacts/
+reports/
+sessions/
+__pycache__/
+*.log
+*.tmp
+*.cache

@@ -1,0 +1,39 @@
+domains:
+  - name: physics.classical
+    seeds:
+      - "قوانين نيوتن"
+      - "الديناميكا والاحتكاك"
+    target_facts: 120
+  - name: electricity.basics
+    seeds:
+      - "قانون أوم"
+      - "القدرة الكهربائية"
+    target_facts: 80
+  - name: chemistry.organic
+    seeds:
+      - "المجموعات الوظيفية"
+    target_facts: 100
+  - name: physics.atomic
+    seeds:
+      - "التركيب الذري"
+      - "مستويات الطاقة"
+    target_facts: 60
+  - name: biochemistry.metabolism
+    seeds:
+      - "مسارات التمثيل الغذائي"
+      - "إنزيمات التحفيز"
+    target_facts: 80
+  - name: materials.science
+    seeds:
+      - "خواص المواد"
+      - "السبائك وخواصها"
+    target_facts: 90
+  - name: control.systems
+    seeds:
+      - "أنظمة التحكم"
+      - "استجابة التغذية الراجعة"
+    target_facts: 100
+policy:
+  per_minute_limit: 3
+  min_confidence: 0.70
+  require_source: true

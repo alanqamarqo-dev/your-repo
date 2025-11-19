@@ -1,0 +1,3995 @@
+[
+  {
+    "ts": "2025-11-13T00:23:06Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "idea": "alternative thinking strategy"
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.65,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "meta"
+      ],
+      "score": 0.8700000000000001
+    },
+    "confidence": 0.8700000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:23:06Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "idea": "alternative thinking strategy"
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.65,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "meta"
+      ],
+      "score": 0.8700000000000001
+    },
+    "confidence": 0.8700000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:23:06Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "idea": "alternative thinking strategy"
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.65,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "meta"
+      ],
+      "score": 0.8700000000000001
+    },
+    "confidence": 0.8700000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:23:06Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "idea": "alternative thinking strategy"
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.65,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "meta"
+      ],
+      "score": 0.8700000000000001
+    },
+    "confidence": 0.8700000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:23:06Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "idea": "alternative thinking strategy"
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.65,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "meta"
+      ],
+      "score": 0.8700000000000001
+    },
+    "confidence": 0.8700000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:23:06Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "idea": "alternative thinking strategy"
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.65,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "meta"
+      ],
+      "score": 0.8700000000000001
+    },
+    "confidence": 0.8700000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:31:43Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:31:43Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:31:43Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:31:43Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:31:43Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T00:31:43Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T01:37:46Z",
+    "task": {
+      "title": "story_qa_debug",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T01:38:26Z",
+    "task": {
+      "title": "story_qa_debug_signals",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T01:38:26Z",
+    "task": {
+      "title": "story_qa_debug_flat",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T01:53:38Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T01:53:38Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T01:53:38Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T01:53:38Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T01:53:38Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T01:53:38Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T02:57:30Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T02:57:30Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T02:57:30Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T02:57:30Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T02:57:30Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T02:57:30Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:38:33Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:38:33Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:38:33Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:38:33Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:38:33Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:38:33Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_ar_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_ar_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_ar_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_en_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_en_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:15Z",
+    "task": {
+      "title": "story_qa_en_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:41Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:41Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:41Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:41Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:41Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:41Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:58Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:58Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:58Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:58Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:58Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T03:44:58Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "deliberation",
+      "content": {
+        "deliberation": {
+          "pros": [
+            "path A",
+            "path B"
+          ],
+          "cons": [
+            "risk X",
+            "risk Y"
+          ]
+        }
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.6,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "reasoning",
+        "logic",
+        "analysis"
+      ],
+      "score": 0.8200000000000001
+    },
+    "confidence": 0.8200000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:00Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:00Z",
+    "task": {
+      "title": "story_qa_ar_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:00Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:00Z",
+    "task": {
+      "title": "story_qa_ar_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:00Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:00Z",
+    "task": {
+      "title": "story_qa_ar_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:01Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:01Z",
+    "task": {
+      "title": "story_qa_en_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:01Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:01Z",
+    "task": {
+      "title": "story_qa_en_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:01Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:32:01Z",
+    "task": {
+      "title": "story_qa_en_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_ar_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 1,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 1,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_ar_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_ar",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_ar_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_en_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_en_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_en",
+      "domains": [
+        "language",
+        "analysis"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  },
+  {
+    "ts": "2025-11-13T04:39:51Z",
+    "task": {
+      "title": "story_qa_en_strict",
+      "domains": [
+        "analysis",
+        "reason",
+        "language"
+      ]
+    },
+    "winner": {
+      "engine": "gen_creativity",
+      "content": {
+        "ideas": [
+          {
+            "idea": "Design a cognitive lens that merges visual and abstract perception",
+            "novelty": 0.82
+          },
+          {
+            "idea": "Simulate social reasoning between independent engines",
+            "novelty": 0.79
+          },
+          {
+            "idea": "Develop an evolving ontology based on cooperative learning",
+            "novelty": 0.85
+          }
+        ]
+      },
+      "checks": {
+        "constraints": true,
+        "feasible": true
+      },
+      "novelty": 0.85,
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      },
+      "domains": [
+        "creativity",
+        "synthesis",
+        "ideation"
+      ],
+      "score": 0.9450000000000001
+    },
+    "confidence": 0.9450000000000001,
+    "features": {
+      "percept": {},
+      "meta": {
+        "latency_ms": 0,
+        "tokens": 0
+      }
+    }
+  }
+]

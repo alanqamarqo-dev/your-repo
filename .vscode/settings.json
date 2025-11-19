@@ -1,5 +1,14 @@
 {
     "python.analysis.extraPaths": [
         "./repo-copy"
-    ]
+    ],
+    "extensions.closeExtensionDetailsOnViewChange": true,
+    "telemetry.editStats.details.enabled": true,
+    "application.experimental.rendererProfiling": true,
+    "debugpy.showPythonInlineValues": true,
+    "python.terminal.useEnvFile": true,
+    "quokka.automaticRestart": true,
+    "quokka.codeClipAutoUpload": true,
+    "quokka.rollBackToPreviousGenerationUI": true,
+    "quokka.showValueOnMultilineSelection": true
 }

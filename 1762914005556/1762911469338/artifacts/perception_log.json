@@ -1,0 +1,36 @@
+{
+  "timestamp": 1762895501.5996747,
+  "trace_id": null,
+  "metrics": {
+    "latency_ms": 100.0,
+    "success_rate": 1.0,
+    "error_count": 0,
+    "bridge_load": 8,
+    "total_events": 8
+  },
+  "snapshot": {
+    "identity": {
+      "role": "assistant",
+      "origin": "AGL"
+    },
+    "core_values": {
+      "curiosity": 0.5,
+      "helpfulness": 0.5,
+      "honesty": 0.5
+    },
+    "mood": 0.04000000000000001,
+    "confidence": 1.0,
+    "ts": 1762895501.5996559,
+    "recent_bio": []
+  },
+  "recent_event_types": [
+    "rationale",
+    "rationale",
+    "prompt_plan",
+    "rationale",
+    "prompt_plan",
+    "plan",
+    "analogy_map",
+    "analogy_map"
+  ]
+}

@@ -1,0 +1,37 @@
+[run]
+branch = True
+source =
+    Core_Engines
+    Integration_Layer
+    Learning_System
+    Knowledge_Base
+    Safety_Control
+    Scientific_Systems
+omit =
+    # CLIs and reporting/visualizer helpers (not core product code)
+    Learning_System/*cli*.py
+    Learning_System/visualizer.py
+    Learning_System/generalize_cli.py
+    Learning_System/generalization_cli.py
+    Learning_System/*reasoner_cli.py
+    # experimental / heavy numeric modules
+    Core_Engines/Quantum_Neural_Core.py
+    Core_Engines/Quantum_Processor.py
+    Scientific_Systems/Automated_Theorem_Prover.py
+    # temporarily omit large/placeholder learning modules
+    Learning_System/Self_Optimizer.py
+    Learning_System/Training_Path.py
+    Learning_System/ModelZoo.py
+    Learning_System/io_utils.py
+    Core_Engines/Symbolic_Grammar.py
+    # main entrypoints
+    **/__main__.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.
+    raise NotImplementedError
+
+[html]
+directory = htmlcov

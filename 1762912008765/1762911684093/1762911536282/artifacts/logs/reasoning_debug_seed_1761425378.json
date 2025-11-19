@@ -1,0 +1,172 @@
+{
+  "seed": "",
+  "nlp_res": {
+    "text": "(neutral) dry-run",
+    "intent": {
+      "label": "chitchat",
+      "slots": {},
+      "confidence": 0.5
+    },
+    "emotion": {
+      "sentiment": "neutral",
+      "tone": "neutral",
+      "confidence": 0.5
+    },
+    "context_used": "dry-run",
+    "style": {
+      "lang": "ar",
+      "tone": "neutral",
+      "formal": false,
+      "brevity": "short"
+    },
+    "confidence": {
+      "emotion": 0.5,
+      "intent": 0.5
+    }
+  },
+  "nlp_ctx": {
+    "dominant_lang": "ar",
+    "entities": [
+      "dry",
+      "run"
+    ],
+    "chars": 7
+  },
+  "entities": [
+    "dry",
+    "run"
+  ],
+  "initial_facts": [
+    {
+      "text": "(LLM error) 'Chat' object has no attribute 'create'",
+      "source": "llm_coref",
+      "confidence": 0.95
+    },
+    {
+      "text": "dry-run",
+      "source": "query",
+      "confidence": 0.9
+    },
+    {
+      "text": "dry-run",
+      "source": "nlp_summary",
+      "confidence": 0.8
+    },
+    {
+      "text": "dry",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "run",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    }
+  ],
+  "llm_prompt": "حدد بدقة من المرجع الضميري في الجملة التالية وأعد الإجابة بكلمة واحدة فقط (اسم/كلمة):\n\ndry-run\n\nأعد فقط الاسم أو الكلمة التي يشير إليها الضمير (باللغة العربية).",
+  "llm_response": "(LLM error) 'Chat' object has no attribute 'create'",
+  "llm_backend": "openai",
+  "run_cycle_result_summary": null,
+  "accepted_hypotheses": [
+    {
+      "id": "c09e8772a773498bbee8e374a16c084d",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'dry-run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "e0c3b4c9626a4f5f85df8da33f6b6aad",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'dry-run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "80ac82df4ed64f54bc8bf04bf92e0dbd",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'dry' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "27bf8381d94246119cf9a8d76cc89033",
+      "domain": null,
+      "hypothesis": "قد ترتبط '(LLM error) 'Chat' object has no attribute 'create'' مع 'run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "1096521e22dd4be5b061c11ab472db7c",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry-run' مع 'dry-run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "1cfbc734fc674f5283fb3e9918a660d1",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry-run' مع 'dry' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "cb6510bd91e147e0a638319578e76928",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry-run' مع 'run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "36572246d2cf41d9a25aae6ccd92360c",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry-run' مع 'dry' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "768def22d6ce49a28d791797d29fc569",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry-run' مع 'run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "363af2c98191444fb33071bdedc739e5",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry' مع 'run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    }
+  ]
+}

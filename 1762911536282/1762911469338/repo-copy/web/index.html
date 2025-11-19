@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AGL Chat UI</title>
+  <style>
+    :root { --bg:#f7f7fb; --card:#fff; --me:#d1f7c4; --bot:#e8ecff; --muted:#777; }
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);font-family:system-ui,Segoe UI,Arial}
+    .app{max-width:920px;margin:auto;min-height:100vh;display:flex;flex-direction:column;padding:16px}
+    .header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .dot{width:10px;height:10px;border-radius:50%;background:#4caf50}
+    .title{font-weight:700}
+    .chat{flex:1;overflow:auto;padding:8px;border-radius:12px;background:var(--card);border:1px solid #eee}
+  .bubble{max-width:80%;padding:10px 12px;border-radius:14px;margin:8px 0;line-height:1.6;position:relative}
+    .me{background:var(--me);margin-left:auto;border-top-left-radius:4px}
+    .bot{background:var(--bot);margin-right:auto;border-top-right-radius:4px}
+  .role{font-size:11px;color:var(--muted);position:absolute;top:-14px}
+  .time{font-size:11px;color:var(--muted);margin-left:8px}
+  .actions{position:absolute;right:6px;top:6px;display:flex;gap:6px}
+  .chip{display:inline-block;background:#eef; padding:6px 10px;border-radius:999px;margin:6px 6px 0 0;cursor:pointer;font-size:13px}
+    .meta{font-size:12px;color:var(--muted);margin-top:4px}
+    .inputbar{Display:flex;gap:10px;margin-top:12px}
+    textarea{flex:1;resize:none;padding:12px;border:1px solid #ddd;border-radius:10px;height:56px}
+    button{padding:0 18px;border:0;border-radius:10px;background:#3b82f6;color:#fff;font-weight:600}
+    button:disabled{opacity:.6}
+    .hint{font-size:12px;color:var(--muted);margin-top:6px}
+    .spinner{display:inline-block;width:14px;height:14px;border:2px solid #999;border-top-color:transparent;border-radius:50%;vertical-align:middle;margin-left:8px;animation:spin .9s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <div class="dot"></div>
+      <div class="title">واجهة AGL التفاعلية</div>
+  <div class="hint">متصل بـ <span id="apiHint">...</span></div>
+    </div>
+
+    <div id="chat" class="chat"></div>
+
+    <div class="inputbar">
+      <textarea id="msg" placeholder="اكتب رسالتك (Enter لإرسال، مع Shift+Enter لسطر جديد)"></textarea>
+      <button id="send">إرسال</button>
+    </div>
+  </div>
+
+  <script>
+  // Use the current origin so the UI works when served from the same host:port
+  const API = window.location.origin || "http://127.0.0.1:8000";
+    const chat = document.getElementById("chat");
+    const msg = document.getElementById("msg");
+    const send = document.getElementById("send");
+    let sessionId = localStorage.getItem("agl_session_id") || "";
+
+    function _now() { return new Date().toLocaleTimeString(); }
+
+    function addBubble(text, who="bot", meta="", opts={suggestions:[]}) {
+      const wrap = document.createElement("div");
+      wrap.className = "wrap";
+      const b = document.createElement("div");
+      b.className = "bubble " + (who === "me" ? "me":"bot");
+      // role label
+      const role = document.createElement('div'); role.className='role'; role.textContent = who === 'me' ? 'أنت' : 'AGL'; b.appendChild(role);
+      // actions (copy / retry)
+      const actions = document.createElement('div'); actions.className='actions';
+      const copyBtn = document.createElement('button'); copyBtn.textContent='نسخ'; copyBtn.style.fontSize='11px'; copyBtn.onclick = ()=>navigator.clipboard?.writeText(text);
+      const retryBtn = document.createElement('button'); retryBtn.textContent='أعد'; retryBtn.style.fontSize='11px'; retryBtn.onclick = ()=>{ msg.value = text; msg.focus(); };
+      actions.appendChild(copyBtn); actions.appendChild(retryBtn); b.appendChild(actions);
+
+      // always set as textContent to avoid XSS
+      b.appendChild(document.createTextNode('\n'));
+      const p = document.createElement('div'); p.textContent = text; b.appendChild(p);
+
+      // timestamp
+      const ts = document.createElement('div'); ts.className='time'; ts.textContent = _now(); b.appendChild(ts);
+
+      wrap.appendChild(b);
+
+      // meta
+      if (meta) {
+        const m = document.createElement("div");
+        m.className = "meta";
+        m.textContent = meta;
+        wrap.appendChild(m);
+      }
+
+      // suggestions chips
+      if (opts.suggestions && opts.suggestions.length) {
+        const chips = document.createElement('div');
+        opts.suggestions.forEach(s => {
+          const c = document.createElement('span'); c.className='chip'; c.textContent = s; c.onclick = ()=>{ msg.value = s; msg.focus(); };
+          chips.appendChild(c);
+        });
+        wrap.appendChild(chips);
+      }
+
+      chat.appendChild(wrap);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    // simple client-side rate guard (prevent accidental rapid clicks)
+    let lastSentAt = 0;
+
+    async function sendMessage() {
+      const text = (msg.value || "").trim();
+      if (!text) return;
+      // sanitize large inputs
+      const MAX_CHARS = 4000;
+      if (text.length > MAX_CHARS) {
+        addBubble(`نص طويل جدًا (أقصى ${MAX_CHARS} حرف). حاول تقصيره.`, "bot");
+        return;
+      }
+      const now = Date.now();
+      if (now - lastSentAt < 300) return; // debounce
+      lastSentAt = now;
+      addBubble(text, "me");
+      msg.value = "";
+      msg.disabled = true; send.disabled = true;
+        // insert a waiting bubble with spinner
+        const waitingWrap = document.createElement('div');
+        waitingWrap.className = 'wrap';
+        const waiting = document.createElement('div');
+        waiting.className = 'bubble bot';
+        waiting.textContent = '…';
+        const sp = document.createElement('span'); sp.className = 'spinner'; waiting.appendChild(sp);
+        waitingWrap.appendChild(waiting);
+        chat.appendChild(waitingWrap);
+        chat.scrollTop = chat.scrollHeight;
+
+        try {
+          const res = await fetch(API + "/chat", {
+            method: "POST",
+            headers: {"Content-Type": "application/json; charset=utf-8", "Accept": "application/json"},
+            body: JSON.stringify({ session_id: sessionId, text })
+          });
+
+          // Be defensive: some responses may be empty or plain text (not JSON).
+          // Read raw text first, then try to parse JSON. This avoids the
+          // `Unexpected end of JSON input` error when body is empty.
+          const rawText = await res.text();
+          let data;
+          try {
+            data = rawText ? JSON.parse(rawText) : {};
+          } catch (parseErr) {
+            // Non-JSON response: wrap it so the UI can show a friendly message.
+            data = { ok: false, error: 'invalid_json_response', raw_text: rawText };
+          }
+
+          // DEBUG logging removed for production
+
+          // backend may return normalized text or raw engine payload
+          // prefer canonical textual fields, fall back to raw description/design, then to a friendly message
+          let replyCandidate = data?.reply_text ?? data?.text ?? data?.reply ?? data?.raw?.reply_text ?? data?.raw?.text ?? data?.raw?.description ?? (data?.raw?.design ? "[تم توليد تصميم/مخطط]" : null) ?? (data?.raw_text ? data.raw_text : null);
+
+          // if replyCandidate is empty or only whitespace, replace with friendly fallback and expose metadata for debugging
+          let reply = (replyCandidate && String(replyCandidate).trim()) ? String(replyCandidate) : null;
+          const metaInfo = data?.meta || (data?.raw ? { engine: data.raw.engine, intent: data.raw.intent } : {});
+          if (!reply) {
+            reply = "عذرًا، لم أتمكن من توليد رد نصي على هذا المدخل. يمكنك مراجعة بيانات المحرك أدناه أو إعادة صياغة السؤال.";
+          }
+
+          // always persist returned session id if present
+          if (data?.session_id) {
+            sessionId = data.session_id;
+            localStorage.setItem("agl_session_id", sessionId);
+          }
+
+          // user-friendly handling for backend errors
+          if (data && data.ok === false) {
+            const friendly = data.error || data.detail || "حدث خطأ من الخادم. حاول الإرسال مرة أخرى.";
+            waiting.textContent = `خطأ: ${friendly}`;
+            waiting.className = 'bubble bot';
+            // suggestion
+            const mm = document.createElement('div'); mm.className = 'meta'; mm.textContent = 'اقترح: أعد المحاولة أو حدّث الصفحة.'; waitingWrap.appendChild(mm);
+          } else {
+              // success: replace waiting bubble content
+              // attach cleaned reply (may be short) and optionally show sources
+              // show a short preview, with an expand button for long replies
+              const MAX_PREVIEW = 600;
+              const isLong = reply.length > MAX_PREVIEW;
+              const preview = isLong ? reply.slice(0, MAX_PREVIEW) + '…' : reply;
+              // clear waiting bubble children
+              waiting.innerHTML = '';
+              const pnode = document.createElement('div'); pnode.textContent = preview; waiting.appendChild(pnode);
+
+              // expand/collapse when long
+              if (isLong) {
+                const exp = document.createElement('button'); exp.textContent = 'عرض المزيد'; exp.style.fontSize='12px'; exp.style.marginLeft='8px';
+                exp.onclick = ()=>{
+                  if (exp.textContent === 'عرض المزيد') { pnode.textContent = reply; exp.textContent = 'عرض أقل'; }
+                  else { pnode.textContent = preview; exp.textContent = 'عرض المزيد'; }
+                };
+                waiting.appendChild(exp);
+              }
+
+              // attach metadata (engine/intent) if present to help debugging or to show provenance
+              const engine = (data?.meta && data.meta.engine) || (data?.raw && data.raw.engine) || "-";
+              const intent = (data?.meta && data.meta.intent) || (data?.raw && data.raw.intent) || "-";
+              const meta = `intent=${intent} • engine=${engine}`;
+              const m = document.createElement('div'); m.className = 'meta'; m.textContent = meta; waitingWrap.appendChild(m);
+
+              // show sources if the backend provides 'sources' array or data.facts
+              const sources = (data?.meta && data.meta.sources) || (data?.raw && data.raw.sources) || (data?.data && data.data.facts);
+              if (sources && Array.isArray(sources) && sources.length) {
+                const sdiv = document.createElement('div'); sdiv.className = 'meta'; sdiv.style.marginTop = '6px';
+                sdiv.textContent = 'المصادر:';
+                const ul = document.createElement('ul'); ul.style.margin = '6px 0 0 16px'; ul.style.padding = '0'; ul.style.listStyle = 'disc';
+                sources.slice(0,5).forEach(src => {
+                  const li = document.createElement('li');
+                  if (typeof src === 'string') li.textContent = src;
+                  else if (src && src.source) li.textContent = src.source || JSON.stringify(src);
+                  else li.textContent = JSON.stringify(src);
+                  ul.appendChild(li);
+                });
+                sdiv.appendChild(ul);
+                waitingWrap.appendChild(sdiv);
+              }
+
+            // If the replyCandidate was empty, also append the raw payload for inspection
+            if (!replyCandidate) {
+              try {
+                const rawPre = document.createElement('pre'); rawPre.className = 'meta'; rawPre.style.whiteSpace = 'pre-wrap'; rawPre.style.fontSize = '12px'; rawPre.textContent = JSON.stringify(data?.raw || data || {}, null, 2);
+                waitingWrap.appendChild(rawPre);
+              } catch (e) { /* ignore */ }
+            }
+          }
+        } catch (e) {
+          // network error
+          waiting.textContent = "عذرًا، خطأ في الاتصال بالخادم.";
+          const mm = document.createElement('div'); mm.className = 'meta'; mm.textContent = 'تحقق من اتصال الإنترنت أو أعد المحاولة.'; waitingWrap.appendChild(mm);
+          console.error(e);
+        } finally {
+          msg.disabled = false; send.disabled = false; msg.focus();
+        }
+    }
+
+    send.addEventListener("click", sendMessage);
+    msg.addEventListener("keydown", (e)=>{
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    });
+
+  // إظهار أصل API المستخدم (سيُحدَّث لاحقًا مع اسم المحرك الفعلي)
+  document.getElementById('apiHint').textContent = API + ' • جار التحقق...';
+
+  // إجراء فحص بسيط للمحرك عند تحميل الواجهة (يستبدل رسالة الترحيب الافتراضية برد من المحرك)
+  async function initProbe() {
+    try {
+      const probeText = 'مرحبًا، حال النظام؟';
+      const res = await fetch(API + "/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json; charset=utf-8", "Accept": "application/json"},
+        body: JSON.stringify({ session_id: sessionId, text: probeText })
+      });
+      const raw = await res.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; } catch (e) { data = { ok: false, raw_text: raw }; }
+
+      // update api hint with engine metadata if available
+      const engine = data?.meta?.engine || data?.raw?.engine || (data?.raw && data.raw.engine) || '-';
+      document.getElementById('apiHint').textContent = API + ' • engine=' + engine;
+
+      let reply = data?.reply_text ?? data?.text ?? data?.reply ?? null;
+      if (!reply || String(reply).trim().length === 0) {
+        reply = 'مرحبًا! أنا الآن متصّل بمحرك محلي. اسألني أي سؤال.';
+      }
+      // show the probe reply as the initial intelligent greeting
+      addBubble(reply, 'bot', `engine=${engine}`);
+      if (data?.session_id) { sessionId = data.session_id; localStorage.setItem('agl_session_id', sessionId); }
+    } catch (e) {
+      document.getElementById('apiHint').textContent = API + ' • offline';
+      addBubble('مرحبًا! يبدو أن الخادم غير متاح محليًا. تأكد من تشغيل الخادم ثم حدّث الصفحة.', 'bot');
+      console.error('initProbe error', e);
+    } finally {
+      msg.focus();
+    }
+  }
+
+  // ابدأ بفحص المحرك لعرض رد ذكي بدلاً من رسالة افتراضية
+  initProbe();
+  </script>
+</body>
+</html>

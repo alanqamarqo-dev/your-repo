@@ -1,0 +1,27 @@
+{
+  "id": "sess-e6a7f887",
+  "created_at": "2025-11-02T21:05:27.591633+00:00",
+  "history": [
+    {
+      "ts": "2025-11-02T21:05:27.592119+00:00",
+      "user": "تعلّم من لقطة قليلة: مثال: مدخل=2 مخرج=4; مدخل=3 مخرج=6",
+      "agent": {
+        "ok": true,
+        "text": "تعلّم من لقطة قليلة: مثال: مدخل=2 مخرج=4; مدخل=3 مخرج=6",
+        "reply_text": "تعلّم من لقطة قليلة: مثال: مدخل=2 مخرج=4; مدخل=3 مخرج=6",
+        "data": {
+          "text": "تعلّم من لقطة قليلة: مثال: مدخل=2 مخرج=4; مدخل=3 مخرج=6",
+          "intent": "meta_learn",
+          "extra": {},
+          "warning": "meta.few_shot_learn failed; fallback exhausted."
+        },
+        "meta": {
+          "intent": "meta_learn",
+          "extra": {},
+          "warning": "meta.few_shot_learn failed; fallback exhausted."
+        }
+      },
+      "intent": "meta_learn"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+law_name,x,k,F,units_x,units_k,units_F,split
+hooke,0.01,98,0.98,m,N/m,N,train
+hooke,0.02,98,1.96,m,N/m,N,train
+hooke,0.03,98,2.94,m,N/m,N,train
+hooke,0.05,98,4.90,m,N/m,N,train
+hooke,0.04,98,3.92,m,N/m,N,val
+hooke,0.06,98,5.88,m,N/m,N,test

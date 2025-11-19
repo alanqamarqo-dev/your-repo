@@ -1,0 +1,70 @@
+{
+  "ts": "2025-10-29T20:53:11.442089Z",
+  "solvers": {
+    "quantum": {
+      "ok": true,
+      "result": "p=0.5 (approx)",
+      "raw": {
+        "ok": true,
+        "result": "p=0.5 (approx)",
+        "steps": [
+          "apply U to |ψ>, compute overlap"
+        ],
+        "uncertainty": 0.2,
+        "domain": "quantum"
+      }
+    },
+    "physics": {
+      "ok": true,
+      "result": "I=3.0",
+      "raw": {
+        "ok": true,
+        "result": "I=3.0",
+        "steps": [
+          "I = V / R"
+        ],
+        "uncertainty": 0.01,
+        "domain": "electrical"
+      }
+    },
+    "algebra": {
+      "ok": true,
+      "result": "det=1 (placeholder)",
+      "raw": {
+        "ok": true,
+        "result": "det=1 (placeholder)",
+        "steps": [
+          "compute determinant"
+        ],
+        "uncertainty": 0.5,
+        "domain": "math.algebra"
+      }
+    },
+    "chemistry": {
+      "ok": true,
+      "result": "balanced (stub)",
+      "raw": {
+        "ok": true,
+        "result": "balanced (stub)",
+        "steps": [
+          "count atoms",
+          "solve stoichiometry"
+        ],
+        "uncertainty": 0.4,
+        "domain": "chemistry"
+      }
+    }
+  },
+  "solvers_summary": {
+    "total": 4,
+    "ok": 4,
+    "pct_ok": 100.0
+  },
+  "tests": {
+    "testsRun": 118,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "wasSuccessful": true
+  }
+}

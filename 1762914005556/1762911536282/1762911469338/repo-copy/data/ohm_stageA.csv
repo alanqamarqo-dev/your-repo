@@ -1,0 +1,7 @@
+law_name,I,R,V,units_I,units_R,units_V,split
+ohm,0.10,10,1.0,A,ohm,V,train
+ohm,0.20,10,2.0,A,ohm,V,train
+ohm,0.30,10,3.0,A,ohm,V,train
+ohm,0.50,10,5.0,A,ohm,V,train
+ohm,0.40,10,4.0,A,ohm,V,val
+ohm,0.60,10,6.0,A,ohm,V,test

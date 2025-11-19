@@ -1,0 +1,11 @@
+prompt,expected
+"Change to passive voice: The chef cooks the meal.","The meal is cooked by the chef."
+"Change to passive voice (past): The company built the bridge.","The bridge was built by the company."
+"Change to active voice: The song was sung by her.","She sang the song."
+"Passive (future): They will finish the project.","The project will be finished by them."
+"Make passive: People speak English all over the world.","English is spoken all over the world."
+"Active: The letter was written by Ali.","Ali wrote the letter."
+"Passive (present perfect): Someone has stolen my bike.","My bike has been stolen."
+"Active: The cake was baked by my mom.","My mom baked the cake."
+"Passive simple: The committee approves the plan.","The plan is approved by the committee."
+"Active: A solution was found by the team.","The team found a solution."

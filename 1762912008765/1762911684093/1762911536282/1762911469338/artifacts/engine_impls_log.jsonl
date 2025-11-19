@@ -1,0 +1,34 @@
+{"ts": "2025-11-11T02:51:39Z", "event": "connect_engines_summary", "engines": ["planner", "deliberation", "associative"], "impl_types": ["PlannerAdapter", "DeliberationAdapter", "AssociativeAdapter"]}
+{"ts": "2025-11-11T03:13:41Z", "event": "connect_engines_summary", "engines": ["planner", "deliberation", "associative"], "impl_types": ["PlannerAdapter", "DeliberationAdapter", "AssociativeAdapter"]}
+{"ts": "2025-11-11T03:13:41Z", "event": "override_import_failed", "engine": "planner", "spec": "ghost.mod:Nope", "error": "import-module-failed:ghost.mod:ModuleNotFoundError(\"No module named 'ghost'\")"}
+{"ts": "2025-11-11T03:13:41Z", "event": "override_import_failed", "engine": "deliberation", "spec": "bad.path:Missing", "error": "import-module-failed:bad.path:ModuleNotFoundError(\"No module named 'bad'\")"}
+{"ts": "2025-11-11T03:21:52Z", "event": "connect_engines_summary", "engines": ["planner", "deliberation", "associative"], "impl_types": ["PlannerAdapter", "DeliberationAdapter", "AssociativeAdapter"]}
+{"ts": "2025-11-11T03:21:52Z", "event": "override_import_failed", "engine": "planner", "spec": "ghost.mod:Nope", "error": "import-module-failed:ghost.mod:ModuleNotFoundError(\"No module named 'ghost'\")"}
+{"ts": "2025-11-11T03:21:52Z", "event": "override_import_failed", "engine": "deliberation", "spec": "bad.path:Missing", "error": "import-module-failed:bad.path:ModuleNotFoundError(\"No module named 'bad'\")"}
+{"ts": "2025-11-11T03:21:52Z", "event": "override_import_ok", "engine": "math", "spec": "tmp_override_pkg.tmp_mod:FakeMathAdapter", "impl_type": "FakeMathAdapter"}
+{"ts": "2025-11-11T03:21:52Z", "event": "override_import_ok", "engine": "math", "spec": "tmp_override_pkg.tmp_mod:FakeMathAdapter", "impl_type": "FakeMathAdapter"}
+{"ts": "2025-11-11T03:21:52Z", "event": "connect_engines_summary", "engines": ["math", "planner"], "impl_types": ["FakeMathAdapter", "PlannerAdapter"]}
+{"ts": "2025-11-11T03:46:16Z", "event": "connect_engines_summary", "engines": ["planner", "deliberation", "associative"], "impl_types": ["PlannerAdapter", "DeliberationAdapter", "AssociativeAdapter"]}
+{"ts": "2025-11-11T03:46:16Z", "event": "override_import_failed", "engine": "planner", "spec": "ghost.mod:Nope", "error": "import-module-failed:ghost.mod:ModuleNotFoundError(\"No module named 'ghost'\")"}
+{"ts": "2025-11-11T03:46:16Z", "event": "override_import_failed", "engine": "deliberation", "spec": "bad.path:Missing", "error": "import-module-failed:bad.path:ModuleNotFoundError(\"No module named 'bad'\")"}
+{"ts": "2025-11-11T03:46:16Z", "event": "override_import_ok", "engine": "math", "spec": "tmp_override_pkg.tmp_mod:FakeMathAdapter", "impl_type": "FakeMathAdapter"}
+{"ts": "2025-11-11T03:46:16Z", "event": "override_import_ok", "engine": "math", "spec": "tmp_override_pkg.tmp_mod:FakeMathAdapter", "impl_type": "FakeMathAdapter"}
+{"ts": "2025-11-11T03:46:16Z", "event": "connect_engines_summary", "engines": ["math", "planner"], "impl_types": ["FakeMathAdapter", "PlannerAdapter"]}
+{"ts": "2025-11-11T03:46:16Z", "event": "connect_engines_summary", "engines": ["planner", "emotion", "retriever"], "impl_types": ["PlannerAdapter", "EmotionAdapter", "RetrieverAdapter"]}
+{"ts": "2025-11-11T03:46:16Z", "event": "connect_engines_summary", "engines": ["planner", "deliberation", "associative"], "impl_types": ["PlannerAdapter", "DeliberationAdapter", "AssociativeAdapter"]}
+{"ts": "2025-11-11T03:47:23Z", "event": "connect_engines_summary", "engines": ["planner", "deliberation", "associative"], "impl_types": ["PlannerAdapter", "DeliberationAdapter", "AssociativeAdapter"]}
+{"ts": "2025-11-11T03:47:23Z", "event": "override_import_failed", "engine": "planner", "spec": "ghost.mod:Nope", "error": "import-module-failed:ghost.mod:ModuleNotFoundError(\"No module named 'ghost'\")"}
+{"ts": "2025-11-11T03:47:23Z", "event": "override_import_failed", "engine": "deliberation", "spec": "bad.path:Missing", "error": "import-module-failed:bad.path:ModuleNotFoundError(\"No module named 'bad'\")"}
+{"ts": "2025-11-11T03:47:23Z", "event": "override_import_ok", "engine": "math", "spec": "tmp_override_pkg.tmp_mod:FakeMathAdapter", "impl_type": "FakeMathAdapter"}
+{"ts": "2025-11-11T03:47:23Z", "event": "override_import_ok", "engine": "math", "spec": "tmp_override_pkg.tmp_mod:FakeMathAdapter", "impl_type": "FakeMathAdapter"}
+{"ts": "2025-11-11T03:47:23Z", "event": "connect_engines_summary", "engines": ["math", "planner"], "impl_types": ["FakeMathAdapter", "PlannerAdapter"]}
+{"ts": "2025-11-11T03:47:23Z", "event": "connect_engines_summary", "engines": ["planner", "emotion", "retriever"], "impl_types": ["PlannerAdapter", "EmotionAdapter", "RetrieverAdapter"]}
+{"ts": "2025-11-11T03:47:23Z", "event": "connect_engines_summary", "engines": ["planner", "deliberation", "associative"], "impl_types": ["PlannerAdapter", "DeliberationAdapter", "AssociativeAdapter"]}
+{"ts": "2025-11-11T21:13:57Z", "event": "connect_engines_summary", "engines": ["planner", "deliberation", "associative"], "impl_types": ["PlannerAdapter", "DeliberationAdapter", "AssociativeAdapter"]}
+{"ts": "2025-11-11T21:13:57Z", "event": "override_import_failed", "engine": "planner", "spec": "ghost.mod:Nope", "error": "import-module-failed:ghost.mod:ModuleNotFoundError(\"No module named 'ghost'\")"}
+{"ts": "2025-11-11T21:13:57Z", "event": "override_import_failed", "engine": "deliberation", "spec": "bad.path:Missing", "error": "import-module-failed:bad.path:ModuleNotFoundError(\"No module named 'bad'\")"}
+{"ts": "2025-11-11T21:13:57Z", "event": "override_import_ok", "engine": "math", "spec": "tmp_override_pkg.tmp_mod:FakeMathAdapter", "impl_type": "FakeMathAdapter"}
+{"ts": "2025-11-11T21:13:57Z", "event": "override_import_ok", "engine": "math", "spec": "tmp_override_pkg.tmp_mod:FakeMathAdapter", "impl_type": "FakeMathAdapter"}
+{"ts": "2025-11-11T21:13:57Z", "event": "connect_engines_summary", "engines": ["math", "planner"], "impl_types": ["FakeMathAdapter", "PlannerAdapter"]}
+{"ts": "2025-11-11T21:13:57Z", "event": "connect_engines_summary", "engines": ["planner", "emotion", "retriever"], "impl_types": ["PlannerAdapter", "EmotionAdapter", "RetrieverAdapter"]}
+{"ts": "2025-11-11T21:13:57Z", "event": "connect_engines_summary", "engines": ["planner", "deliberation", "associative"], "impl_types": ["PlannerAdapter", "DeliberationAdapter", "AssociativeAdapter"]}

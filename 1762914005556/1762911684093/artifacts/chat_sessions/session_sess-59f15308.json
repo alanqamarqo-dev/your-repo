@@ -1,0 +1,82 @@
+{
+  "id": "sess-59f15308",
+  "created_at": "2025-11-11T21:11:41.435402+00:00",
+  "history": [
+    {
+      "ts": "2025-11-11T21:11:41.436067+00:00",
+      "user": "أعطني فكرة لميزة اجتماعية مبتكرة",
+      "agent": {
+        "ok": true,
+        "text": "أعطني فكرة لميزة اجتماعية مبتكرة",
+        "reply_text": "أعطني فكرة لميزة اجتماعية مبتكرة",
+        "data": {
+          "text": "أعطني فكرة لميزة اجتماعية مبتكرة",
+          "intent": "brainstorm",
+          "extra": {},
+          "warning": "creative.ideate failed; fallback exhausted."
+        },
+        "meta": {
+          "intent": "brainstorm",
+          "extra": {},
+          "warning": "creative.ideate failed; fallback exhausted."
+        }
+      },
+      "intent": "brainstorm"
+    },
+    {
+      "ts": "2025-11-11T21:11:41.436664+00:00",
+      "user": "حوله لخطة ربع سنوية",
+      "agent": {
+        "ok": true,
+        "text": "",
+        "reply_text": "",
+        "data": [
+          {
+            "horizon_days": 90,
+            "objective": {
+              "text": "حوله لخطة ربع سنوية",
+              "intent": "plan",
+              "extra": {},
+              "warning": "nlp.clarify_objectives failed; fallback exhausted."
+            },
+            "milestones": [
+              "تحديد مؤشرات النجاح",
+              "MVP",
+              "تجارب جدوى"
+            ]
+          },
+          {
+            "horizon_days": 180,
+            "objective": {
+              "text": "حوله لخطة ربع سنوية",
+              "intent": "plan",
+              "extra": {},
+              "warning": "nlp.clarify_objectives failed; fallback exhausted."
+            },
+            "milestones": [
+              "تحسين العملية",
+              "شراكات",
+              "توسعة محسوبة"
+            ]
+          },
+          {
+            "horizon_days": 365,
+            "objective": {
+              "text": "حوله لخطة ربع سنوية",
+              "intent": "plan",
+              "extra": {},
+              "warning": "nlp.clarify_objectives failed; fallback exhausted."
+            },
+            "milestones": [
+              "أتمتة",
+              "حوكمة/امتثال",
+              "توسع دولي"
+            ]
+          }
+        ],
+        "meta": {}
+      },
+      "intent": "plan"
+    }
+  ]
+}

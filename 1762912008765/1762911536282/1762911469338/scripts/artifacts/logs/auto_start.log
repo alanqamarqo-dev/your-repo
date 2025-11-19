@@ -1,0 +1,22 @@
+﻿DryRun mode: will not start processes. Showing environment to set:
+  AGL_EXTERNAL_INFO_IMPL = openai_engine
+  AGL_OPENAI_KB_CACHE_ENABLE = 0
+  AGL_EXTERNAL_INFO_ENABLED = 1
+  PYTHONUTF8 = 1
+  AGL_USE_ORCHESTRATOR = 1
+  PYTHONIOENCODING = utf-8
+Starting AGL (Mode=start) [DryRun=True] using Python: py.exe
+DryRun: would start ops runner: pwsh -ExecutionPolicy Bypass -File D:\AGL\scripts\ops_full_run.ps1 -Mode start
+WithUI not set; skipping UI start.
+auto_start.ps1 completed (Mode=start, WithUI=False, DryRun=True)
+Set AGL_EXTERNAL_INFO_IMPL
+Set AGL_OPENAI_KB_CACHE_ENABLE
+Set AGL_EXTERNAL_INFO_ENABLED
+Set PYTHONUTF8
+Set AGL_USE_ORCHESTRATOR
+Set PYTHONIOENCODING
+Starting AGL (Mode=start) [DryRun=False] using Python: py.exe
+Launching ops runner...
+Ops runner started (check artifacts/logs/ops_main.log and logs/* for details)
+WithUI not set; skipping UI start.
+auto_start.ps1 completed (Mode=start, WithUI=False, DryRun=False)

@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>AGL Test UI</title>
+    <style>body{font-family:Segoe UI,Arial;margin:20px}label{display:block;margin-top:8px}</style>
+  </head>
+  <body>
+    <h2>AGL Quick Test UI</h2>
+    <div>
+      <label>Base URL <input id="base" value="http://127.0.0.1:8000" style="width:300px"/></label>
+
+      <h3>/process</h3>
+      <textarea id="process_text" rows="3" cols="60">Explain Newton's laws briefly.</textarea><br/>
+      <button onclick="callProcess()">Call /process</button>
+      <pre id="process_out"></pre>
+
+      <h3>/rag/answer</h3>
+      <textarea id="rag_q" rows="2" cols="60">What are common uses of graphene?</textarea><br/>
+      <button onclick="callRag()">Call /rag/answer</button>
+      <pre id="rag_out"></pre>
+
+      <h3>/improve/run-once</h3>
+      <button onclick="callImprove()">Call /improve/run-once</button>
+      <pre id="improve_out"></pre>
+
+      <h3>/health & /admin/flags</h3>
+      <button onclick="callHealth()">GET /health</button>
+      <pre id="health_out"></pre>
+      <div>
+        <label>Flags JSON (e.g. {"enable_self_improvement": true})</label>
+        <textarea id="flags" rows="3" cols="60">{"enable_self_improvement": false}</textarea><br/>
+        <button onclick="setFlags()">POST /admin/flags</button>
+        <pre id="flags_out"></pre>
+      </div>
+    </div>
+
+    <script>
+      async function callProcess(){
+        const base = document.getElementById('base').value;
+        const text = document.getElementById('process_text').value;
+        const res = await fetch(base + '/process', {method:'POST',headers:{'content-type':'application/json'}, body: JSON.stringify({text})});
+        document.getElementById('process_out').textContent = await res.text();
+      }
+      async function callRag(){
+        const base = document.getElementById('base').value;
+        const q = document.getElementById('rag_q').value;
+        const res = await fetch(base + '/rag/answer', {method:'POST',headers:{'content-type':'application/json'}, body: JSON.stringify({query:q})});
+        document.getElementById('rag_out').textContent = await res.text();
+      }
+      async function callImprove(){
+        const base = document.getElementById('base').value;
+        const res = await fetch(base + '/improve/run-once', {method:'POST',headers:{'content-type':'application/json'}, body: JSON.stringify({})});
+        document.getElementById('improve_out').textContent = await res.text();
+      }
+      async function callHealth(){
+        const base = document.getElementById('base').value;
+        const res = await fetch(base + '/health');
+        document.getElementById('health_out').textContent = await res.text();
+      }
+      async function setFlags(){
+        const base = document.getElementById('base').value;
+        let v = document.getElementById('flags').value;
+        try{ v = JSON.parse(v);}catch(e){alert('flags must be valid json');return}
+        const res = await fetch(base + '/admin/flags', {method:'POST',headers:{'content-type':'application/json'}, body: JSON.stringify(v)});
+        document.getElementById('flags_out').textContent = await res.text();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+
+      - name: Enforce AND bridge queries (codemod)
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python tools/codemods/enforce_trace_and_type.py
+
+      - name: Lint: forbid OR with (type+trace_id)
+        run: |
+          python -m pytest -q tests/lint/test_no_or_queries_for_trace_and_type.py -q
+
+      - name: Run memory/bridge tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          AGL_TEST_SCAFFOLD_FORCE: '1'
+          AGL_LLM_PROVIDER: 'offline'
+        run: |
+          python -m pytest -q tests/memory/test_bridge_query_and.py -q; if [ $? -ne 0 ]; then exit 1; fi
+          python -m pytest -q tests/memory/test_trace_linkage.py -q; if [ $? -ne 0 ]; then exit 1; fi
+
+      - name: Integration (fast)
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          AGL_TEST_SCAFFOLD_FORCE: '1'
+          AGL_LLM_PROVIDER: 'offline'
+        run: |
+          python -m pytest -q tests/integration/context_goal_tests.py -q; if [ $? -ne 0 ]; then exit 1; fi
+          python -m pytest -q tests/integration/stability_test_matrix.py -q; if [ $? -ne 0 ]; then exit 1; fi
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run JSON normalization check
+        run: |
+          python tools/normalize_json.py --check
+      - name: Run unit tests
+        run: |
+          python -m unittest discover -s tests -p "test_*.py" -v
+      - name: Generate HTML reports
+        run: |
+          python scripts/generate_all_reports.py
+          # simple aggregator: combine auto_reports into one full_report.html
+          python - <<'PY'
+import glob,os
+outs = sorted(glob.glob('reports/auto_reports/*.html'))
+os.makedirs('reports', exist_ok=True)
+with open('reports/full_report.html','w',encoding='utf-8') as fout:
+    fout.write('<html><body>')
+    for p in outs:
+        fout.write(f'<h2>{os.path.basename(p)}</h2>')
+        with open(p,'r',encoding='utf-8') as fin:
+            fout.write(fin.read())
+    fout.write('</body></html>')
+PY
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            reports/full_report.html
+            reports/auto_reports/**
+      - name: Optionally run coverage and upload htmlcov
+        if: ${{ always() }}
+        run: |
+          pip install coverage || true
+          coverage run -m unittest discover -s tests -p "test_*.py" || true
+          coverage html || true
+      - name: Upload coverage
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: htmlcov
+          path: hemlock
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install coverage
+
+      - name: Run unit tests with coverage
+        run: |
+          coverage run -m unittest discover -v tests
+          coverage xml
+          coverage report -m
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-xml
+          path: coverage.xml
+
+      - name: Save last_run baseline (if exists)
+        if: ${{ hashFiles('reports/last_run.json') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: last_run
+          path: reports/last_run.json

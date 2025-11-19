@@ -1,0 +1,17 @@
+{
+  "id": "web_e12929a7",
+  "created_at": "2025-11-01T00:46:07.585827+00:00",
+  "history": [
+    {
+      "ts": "2025-11-01T00:46:07.649052+00:00",
+      "user": "Explain Newton's laws briefly.",
+      "agent": {
+        "ok": true,
+        "intent": "ask_info",
+        "engine": "General_Knowledge",
+        "text": "تفصيل: Explain Newton's laws briefly. | (explanatory) تفصيل: Explain Newton's laws briefly. | Explain Newton's laws briefly.",
+        "reply_text": "تفصيل: Explain Newton's laws briefly. | (explanatory) تفصيل: Explain Newton's laws briefly. | Explain Newton's laws briefly."
+      }
+    }
+  ]
+}

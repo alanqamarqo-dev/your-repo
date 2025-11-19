@@ -1,0 +1,17 @@
+{
+  "id": "intents_567134",
+  "created_at": "2025-11-05T00:20:10.794512+00:00",
+  "history": [
+    {
+      "ts": "2025-11-05T00:20:10.797920+00:00",
+      "user": "تعلّم من لقطة قليلة",
+      "agent": {
+        "ok": true,
+        "intent": "meta_learn",
+        "engine": "Meta_Learning",
+        "text": "{'ok': True, 'transferred': False, 'confidence': 0.0, 'note': 'cross_domain_transfer'}",
+        "reply_text": "{'ok': True, 'transferred': False, 'confidence': 0.0, 'note': 'cross_domain_transfer'}"
+      }
+    }
+  ]
+}

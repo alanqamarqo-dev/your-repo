@@ -1,0 +1,127 @@
+{
+  "seed": "",
+  "nlp_res": {
+    "text": "(neutral) dry-run",
+    "intent": {
+      "label": "chitchat",
+      "slots": {},
+      "confidence": 0.5
+    },
+    "emotion": {
+      "sentiment": "neutral",
+      "tone": "neutral",
+      "confidence": 0.5
+    },
+    "context_used": "dry-run",
+    "style": {
+      "lang": "ar",
+      "tone": "neutral",
+      "formal": false,
+      "brevity": "short"
+    },
+    "confidence": {
+      "emotion": 0.5,
+      "intent": 0.5
+    }
+  },
+  "nlp_ctx": {
+    "dominant_lang": "ar",
+    "entities": [
+      "dry",
+      "run"
+    ],
+    "chars": 7
+  },
+  "entities": [
+    "dry",
+    "run"
+  ],
+  "initial_facts": [
+    {
+      "text": "dry-run",
+      "source": "query",
+      "confidence": 0.9
+    },
+    {
+      "text": "dry-run",
+      "source": "nlp_summary",
+      "confidence": 0.8
+    },
+    {
+      "text": "dry",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    },
+    {
+      "text": "run",
+      "source": "nlp_entity",
+      "confidence": 0.7
+    }
+  ],
+  "llm_prompt": null,
+  "llm_response": null,
+  "llm_backend": null,
+  "run_cycle_result_summary": null,
+  "accepted_hypotheses": [
+    {
+      "id": "bd4ba006554b4324a02d02450211559f",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry-run' مع 'dry-run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "7272a5ffc21145a887b1200184a077b2",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry-run' مع 'dry' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "bb170533a6a14e038daea6777d121ed2",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry-run' مع 'run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "6cf17e6ae5004a7ca4fa3b5e7432088b",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry-run' مع 'dry' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "42888fc881804752a47d572c52ee8fe1",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry-run' مع 'run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    },
+    {
+      "id": "7dca69d8efd84d14b38c8a814f617587",
+      "domain": null,
+      "hypothesis": "قد ترتبط 'dry' مع 'run' بمعنى أن وجود أحدهما قد يؤثر على الآخر.",
+      "support": [
+        null,
+        null
+      ],
+      "confidence": 0.55
+    }
+  ]
+}

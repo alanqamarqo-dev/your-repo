@@ -1,0 +1,36 @@
+name: Engine probe snapshot
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch: {}
+
+jobs:
+  probe:
+    name: Run engine probe and upload snapshot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install deps if present
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run engine probe
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          AGL_LLM_PROVIDER: offline
+        run: |
+          python scripts/engine_probe_matrix.py
+
+      - name: Upload probe snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: engine-probe-snapshot
+          path: artifacts/engine_probe.json

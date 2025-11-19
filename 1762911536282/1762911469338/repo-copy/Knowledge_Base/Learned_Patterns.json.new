@@ -1,0 +1,53 @@
+{
+  "version": "G.1",
+  "patterns": [
+    {
+      "base": "ohm",
+      "winner": "ohm",
+      "fit": {"a": 10.0, "b": 0.0, "rmse": 0.0, "n": 6},
+      "schema": "V(I) ≈ R·I + V0",
+      "derived": {"R≈": "R≈a"},
+      "units": {"y": "V", "x": "A"}
+    },
+    {
+      "base": "poly2_iv",
+      "winner": "poly2",
+      "fit": {"a": 0.1, "b": 10.0, "rmse": 0.0, "n": 11},
+      "schema": "V(I) ≈ a·I^2 + b",
+      "derived": {"dV/dI": "dVdI(I) = 2·a·I"},
+      "units": {"V": "V", "I": "A"}
+    },
+    {
+      "base": "poly2",
+      "winner": "poly2",
+      "fit": {"a": 0.1, "b": 10.0, "rmse": 0.0, "n": 11},
+      "schema": "y(x) ≈ a·x^2 + b",
+      "derived": {"d/dx": "= 2·a·x"},
+      "units": {"y": "V", "x": "A"}
+    },
+    {
+      "base": "rc_step",
+      "winner": "exp1",
+      "fit": {"a": -0.0268618457, "b": 2.3954743973, "rmse": 0.0180317461, "n": 11},
+      "schema": "Vc(t) ≈ b + exp(a·t)",
+      "derived": {"tau": "tau = -1/a"},
+      "units": {"y": "V", "x": "s"}
++    },
++    {
++      "base": "projectile",
++      "winner": "poly2",
++      "fit": {"a": 4.9262504564, "b": -0.0238481198, "rmse": 0.0037956182, "n": 11},
++      "schema": "s(t) ≈ a·t^2 + b·t (+ c≈0)",
++      "derived": {"g≈": "g ≈ 2·a"},
++      "units": {"s": "m", "t": "s", "g": "m/s^2"}
++    },
++    {
++      "base": "hooke",
++      "winner": "hooke",
++      "fit": {"a": 98.0, "b": 0.0, "rmse": 0.0, "n": 6},
++      "schema": "F(x) ≈ k·x + b",
++      "derived": {"E_p(x)": "E_p = 0.5·k·x^2 (if |b|≈0)"},
++      "units": {"y": "N", "x": "m"}
++    }
++  ]
++}

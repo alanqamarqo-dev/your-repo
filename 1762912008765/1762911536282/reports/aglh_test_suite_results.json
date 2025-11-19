@@ -1,0 +1,916 @@
+{
+  "suite": "aglhybrid_v1",
+  "timestamp": 1761755657.344446,
+  "tests": [
+    {
+      "id": 1,
+      "name": "الفهم والسياق",
+      "prompt": "قصة:\nكان أحمد يلعب في الحديقة. رأى قطة جميلة تلاحق فراشة.\nثم سمع صوت بكاء طفل صغير. ترك القطة وركض لمساعدة الطفل.\n\nالأسئلة:\n1. لماذا ترك أحمد القطة؟\n2. ما هي المشاعر المحتملة لأحمد في كل موقف؟\n3. كيف كان يمكن أن يتصرف بشكل مختلف؟",
+      "duration_seconds": 0.1096649169921875,
+      "confidence": 0.667,
+      "scores": {
+        "understanding": 7,
+        "reasoning": 7,
+        "creativity": 7,
+        "integration": 7,
+        "learning": 7,
+        "overall_percent": 66.7,
+        "category": "جيد"
+      },
+      "raw_output": {
+        "task": "قصة: كان أحمد يلعب في الحديقة. رأى قطة جميلة تلاحق فراشة. ثم سمع صوت بكاء طفل صغير. ترك القطة وركض لمساعدة الطفل. الأسئلة: 1. لماذا ترك أحمد القطة؟ 2. ما هي المشاعر المحتملة لأحمد في كل موقف؟ 3. كيف كان يمكن أن يتصرف بشكل مختلف؟",
+        "timestamp": 1761755657.4460578,
+        "phase": "phase_2",
+        "seed": 1185875512,
+        "inputs_hash": "85f8818dd62238ab32a8320e50951edaf66030abfbfa1675fe2d6d8b58d42446",
+        "solution": {
+          "audience": "evaluation",
+          "purpose": "solution",
+          "result": {
+            "mathematical_brain": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.5,
+              "confidence": 0.5,
+              "result": "نتيجة عامة",
+              "error": null
+            },
+            "quantum_processor": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.6,
+              "confidence": 0.6,
+              "result": {
+                "unitary_ok": true,
+                "stability": 0.98,
+                "notes": "stub-baseline"
+              },
+              "error": null
+            },
+            "code_generator": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.88,
+              "confidence": 0.86,
+              "result": {
+                "architecture": "هيكل النظام",
+                "components": [
+                  "مكون 1",
+                  "مكون 2"
+                ],
+                "code_artifact": "D:\\AGL\\artifacts\\codegen_1761755657_528cf114.py",
+                "artifact_validated": true,
+                "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
+                "artifact_meta": {
+                  "exists": true,
+                  "size_bytes": 215,
+                  "sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3"
+                }
+              },
+              "error": null
+            },
+            "protocol_designer": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.6,
+              "confidence": 0.6,
+              "result": {
+                "spec": {
+                  "name": "secure-iot-protocol",
+                  "version": "0.1",
+                  "handshake": [
+                    "client_hello",
+                    "server_hello",
+                    "key_exchange",
+                    "finished"
+                  ],
+                  "crypto": {
+                    "kex": "X25519",
+                    "cipher": "AES-256-GCM",
+                    "hash": "SHA-256"
+                  },
+                  "replay_protection": true,
+                  "constraints": {
+                    "mtu_min": 512,
+                    "latency_ms_max": 200
+                  }
+                },
+                "verified": true
+              },
+              "error": null
+            }
+          },
+          "details": [
+            "Loaded persisted fusion_weights from config and applied to fusion.",
+            "Increased fusion weight for validated code artifact: code_generator=1.2",
+            "Applied fusion weights (not raw-score boost) to mathematical_brain=1.05, quantum_processor=0.6, code_generator=1.2, protocol_designer=0.6, power=1.12",
+            {
+              "engine": "mathematical_brain",
+              "score": 0.5,
+              "weight": 1.05
+            },
+            {
+              "engine": "quantum_processor",
+              "score": 0.6,
+              "weight": 0.6
+            },
+            {
+              "engine": "code_generator",
+              "score": 0.88,
+              "weight": 1.2
+            },
+            {
+              "engine": "protocol_designer",
+              "score": 0.6,
+              "weight": 0.6
+            }
+          ],
+          "misc": {
+            "verification": null,
+            "artifact_path": "D:\\AGL\\artifacts\\codegen_1761755657_528cf114.py",
+            "artifact_validated": true,
+            "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
+            "architecture": "هيكل النظام",
+            "components": [
+              "مكون 1",
+              "مكون 2"
+            ]
+          },
+          "confidence": 0.667,
+          "complexity_level": "adjusted"
+        },
+        "safety": {
+          "approval": true,
+          "risk_level": "low",
+          "checks_passed": true
+        },
+        "signals": {
+          "mathematical_brain": {
+            "ok": true,
+            "score": 0.5,
+            "confidence": 0.5,
+            "error": null
+          },
+          "quantum_processor": {
+            "ok": true,
+            "score": 0.6,
+            "confidence": 0.6,
+            "error": null
+          },
+          "code_generator": {
+            "ok": true,
+            "score": 0.88,
+            "confidence": 0.86,
+            "error": null
+          },
+          "protocol_designer": {
+            "ok": true,
+            "score": 0.6,
+            "confidence": 0.6,
+            "error": null
+          }
+        },
+        "confidence_score": 0.667,
+        "improvement_opportunities": [],
+        "confidence_gate_baseline": {
+          "passed": false,
+          "reason": "different_input"
+        },
+        "confidence_gate": {
+          "passed": false,
+          "reason": "different_input",
+          "similarity": 0.12549019607843137,
+          "normalized_task": "قصة: كان أحمد يلعب في الحديقة. رأى قطة جميلة تلاحق فراشة. ثم سمع صوت بكاء طفل صغير. ترك القطة وركض لمساعدة الطفل. الأسئلة: 1. لماذا ترك أحمد القطة؟ 2. ما هي المشاعر المحتملة لأحمد في كل موقف؟ 3. كيف كان يمكن أن يتصرف بشكل مختلف؟"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "حل المشكلات المعقدة",
+      "prompt": "المهمة: تصميم نظام ري ذكي لحديقة\nالمتطلبات:\n- توفير 30% من المياه\n- مراعاة أنواع النباتات المختلفة\n- التكيف مع أحوال الطقس\n- التكلفة لا تتجاوز 200 دولار\n\nالمطلوب: خطة تنفيذ مفصلة مع مبررات لكل اختيار",
+      "duration_seconds": 0.09115743637084961,
+      "confidence": 0.6694,
+      "scores": {
+        "understanding": 7,
+        "reasoning": 7,
+        "creativity": 7,
+        "integration": 7,
+        "learning": 7,
+        "overall_percent": 66.9,
+        "category": "جيد"
+      },
+      "raw_output": {
+        "task": "المهمة: تصميم نظام ري ذكي لحديقة المتطلبات: - توفير 30% من المياه - مراعاة أنواع النباتات المختلفة - التكيف مع أحوال الطقس - التكلفة لا تتجاوز 200 دولار المطلوب: خطة تنفيذ مفصلة مع مبررات لكل اختيار",
+        "timestamp": 1761755657.542707,
+        "phase": "phase_2",
+        "seed": 396766101,
+        "inputs_hash": "5a01a05ca48eba89c3dc514dce8df9e6ac9b8f3a88c4acf5eb546598f887ffbe",
+        "solution": {
+          "audience": "evaluation",
+          "purpose": "solution",
+          "result": {
+            "mathematical_brain": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.5,
+              "confidence": 0.5,
+              "result": "نتيجة عامة",
+              "error": null
+            },
+            "quantum_processor": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.6,
+              "confidence": 0.6,
+              "result": {
+                "unitary_ok": true,
+                "stability": 0.98,
+                "notes": "stub-baseline"
+              },
+              "error": null
+            },
+            "code_generator": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.88,
+              "confidence": 0.86,
+              "result": {
+                "architecture": "هيكل النظام",
+                "components": [
+                  "مكون 1",
+                  "مكون 2"
+                ],
+                "code_artifact": "D:\\AGL\\artifacts\\codegen_1761755657_6006969e.py",
+                "artifact_validated": true,
+                "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
+                "artifact_meta": {
+                  "exists": true,
+                  "size_bytes": 215,
+                  "sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3"
+                }
+              },
+              "error": null
+            },
+            "protocol_designer": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.6,
+              "confidence": 0.6,
+              "result": {
+                "spec": {
+                  "name": "secure-iot-protocol",
+                  "version": "0.1",
+                  "handshake": [
+                    "client_hello",
+                    "server_hello",
+                    "key_exchange",
+                    "finished"
+                  ],
+                  "crypto": {
+                    "kex": "X25519",
+                    "cipher": "AES-256-GCM",
+                    "hash": "SHA-256"
+                  },
+                  "replay_protection": true,
+                  "constraints": {
+                    "mtu_min": 512,
+                    "latency_ms_max": 200
+                  }
+                },
+                "verified": true
+              },
+              "error": null
+            }
+          },
+          "details": [
+            "Loaded persisted fusion_weights from config and applied to fusion.",
+            "Increased fusion weight for validated code artifact: code_generator=1.2",
+            "Applied fusion weights (not raw-score boost) to quantum_processor=0.6, code_generator=1.2, protocol_designer=0.6",
+            {
+              "engine": "mathematical_brain",
+              "score": 0.5,
+              "weight": 1.0
+            },
+            {
+              "engine": "quantum_processor",
+              "score": 0.6,
+              "weight": 0.6
+            },
+            {
+              "engine": "code_generator",
+              "score": 0.88,
+              "weight": 1.2
+            },
+            {
+              "engine": "protocol_designer",
+              "score": 0.6,
+              "weight": 0.6
+            }
+          ],
+          "misc": {
+            "verification": null,
+            "artifact_path": "D:\\AGL\\artifacts\\codegen_1761755657_6006969e.py",
+            "artifact_validated": true,
+            "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
+            "architecture": "هيكل النظام",
+            "components": [
+              "مكون 1",
+              "مكون 2"
+            ]
+          },
+          "confidence": 0.6694,
+          "complexity_level": "adjusted"
+        },
+        "safety": {
+          "approval": true,
+          "risk_level": "low",
+          "checks_passed": true
+        },
+        "signals": {
+          "mathematical_brain": {
+            "ok": true,
+            "score": 0.5,
+            "confidence": 0.5,
+            "error": null
+          },
+          "quantum_processor": {
+            "ok": true,
+            "score": 0.6,
+            "confidence": 0.6,
+            "error": null
+          },
+          "code_generator": {
+            "ok": true,
+            "score": 0.88,
+            "confidence": 0.86,
+            "error": null
+          },
+          "protocol_designer": {
+            "ok": true,
+            "score": 0.6,
+            "confidence": 0.6,
+            "error": null
+          }
+        },
+        "confidence_score": 0.6694,
+        "improvement_opportunities": [],
+        "confidence_gate_baseline": {
+          "passed": false,
+          "reason": "different_input"
+        },
+        "confidence_gate": {
+          "passed": false,
+          "reason": "different_input",
+          "similarity": 0.03294117647058824,
+          "normalized_task": "المهمة: تصميم نظام ري ذكي لحديقة المتطلبات: - توفير 30 من المياه - مراعاة أنواع النباتات المختلفة - التكيف مع أحوال الطقس - التكلفة لا تتجاوز 200 دولار المطلوب: خطة تنفيذ مفصلة مع مبررات لكل اختيار"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "name": "التعلم والتبادل بين المجالات",
+      "prompt": "تعلم وتطبيق:\nالمفهوم الجديد = \"مبدأ حفظ الطاقة: الطاقة لا تفنى ولا تستحدث ولكن تتحول من شكل لآخر\"\n\nالمطلوب:\n1. شرح المبدأ بكلماتك الخاصة\n2. تطبيق المبدأ في مجال الاقتصاد أو العلاقات الاجتماعية\n3. استنتاج قاعدة جديدة بناءً على هذا المبدأ",
+      "duration_seconds": 0.08908367156982422,
+      "confidence": 0.6694,
+      "scores": {
+        "understanding": 7,
+        "reasoning": 7,
+        "creativity": 7,
+        "integration": 7,
+        "learning": 7,
+        "overall_percent": 66.9,
+        "category": "جيد"
+      },
+      "raw_output": {
+        "task": "تعلم وتطبيق: المفهوم الجديد = \"مبدأ حفظ الطاقة: الطاقة لا تفنى ولا تستحدث ولكن تتحول من شكل لآخر\" المطلوب: 1. شرح المبدأ بكلماتك الخاصة 2. تطبيق المبدأ في مجال الاقتصاد أو العلاقات الاجتماعية 3. استنتاج قاعدة جديدة بناءً على هذا المبدأ",
+        "timestamp": 1761755657.6318195,
+        "phase": "phase_2",
+        "seed": 1166292086,
+        "inputs_hash": "04e323d9a5821d90623caf1b1e0f09eea62be619cedcffc16f8f30235a212344",
+        "solution": {
+          "audience": "evaluation",
+          "purpose": "solution",
+          "result": {
+            "mathematical_brain": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.5,
+              "confidence": 0.5,
+              "result": "نتيجة عامة",
+              "error": null
+            },
+            "quantum_processor": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.6,
+              "confidence": 0.6,
+              "result": {
+                "unitary_ok": true,
+                "stability": 0.98,
+                "notes": "stub-baseline"
+              },
+              "error": null
+            },
+            "code_generator": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.88,
+              "confidence": 0.86,
+              "result": {
+                "architecture": "هيكل النظام",
+                "components": [
+                  "مكون 1",
+                  "مكون 2"
+                ],
+                "code_artifact": "D:\\AGL\\artifacts\\codegen_1761755657_637dfe1d.py",
+                "artifact_validated": true,
+                "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
+                "artifact_meta": {
+                  "exists": true,
+                  "size_bytes": 215,
+                  "sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3"
+                }
+              },
+              "error": null
+            },
+            "protocol_designer": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.6,
+              "confidence": 0.6,
+              "result": {
+                "spec": {
+                  "name": "secure-iot-protocol",
+                  "version": "0.1",
+                  "handshake": [
+                    "client_hello",
+                    "server_hello",
+                    "key_exchange",
+                    "finished"
+                  ],
+                  "crypto": {
+                    "kex": "X25519",
+                    "cipher": "AES-256-GCM",
+                    "hash": "SHA-256"
+                  },
+                  "replay_protection": true,
+                  "constraints": {
+                    "mtu_min": 512,
+                    "latency_ms_max": 200
+                  }
+                },
+                "verified": true
+              },
+              "error": null
+            }
+          },
+          "details": [
+            "Loaded persisted fusion_weights from config and applied to fusion.",
+            "Increased fusion weight for validated code artifact: code_generator=1.2",
+            "Applied fusion weights (not raw-score boost) to quantum_processor=0.6, code_generator=1.2, protocol_designer=0.6",
+            {
+              "engine": "mathematical_brain",
+              "score": 0.5,
+              "weight": 1.0
+            },
+            {
+              "engine": "quantum_processor",
+              "score": 0.6,
+              "weight": 0.6
+            },
+            {
+              "engine": "code_generator",
+              "score": 0.88,
+              "weight": 1.2
+            },
+            {
+              "engine": "protocol_designer",
+              "score": 0.6,
+              "weight": 0.6
+            }
+          ],
+          "misc": {
+            "verification": null,
+            "artifact_path": "D:\\AGL\\artifacts\\codegen_1761755657_637dfe1d.py",
+            "artifact_validated": true,
+            "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
+            "architecture": "هيكل النظام",
+            "components": [
+              "مكون 1",
+              "مكون 2"
+            ]
+          },
+          "confidence": 0.6694,
+          "complexity_level": "adjusted"
+        },
+        "safety": {
+          "approval": true,
+          "risk_level": "low",
+          "checks_passed": true
+        },
+        "signals": {
+          "mathematical_brain": {
+            "ok": true,
+            "score": 0.5,
+            "confidence": 0.5,
+            "error": null
+          },
+          "quantum_processor": {
+            "ok": true,
+            "score": 0.6,
+            "confidence": 0.6,
+            "error": null
+          },
+          "code_generator": {
+            "ok": true,
+            "score": 0.88,
+            "confidence": 0.86,
+            "error": null
+          },
+          "protocol_designer": {
+            "ok": true,
+            "score": 0.6,
+            "confidence": 0.6,
+            "error": null
+          }
+        },
+        "confidence_score": 0.6694,
+        "improvement_opportunities": [],
+        "confidence_gate_baseline": {
+          "passed": false,
+          "reason": "different_input"
+        },
+        "confidence_gate": {
+          "passed": false,
+          "reason": "different_input",
+          "similarity": 0.2930232558139535,
+          "normalized_task": "تعلم وتطبيق: المفهوم الجديد = مبدأ حفظ الطاقة: الطاقة لا تفنى ولا تستحدث ولكن تتحول من شكل لآخر المطلوب: 1. شرح المبدأ بكلماتك الخاصة 2. تطبيق المبدأ في مجال الاقتصاد أو العلاقات الاجتماعية 3. استنتاج قاعدة جديدة بناءً على هذا المبدأ"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "الإبداع والابتكار",
+      "prompt": "الإبداع والابتكار:\nالمشكلة = \"كيف نساعد كبار السن على تذكر تناول الأدوية في أوقاتها؟\"\n\nالمطلوب:\n1. 3 أفكار إبداعية لحل المشكلة\n2. اختيار أفضل فكرة وتطويرها\n3. تحديد التحديات وكيفية التغلب عليها",
+      "duration_seconds": 0.08803081512451172,
+      "confidence": 0.6694,
+      "scores": {
+        "understanding": 7,
+        "reasoning": 7,
+        "creativity": 7,
+        "integration": 7,
+        "learning": 7,
+        "overall_percent": 66.9,
+        "category": "جيد"
+      },
+      "raw_output": {
+        "task": "الإبداع والابتكار: المشكلة = \"كيف نساعد كبار السن على تذكر تناول الأدوية في أوقاتها؟\" المطلوب: 1. 3 أفكار إبداعية لحل المشكلة 2. اختيار أفضل فكرة وتطويرها 3. تحديد التحديات وكيفية التغلب عليها",
+        "timestamp": 1761755657.7198162,
+        "phase": "phase_2",
+        "seed": 175498619,
+        "inputs_hash": "20b6f87f871d7c83221024c20311ef03f0a0d769af801f9b8f618104bc6f7989",
+        "solution": {
+          "audience": "evaluation",
+          "purpose": "solution",
+          "result": {
+            "mathematical_brain": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.5,
+              "confidence": 0.5,
+              "result": "نتيجة عامة",
+              "error": null
+            },
+            "quantum_processor": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.6,
+              "confidence": 0.6,
+              "result": {
+                "unitary_ok": true,
+                "stability": 0.98,
+                "notes": "stub-baseline"
+              },
+              "error": null
+            },
+            "code_generator": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.88,
+              "confidence": 0.86,
+              "result": {
+                "architecture": "هيكل النظام",
+                "components": [
+                  "مكون 1",
+                  "مكون 2"
+                ],
+                "code_artifact": "D:\\AGL\\artifacts\\codegen_1761755657_f0a299ff.py",
+                "artifact_validated": true,
+                "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
+                "artifact_meta": {
+                  "exists": true,
+                  "size_bytes": 215,
+                  "sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3"
+                }
+              },
+              "error": null
+            },
+            "protocol_designer": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.6,
+              "confidence": 0.6,
+              "result": {
+                "spec": {
+                  "name": "secure-iot-protocol",
+                  "version": "0.1",
+                  "handshake": [
+                    "client_hello",
+                    "server_hello",
+                    "key_exchange",
+                    "finished"
+                  ],
+                  "crypto": {
+                    "kex": "X25519",
+                    "cipher": "AES-256-GCM",
+                    "hash": "SHA-256"
+                  },
+                  "replay_protection": true,
+                  "constraints": {
+                    "mtu_min": 512,
+                    "latency_ms_max": 200
+                  }
+                },
+                "verified": true
+              },
+              "error": null
+            }
+          },
+          "details": [
+            "Loaded persisted fusion_weights from config and applied to fusion.",
+            "Increased fusion weight for validated code artifact: code_generator=1.2",
+            "Applied fusion weights (not raw-score boost) to quantum_processor=0.6, code_generator=1.2, protocol_designer=0.6",
+            {
+              "engine": "mathematical_brain",
+              "score": 0.5,
+              "weight": 1.0
+            },
+            {
+              "engine": "quantum_processor",
+              "score": 0.6,
+              "weight": 0.6
+            },
+            {
+              "engine": "code_generator",
+              "score": 0.88,
+              "weight": 1.2
+            },
+            {
+              "engine": "protocol_designer",
+              "score": 0.6,
+              "weight": 0.6
+            }
+          ],
+          "misc": {
+            "verification": null,
+            "artifact_path": "D:\\AGL\\artifacts\\codegen_1761755657_f0a299ff.py",
+            "artifact_validated": true,
+            "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
+            "architecture": "هيكل النظام",
+            "components": [
+              "مكون 1",
+              "مكون 2"
+            ]
+          },
+          "confidence": 0.6694,
+          "complexity_level": "adjusted"
+        },
+        "safety": {
+          "approval": true,
+          "risk_level": "low",
+          "checks_passed": true
+        },
+        "signals": {
+          "mathematical_brain": {
+            "ok": true,
+            "score": 0.5,
+            "confidence": 0.5,
+            "error": null
+          },
+          "quantum_processor": {
+            "ok": true,
+            "score": 0.6,
+            "confidence": 0.6,
+            "error": null
+          },
+          "code_generator": {
+            "ok": true,
+            "score": 0.88,
+            "confidence": 0.86,
+            "error": null
+          },
+          "protocol_designer": {
+            "ok": true,
+            "score": 0.6,
+            "confidence": 0.6,
+            "error": null
+          }
+        },
+        "confidence_score": 0.6694,
+        "improvement_opportunities": [],
+        "confidence_gate_baseline": {
+          "passed": false,
+          "reason": "different_input"
+        },
+        "confidence_gate": {
+          "passed": false,
+          "reason": "different_input",
+          "similarity": 0.1182033096926714,
+          "normalized_task": "الإبداع والابتكار: المشكلة = كيف نساعد كبار السن على تذكر تناول الأدوية في أوقاتها؟ المطلوب: 1. 3 أفكار إبداعية لحل المشكلة 2. اختيار أفضل فكرة وتطويرها 3. تحديد التحديات وكيفية التغلب عليها"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "name": "التفكير الاستراتيجي",
+      "prompt": "التفكير الاستراتيجي:\nالهدف = \"زيادة الوعي البيئي في الحي خلال 6 أشهر\"\nالميزانية = \"500 دولار\"\nالمشاركون = \"متطوعون من الشباب\"\n\nالمطلوب: خطة استراتيجية شاملة تشمل: مراحل التنفيذ، مؤشرات النجاح، إدارة المخاطر، الاستدامة",
+      "duration_seconds": 0.0858614444732666,
+      "confidence": 0.6694,
+      "scores": {
+        "understanding": 7,
+        "reasoning": 7,
+        "creativity": 7,
+        "integration": 7,
+        "learning": 7,
+        "overall_percent": 66.9,
+        "category": "جيد"
+      },
+      "raw_output": {
+        "task": "التفكير الاستراتيجي: الهدف = \"زيادة الوعي البيئي في الحي خلال 6 أشهر\" الميزانية = \"500 دولار\" المشاركون = \"متطوعون من الشباب\" المطلوب: خطة استراتيجية شاملة تشمل: مراحل التنفيذ، مؤشرات النجاح، إدارة المخاطر، الاستدامة",
+        "timestamp": 1761755657.8061347,
+        "phase": "phase_2",
+        "seed": 401532929,
+        "inputs_hash": "3ee02debacf0387f8ad17d4080b6e6aa857b05c773e1754fa758190271357639",
+        "solution": {
+          "audience": "evaluation",
+          "purpose": "solution",
+          "result": {
+            "mathematical_brain": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.5,
+              "confidence": 0.5,
+              "result": "نتيجة عامة",
+              "error": null
+            },
+            "quantum_processor": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.6,
+              "confidence": 0.6,
+              "result": {
+                "unitary_ok": true,
+                "stability": 0.98,
+                "notes": "stub-baseline"
+              },
+              "error": null
+            },
+            "code_generator": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.88,
+              "confidence": 0.86,
+              "result": {
+                "architecture": "هيكل النظام",
+                "components": [
+                  "مكون 1",
+                  "مكون 2"
+                ],
+                "code_artifact": "D:\\AGL\\artifacts\\codegen_1761755657_7e7b7bed.py",
+                "artifact_validated": true,
+                "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
+                "artifact_meta": {
+                  "exists": true,
+                  "size_bytes": 215,
+                  "sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3"
+                }
+              },
+              "error": null
+            },
+            "protocol_designer": {
+              "status": "ok",
+              "ok": true,
+              "score": 0.6,
+              "confidence": 0.6,
+              "result": {
+                "spec": {
+                  "name": "secure-iot-protocol",
+                  "version": "0.1",
+                  "handshake": [
+                    "client_hello",
+                    "server_hello",
+                    "key_exchange",
+                    "finished"
+                  ],
+                  "crypto": {
+                    "kex": "X25519",
+                    "cipher": "AES-256-GCM",
+                    "hash": "SHA-256"
+                  },
+                  "replay_protection": true,
+                  "constraints": {
+                    "mtu_min": 512,
+                    "latency_ms_max": 200
+                  }
+                },
+                "verified": true
+              },
+              "error": null
+            }
+          },
+          "details": [
+            "Loaded persisted fusion_weights from config and applied to fusion.",
+            "Increased fusion weight for validated code artifact: code_generator=1.2",
+            "Applied fusion weights (not raw-score boost) to quantum_processor=0.6, code_generator=1.2, protocol_designer=0.6",
+            {
+              "engine": "mathematical_brain",
+              "score": 0.5,
+              "weight": 1.0
+            },
+            {
+              "engine": "quantum_processor",
+              "score": 0.6,
+              "weight": 0.6
+            },
+            {
+              "engine": "code_generator",
+              "score": 0.88,
+              "weight": 1.2
+            },
+            {
+              "engine": "protocol_designer",
+              "score": 0.6,
+              "weight": 0.6
+            }
+          ],
+          "misc": {
+            "verification": null,
+            "artifact_path": "D:\\AGL\\artifacts\\codegen_1761755657_7e7b7bed.py",
+            "artifact_validated": true,
+            "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
+            "architecture": "هيكل النظام",
+            "components": [
+              "مكون 1",
+              "مكون 2"
+            ]
+          },
+          "confidence": 0.6694,
+          "complexity_level": "adjusted"
+        },
+        "safety": {
+          "approval": true,
+          "risk_level": "low",
+          "checks_passed": true
+        },
+        "signals": {
+          "mathematical_brain": {
+            "ok": true,
+            "score": 0.5,
+            "confidence": 0.5,
+            "error": null
+          },
+          "quantum_processor": {
+            "ok": true,
+            "score": 0.6,
+            "confidence": 0.6,
+            "error": null
+          },
+          "code_generator": {
+            "ok": true,
+            "score": 0.88,
+            "confidence": 0.86,
+            "error": null
+          },
+          "protocol_designer": {
+            "ok": true,
+            "score": 0.6,
+            "confidence": 0.6,
+            "error": null
+          }
+        },
+        "confidence_score": 0.6694,
+        "improvement_opportunities": [],
+        "confidence_gate_baseline": {
+          "passed": false,
+          "reason": "different_input"
+        },
+        "confidence_gate": {
+          "passed": false,
+          "reason": "different_input",
+          "similarity": 0.34,
+          "normalized_task": "التفكير الاستراتيجي: الهدف = زيادة الوعي البيئي في الحي خلال 6 أشهر الميزانية = 500 دولار المشاركون = متطوعون من الشباب المطلوب: خطة استراتيجية شاملة تشمل: مراحل التنفيذ، مؤشرات النجاح، إدارة المخاطر، الاستدامة"
+        }
+      }
+    }
+  ]
+}

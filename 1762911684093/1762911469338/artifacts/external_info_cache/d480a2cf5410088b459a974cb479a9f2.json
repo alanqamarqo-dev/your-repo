@@ -1,0 +1,11 @@
+﻿{
+  "answer": "هذا ملخص تجريبي عن: ما هي أسباب ازدحام المرور؟",
+  "facts": [
+    {
+      "text": "حقيقة دقيقة وموثّقة حول «ما هي أسباب ازدحام المرور؟» ضمن مجال domain:transport.",
+      "source": "mock-provider",
+      "confidence": 0.9,
+      "domain": "domain:transport"
+    }
+  ]
+}
