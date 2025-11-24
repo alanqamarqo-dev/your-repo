@@ -5,3 +5,4 @@
 {"ts": "2025-11-12T01:37:07.300277Z", "event": "evolve_reject", "reason": "empty_patch"}
 {"ts": "2025-11-12T01:37:07.549224Z", "event": "evolve_reject", "reason": "empty_patch"}
 {"ts": "2025-11-12T02:20:05.160770Z", "event": "evolve_reject", "reason": "diff too large"}
+{"ts": "2025-11-20T21:59:09.794970Z", "event": "evolve_blocked", "reason": "premerge_failed"}

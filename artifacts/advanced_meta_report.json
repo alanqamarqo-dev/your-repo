@@ -1,20 +1,20 @@
 {
   "quality": {
-    "n_traces": 168,
+    "n_traces": 193,
     "n_memory_entries": 0,
     "by_type": {
-      "self_engineer.diagnose": 28,
-      "self_engineer.propose": 28,
-      "self_engineer.fit_and_score": 84,
-      "self_engineer.select": 28
+      "self_engineer.diagnose": 32,
+      "self_engineer.propose": 31,
+      "self_engineer.fit_and_score": 99,
+      "self_engineer.select": 31
     },
-    "conf_mean": -2.6856250000000004,
+    "conf_mean": -2.5189807692307697,
     "conf_median": 0.925,
-    "conf_std": 6.253785947078378,
+    "conf_std": 6.154566493327051,
     "contradictions": 0,
     "domain_counts": {},
-    "low_conf_frac": 0.25,
-    "analyzed_at": 1762894771.5795264,
+    "low_conf_frac": 0.23846153846153847,
+    "analyzed_at": 1763673591.3054128,
     "textual_contradictions": 0,
     "textual_conflict_examples": [],
     "graph_issues": []

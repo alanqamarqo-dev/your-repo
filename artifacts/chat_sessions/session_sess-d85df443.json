@@ -1,0 +1,27 @@
+{
+  "id": "sess-d85df443",
+  "created_at": "2025-11-20T21:26:57.733434+00:00",
+  "history": [
+    {
+      "ts": "2025-11-20T21:26:57.734978+00:00",
+      "user": "أنا حزين وأحتاج دعم",
+      "agent": {
+        "ok": true,
+        "text": "أنا حزين وأحتاج دعم",
+        "reply_text": "أنا حزين وأحتاج دعم",
+        "data": {
+          "text": "أنا حزين وأحتاج دعم",
+          "intent": "social",
+          "extra": {},
+          "warning": "social.empathetic_reply failed; fallback exhausted."
+        },
+        "meta": {
+          "intent": "social",
+          "extra": {},
+          "warning": "social.empathetic_reply failed; fallback exhausted."
+        }
+      },
+      "intent": "social"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "timestamp": "2025-11-11T21:00:01.135113Z",
+    "strict": false
+  },
+  "part1": {
+    "raw": "⚠️ SUT غير محدد (AGL_SUT). هذا مولِّد افتراضي للاختبار فقط.\nسأنتج بضعة أسطر تجريبية لكي يمرّ الاختبار شكليًا.",
+    "question_count_estimate": 0,
+    "domain_diversity": [],
+    "depth": {
+      "cues": 0,
+      "avg_q_len": 0
+    }
+  },
+  "part2": {
+    "raw": "⚠️ SUT غير محدد (AGL_SUT). هذا مولِّد افتراضي للاختبار فقط.\nسأنتج بضعة أسطر تجريبية لكي يمرّ الاختبار شكليًا.",
+    "linking_metrics": {
+      "domains": [],
+      "pairs": 0,
+      "triple_or_more": 0,
+      "causal_cues": 0,
+      "novelty_cues": 0
+    },
+    "innovative_links_estimate": 0
+  },
+  "part3": {
+    "raw": "⚠️ SUT غير محدد (AGL_SUT). هذا مولِّد افتراضي للاختبار فقط.\nسأنتج بضعة أسطر تجريبية لكي يمرّ الاختبار شكليًا.",
+    "joke_score": {
+      "layers": 1,
+      "punchline_grasp": 0,
+      "is_pass": false
+    }
+  },
+  "final_challenge": {
+    "thresholds": {
+      "min_original_questions": 3,
+      "min_innovative_cross_domain_links": 2,
+      "joke_understanding_required": true
+    },
+    "result": "FAIL"
+  }
+}

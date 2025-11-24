@@ -1,68 +1,33 @@
 {
-  "ts": "2025-11-13T04:39:51Z",
+  "ts": "2025-11-20T21:59:09Z",
   "engines": {
     "planner": {
-      "calls": 24,
-      "successes": 24,
+      "calls": 2,
+      "successes": 2,
       "fails": 0,
       "avg_latency_ms": 0.0,
-      "avg_quality": 0.685232
+      "avg_quality": 0.567
     },
     "deliberation": {
-      "calls": 24,
-      "successes": 24,
+      "calls": 2,
+      "successes": 2,
       "fails": 0,
       "avg_latency_ms": 0.0,
-      "avg_quality": 0.721173
-    },
-    "retriever": {
-      "calls": 12,
-      "successes": 12,
-      "fails": 0,
-      "avg_latency_ms": 0.0,
-      "avg_quality": 0.453436
-    },
-    "vision": {
-      "calls": 24,
-      "successes": 24,
-      "fails": 0,
-      "avg_latency_ms": 0.0,
-      "avg_quality": 0.721173
-    },
-    "audio": {
-      "calls": 12,
-      "successes": 12,
-      "fails": 0,
-      "avg_latency_ms": 0.0,
-      "avg_quality": 0.5
-    },
-    "motivation": {
-      "calls": 24,
-      "successes": 24,
-      "fails": 0,
-      "avg_latency_ms": 0.0,
-      "avg_quality": 0.685232
-    },
-    "timeline": {
-      "calls": 12,
-      "successes": 12,
-      "fails": 0,
-      "avg_latency_ms": 0.0,
-      "avg_quality": 0.518626
-    },
-    "gen_creativity": {
-      "calls": 36,
-      "successes": 36,
-      "fails": 0,
-      "avg_latency_ms": 0.00118,
-      "avg_quality": 0.919946
+      "avg_quality": 0.58
     },
     "hosted_storyqa": {
-      "calls": 12,
-      "successes": 12,
+      "calls": 2,
+      "successes": 2,
       "fails": 0,
-      "avg_latency_ms": 0.373983,
-      "avg_quality": 0.919076
+      "avg_latency_ms": 0.0,
+      "avg_quality": 0.586
+    },
+    "gen_creativity": {
+      "calls": 2,
+      "successes": 2,
+      "fails": 0,
+      "avg_latency_ms": 0.0,
+      "avg_quality": 0.6332
     }
   }
 }

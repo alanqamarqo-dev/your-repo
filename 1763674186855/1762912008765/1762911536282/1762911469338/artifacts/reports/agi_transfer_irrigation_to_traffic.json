@@ -1,0 +1,14 @@
+{
+  "case": "transfer_irrigation_to_traffic",
+  "ok": false,
+  "score_total": 66.85,
+  "axes": {
+    "flex": 65.0,
+    "philo": 70.0,
+    "fewshot": 75.0,
+    "creative": 70.0,
+    "self": 60.0,
+    "transfer": 70.0
+  },
+  "raw_excerpt": "{'ideas': [{'idea': 'حلّ بسيط قابل للتنفيذ لـ موضوع', 'scores': {'composite': 0.9593558479005834}}, {'idea': 'موشر اداء/قياس واضح لـ موضوع', 'scores': {'composite': 0.7240916904350956}}, {'idea': 'اتمته جزييه مع رقابه بشريه لـ موضوع', 'scores': {'composite': 0.7149447264883073}}, {'idea': 'تعاون مجتمعي/مفتوح المصدر لـ موضوع', 'scores': {'composite': 0.10004981725943503}}, {'idea': 'تجربه سريعه (Prototype) لـ موضوع', 'scores': {'composite': 0.063975735349575}}]}\n\nوصف بروتوكول مبسّط بارشادات تشغيل خطوه بخطوه."
+}

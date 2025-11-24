@@ -1,6 +1,6 @@
 # AGI Final Test — v4.0 (Instant Report)
 
-	**Timestamp (UTC):** 2025-11-11T20:59:41.336881Z
+	**Timestamp (UTC):** 2025-11-20T21:52:53.962104Z
 	**Has System:** False
 
 	## Scores (0–10)
@@ -34,8 +34,8 @@
   },
   "timing": {
     "creative_seconds": 4.76837158203125e-07,
-    "learning_seconds": 4.76837158203125e-07,
-    "problem_seconds": 4.76837158203125e-07
+    "learning_seconds": 9.5367431640625e-07,
+    "problem_seconds": 9.5367431640625e-07
   }
 }
 	```

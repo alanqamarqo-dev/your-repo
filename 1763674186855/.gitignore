@@ -1,0 +1,12 @@
+*~
+
+# Backup & temp files
+*.bak
+*.tmp
+*.swp
+*.orig
+*.backup
+*.bundle
+*.patch
+.gitignore.bak
+backups/

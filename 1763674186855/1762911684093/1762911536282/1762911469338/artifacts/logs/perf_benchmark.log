@@ -1,0 +1,9 @@
+[2025-10-23T21:02:03.514530Z] elapsed_seconds=0.788 returncode=0
+--- STDOUT ---
+Running smoke self-engineer using: D:\AGL\scripts\self_engineer_run.py
+Self-Engineer run complete. Outputs in: reports/self_engineer
+Target exited with code: 0
+
+--- STDERR ---
+
+

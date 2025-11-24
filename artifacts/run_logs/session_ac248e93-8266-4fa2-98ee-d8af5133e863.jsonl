@@ -1,0 +1,1 @@
+{"session_id": "ac248e93-8266-4fa2-98ee-d8af5133e863", "start": 1763843718.1766355, "question": "ما هي أعراض الإنفلونزا؟", "reward_score": 0.6466666666666667, "persisted": false, "trained": false, "train_log": {"note": "below-train-threshold"}, "end": 1763843718.176639, "elapsed_s": 3.814697265625e-06, "engines_used": ["hosted_llm"], "rag_used": false, "metrics": {}}

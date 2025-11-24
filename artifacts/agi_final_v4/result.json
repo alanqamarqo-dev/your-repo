@@ -1,6 +1,6 @@
 {
   "meta": {
-    "ts": "2025-11-11T20:59:41.336881Z",
+    "ts": "2025-11-20T21:52:53.962104Z",
     "has_system": false,
     "mode": "none",
     "budget_seconds_learning": 180
@@ -20,8 +20,8 @@
     },
     "timing": {
       "creative_seconds": 4.76837158203125e-07,
-      "learning_seconds": 4.76837158203125e-07,
-      "problem_seconds": 4.76837158203125e-07
+      "learning_seconds": 9.5367431640625e-07,
+      "problem_seconds": 9.5367431640625e-07
     }
   },
   "scores": {

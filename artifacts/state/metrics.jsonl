@@ -3,3 +3,7 @@
 {"ts": 1762893763.4150536, "snapshots_written": 1, "bridge_failures": 0, "queue_dropped": 0, "avg_write_ms": 0.2933979034423828}
 {"ts": 1762894781.644965, "snapshots_written": 1, "bridge_failures": 0, "queue_dropped": 0, "avg_write_ms": 0.13294219970703125}
 {"ts": 1762894781.698834, "snapshots_written": 1, "bridge_failures": 0, "queue_dropped": 0, "avg_write_ms": 0.121307373046875}
+{"ts": 1763673603.0088336, "snapshots_written": 1, "bridge_failures": 0, "queue_dropped": 0, "avg_write_ms": 2.1820545196533203}
+{"ts": 1763673603.0990417, "snapshots_written": 1, "bridge_failures": 0, "queue_dropped": 0, "avg_write_ms": 0.19540786743164062}
+{"ts": 1763675574.5251827, "snapshots_written": 1, "bridge_failures": 0, "queue_dropped": 0, "avg_write_ms": 0.23674964904785156}
+{"ts": 1763675574.5940442, "snapshots_written": 1, "bridge_failures": 0, "queue_dropped": 0, "avg_write_ms": 0.09407997131347656}

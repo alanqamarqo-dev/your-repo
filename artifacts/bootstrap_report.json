@@ -45,7 +45,8 @@
     "Core_Consciousness",
     "C_Layer_StateLogger",
     "Quantum_Neural_Core",
-    "Advanced_Exponential_Algebra"
+    "Advanced_Exponential_Algebra",
+    "FakeEngine"
   ],
   "skipped": {
     "tensor_utils": "no factory/class (utility module?)",

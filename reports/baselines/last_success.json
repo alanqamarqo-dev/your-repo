@@ -1,9 +1,9 @@
 ﻿{
   "task": "حل معادلة تفاضلية",
-  "timestamp": 1762895502.865131,
+  "timestamp": 1763674026.3699987,
   "phase": "phase_2",
-  "seed": 15871952,
-  "inputs_hash": "f7ec625a90700b0acdd58d4f61075ce184fbc178f47e500f7e9d7c113e20f36b",
+  "seed": 1704027996,
+  "inputs_hash": "aeef9f6c1501e5455074feed9b2fbeef7e8e350703fb7a469f86193ca662ceb1",
   "solution": {
     "audience": "technical",
     "purpose": "solution",
@@ -51,7 +51,7 @@
             "مكون 1",
             "مكون 2"
           ],
-          "code_artifact": "D:\\AGL\\repo-copy\\artifacts\\codegen_1762895502_e4e5aa5e.py",
+          "code_artifact": "D:\\AGL\\1762911469338\\repo-copy\\artifacts\\codegen_1763674023_c9b5a96e.py",
           "artifact_validated": true,
           "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
           "artifact_meta": {
@@ -127,7 +127,7 @@
         "residual_norm": 1e-06,
         "verified": true
       },
-      "artifact_path": "D:\\AGL\\repo-copy\\artifacts\\codegen_1762895502_e4e5aa5e.py",
+      "artifact_path": "D:\\AGL\\1762911469338\\repo-copy\\artifacts\\codegen_1763674023_c9b5a96e.py",
       "artifact_validated": true,
       "artifact_sha256": "99fc4be038ee131eccf6cbf9eb355620a8e89c7ae442cd5b37810993dd30f5b3",
       "architecture": "هيكل النظام",
@@ -187,6 +187,6 @@
   ],
   "confidence_gate": {
     "passed": false,
-    "reason": "no_baseline"
+    "reason": "different_input"
   }
 }

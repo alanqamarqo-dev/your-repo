@@ -1,0 +1,43 @@
+name: Stability Matrix
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  stability:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
+
+      - name: Run stability matrix
+        run: |
+          $env:PYTHONPATH='repo-copy'
+          $env:AGL_TEST_SCAFFOLD_FORCE='1'
+          $env:AGL_LLM_PROVIDER='offline'
+          pytest -q tests/integration/stability_test_matrix.py
+
+      - name: Upload stability artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stability-matrix-${{ github.sha }}
+          path: artifacts/stability_matrix.json
+
+      - name: Compare against baseline
+        if: always()
+        run: |
+          python scripts/compare_stability.py

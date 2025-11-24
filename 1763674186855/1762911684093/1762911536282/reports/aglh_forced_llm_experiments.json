@@ -1,0 +1,1037 @@
+{
+  "mode": "forced_llm_iterative",
+  "system_prompt": "أنت منظومة AGL المتكاملة. أجب بالعربية فقط وبنبرة رسمية ومفصّلة. لكل مهمة قدم: ملخّصًا سريعًا، ثم خطة خطوة-بخطوة قابلة للتنفيذ، ثم مؤشرات قياس أداء رقمية حيث ينطبق، ثم تقييمًا ذاتيًا للنتيجة بنقاط (0-100) عبر المعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي. لا تستخدم أي مسترجع محلي أو قاعدة بيانات داخلية — أجب استنادًا إلى قدرات النموذج التوليدي فقط. لا تضف مراجع مصدرية مزيفة. إذا لم تكن متأكدًا من معلومة، اعترف بذلك وقدم خطوات لجمع الدليل.",
+  "timestamp": 1761762069.522092,
+  "tests": [
+    {
+      "id": 1,
+      "name": "الفهم والسياق",
+      "rounds": [
+        {
+          "round": 0,
+          "prompt": "قصة:\nكان أحمد يلعب في الحديقة. رأى قطة جميلة تلاحق فراشة.\nثم سمع صوت بكاء طفل صغير. ترك القطة وركض لمساعدة الطفل.\n\nالأسئلة:\n1. لماذا ترك أحمد القطة؟\n2. ما هي المشاعر المحتملة لأحمد في كل موقف؟\n3. كيف كان يمكن أن يتصرف بشكل مختلف؟",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "e7f8c6d4dd6c"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 3.077690839767456
+        },
+        {
+          "round": 1,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nقصة:\nكان أحمد يلعب في الحديقة. رأى قطة جميلة تلاحق فراشة.\nثم سمع صوت بكاء طفل صغير. ترك القطة وركض لمساعدة الطفل.\n\nالأسئلة:\n1. لماذا ترك أحمد القطة؟\n2. ما هي المشاعر المحتملة لأحمد في كل موقف؟\n3. كيف كان يمكن أن يتصرف بشكل مختلف؟",
+          "response": {
+            "ok": true,
+            "text": "{'text': '{\\n \"ملخص\": \\n -1.1', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "{\n  \"ملخص\": \n  -1.1",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "449ec159dbf0"
+              }
+            ]
+          },
+          "text": "{'text': '{\\n \"ملخص\": \\n -1.1', 'citations': [], 'confidence': None}",
+          "duration": 6.211362600326538
+        },
+        {
+          "round": 2,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '{\\n \"ملخص\": \\n -1.1', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nقصة:\nكان أحمد يلعب في الحديقة. رأى قطة جميلة تلاحق فراشة.\nثم سمع صوت بكاء طفل صغير. ترك القطة وركض لمساعدة الطفل.\n\nالأسئلة:\n1. لماذا ترك أحمد القطة؟\n2. ما هي المشاعر المحتملة لأحمد في كل موقف؟\n3. كيف كان يمكن أن يتصرف بشكل مختلف؟",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "9689e93bd300"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 3.310070753097534
+        },
+        {
+          "round": 3,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nقصة:\nكان أحمد يلعب في الحديقة. رأى قطة جميلة تلاحق فراشة.\nثم سمع صوت بكاء طفل صغير. ترك القطة وركض لمساعدة الطفل.\n\nالأسئلة:\n1. لماذا ترك أحمد القطة؟\n2. ما هي المشاعر المحتملة لأحمد في كل موقف؟\n3. كيف كان يمكن أن يتصرف بشكل مختلف؟",
+          "response": {
+            "ok": true,
+            "text": "{'text': '{\\n \"ملخص\": \\n -4.0', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "{\n  \"ملخص\": \n  -4.0",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "449ec159dbf0"
+              }
+            ]
+          },
+          "text": "{'text': '{\\n \"ملخص\": \\n -4.0', 'citations': [], 'confidence': None}",
+          "duration": 6.349864959716797
+        },
+        {
+          "round": 4,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '{\\n \"ملخص\": \\n -4.0', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nقصة:\nكان أحمد يلعب في الحديقة. رأى قطة جميلة تلاحق فراشة.\nثم سمع صوت بكاء طفل صغير. ترك القطة وركض لمساعدة الطفل.\n\nالأسئلة:\n1. لماذا ترك أحمد القطة؟\n2. ما هي المشاعر المحتملة لأحمد في كل موقف؟\n3. كيف كان يمكن أن يتصرف بشكل مختلف؟",
+          "response": {
+            "ok": true,
+            "text": "{'text': '{\\n \"ملخص\": \\n-4.0', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "{\n  \"ملخص\": \n-4.0",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "96b4c79dbaee"
+              }
+            ]
+          },
+          "text": "{'text': '{\\n \"ملخص\": \\n-4.0', 'citations': [], 'confidence': None}",
+          "duration": 5.96028208732605
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "حل المشكلات المعقدة",
+      "rounds": [
+        {
+          "round": 0,
+          "prompt": "المهمة: تصميم نظام ري ذكي لحديقة\nالمتطلبات:\n- توفير 30% من المياه\n- مراعاة أنواع النباتات المختلفة\n- التكيف مع أحوال الطقس\n- التكلفة لا تتجاوز 200 دولار\n\nالمطلوب: خطة تنفيذ مفصلة مع مبررات لكل اختيار",
+          "response": {
+            "ok": true,
+            "text": "{'text': '{\\n \"ملخص\": \"نظام ري ذكي لحديقة سيوفر 30% من المياه، يراعي أنواع النباتات المختلفة ويتكيف مع أحوال الطقس، مع التكلفة المقدرة عند 180 دولارًا.\",\\n \\n \"خطة تنفيذ خطوة بخطوة\": \\n 1.01', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "{\n    \"ملخص\": \"نظام ري ذكي لحديقة سيوفر 30% من المياه، يراعي أنواع النباتات المختلفة ويتكيف مع أحوال الطقس، مع التكلفة المقدرة عند 180 دولارًا.\",\n    \n    \"خطة تنفيذ خطوة بخطوة\": \n    1.01",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "5d203ae1bc7e"
+              }
+            ]
+          },
+          "text": "{'text': '{\\n \"ملخص\": \"نظام ري ذكي لحديقة سيوفر 30% من المياه، يراعي أنواع النباتات المختلفة ويتكيف مع أحوال الطقس، مع التكلفة المقدرة عند 180 دولارًا.\",\\n \\n \"خطة تنفيذ خطوة بخطوة\": \\n 1.01', 'citations': [], 'confidence': None}",
+          "duration": 14.344912767410278
+        },
+        {
+          "round": 1,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '{\\n \"ملخص\": \"نظام ري ذكي لحديقة سيوفر 30% من المياه، يراعي أنواع النباتات المختلفة ويتكيف مع أحوال الطقس، مع التكلفة المقدرة عند 180 دولارًا.\",\\n \\n \"خطة تنفيذ خطوة بخطوة\": \\n 1.01', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالمهمة: تصميم نظام ري ذكي لحديقة\nالمتطلبات:\n- توفير 30% من المياه\n- مراعاة أنواع النباتات المختلفة\n- التكيف مع أحوال الطقس\n- التكلفة لا تتجاوز 200 دولار\n\nالمطلوب: خطة تنفيذ مفصلة مع مبررات لكل اختيار",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "60cd07da646d"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 9.314265251159668
+        },
+        {
+          "round": 2,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالمهمة: تصميم نظام ري ذكي لحديقة\nالمتطلبات:\n- توفير 30% من المياه\n- مراعاة أنواع النباتات المختلفة\n- التكيف مع أحوال الطقس\n- التكلفة لا تتجاوز 200 دولار\n\nالمطلوب: خطة تنفيذ مفصلة مع مبررات لكل اختيار",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "5e0d4cf11ca6"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 54.072344064712524
+        },
+        {
+          "round": 3,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالمهمة: تصميم نظام ري ذكي لحديقة\nالمتطلبات:\n- توفير 30% من المياه\n- مراعاة أنواع النباتات المختلفة\n- التكيف مع أحوال الطقس\n- التكلفة لا تتجاوز 200 دولار\n\nالمطلوب: خطة تنفيذ مفصلة مع مبررات لكل اختيار",
+          "response": {
+            "ok": true,
+            "text": "{'text': '{\\n \"ملخص\": \"هذا النظام الذكي للري سيوفر 30% من المياه ويلبي احتياجات أنواع النباتات المختلفة، وأيضاً يتكيف مع متغيرات الطقس. سيتم التحقق من هذه النقاط من خلال تحديد نظام التحكم والتوازن المائي المناسب والجهاز الذي يمكنه مراقبة حالة الطقس واستخدام تقنيات الرش المتقدمة. الكلفة ستظل داخل الحدود المحددة بـ 200 دولار.\",\\n \\n \"خطة تنفيذ خطوة-بخطوة\":\\n 1.1', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "{\n    \"ملخص\": \"هذا النظام الذكي للري سيوفر 30% من المياه ويلبي احتياجات أنواع النباتات المختلفة، وأيضاً يتكيف مع متغيرات الطقس. سيتم التحقق من هذه النقاط من خلال تحديد نظام التحكم والتوازن المائي المناسب والجهاز الذي يمكنه مراقبة حالة الطقس واستخدام تقنيات الرش المتقدمة. الكلفة ستظل داخل الحدود المحددة بـ 200 دولار.\",\n    \n    \"خطة تنفيذ خطوة-بخطوة\":\n    1.1",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "5e0d4cf11ca6"
+              }
+            ]
+          },
+          "text": "{'text': '{\\n \"ملخص\": \"هذا النظام الذكي للري سيوفر 30% من المياه ويلبي احتياجات أنواع النباتات المختلفة، وأيضاً يتكيف مع متغيرات الطقس. سيتم التحقق من هذه النقاط من خلال تحديد نظام التحكم والتوازن المائي المناسب والجهاز الذي يمكنه مراقبة حالة الطقس واستخدام تقنيات الرش المتقدمة. الكلفة ستظل داخل الحدود المحددة بـ 200 دولار.\",\\n \\n \"خطة تنفيذ خطوة-بخطوة\":\\n 1.1', 'citations': [], 'confidence': None}",
+          "duration": 21.65897488594055
+        },
+        {
+          "round": 4,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '{\\n \"ملخص\": \"هذا النظام الذكي للري سيوفر 30% من المياه ويلبي احتياجات أنواع النباتات المختلفة، وأيضاً يتكيف مع متغيرات الطقس. سيتم التحقق من هذه النقاط من خلال تحديد نظام التحكم والتوازن المائي المناسب والجهاز الذي يمكنه مراقبة حالة الطقس واستخدام تقنيات الرش المتقدمة. الكلفة ستظل داخل الحدود المحددة بـ 200 دولار.\",\\n \\n \"خطة تنفيذ خطوة-بخطوة\":\\n 1.1', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالمهمة: تصميم نظام ري ذكي لحديقة\nالمتطلبات:\n- توفير 30% من المياه\n- مراعاة أنواع النباتات المختلفة\n- التكيف مع أحوال الطقس\n- التكلفة لا تتجاوز 200 دولار\n\nالمطلوب: خطة تنفيذ مفصلة مع مبررات لكل اختيار",
+          "response": {
+            "ok": true,
+            "text": "{'text': '{\\n \"ملخص\": \"نظام ري ذكي لحديقة سيتم تصميمه لتوفير 30% من المياه، مع مراعاة أنواع النباتات المختلفة والتكيف مع أحوال الطقس. التكلفة ستظل داخل الحدود المحددة بـ 200 دولار.\",\\n \\n \"خطة تنفيذ خطوة-بخطوة\":\\n 1.1', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "{\n    \"ملخص\": \"نظام ري ذكي لحديقة سيتم تصميمه لتوفير 30% من المياه، مع مراعاة أنواع النباتات المختلفة والتكيف مع أحوال الطقس. التكلفة ستظل داخل الحدود المحددة بـ 200 دولار.\",\n    \n    \"خطة تنفيذ خطوة-بخطوة\":\n    1.1",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "cd900b0415a4"
+              }
+            ]
+          },
+          "text": "{'text': '{\\n \"ملخص\": \"نظام ري ذكي لحديقة سيتم تصميمه لتوفير 30% من المياه، مع مراعاة أنواع النباتات المختلفة والتكيف مع أحوال الطقس. التكلفة ستظل داخل الحدود المحددة بـ 200 دولار.\",\\n \\n \"خطة تنفيذ خطوة-بخطوة\":\\n 1.1', 'citations': [], 'confidence': None}",
+          "duration": 16.123884677886963
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "التعلم والتبادل بين المجالات",
+      "rounds": [
+        {
+          "round": 0,
+          "prompt": "تعلم وتطبيق:\nالمفهوم الجديد = \"مبدأ حفظ الطاقة: الطاقة لا تفنى ولا تستحدث ولكن تتحول من شكل لآخر\"\n\nالمطلوب:\n1. شرح المبدأ بكلماتك الخاصة\n2. تطبيق المبدأ في مجال الاقتصاد أو العلاقات الاجتماعية\n3. استنتاج قاعدة جديدة بناءً على هذا المبدأ",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "d733fe034dc1"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 3.3494222164154053
+        },
+        {
+          "round": 1,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nتعلم وتطبيق:\nالمفهوم الجديد = \"مبدأ حفظ الطاقة: الطاقة لا تفنى ولا تستحدث ولكن تتحول من شكل لآخر\"\n\nالمطلوب:\n1. شرح المبدأ بكلماتك الخاصة\n2. تطبيق المبدأ في مجال الاقتصاد أو العلاقات الاجتماعية\n3. استنتاج قاعدة جديدة بناءً على هذا المبدأ",
+          "response": {
+            "ok": true,
+            "text": "{'text': '{\\n \"ملخص\": \\n \"هذا التعريف يشرح مبدأ حفظ الطاقة، حيث أن الطاقة لا تفنى ولا تستحدث بشكل مباشر، بل تحول من شكل إلى آخر. سيتم تطبيق هذا المبدأ في الاقتصاد لاستنتاج قاعدة جديدة.\"', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "{\n  \"ملخص\": \n  \"هذا التعريف يشرح مبدأ حفظ الطاقة، حيث أن الطاقة لا تفنى ولا تستحدث بشكل مباشر، بل تحول من شكل إلى آخر. سيتم تطبيق هذا المبدأ في الاقتصاد لاستنتاج قاعدة جديدة.\"",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "767b47cb864d"
+              }
+            ]
+          },
+          "text": "{'text': '{\\n \"ملخص\": \\n \"هذا التعريف يشرح مبدأ حفظ الطاقة، حيث أن الطاقة لا تفنى ولا تستحدث بشكل مباشر، بل تحول من شكل إلى آخر. سيتم تطبيق هذا المبدأ في الاقتصاد لاستنتاج قاعدة جديدة.\"', 'citations': [], 'confidence': None}",
+          "duration": 12.47481656074524
+        },
+        {
+          "round": 2,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '{\\n \"ملخص\": \\n \"هذا التعريف يشرح مبدأ حفظ الطاقة، حيث أن الطاقة لا تفنى ولا تستحدث بشكل مباشر، بل تحول من شكل إلى آخر. سيتم تطبيق هذا المبدأ في الاقتصاد لاستنتاج قاعدة جديدة.\"', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nتعلم وتطبيق:\nالمفهوم الجديد = \"مبدأ حفظ الطاقة: الطاقة لا تفنى ولا تستحدث ولكن تتحول من شكل لآخر\"\n\nالمطلوب:\n1. شرح المبدأ بكلماتك الخاصة\n2. تطبيق المبدأ في مجال الاقتصاد أو العلاقات الاجتماعية\n3. استنتاج قاعدة جديدة بناءً على هذا المبدأ",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "a7874c33dac8"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 6.304563999176025
+        },
+        {
+          "round": 3,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nتعلم وتطبيق:\nالمفهوم الجديد = \"مبدأ حفظ الطاقة: الطاقة لا تفنى ولا تستحدث ولكن تتحول من شكل لآخر\"\n\nالمطلوب:\n1. شرح المبدأ بكلماتك الخاصة\n2. تطبيق المبدأ في مجال الاقتصاد أو العلاقات الاجتماعية\n3. استنتاج قاعدة جديدة بناءً على هذا المبدأ",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "767b47cb864d"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 58.25942015647888
+        },
+        {
+          "round": 4,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nتعلم وتطبيق:\nالمفهوم الجديد = \"مبدأ حفظ الطاقة: الطاقة لا تفنى ولا تستحدث ولكن تتحول من شكل لآخر\"\n\nالمطلوب:\n1. شرح المبدأ بكلماتك الخاصة\n2. تطبيق المبدأ في مجال الاقتصاد أو العلاقات الاجتماعية\n3. استنتاج قاعدة جديدة بناءً على هذا المبدأ",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "767b47cb864d"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 35.958847761154175
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "الإبداع والابتكار",
+      "rounds": [
+        {
+          "round": 0,
+          "prompt": "الإبداع والابتكار:\nالمشكلة = \"كيف نساعد كبار السن على تذكر تناول الأدوية في أوقاتها؟\"\n\nالمطلوب:\n1. 3 أفكار إبداعية لحل المشكلة\n2. اختيار أفضل فكرة وتطويرها\n3. تحديد التحديات وكيفية التغلب عليها",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "da54e0a854ef"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 9.489721298217773
+        },
+        {
+          "round": 1,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالإبداع والابتكار:\nالمشكلة = \"كيف نساعد كبار السن على تذكر تناول الأدوية في أوقاتها؟\"\n\nالمطلوب:\n1. 3 أفكار إبداعية لحل المشكلة\n2. اختيار أفضل فكرة وتطويرها\n3. تحديد التحديات وكيفية التغلب عليها",
+          "response": {
+            "ok": true,
+            "text": "{'text': '{\\n \"ملخص\": \\n \"سيقدم هذا الإجابة ثلاث طرق إبداعية لمساعدة كبار السن على تذكيرهم بتناول الأدوية في أوقاتها، ومن ثم اختيار أفضل فكرة وتطويرها، والتنبيه عن تحديات محتملة وكيفية التغلب عليها.\",\\n \\n \"خطة خطوة-بخطوة\": \\n 1.1', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "{\n    \"ملخص\": \n        \"سيقدم هذا الإجابة ثلاث طرق إبداعية لمساعدة كبار السن على تذكيرهم بتناول الأدوية في أوقاتها، ومن ثم اختيار أفضل فكرة وتطويرها، والتنبيه عن تحديات محتملة وكيفية التغلب عليها.\",\n    \n    \"خطة خطوة-بخطوة\": \n        1.1",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "abfb7d3c2f25"
+              }
+            ]
+          },
+          "text": "{'text': '{\\n \"ملخص\": \\n \"سيقدم هذا الإجابة ثلاث طرق إبداعية لمساعدة كبار السن على تذكيرهم بتناول الأدوية في أوقاتها، ومن ثم اختيار أفضل فكرة وتطويرها، والتنبيه عن تحديات محتملة وكيفية التغلب عليها.\",\\n \\n \"خطة خطوة-بخطوة\": \\n 1.1', 'citations': [], 'confidence': None}",
+          "duration": 15.926599502563477
+        },
+        {
+          "round": 2,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '{\\n \"ملخص\": \\n \"سيقدم هذا الإجابة ثلاث طرق إبداعية لمساعدة كبار السن على تذكيرهم بتناول الأدوية في أوقاتها، ومن ثم اختيار أفضل فكرة وتطويرها، والتنبيه عن تحديات محتملة وكيفية التغلب عليها.\",\\n \\n \"خطة خطوة-بخطوة\": \\n 1.1', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالإبداع والابتكار:\nالمشكلة = \"كيف نساعد كبار السن على تذكر تناول الأدوية في أوقاتها؟\"\n\nالمطلوب:\n1. 3 أفكار إبداعية لحل المشكلة\n2. اختيار أفضل فكرة وتطويرها\n3. تحديد التحديات وكيفية التغلب عليها",
+          "response": {
+            "ok": true,
+            "text": "{'text': '{\\n \"ملخص\": \\n \"سيقدم هذا الإجابة ثلاثة أفكار إبداعية لمساعدة كبار السن على تذكيرهم بتناول الأدوية في أوقاتها، ومن ثم اختيار أفضل فكرة وتطويرها، مع تحديد التحديات المحتملة وكيفية التغلب عليها.\",\\n \\n \"خطة خطوة-بخطوة\": \\n 1.1', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "{\n    \"ملخص\": \n        \"سيقدم هذا الإجابة ثلاثة أفكار إبداعية لمساعدة كبار السن على تذكيرهم بتناول الأدوية في أوقاتها، ومن ثم اختيار أفضل فكرة وتطويرها، مع تحديد التحديات المحتملة وكيفية التغلب عليها.\",\n    \n    \"خطة خطوة-بخطوة\": \n        1.1",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "72da12d3621a"
+              }
+            ]
+          },
+          "text": "{'text': '{\\n \"ملخص\": \\n \"سيقدم هذا الإجابة ثلاثة أفكار إبداعية لمساعدة كبار السن على تذكيرهم بتناول الأدوية في أوقاتها، ومن ثم اختيار أفضل فكرة وتطويرها، مع تحديد التحديات المحتملة وكيفية التغلب عليها.\",\\n \\n \"خطة خطوة-بخطوة\": \\n 1.1', 'citations': [], 'confidence': None}",
+          "duration": 16.15297222137451
+        },
+        {
+          "round": 3,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '{\\n \"ملخص\": \\n \"سيقدم هذا الإجابة ثلاثة أفكار إبداعية لمساعدة كبار السن على تذكيرهم بتناول الأدوية في أوقاتها، ومن ثم اختيار أفضل فكرة وتطويرها، مع تحديد التحديات المحتملة وكيفية التغلب عليها.\",\\n \\n \"خطة خطوة-بخطوة\": \\n 1.1', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالإبداع والابتكار:\nالمشكلة = \"كيف نساعد كبار السن على تذكر تناول الأدوية في أوقاتها؟\"\n\nالمطلوب:\n1. 3 أفكار إبداعية لحل المشكلة\n2. اختيار أفضل فكرة وتطويرها\n3. تحديد التحديات وكيفية التغلب عليها",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "904ad6380e5b"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 9.239006280899048
+        },
+        {
+          "round": 4,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالإبداع والابتكار:\nالمشكلة = \"كيف نساعد كبار السن على تذكر تناول الأدوية في أوقاتها؟\"\n\nالمطلوب:\n1. 3 أفكار إبداعية لحل المشكلة\n2. اختيار أفضل فكرة وتطويرها\n3. تحديد التحديات وكيفية التغلب عليها",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "abfb7d3c2f25"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 9.838460206985474
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "التفكير الاستراتيجي",
+      "rounds": [
+        {
+          "round": 0,
+          "prompt": "التفكير الاستراتيجي:\nالهدف = \"زيادة الوعي البيئي في الحي خلال 6 أشهر\"\nالميزانية = \"500 دولار\"\nالمشاركون = \"متطوعون من الشباب\"\n\nالمطلوب: خطة استراتيجية شاملة تشمل: مراحل التنفيذ، مؤشرات النجاح، إدارة المخاطر، الاستدامة",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "59eabc6456b5"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 13.042460680007935
+        },
+        {
+          "round": 1,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالتفكير الاستراتيجي:\nالهدف = \"زيادة الوعي البيئي في الحي خلال 6 أشهر\"\nالميزانية = \"500 دولار\"\nالمشاركون = \"متطوعون من الشباب\"\n\nالمطلوب: خطة استراتيجية شاملة تشمل: مراحل التنفيذ، مؤشرات النجاح، إدارة المخاطر، الاستدامة",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "083fab537f57"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 50.732221364974976
+        },
+        {
+          "round": 2,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالتفكير الاستراتيجي:\nالهدف = \"زيادة الوعي البيئي في الحي خلال 6 أشهر\"\nالميزانية = \"500 دولار\"\nالمشاركون = \"متطوعون من الشباب\"\n\nالمطلوب: خطة استراتيجية شاملة تشمل: مراحل التنفيذ، مؤشرات النجاح، إدارة المخاطر، الاستدامة",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "083fab537f57"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 30.508572816848755
+        },
+        {
+          "round": 3,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالتفكير الاستراتيجي:\nالهدف = \"زيادة الوعي البيئي في الحي خلال 6 أشهر\"\nالميزانية = \"500 دولار\"\nالمشاركون = \"متطوعون من الشباب\"\n\nالمطلوب: خطة استراتيجية شاملة تشمل: مراحل التنفيذ، مؤشرات النجاح، إدارة المخاطر، الاستدامة",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "083fab537f57"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 7.729149103164673
+        },
+        {
+          "round": 4,
+          "prompt": "راجع الإجابة السابقة وحسّنها: قدم نسخة محسنة بالعربية كمخطط واضح خطوة‑بخطوة.\nالمعايير: الفهم، الاستدلال، الإبداع، التكامل، الفهم العاطفي.\nالإجابة السابقة:\n{'text': '', 'citations': [], 'confidence': None}\n\nالمهمة الأصلية:\nالتفكير الاستراتيجي:\nالهدف = \"زيادة الوعي البيئي في الحي خلال 6 أشهر\"\nالميزانية = \"500 دولار\"\nالمشاركون = \"متطوعون من الشباب\"\n\nالمطلوب: خطة استراتيجية شاملة تشمل: مراحل التنفيذ، مؤشرات النجاح، إدارة المخاطر، الاستدامة",
+          "response": {
+            "ok": true,
+            "text": "{'text': '', 'citations': [], 'confidence': None}",
+            "sources": [],
+            "evidence": [
+              {
+                "text": {
+                  "text": "",
+                  "citations": [],
+                  "confidence": null
+                },
+                "source": "",
+                "confidence": 0.8
+              }
+            ],
+            "engine_trace": [
+              {
+                "engine": "control",
+                "note": "force_external=True - skipping retriever"
+              },
+              {
+                "engine": "external_provider",
+                "response_keys": [
+                  "ok",
+                  "answer",
+                  "facts",
+                  "used_system_prompt",
+                  "prompt_hash"
+                ],
+                "used_system_prompt": true,
+                "prompt_hash": "083fab537f57"
+              }
+            ]
+          },
+          "text": "{'text': '', 'citations': [], 'confidence': None}",
+          "duration": 51.88637685775757
+        }
+      ]
+    }
+  ]
+}
