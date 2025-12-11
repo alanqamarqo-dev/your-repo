@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "experiences": [
+    {
+      "instruction": "Interpret this learning event and provide a short human-readable summary:",
+      "input": "Event: module_loaded\nPayload: {}\nTimestamp: 2025-12-07T23:13:49.762254+00:00",
+      "response": "Event module_loaded recorded at 2025-12-07T23:13:49.762254+00:00",
+      "context": "event_summarize",
+      "metadata": {
+        "source": "events_jsonl"
+      }
+    },
+    {
+      "instruction": "Interpret this learning event and provide a short human-readable summary:",
+      "input": "Event: module_loaded\nPayload: {}\nTimestamp: 2025-12-07T23:20:24.371618+00:00",
+      "response": "Event module_loaded recorded at 2025-12-07T23:20:24.371618+00:00",
+      "context": "event_summarize",
+      "metadata": {
+        "source": "events_jsonl"
+      }
+    },
+    {
+      "instruction": "Interpret this learning event and provide a short human-readable summary:",
+      "input": "Event: module_loaded\nPayload: {}\nTimestamp: 2025-12-07T23:20:26.164689+00:00",
+      "response": "Event module_loaded recorded at 2025-12-07T23:20:26.164689+00:00",
+      "context": "event_summarize",
+      "metadata": {
+        "source": "events_jsonl"
+      }
+    },
+    {
+      "instruction": "Interpret this learning event and provide a short human-readable summary:",
+      "input": "Event: module_loaded\nPayload: {}\nTimestamp: 2025-12-07T23:20:37.427611+00:00",
+      "response": "Event module_loaded recorded at 2025-12-07T23:20:37.427611+00:00",
+      "context": "event_summarize",
+      "metadata": {
+        "source": "events_jsonl"
+      }
+    },
+    {
+      "instruction": "Interpret this learning event and provide a short human-readable summary:",
+      "input": "Event: module_loaded\nPayload: {}\nTimestamp: 2025-12-07T23:20:50.039634+00:00",
+      "response": "Event module_loaded recorded at 2025-12-07T23:20:50.039634+00:00",
+      "context": "event_summarize",
+      "metadata": {
+        "source": "events_jsonl"
+      }
+    }
+  ],
+  "statistics": {
+    "total": 5,
+    "by_type": {
+      "learning_event": 5
+    },
+    "by_source": {
+      "events_jsonl": 5
+    }
+  }
+}

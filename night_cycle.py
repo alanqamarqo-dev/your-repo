@@ -1,83 +1,115 @@
+
+import asyncio
 import sys
 import os
 import time
 import json
+from datetime import datetime
 
-# 1. إعداد المسارات (لضمان رؤية كل المجلدات)
-current_dir = os.getcwd()
-sys.path.append(current_dir)
-if 'repo-copy' not in current_dir:
-    sys.path.append(os.path.join(current_dir, 'repo-copy'))
+# إضافة المسار الحالي للمكتبات
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# إضافة المجلدات الفرعية للمسار
-for folder in ["Learning_System", "Scientific_Systems", "Core_Memory", "Safety_Systems"]:
-    path = os.path.join(current_dir, 'repo-copy', folder) if 'repo-copy' not in current_dir else os.path.join(current_dir, folder)
-    if os.path.exists(path):
-        sys.path.append(path)
-
-# 2. الاستيراد (بناءً على فحصك الدقيق)
+# محاولة استيراد النظام الموحد
 try:
-    print(">> [Night Cycle] Initializing modules...")
-    from Learning_System.Feedback_Analyzer import FeedbackAnalyzer
-    from Learning_System.Improvement_Generator import ImprovementGenerator
-    from Scientific_Systems.Automated_Theorem_Prover import AutomatedTheoremProver
-    from Safety_Systems.Rollback_Mechanism import RollbackMechanism
-    print("✅ All Systems Operational: Analyst, Developer, Scientist, Safety.")
-except ImportError as e:
-    print(f"❌ Critical Import Error: {e}")
-    sys.exit(1)
+    from repo_copy.dynamic_modules.unified_agi_system import create_unified_agi_system # pyright: ignore[reportMissingImports]
+    from repo_copy.Core_Engines import bootstrap_register_all_engines # type: ignore
+except ImportError:
+    # Fallback paths
+    sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'repo-copy'))
+    from dynamic_modules.unified_agi_system import create_unified_agi_system
+    from Core_Engines import bootstrap_register_all_engines
 
-def start_night_cycle_simulation():
-    print("\n=== 🌙 STARTING AGI NIGHT CYCLE (Self-Improvement Protocol) ===")
+async def run_night_cycle(duration_minutes=5):
+    print(f"🌙 Starting AGL Night Cycle (Dreaming Mode)...")
+    print(f"⏱️  Duration: {duration_minutes} minutes")
     
-    # تهيئة الكائنات
-    analyzer = FeedbackAnalyzer()
-    generator = ImprovementGenerator()
-    scientist = AutomatedTheoremProver()
-    safety = RollbackMechanism()
-
-    # --- المرحلة 1: التحليل (The Analyst) ---
-    print("\n🔍 [Step 1] Analyzing daily performance logs...")
-    # بيانات وهمية للمحاكاة (لأننا لم نشغل النظام ليوم كامل بعد)
-    mock_data = {
-        "run_id": "simulation_run_01",
-        "errors": ["latency_spike_in_reasoning"], 
-        "success_rate": 0.78
-    }
-    report = analyzer.analyze_performance_feedback(mock_data)
-    print(f"   >> Insight Identified: System needs optimization in '{list(report.get('gaps', {}).keys())[:1]}'")
-
-    # --- المرحلة 2: الأمان (The Safety Net) ---
-    print("\n🛡️ [Step 2] Creating safety snapshot...")
+    # 1. تهيئة النظام
+    registry = {}
+    print("   - Bootstrapping engines...")
+    bootstrap_register_all_engines(registry, allow_optional=True, verbose=False)
+    
+    print("   - Initializing Unified AGI System...")
+    agi_system = create_unified_agi_system(registry)
+    
+    # 2. بدء دورة الاستقلال الذاتي (Autonomous Cycle)
+    print("   - Entering autonomous state...")
+    start_time = time.time()
+    
+    # تشغيل الدورة المستقلة
+    cycle_count = 0
+    thoughts_log = []
+    
     try:
-        # قد تحتاج الدالة لوسائط، سنجرب الافتراضي
-        snapshot_id = safety.create_snapshot("pre_optimization") if hasattr(safety, 'create_snapshot') else "mock_snapshot"
-        print(f"   >> Backup created: {snapshot_id}")
-    except:
-        print("   >> (Simulation) Snapshot logic skipped (Mock mode).")
-
-    # --- المرحلة 3: التوليد (The Developer) ---
-    print("\n🛠️ [Step 3] Generating code improvement...")
-    # نطلب من المولد حلاً للثغرة التي وجدها المحلل
-    proposed_patch = generator.generate_solution(report) if hasattr(generator, 'generate_solution') else {"code": "def optimize(): pass", "type": "optimization"}
-    print(f"   >> Patch Generated: {str(proposed_patch)[:50]}...")
-
-    # --- المرحلة 4: التحقق العلمي (The Scientist) ---
-    print("\nrts [Step 4] Scientific Verification (Theorem Proving)...")
-    # العالم يتأكد أن الكود الجديد منطقي رياضياً
-    is_valid = scientist.verify(proposed_patch) if hasattr(scientist, 'verify') else True
+        while (time.time() - start_time) < (duration_minutes * 60):
+            cycle_count += 1
+            remaining = (duration_minutes * 60) - (time.time() - start_time)
+            print(f"\n💤 Cycle #{cycle_count} (Time remaining: {int(remaining)}s)")
+            
+            try:
+                # تشغيل دورة قصيرة
+                result = await agi_system.autonomous_cycle(duration_seconds=60)
+                
+                # تسجيل النتائج
+                if result.get('log'):
+                    for entry in result['log']:
+                        goal_text = entry.get('goal', {}).get('goal', 'Exploring...')
+                        res_text = str(entry.get('result', ''))
+                        print(f"      💭 Thought: {goal_text}")
+                        print(f"         Result: {res_text[:100]}...")
+                        thoughts_log.append(entry)
+                        
+                        # === Active Learning Injection ===
+                        # محاولة تغذية النتائج للذاكرة الدلالية إذا كانت مفيدة
+                        if len(res_text) > 20 and "error" not in res_text.lower():
+                            print("      🧠 Consolidating memory...")
+                            # إضافة للذاكرة (محاكاة التعلم)
+                            if hasattr(agi_system, 'memory') and hasattr(agi_system.memory, 'add_memory'):
+                                agi_system.memory.add_memory(
+                                    content=f"Learned from night cycle: {goal_text} -> {res_text[:200]}",
+                                    memory_type="semantic",
+                                    importance=0.8
+                                )
+                            
+                            # تحديث الوعي
+                            if hasattr(agi_system, 'consciousness_tracker'):
+                                agi_system.consciousness_tracker.update_consciousness(
+                                    complexity=0.01, 
+                                    integration=0.01
+                                )
+                                
+            except Exception as e:
+                print(f"      ❌ Error in cycle: {e}")
+            
+            # فترة راحة قصيرة
+            await asyncio.sleep(2)
+            
+    except KeyboardInterrupt:
+        print("\n⚠️ Night cycle interrupted by user.")
     
-    if is_valid:
-        print("   ✅ Theorem Proved: The new logic is mathematically sound.")
-        print("\n🚀 [Final Step] Applying upgrade to Neural Core...")
-        # generator.apply_patch(proposed_patch) # (معطلة حالياً للأمان)
-        print(">> SYSTEM UPGRADED SUCCESSFULLY.")
-    else:
-        print("   ❌ Validation Failed: Logic flaw detected.")
-        print("\n⏪ [Rollback] Reverting to previous snapshot...")
-        # safety.restore(snapshot_id)
-
-    print("\n=== ☀️ NIGHT CYCLE COMPLETE (Ready for a smarter tomorrow) ===")
+    # 3. حفظ تقرير الحلم
+    print("\n🌅 Waking up...")
+    report = {
+        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "duration_minutes": duration_minutes,
+        "cycles_completed": cycle_count,
+        "consciousness_level_start": 0.15, 
+        "consciousness_level_end": agi_system.consciousness_level,
+        "thoughts": thoughts_log
+    }
+    
+    filename = f"night_cycle_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(report, f, indent=2, ensure_ascii=False)
+        
+    print(f"✅ Night cycle complete. Report saved to: {filename}")
+    print(f"📈 Consciousness Level: {agi_system.consciousness_level:.4f}")
 
 if __name__ == "__main__":
-    start_night_cycle_simulation()
+    duration = 1 
+    if len(sys.argv) > 1:
+        try:
+            duration = int(sys.argv[1])
+        except:
+            pass
+            
+    asyncio.run(run_night_cycle(duration))

@@ -1,0 +1,179 @@
+﻿python : [INFO] AGL.Core_Engines: ╪¬╪«╪╖┘è 
+OpenAI_KnowledgeEngine: ╪º╪│╪¬╪«╪»╪º┘à Ollama ╪╣╪¿╪▒ 
+AGL_LLM_PROVIDER/AGL_LLM_BASEURL
+At line:1 char:1
++ python test_advanced_engines.py 2>&1 | Out-File 
+-FilePath test_advanc ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([INFO] A 
+   GL.Core...AGL_LLM_BASEURL:String) [], RemoteExcep  
+  tion
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+INFO:AGL.Core_Engines:╪¬╪«╪╖┘è 
+OpenAI_KnowledgeEngine: ╪º╪│╪¬╪«╪»╪º┘à Ollama ╪╣╪¿╪▒ 
+AGL_LLM_PROVIDER/AGL_LLM_BASEURL
+[INFO] AGL.Core_Engines: ┘à╪¡╪▒┘â╪º╪¬ ┘à╪│╪¼┘æ┘Ä┘ä╪⌐: 
+['Mathematical_Brain', 'Quantum_Processor', 
+'Code_Generator', 'Protocol_Designer', 
+'Visual_Spatial', 'Strategic_Thinking', 
+'Social_Interaction', 'Creative_Innovation', 
+'NLP_Advanced', 'Causal_Graph', 'Reasoning_Layer', 
+'CAUSAL_GRAPH', 'HYPOTHESIS_GENERATOR', 
+'Reasoning_Planner', 'Meta_Learning', 
+'Self_Reflective', 'Curiosity_Engine', 
+'AdvancedMetaReasoner', 'Meta_Ensembler', 
+'General_Knowledge', 'GK_graph', 'GK_reasoner', 
+'GK_retriever', 'GK_verifier', 'Units_Validator', 
+'Consistency_Checker', 'Law_Matcher', 'Law_Parser', 
+'Robust_Regression', 'Hosted_LLM', 
+'Ollama_KnowledgeEngine', 'Hybrid_Reasoner', 
+'Analogy_Mapping_Engine', 'Moral_Reasoner', 
+'Prompt_Composer_V2', 'Self_Critique_and_Revise', 
+'Counterfactual_Explorer', 'Math_Prover_Lite', 
+'Plan-and-Execute_MicroPlanner', 
+'Humor_Irony_Stylist', 'Rubric_Enforcer', 
+'Quantum_Simulator_Wrapper', 'Core_Consciousness', 
+'C_Layer_StateLogger', 'Quantum_Neural_Core', 
+'Advanced_Exponential_Algebra']
+INFO:AGL.Core_Engines:┘à╪¡╪▒┘â╪º╪¬ ┘à╪│╪¼┘æ┘Ä┘ä╪⌐: 
+['Mathematical_Brain', 'Quantum_Processor', 
+'Code_Generator', 'Protocol_Designer', 
+'Visual_Spatial', 'Strategic_Thinking', 
+'Social_Interaction', 'Creative_Innovation', 
+'NLP_Advanced', 'Causal_Graph', 'Reasoning_Layer', 
+'CAUSAL_GRAPH', 'HYPOTHESIS_GENERATOR', 
+'Reasoning_Planner', 'Meta_Learning', 
+'Self_Reflective', 'Curiosity_Engine', 
+'AdvancedMetaReasoner', 'Meta_Ensembler', 
+'General_Knowledge', 'GK_graph', 'GK_reasoner', 
+'GK_retriever', 'GK_verifier', 'Units_Validator', 
+'Consistency_Checker', 'Law_Matcher', 'Law_Parser', 
+'Robust_Regression', 'Hosted_LLM', 
+'Ollama_KnowledgeEngine', 'Hybrid_Reasoner', 
+'Analogy_Mapping_Engine', 'Moral_Reasoner', 
+'Prompt_Composer_V2', 'Self_Critique_and_Revise', 
+'Counterfactual_Explorer', 'Math_Prover_Lite', 
+'Plan-and-Execute_MicroPlanner', 
+'Humor_Irony_Stylist', 'Rubric_Enforcer', 
+'Quantum_Simulator_Wrapper', 'Core_Consciousness', 
+'C_Layer_StateLogger', 'Quantum_Neural_Core', 
+'Advanced_Exponential_Algebra']
+[INFO] AGL.Core_Engines: ┘à╪¡╪▒┘â╪º╪¬ ┘à╪¬╪«╪╖┘æ╪º╪⌐ 
+(2): tensor_utils (no factory/class (utility 
+module?)), OpenAI_KnowledgeEngine (preferred provider 
+is Ollama (AGL_LLM_PROVIDER/AGL_LLM_BASEURL))
+INFO:AGL.Core_Engines:┘à╪¡╪▒┘â╪º╪¬ ┘à╪¬╪«╪╖┘æ╪º╪⌐ 
+(2): tensor_utils (no factory/class (utility 
+module?)), OpenAI_KnowledgeEngine (preferred provider 
+is Ollama (AGL_LLM_PROVIDER/AGL_LLM_BASEURL))
+[INFO] AGL.Core_Engines: ╪¬╪«╪╖┘è 
+OpenAI_KnowledgeEngine: ╪º╪│╪¬╪«╪»╪º┘à Ollama ╪╣╪¿╪▒ 
+AGL_LLM_PROVIDER/AGL_LLM_BASEURL
+INFO:AGL.Core_Engines:╪¬╪«╪╖┘è 
+OpenAI_KnowledgeEngine: ╪º╪│╪¬╪«╪»╪º┘à Ollama ╪╣╪¿╪▒ 
+AGL_LLM_PROVIDER/AGL_LLM_BASEURL
+[INFO] AGL.Core_Engines: ┘à╪¡╪▒┘â╪º╪¬ ┘à╪│╪¼┘æ┘Ä┘ä╪⌐: 
+['Mathematical_Brain', 'Quantum_Processor', 
+'Code_Generator', 'Protocol_Designer', 
+'Visual_Spatial', 'Strategic_Thinking', 
+'Social_Interaction', 'Creative_Innovation', 
+'NLP_Advanced', 'Causal_Graph', 'Reasoning_Layer', 
+'CAUSAL_GRAPH', 'HYPOTHESIS_GENERATOR', 
+'Reasoning_Planner', 'Meta_Learning', 
+'Self_Reflective', 'Curiosity_Engine', 
+'AdvancedMetaReasoner', 'Meta_Ensembler', 
+'General_Knowledge', 'GK_graph', 'GK_reasoner', 
+'GK_retriever', 'GK_verifier', 'Units_Validator', 
+'Consistency_Checker', 'Law_Matcher', 'Law_Parser', 
+'Robust_Regression', 'Hosted_LLM', 
+'Ollama_KnowledgeEngine', 'Hybrid_Reasoner', 
+'Analogy_Mapping_Engine', 'Moral_Reasoner', 
+'Prompt_Composer_V2', 'Self_Critique_and_Revise', 
+'Counterfactual_Explorer', 'Math_Prover_Lite', 
+'Plan-and-Execute_MicroPlanner', 
+'Humor_Irony_Stylist', 'Rubric_Enforcer', 
+'Quantum_Simulator_Wrapper', 'Core_Consciousness', 
+'C_Layer_StateLogger', 'Quantum_Neural_Core', 
+'Advanced_Exponential_Algebra']
+INFO:AGL.Core_Engines:┘à╪¡╪▒┘â╪º╪¬ ┘à╪│╪¼┘æ┘Ä┘ä╪⌐: 
+['Mathematical_Brain', 'Quantum_Processor', 
+'Code_Generator', 'Protocol_Designer', 
+'Visual_Spatial', 'Strategic_Thinking', 
+'Social_Interaction', 'Creative_Innovation', 
+'NLP_Advanced', 'Causal_Graph', 'Reasoning_Layer', 
+'CAUSAL_GRAPH', 'HYPOTHESIS_GENERATOR', 
+'Reasoning_Planner', 'Meta_Learning', 
+'Self_Reflective', 'Curiosity_Engine', 
+'AdvancedMetaReasoner', 'Meta_Ensembler', 
+'General_Knowledge', 'GK_graph', 'GK_reasoner', 
+'GK_retriever', 'GK_verifier', 'Units_Validator', 
+'Consistency_Checker', 'Law_Matcher', 'Law_Parser', 
+'Robust_Regression', 'Hosted_LLM', 
+'Ollama_KnowledgeEngine', 'Hybrid_Reasoner', 
+'Analogy_Mapping_Engine', 'Moral_Reasoner', 
+'Prompt_Composer_V2', 'Self_Critique_and_Revise', 
+'Counterfactual_Explorer', 'Math_Prover_Lite', 
+'Plan-and-Execute_MicroPlanner', 
+'Humor_Irony_Stylist', 'Rubric_Enforcer', 
+'Quantum_Simulator_Wrapper', 'Core_Consciousness', 
+'C_Layer_StateLogger', 'Quantum_Neural_Core', 
+'Advanced_Exponential_Algebra']
+[INFO] AGL.Core_Engines: ┘à╪¡╪▒┘â╪º╪¬ ┘à╪¬╪«╪╖┘æ╪º╪⌐ 
+(2): tensor_utils (no factory/class (utility 
+module?)), OpenAI_KnowledgeEngine (preferred provider 
+is Ollama (AGL_LLM_PROVIDER/AGL_LLM_BASEURL))
+INFO:AGL.Core_Engines:┘à╪¡╪▒┘â╪º╪¬ ┘à╪¬╪«╪╖┘æ╪º╪⌐ 
+(2): tensor_utils (no factory/class (utility 
+module?)), OpenAI_KnowledgeEngine (preferred provider 
+is Ollama (AGL_LLM_PROVIDER/AGL_LLM_BASEURL))
+INFO:Core_Engines.optimization_engine:Γ£à 
+OptimizationEngine initialized
+Γ£à [Mission] ╪¬┘à ╪¬╪¡┘à┘è┘ä ╪º┘ä┘à╪¡╪▒┘â╪º╪¬ ╪º┘ä┘à┘ê╪│╪╣╪⌐ ┘à┘å ENGINE_REGISTRY:
+   ≡ƒôè Registry Size: 46 ┘à╪¡╪▒┘â
+
+   ≡ƒÄ» ╪º┘ä┘à╪¡╪▒┘â╪º╪¬ ╪º┘ä╪ú╪│╪º╪│┘è╪⌐:
+      - MathematicalBrain: Γ£à
+      - OptimizationEngine: Γ£à
+      - AdvancedSimulationEngine: Γ£à
+      - CreativeInnovationEngine: Γ£à
+      - CausalGraphEngine: Γ£à
+      - HypothesisGeneratorEngine: Γ£à
+      - AdvancedMetaReasonerEngine: Γ£à
+      - AnalogyMappingEngine: Γ£à
+      - MetaLearningEngine: Γ£à
+
+   ≡ƒº¬ ╪º┘ä┘à╪¡╪▒┘â╪º╪¬ ╪º┘ä╪╣┘ä┘à┘è╪⌐:
+      - AutomatedTheoremProver: Γ£à
+      - ScientificResearchAssistant: Γ£à
+      - HardwareSimulator: Γ£à
+
+   ΓÜÖ∩╕Å ╪º┘ä┘à╪¡╪▒┘â╪º╪¬ ╪º┘ä┘ç┘å╪»╪│┘è╪⌐:
+      - AdvancedCodeGenerator: Γ£à
+      - IoTProtocolDesigner: Γ£à
+
+   ≡ƒºá ╪º┘ä╪¬╪¡╪│┘è┘å ╪º┘ä╪░╪º╪¬┘è:
+      - SelfImprovementEngine: Γ£à
+      - SelfMonitoringSystem: Γ£à
+
+   ΓÜ¢∩╕Å ╪º┘ä┘à╪¡╪▒┘â╪º╪¬ ╪º┘ä┘â┘à┘ê┘à┘è╪⌐:
+      - QuantumNeuralCore: Γ£à
+      - AdvancedExponentialAlgebra: Γ£à
+      - QuantumSimulatorWrapper: Γ£à
+
+   ≡ƒÄ» ┘à╪¡╪▒┘â╪º╪¬ ┘à╪╣╪▒┘ü┘è╪⌐:
+      - MoralReasoner: Γ£à
+      - CounterfactualExplorer: Γ£à
+      - PlanAndExecuteMicroPlanner: Γ£à
+      - SelfCritiqueAndRevise: Γ£à
+
+   Γ£à ┘à╪¡╪▒┘â╪º╪¬ ╪¼┘ê╪»╪⌐ ┘ê╪¬╪¡┘é┘é:
+      - UnitsValidator: Γ£à
+      - ConsistencyChecker: Γ£à
+      - RubricEnforcer: Γ£à
+      - MathProverLite: Γ£à
+
+   ≡ƒîƒ ╪ú┘å╪╕┘à╪⌐ ┘à╪¬┘é╪»┘à╪⌐:
+      - CoreConsciousness: Γ£à
+      - EvolutionEngine: Γ£à
+      - FastTrackCodeGeneration: Γ£à

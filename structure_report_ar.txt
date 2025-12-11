@@ -1,0 +1,18 @@
+﻿تقرير فحص البنية — أخطاء في ملفات بايثون:
+
+- الملف: `server.py` — عدد المشاكل: 1
+  - سطر غير محدد: [Syntax Error] File: server.py | Line: 27 | Msg: '(' was never closed
+- الملف: `torch_fake_backup.py` — عدد المشاكل: 1
+  - سطر غير محدد: [Syntax Error] File: torch_fake_backup.py | Line: 1 | Msg: invalid non-printable character U+FEFF
+- الملف: `Training_Panel.py` — عدد المشاكل: 1
+  - سطر غير محدد: [Syntax Error] File: Training_Panel.py | Line: 39 | Msg: unexpected indent
+- الملف: `Self_Model.py` — عدد المشاكل: 1
+  - سطر غير محدد: [Syntax Error] File: Self_Model.py | Line: 1 | Msg: invalid non-printable character U+FEFF
+- الملف: `orchestrator.py` — عدد المشاكل: 1
+  - سطر غير محدد: [Syntax Error] File: orchestrator.py | Line: 1 | Msg: invalid non-printable character U+FEFF
+- الملف: `Quantum_Neural_Core.cleaned.py` — عدد المشاكل: 1
+  - سطر غير محدد: [Syntax Error] File: Quantum_Neural_Core.cleaned.py | Line: 521 | Msg: unexpected indent
+- الملف: `rag_wrapper.py` — عدد المشاكل: 1
+  - سطر غير محدد: [Syntax Error] File: rag_wrapper.py | Line: 1 | Msg: invalid non-printable character U+FEFF
+- الملف: `download_qwen.py` — عدد المشاكل: 1
+  - سطر غير محدد: [Syntax Error] File: download_qwen.py | Line: 1 | Msg: (unicode error) 'unicodeescape' codec can't decode bytes in position 391-392: truncated \UXXXXXXXX escape

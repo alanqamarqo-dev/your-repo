@@ -1,0 +1,75 @@
+Found 74 Dormant Modules:
+Advanced_Exponential_Algebra - Not imported. -> Recommendation: Import Advanced_Exponential_Algebra to enable Advanced Exponential Algebra.
+analogy_mapping - Not imported. -> Recommendation: Import analogy_mapping to enable Analogy Mapping.
+Code_Generator - Not imported. -> Recommendation: Import Code_Generator to enable Code Generator.
+Consistency_Checker - Not imported. -> Recommendation: Import Consistency_Checker to enable Consistency Checker.
+counterfactual_explorer - Not imported. -> Recommendation: Import counterfactual_explorer to enable Counterfactual Explorer.
+domain_router - Not imported. -> Recommendation: Import domain_router to enable Domain Router.
+engine_base - Not imported. -> Recommendation: Import engine_base to enable Engine Base.
+experience_memory - Not imported. -> Recommendation: Import experience_memory to enable Experience Memory.
+External_InfoProvider - Not imported. -> Recommendation: Import External_InfoProvider to enable External Infoprovider.
+External_InfoProvider_PowerShellWrapper - Not imported. -> Recommendation: Import External_InfoProvider_PowerShellWrapper to enable External Infoprovider Powershellwrapper.
+General_Knowledge - Not imported. -> Recommendation: Import General_Knowledge to enable General Knowledge.
+GK_graph - Not imported. -> Recommendation: Import GK_graph to enable Gk Graph.
+GK_reasoner - Not imported. -> Recommendation: Import GK_reasoner to enable Gk Reasoner.
+GK_reasoner_engine - Not imported. -> Recommendation: Import GK_reasoner_engine to enable Gk Reasoner Engine.
+GK_retriever - Not imported. -> Recommendation: Import GK_retriever to enable Gk Retriever.
+GK_types - Not imported. -> Recommendation: Import GK_types to enable Gk Types.
+GK_verifier - Not imported. -> Recommendation: Import GK_verifier to enable Gk Verifier.
+Hosted_LLM - Not imported. -> Recommendation: Import Hosted_LLM to enable Hosted Llm.
+humor_stylist - Not imported. -> Recommendation: Import humor_stylist to enable Humor Stylist.
+hybrid_reasoner - Not imported. -> Recommendation: Import hybrid_reasoner to enable Hybrid Reasoner.
+hybrid_reasoner2 - Not imported. -> Recommendation: Import hybrid_reasoner2 to enable Hybrid Reasoner2.
+Hypothesis_Generator - Not imported. -> Recommendation: Import Hypothesis_Generator to enable Hypothesis Generator.
+Law_Matcher - Not imported. -> Recommendation: Import Law_Matcher to enable Law Matcher.
+Law_Parser - Not imported. -> Recommendation: Import Law_Parser to enable Law Parser.
+Mathematical_Brain - Not imported. -> Recommendation: Import Mathematical_Brain to enable Mathematical Brain.
+math_prover_lite - Not imported. -> Recommendation: Import math_prover_lite to enable Math Prover Lite.
+Meta_Ensembler - Not imported. -> Recommendation: Import Meta_Ensembler to enable Meta Ensembler.
+Meta_Learning_clean - Not imported. -> Recommendation: Import Meta_Learning_clean to enable Meta Learning Clean.
+micro_planner - Not imported. -> Recommendation: Import micro_planner to enable Micro Planner.
+Model_Structure_Searcher - Not imported. -> Recommendation: Import Model_Structure_Searcher to enable Model Structure Searcher.
+moral_reasoner - Not imported. -> Recommendation: Import moral_reasoner to enable Moral Reasoner.
+NLP_Advanced - Not imported. -> Recommendation: Import NLP_Advanced to enable Nlp Advanced.
+Ollama_Adapter - Not imported. -> Recommendation: Import Ollama_Adapter to enable Ollama Adapter.
+Ollama_KnowledgeEngine - Not imported. -> Recommendation: Import Ollama_KnowledgeEngine to enable Ollama Knowledgeengine.
+OpenAI_Adapter - Not imported. -> Recommendation: Import OpenAI_Adapter to enable Openai Adapter.
+OpenAI_KnowledgeEngine - Not imported. -> Recommendation: Import OpenAI_KnowledgeEngine to enable Openai Knowledgeengine.
+orchestrator - Not imported. -> Recommendation: Import orchestrator to enable Orchestrator.
+plan_microplanner - Not imported. -> Recommendation: Import plan_microplanner to enable Plan Microplanner.
+process_task_template - Not imported. -> Recommendation: Import process_task_template to enable Process Task Template.
+prompt_composer - Not imported. -> Recommendation: Import prompt_composer to enable Prompt Composer.
+prompt_composer_v2 - Not imported. -> Recommendation: Import prompt_composer_v2 to enable Prompt Composer V2.
+prompt_templates - Not imported. -> Recommendation: Import prompt_templates to enable Prompt Templates.
+Protocol_Designer - Not imported. -> Recommendation: Import Protocol_Designer to enable Protocol Designer.
+Quantum_Neural_Core.cleaned - Not imported. -> Recommendation: Import Quantum_Neural_Core.cleaned to enable Quantum Neural Core.Cleaned.
+Quantum_Processor - Not imported. -> Recommendation: Import Quantum_Processor to enable Quantum Processor.
+quantum_simulator_wrapper - Not imported. -> Recommendation: Import quantum_simulator_wrapper to enable Quantum Simulator Wrapper.
+Reasoning_Layer - Not imported. -> Recommendation: Import Reasoning_Layer to enable Reasoning Layer.
+Reasoning_Planner - Not imported. -> Recommendation: Import Reasoning_Planner to enable Reasoning Planner.
+Robust_Regression - Not imported. -> Recommendation: Import Robust_Regression to enable Robust Regression.
+rubric_enforcer - Not imported. -> Recommendation: Import rubric_enforcer to enable Rubric Enforcer.
+rubric_enforcer_engine - Not imported. -> Recommendation: Import rubric_enforcer_engine to enable Rubric Enforcer Engine.
+self_critique - Not imported. -> Recommendation: Import self_critique to enable Self Critique.
+self_critique_and_revise - Not imported. -> Recommendation: Import self_critique_and_revise to enable Self Critique And Revise.
+skills_registry - Not imported. -> Recommendation: Import skills_registry to enable Skills Registry.
+Social_Interaction - Not imported. -> Recommendation: Import Social_Interaction to enable Social Interaction.
+Strategic_Thinking - Not imported. -> Recommendation: Import Strategic_Thinking to enable Strategic Thinking.
+Symbolic_Grammar - Not imported. -> Recommendation: Import Symbolic_Grammar to enable Symbolic Grammar.
+tensor_utils - Not imported. -> Recommendation: Import tensor_utils to enable Tensor Utils.
+tri_verify - Not imported. -> Recommendation: Import tri_verify to enable Tri Verify.
+turn_contract - Not imported. -> Recommendation: Import turn_contract to enable Turn Contract.
+Units_Validator - Not imported. -> Recommendation: Import Units_Validator to enable Units Validator.
+Visual_Spatial - Not imported. -> Recommendation: Import Visual_Spatial to enable Visual Spatial.
+__init__ - Not imported. -> Recommendation: Import __init__ to enable   Init  .
+AlgebraSolver - Not imported. -> Recommendation: Import AlgebraSolver to enable Algebrasolver.
+BaseSolver - Not imported. -> Recommendation: Import BaseSolver to enable Basesolver.
+ChemistrySolver - Not imported. -> Recommendation: Import ChemistrySolver to enable Chemistrysolver.
+PhysicsSolver - Not imported. -> Recommendation: Import PhysicsSolver to enable Physicssolver.
+QuantumSolver - Not imported. -> Recommendation: Import QuantumSolver to enable Quantumsolver.
+__init__ - Not imported. -> Recommendation: Import __init__ to enable   Init  .
+Automated_Theorem_Prover - Not imported. -> Recommendation: Import Automated_Theorem_Prover to enable Automated Theorem Prover.
+Hardware_Simulator - Not imported. -> Recommendation: Import Hardware_Simulator to enable Hardware Simulator.
+Integrated_Simulation_Engine - Not imported. -> Recommendation: Import Integrated_Simulation_Engine to enable Integrated Simulation Engine.
+Scientific_Research_Assistant - Not imported. -> Recommendation: Import Scientific_Research_Assistant to enable Scientific Research Assistant.
+__init__ - Not imported. -> Recommendation: Import __init__ to enable   Init  .

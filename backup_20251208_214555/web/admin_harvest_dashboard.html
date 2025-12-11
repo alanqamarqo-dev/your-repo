@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AGL Harvest Dashboard</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; margin: 18px; }
+    pre { background:#f6f6f8; padding:12px; border-radius:6px; }
+    .row { display:flex; gap:12px; margin-bottom:12px }
+    .card { border:1px solid #ddd; padding:12px; border-radius:6px; flex:1 }
+    button { padding:8px 12px; }
+  </style>
+</head>
+<body>
+  <h2>AGL Harvest Dashboard</h2>
+  <div class="row">
+    <div class="card">
+      <h3>Status</h3>
+      <div id="status">Loading…</div>
+      <button id="refresh">Refresh</button>
+      <button id="clearReview">Clear Review Queue</button>
+    </div>
+    <div class="card">
+      <h3>External Info Cache</h3>
+      <div id="cache">Loading…</div>
+      <button id="clearCache">Clear Cache</button>
+    </div>
+  </div>
+
+  <h3>Recent harvested facts</h3>
+  <pre id="facts">Loading…</pre>
+
+  <h3>Recent review items</h3>
+  <pre id="review">Loading…</pre>
+
+  <script>
+    const $ = id => document.getElementById(id)
+    async function load() {
+      try {
+        const s = await fetch('/harvest/status').then(r => r.json())
+        $('status').textContent = JSON.stringify(s, null, 2)
+      } catch (e) { $('status').textContent = 'error: ' + e }
+
+      try {
+        const c = await fetch('/admin/external-info').then(r => r.json())
+        $('cache').textContent = JSON.stringify(c, null, 2)
+      } catch (e) { $('cache').textContent = 'error: ' + e }
+
+      try {
+        const facts = await fetch('/static/artifacts/harvested_facts.jsonl').then(r => r.text())
+        $('facts').textContent = facts.split('\n').slice(-20).filter(Boolean).join('\n') || 'no facts yet'
+      } catch (e) { $('facts').textContent = 'error: ' + e }
+
+      try {
+        const rev = await fetch('/admin/harvest/review').then(r => r.json())
+        $('review').textContent = JSON.stringify(rev, null, 2)
+      } catch (e) { $('review').textContent = 'error: ' + e }
+    }
+
+    $('refresh').addEventListener('click', load)
+    $('clearCache').addEventListener('click', async () => {
+      const r = await fetch('/admin/external-info/clear', { method: 'POST' }).then(r => r.json())
+      alert(JSON.stringify(r))
+      load()
+    })
+    $('clearReview').addEventListener('click', async () => {
+      if (!confirm('Clear review queue? This is destructive.')) return
+      const r = await fetch('/admin/harvest/review/clear', { method: 'POST' }).then(r => r.json())
+      alert(JSON.stringify(r))
+      load()
+    })
+
+    load()
+  </script>
+</body>
+</html>

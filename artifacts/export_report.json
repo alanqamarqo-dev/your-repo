@@ -1,0 +1,15 @@
+{
+  "export_timestamp": "2025-12-08T02:32:07.549437",
+  "total_experiences": 5,
+  "dataset_ready": true,
+  "statistics": {
+    "total": 5,
+    "by_type": {
+      "learning_event": 5
+    },
+    "by_source": {
+      "events_jsonl": 5
+    }
+  },
+  "finetune_jsonl": "artifacts\\finetune_examples.jsonl"
+}

@@ -4,5 +4,29 @@
     "epoch": 1,
     "avg_reward": 0.65,
     "weights_checksum": "bcc56ad430bd"
+  },
+  {
+    "ts": "2025-12-07T23:13:49.762878Z",
+    "epoch": 2,
+    "avg_reward": 0.0,
+    "weights_checksum": "44136fa355b3"
+  },
+  {
+    "ts": "2025-12-07T23:18:24.812646Z",
+    "epoch": 3,
+    "avg_reward": 0.0,
+    "weights_checksum": "44136fa355b3"
+  },
+  {
+    "ts": "2025-12-07T23:20:26.165492Z",
+    "epoch": 4,
+    "avg_reward": 0.0,
+    "weights_checksum": "44136fa355b3"
+  },
+  {
+    "ts": "2025-12-07T23:20:50.844620Z",
+    "epoch": 5,
+    "avg_reward": 0.0,
+    "weights_checksum": "44136fa355b3"
   }
 ]

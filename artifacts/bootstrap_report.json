@@ -27,6 +27,7 @@
     "Units_Validator",
     "Consistency_Checker",
     "Law_Matcher",
+    "Web_Search_Engine",
     "Law_Parser",
     "Robust_Regression",
     "Hosted_LLM",
@@ -45,8 +46,7 @@
     "Core_Consciousness",
     "C_Layer_StateLogger",
     "Quantum_Neural_Core",
-    "Advanced_Exponential_Algebra",
-    "FakeEngine"
+    "Advanced_Exponential_Algebra"
   ],
   "skipped": {
     "tensor_utils": "no factory/class (utility module?)",

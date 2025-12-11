@@ -1,0 +1,125 @@
+{
+  "engineering": {
+    "overview": "نظام ثلاثي مزيج من طاقة شمسية مُسخَّنة، مفاعلات نووية صغيرة MODULAR (SMR)، ووحدة مبتكرة: مولّد معياري يعمل بتخزين حراري عميق ومضاهاة وقود محلي جزئي.",
+    "solar": {
+      "role": "primary during clear periods",
+      "capacity_kw": 25000,
+      "notes": "مزارع شمسية مائلة + مرايا مركزة للحفاظ على الإنتاج خلال زاوية شمس منخفضة"
+    },
+    "nuclear": {
+      "role": "baseline & storm-resilient",
+      "type": "SMR (micro-modular)",
+      "capacity_kw": 12000,
+      "redundancy": 2,
+      "notes": "تصميم داخل مغطس مضاد للإشعاع وحراري للعمل عند -125C مع أنظمة تبادل حراري ومبادلات حرارية فعّالة"
+    },
+    "innovative": {
+      "role": "peak shaving and long-term storage discharge",
+      "concepts": [
+        "radioisotope thermal storage",
+        "solid-state thermal batteries",
+        "regenerative fuel cells (CO2/CH4 loop)"
+      ],
+      "notes": "الوحدة المبتكرة تعمل كمخزن طاقة حراري عالي الكثافة ومصدر طاقة احتياطي طويل الأمد"
+    }
+  },
+  "distribution_algorithm": {
+    "description": "خوارزمية أولوية مرنة تعتمد على فئات الأحمال (حياتي، علمي، تجريبي، تجاري)، ومستوى طاقة المخزون، وتنبؤ إنتاج الطاقة الشمسي لمدة 48 ساعة، وحالة العاصفة.",
+    "priorities": [
+      "life_support",
+      "critical_research",
+      "communications",
+      "habitat_comfort",
+      "non_critical"
+    ],
+    "pseudocode": "function allocate_power(demand_profile, generation_forecast, storage_state, storm_flag):\n  score loads by (priority_weight / (1 + elasticity)) and by criticality;\n  if storm_flag: reduce solar_forecast by X% and raise nuclear_reserve;\n  compute available = generation_forecast + storage_state.dischargeable;\n  allocate to highest score until available exhausted;\n  schedule deferrable loads and pre-charge storage if surplus expected;\n  return allocation_plan"
+  },
+  "storage_system": {
+    "primary": "solid-state thermal battery + molten-salt like hybrid (engineered for -120C to 1000C containment)",
+    "capacity_mwh": 1500,
+    "cycle_life_years": 10,
+    "notes": "مكدس متعدد الطبقات: عازل فراغي حراري، عنصر تسخين بالهواء، ومبادل حراري للأحمال. صُمِّم للعمل دون سوائل متطايرة."
+  },
+  "simulation_plan": {
+    "duration_martian_years": 5,
+    "timestep_hours": 1,
+    "models": [
+      "orbital_insolation_model",
+      "dust_storm_occurrence_model",
+      "component_degradation_model",
+      "crew_load_profile_model"
+    ],
+    "outputs": [
+      "energy_balance_over_time",
+      "probability_of_blackout",
+      "maintenance_schedule",
+      "lifecycle_costs"
+    ],
+    "method": "Monte Carlo with 1000 stochastic storm scenarios; component degradation per-cycle and dust accumulation modeled as exponential opacity increase during storms."
+  },
+  "emergency_plan": {
+    "short_term_storm": [
+      "isolate solar arrays",
+      "switch to nuclear baseline",
+      "prioritize life_support and comms",
+      "enter minimal crew operations"
+    ],
+    "long_term_storm_weeks": [
+      "conserve consumables",
+      "shutdown nonessential experiments",
+      "use regolith-based passive thermal buffering",
+      "dispatch maintenance drones when opacity < threshold"
+    ],
+    "resilience_measures": [
+      "deployable dust-repellant electrostatic covers",
+      "robotic cleaning swarms",
+      "modular hot-swap power pods"
+    ]
+  },
+  "hypotheses": [
+    {
+      "id": "H1",
+      "text": "استخدام SMR كقلب طاقة مرن مع مرافق تخزين حراري يقلل احتمال انقطاع الطاقة إلى <1% خلال العواصف الطويلة.",
+      "supporting_math": "نموذج بسيط: P_required = 10MW baseline; nuclear_capacity = 12MW * 2 units; failure_prob ~ negligible; storage buffers 1.5MWh handles peak gaps."
+    },
+    {
+      "id": "H2",
+      "text": "نظام مرايا مركزة زائد مزارع شمسية زاوية مائلة يقلل فقد الطاقة بسبب زاوية الشمس المائلة ويعطي +30% إنتاج خلال الشتاء المريخي.",
+      "supporting_math": "insolation_gain ≈ cos(theta_adjust) model; combined with concentrators increases effective irradiance."
+    },
+    {
+      "id": "H3",
+      "text": "استخدام تخزين حراري صلب مع تبادل حراري منخفض الفقد يطيل فترات دعم الحياة بدون دخل خارجي إلى أسابيع.",
+      "supporting_math": "Q = m*c*ΔT, choose phase-change/solid-state with high latent heat to maximize stored energy per mass."
+    }
+  ],
+  "evaluation_scores": {
+    "technical_depth": {
+      "score": 8,
+      "notes": "تفصيل هندسي عالي المستوى مع تقديرات نُسبية."
+    },
+    "creativity": {
+      "score": 8,
+      "notes": "يقدّم حلولاً جديدة مثل التخزين الحراري الصلب والتكامل SMR."
+    },
+    "integration": {
+      "score": 7,
+      "notes": "يجمع تخصصات متعددة لكن يتطلب عمل تفصيلي لكل عنصر."
+    },
+    "realism": {
+      "score": 7,
+      "notes": "مستند على تقنيات موجودة مع تبسيط كبير للمتطلبات الحرارية والكتلية."
+    },
+    "innovation": {
+      "score": 8,
+      "notes": "حلول مبتكرة في التخزين والطاقة الاحتياطية."
+    }
+  },
+  "metadata": {
+    "generated_at": "2025-12-08T21:38:25.071164Z",
+    "generator": "fallback_internal_v1",
+    "prompt_summary": "صمم نظام طاقة متكامل لمستعمرة مريخية تضم 1000 نسمة، مع الأخذ في الاعتبار:\n1. اختلاف اليوم المريخي (24.6 ساعة)\n2. العواصف الترابية التي تستمر لأسابيع\n3. نقص الموارد المحلية\n4. درجات حرارة بين -125°C إل",
+    "used_llm": false,
+    "ran_at": "2025-12-08T21:38:25.071277Z"
+  }
+}

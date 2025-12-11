@@ -1,0 +1,26 @@
+domains:
+  - name: "Artificial Intelligence"
+    target_facts: 50
+    seeds:
+      - "Transformer Architecture"
+      - "Reinforcement Learning"
+      - "Neural Symbolic AI"
+      - "Consciousness in AI"
+
+  - name: "Quantum Physics"
+    target_facts: 30
+    seeds:
+      - "Quantum Entanglement"
+      - "Superposition"
+      - "Quantum Computing Algorithms"
+
+  - name: "Cognitive Science"
+    target_facts: 30
+    seeds:
+      - "Memory Consolidation"
+      - "Attention Mechanisms"
+      - "Metacognition"
+
+global_settings:
+  min_confidence: 0.8
+  max_retries: 3
