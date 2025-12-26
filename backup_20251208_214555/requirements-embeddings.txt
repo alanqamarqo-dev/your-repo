@@ -1,7 +1,0 @@
-torch==2.* ; platform_system != "Windows" or platform_machine != "arm64"
-sentence-transformers==3.*
-faiss-cpu==1.*
-scikit-learn>=1.3
-numpy>=1.26
-scipy>=1.11
-pandas>=2.0

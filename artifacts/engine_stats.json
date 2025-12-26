@@ -1,6 +1,14 @@
 {
   "gen_creativity": {
-    "quality_ma": 0.6332000000000001,
+    "quality_ma": 0.8700000000000002,
     "latency_ma": 0.0
+  },
+  "UnifiedAGI": {
+    "quality_ma": 0.9852833037954292,
+    "latency_ma": 0.0,
+    "calls": 317
+  },
+  "Scientific_Systems": {
+    "quality_ma": 0.9899999999999998
   }
 }

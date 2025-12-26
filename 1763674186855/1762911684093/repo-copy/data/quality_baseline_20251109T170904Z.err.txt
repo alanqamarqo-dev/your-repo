@@ -1,2 +1,0 @@
-Memory bootstrap: imported 96 LTM rows
-Memory bootstrap: semantic index built (96 docs)

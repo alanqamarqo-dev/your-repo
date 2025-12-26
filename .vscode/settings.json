@@ -10,6 +10,9 @@
     "python.analysis.extraPaths": [
         "./order_",
         "./repo-copy",
-        "./repo-copy/dynamic_modules"
+        "./repo-copy/dynamic_modules",
+        "./repo-copy/Core_Engines",
+        "./repo-copy/scripts",
+        "./repo-copy/Safety_Systems"
     ]
 }

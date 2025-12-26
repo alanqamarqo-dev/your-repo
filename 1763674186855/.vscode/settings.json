@@ -1,8 +1,0 @@
-{
-    "git.ignoreLimitWarning": true,
-    "python.testing.pytestArgs": [
-        "AGL"
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
-}

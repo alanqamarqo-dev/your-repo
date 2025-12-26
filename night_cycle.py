@@ -19,9 +19,17 @@ except ImportError:
     from dynamic_modules.unified_agi_system import create_unified_agi_system
     from Core_Engines import bootstrap_register_all_engines
 
+try:
+    from repo_copy.Core_Engines.Dreaming_Cycle import DreamingEngine # type: ignore
+except ImportError:
+    from Core_Engines.Dreaming_Cycle import DreamingEngine
+
 async def run_night_cycle(duration_minutes=5):
     print(f"🌙 Starting AGL Night Cycle (Dreaming Mode)...")
     print(f"⏱️  Duration: {duration_minutes} minutes")
+    
+    # Initialize Dreaming Engine
+    dreaming_engine = DreamingEngine()
     
     # 1. تهيئة النظام
     registry = {}
@@ -58,6 +66,9 @@ async def run_night_cycle(duration_minutes=5):
                         print(f"         Result: {res_text[:100]}...")
                         thoughts_log.append(entry)
                         
+                        # Add to Dreaming Engine Buffer
+                        dreaming_engine.add_to_buffer(f"Goal: {goal_text}, Result: {res_text}")
+                        
                         # === Active Learning Injection ===
                         # محاولة تغذية النتائج للذاكرة الدلالية إذا كانت مفيدة
                         if len(res_text) > 20 and "error" not in res_text.lower():
@@ -86,7 +97,11 @@ async def run_night_cycle(duration_minutes=5):
     except KeyboardInterrupt:
         print("\n⚠️ Night cycle interrupted by user.")
     
-    # 3. حفظ تقرير الحلم
+    # 3. Deep Sleep Consolidation
+    print("\n🧠 Starting Deep Sleep Consolidation...")
+    dream_results = dreaming_engine.run_dream_cycle(duration_seconds=120)
+    
+    # 4. حفظ تقرير الحلم
     print("\n🌅 Waking up...")
     report = {
         "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -94,7 +109,8 @@ async def run_night_cycle(duration_minutes=5):
         "cycles_completed": cycle_count,
         "consciousness_level_start": 0.15, 
         "consciousness_level_end": agi_system.consciousness_level,
-        "thoughts": thoughts_log
+        "thoughts": thoughts_log,
+        "dream_consolidation": dream_results
     }
     
     filename = f"night_cycle_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"

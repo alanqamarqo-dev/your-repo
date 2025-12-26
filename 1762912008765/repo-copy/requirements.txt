@@ -1,7 +1,0 @@
-numpy>=2.3.3
-scipy>=1.16.2
-sympy>=1.14.0
-matplotlib>=3.7.0
-pint>=0.23
-# project requirements
-openai>=1.40.0

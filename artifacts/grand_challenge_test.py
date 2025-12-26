@@ -5,13 +5,13 @@ import json
 
 # Add repo root to path
 root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(root_dir)
-sys.path.append(os.path.join(root_dir, 'repo-copy'))
+repo_copy_dir = os.path.join(root_dir, 'repo-copy')
+if repo_copy_dir not in sys.path:
+    sys.path.insert(0, repo_copy_dir)
 
-# Ensure environment variables
-os.environ['AGL_LLM_PROVIDER'] = 'ollama'
-os.environ['AGL_LLM_MODEL'] = 'qwen2.5:7b-instruct'
-os.environ['AGL_LLM_BASEURL'] = 'http://localhost:11434'
+import agl_paths
+agl_paths.setup_sys_path()
+agl_paths.load_env_defaults()
 
 try:
     from dynamic_modules.mission_control_enhanced import EnhancedMissionController, SCIENTIFIC_ORCHESTRATOR
@@ -68,7 +68,35 @@ async def run_grand_challenge():
                 summary = result['llm_summary'].get('summary', '')
             else:
                 summary = str(result.get('llm_summary', ''))
+            
+            # --- SHOW INTERNAL ENGINE WORK (THE "STRENGTH") ---
+            print("\n    🔍 [INTERNAL ENGINE DATA - EVIDENCE OF REAL WORK]:")
+            cluster_res = result.get('cluster_result', {})
+            if isinstance(cluster_res, dict):
+                # Show the specific engine that did the work
+                active_engine = cluster_res.get('engine', 'Unknown')
+                confidence = cluster_res.get('confidence', 0.0)
+                print(f"       ⚙️ Active Engine: {active_engine}")
+                print(f"       🧠 Confidence Score: {confidence}")
                 
+                # Show specific keys based on engine type to prove it's not just text
+                if 'calculations' in cluster_res:
+                    print(f"       🧮 Calculations: {str(cluster_res['calculations'])[:200]}...")
+                if 'simulation' in cluster_res:
+                    print(f"       🧪 Simulation Data: {str(cluster_res['simulation'])[:200]}...")
+                if 'reasoning_trace' in cluster_res:
+                    print(f"       🔗 Reasoning Steps: {len(cluster_res['reasoning_trace'])} steps executed.")
+                
+                # If it's a raw output, show a snippet
+                if 'output' in cluster_res:
+                    out_preview = str(cluster_res['output'])[:150].replace('\n', ' ')
+                    print(f"       📄 Raw Engine Output Preview: {out_preview}...")
+            else:
+                print(f"       ⚠️ Raw Result: {str(cluster_res)[:200]}...")
+            print("    ---------------------------------------------------\n")
+
+            print(f"    📝 [FULL LLM OUTPUT]:\n    {summary}\n")
+
             results[task['name']] = "✅ Success" if summary else "⚠️ No Output Captured (Check Stream)"
             
             print(f"    Result Captured: {len(summary)} chars")

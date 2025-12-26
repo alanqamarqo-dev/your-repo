@@ -1,7 +1,0 @@
-law_name,I,R,V,units_I,units_R,units_V,split
-ohm,100,10,1.01,mA,ohm,V,train
-ohm,200,10,2.02,mA,ohm,V,train
-ohm,300,10,2.98,mA,ohm,V,train
-ohm,500,10,5.00,mA,ohm,V,train
-ohm,400,10,4.02,mA,ohm,V,val
-ohm,600,10,5.98,mA,ohm,V,test

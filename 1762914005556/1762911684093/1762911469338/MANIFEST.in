@@ -1,3 +1,0 @@
-global-include *.md *.json *.txt *.html
-recursive-include reports *
-recursive-include artifacts *

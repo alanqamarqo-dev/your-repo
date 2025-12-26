@@ -1,0 +1,25 @@
+Cycle 1:
+Previous Layers: [5, 10, 20]
+Updated Layers:  [np.int64(-5), np.int64(-10), np.int64(20)]
+Prediction:      35
+
+Cycle 2:
+Previous Layers: [np.int64(-5), np.int64(10), np.int64(-20)]
+Updated Layers:  [np.int64(-5), np.int64(-10), np.int64(20)]
+Prediction:      175
+
+Cycle 3:
+Previous Layers: [np.int64(5), np.int64(-10), np.int64(20)]
+Updated Layers:  [np.int64(-5), np.int64(-10), np.int64(20)]
+Prediction:      140
+
+Cycle 4:
+Previous Layers: [np.int64(-5), np.int64(10), np.int64(20)]
+Updated Layers:  [np.int64(-5), np.int64(-10), np.int64(20)]
+Prediction:      -60
+
+Cycle 5:
+Previous Layers: [np.int64(5), np.int64(10), np.int64(20)]
+Updated Layers:  [np.int64(-5), np.int64(-10), np.int64(20)]
+Prediction:      -60
+

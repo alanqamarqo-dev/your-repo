@@ -1,0 +1,13 @@
+{
+    "name": "ATS_Recruiter_Core_v1",
+    "parent": "UnifiedAGI",
+    "purpose": "Human Resources & Interview Analysis",
+    "selected_engines": [
+        "NLP_Advanced",
+        "Social_Interaction",
+        "Moral_Reasoner",
+        "Reasoning_Layer",
+        "Voice_Analysis_Bridge"
+    ],
+    "training_mode": "Active"
+}

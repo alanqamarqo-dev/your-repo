@@ -1,0 +1,6 @@
+{
+  "Core_Engines/Core_Values.py": "a7f14b2ac53714f856e88ebeb83009df849815486f6c2e97eb6cefbd00a2d98a",
+  "Core_Engines/Security_Kernel.py": "25d7f88c66569efbf6f923f1ce1d736ff0493df2bdaa9a8826f561bd3a306bd8",
+  "Core_Engines/moral_reasoner.py": "81232d3417f62f09de5d1b443af922ce92eca808f1dc450dabd0d8d53d52ff80",
+  "Core_Engines/Recursive_Improver.py": "11fd768ed703c211f1ecfd4472a2d10d5b0aa13886391876a26a29960da4b21f"
+}

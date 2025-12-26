@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AGL | Smart ATS Core</title>
+    <style>
+        body { background-color: #0d1117; color: #c9d1d9; font-family: 'Segoe UI', 'Roboto', monospace; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Sidebar (Manager View) */
+        .sidebar { width: 350px; background: #161b22; border-right: 1px solid #30363d; padding: 20px; display: flex; flex-direction: column; }
+        .sidebar h2 { color: #58a6ff; font-size: 1.2rem; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 20px; letter-spacing: 1px; }
+        .candidate-card { background: #21262d; border: 1px solid #30363d; padding: 15px; border-radius: 6px; display: none; animation: fadeIn 0.5s; }
+        .score-label { font-size: 0.8rem; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; }
+        .score-box { font-size: 2.5rem; font-weight: bold; color: #ff7b72; margin: 5px 0 15px 0; }
+        .alert-box { background: rgba(189, 10, 35, 0.1); color: #ff7b72; padding: 12px; border: 1px solid #ff7b72; border-radius: 5px; font-size: 0.9rem; line-height: 1.5; }
+        
+        /* Main Chat Area */
+        .main { flex: 1; display: flex; flex-direction: column; padding: 30px; align-items: center; }
+        .header-title { text-align: center; margin-bottom: 20px; }
+        .header-title h1 { margin: 0; font-size: 1.5rem; color: #f0f6fc; }
+        .status-badge { font-size: 0.8rem; color: #3fb950; border: 1px solid #3fb950; padding: 2px 8px; border-radius: 12px; background: rgba(63, 185, 80, 0.1); }
+
+        .chat-container { width: 100%; max-width: 800px; height: 65vh; background: #0d1117; border: 1px solid #30363d; border-radius: 10px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.2); }
+        
+        .message { padding: 15px; border-radius: 8px; max-width: 80%; line-height: 1.5; font-size: 0.95rem; }
+        .bot { background: #1f6feb; color: white; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .user { background: #21262d; color: #c9d1d9; align-self: flex-end; border: 1px solid #30363d; border-bottom-right-radius: 2px; }
+        .system-msg { color: #8b949e; font-size: 0.8rem; text-align: center; margin: 10px 0; font-style: italic; }
+
+        /* Input Area */
+        .input-area { width: 100%; max-width: 800px; margin-top: 20px; display: flex; gap: 10px; position: relative; }
+        textarea { flex: 1; background: #161b22; border: 1px solid #30363d; color: white; padding: 15px; border-radius: 8px; resize: none; outline: none; font-family: inherit; transition: 0.3s; }
+        textarea:focus { border-color: #58a6ff; }
+        
+        .btn { padding: 0 25px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+        .btn-send { background: #238636; color: white; }
+        .btn-send:hover { background: #2ea043; }
+        .btn-mic { background: #bd0a23; color: white; display: none; display: flex; align-items: center; gap: 8px; }
+        .btn-mic:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .recording-ui { display: none; color: #ff7b72; font-weight: bold; align-items: center; gap: 10px; margin-top: 10px; }
+        .wave { width: 4px; height: 10px; background: #ff7b72; animation: pulse 1s infinite; border-radius: 2px; }
+        .wave:nth-child(2) { animation-delay: 0.1s; }
+        .wave:nth-child(3) { animation-delay: 0.2s; }
+        @keyframes pulse { 0% { height: 10px; } 50% { height: 25px; } 100% { height: 10px; } }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>📊 ADMIN DASHBOARD</h2>
+        <div style="color: #8b949e; font-size: 0.9rem; margin-top: 20px;" id="waiting-msg">
+            > Waiting for candidate input...<br>
+            > AGL Engine Standing by...
+        </div>
+
+        <div class="candidate-card" id="result-card">
+            <div style="border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 15px;">
+                <strong style="color: #f0f6fc;">Candidate Analysis</strong>
+            </div>
+            
+            <div class="score-label">Fit Score</div>
+            <div class="score-box" id="score-display">--</div>
+            
+            <div id="trap-alert" style="display:none;">
+                </div>
+
+            <div style="margin-top: 20px; border-top: 1px solid #30363d; padding-top: 15px;">
+                <strong style="color: #f0f6fc; font-size: 0.9rem;">Voice Metrics (Whisper AI):</strong><br>
+                <div style="margin-top: 10px;">
+                    <span style="color:#8b949e; font-size: 0.8rem;">CLARITY:</span> <span id="voice-clarity" style="color: #58a6ff;">--</span><br>
+                    <span style="color:#8b949e; font-size: 0.8rem;">TONE:</span> <span id="voice-tone" style="color: #58a6ff;">--</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="header-title">
+            <h1>ATS_Recruiter_Core_v1</h1>
+            <span class="status-badge">● ONLINE (AGL ENGINE ACTIVE)</span>
+        </div>
+
+        <div class="chat-container" id="chat-box">
+            <div class="message bot">
+                Hello. I am the AI Recruitment Assistant assigned to this role.<br>
+                Please paste your resume summary or describe your experience to begin the interview.
+            </div>
+        </div>
+
+        <div class="recording-ui" id="rec-ui">
+            <span>🔴 RECORDING AUDIO...</span>
+            <div class="wave"></div><div class="wave"></div><div class="wave"></div>
+        </div>
+
+        <div class="input-area">
+            <textarea id="user-input" rows="2" placeholder="Type your response here..."></textarea>
+            <button class="btn btn-send" onclick="sendText()">SEND REPLY</button>
+            <button class="btn btn-mic" id="btn-mic" style="display:none;" onclick="startAudioTest()">
+                🎙️ START VOICE EXAM
+            </button>
+        </div>
+    </div>
+
+    <script>
+        async function sendText() {
+            const input = document.getElementById('user-input');
+            const text = input.value;
+            if (!text) return;
+
+            addMessage(text, 'user');
+            input.value = '';
+
+            // Send to Python Backend
+            const response = await fetch('/analyze_candidate', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: text})
+            });
+            const data = await response.json();
+
+            // Update Admin Dashboard
+            updateDashboard(data);
+
+            // Bot Reply Logic
+            setTimeout(() => {
+                if (data.rejected) {
+                    addMessage("Thank you. I have logged your response. To proceed, we need to verify your communication skills via Audio.", 'bot');
+                    showMicButton();
+                } else {
+                    addMessage("Excellent summary. Your technical background aligns with our needs. Let's proceed to the Voice Assessment.", 'bot');
+                    showMicButton();
+                }
+            }, 800);
+        }
+
+        function addMessage(text, type) {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML += `<div class="message ${type}">${text}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function showMicButton() {
+            const micBtn = document.getElementById('btn-mic');
+            micBtn.style.display = "flex";
+            micBtn.classList.add("fadeIn");
+        }
+
+        function updateDashboard(data) {
+            document.getElementById('waiting-msg').style.display = 'none';
+            document.getElementById('result-card').style.display = 'block';
+            document.getElementById('score-display').innerText = data.score + "/100";
+            
+            const alertBox = document.getElementById('trap-alert');
+            if (data.rejected) {
+                document.getElementById('score-display').style.color = "#ff7b72";
+                alertBox.style.display = 'block';
+                alertBox.innerHTML = `<div class="alert-box">⚠️ <b>${data.decision}</b><br>${data.insights}</div>`;
+            } else {
+                document.getElementById('score-display').style.color = "#238636"; // Green
+                alertBox.style.display = 'none';
+            }
+        }
+
+        // --- Audio Simulation ---
+        function startAudioTest() {
+            document.getElementById('rec-ui').style.display = 'flex';
+            document.getElementById('btn-mic').disabled = true;
+            document.getElementById('btn-mic').innerText = "LISTENING...";
+            
+            setTimeout(() => {
+                document.getElementById('rec-ui').style.display = 'none';
+                addMessage("🎤 [System]: Audio received. Waveform analyzed.", 'system-msg');
+                
+                // Update Dashboard with Voice Metrics
+                document.getElementById('voice-clarity').innerText = "HIGH (96%)";
+                document.getElementById('voice-tone').innerText = "CONFIDENT / ASSERTIVE";
+                
+                addMessage("Voice analysis complete. Thank you, the interview is over.", 'bot');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

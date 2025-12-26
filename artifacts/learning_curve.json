@@ -28,5 +28,23 @@
     "epoch": 5,
     "avg_reward": 0.0,
     "weights_checksum": "44136fa355b3"
+  },
+  {
+    "ts": "2025-12-15T23:40:08.326805Z",
+    "epoch": 6,
+    "avg_reward": 0.75,
+    "weights_checksum": "8ed6b3babb3a"
+  },
+  {
+    "ts": "2025-12-15T23:43:39.949557Z",
+    "epoch": 7,
+    "avg_reward": 0.75,
+    "weights_checksum": "3da5dfa7b9ea"
+  },
+  {
+    "ts": "2025-12-15T23:47:43.166802Z",
+    "epoch": 8,
+    "avg_reward": 0.7793032854834294,
+    "weights_checksum": "3b32ce218c32"
   }
 ]
