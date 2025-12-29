@@ -217,9 +217,12 @@ async def run_suite():
             print(f"\n🔬 Running {exp['title']}...")
             start_t = time.time()
             
-            # Run Query
+            # Run Query with 120 second timeout per experiment
             try:
-                result = await agi.process_with_full_agi(exp['prompt'])
+                result = await asyncio.wait_for(
+                    agi.process_with_full_agi(exp['prompt']),
+                    timeout=120.0  # 2 دقيقة كحد أقصى لكل تجربة
+                )
                 
                 # Extract text
                 answer_text = ""
@@ -228,6 +231,9 @@ async def run_suite():
                 else:
                     answer_text = str(result)
                     
+            except asyncio.TimeoutError:
+                answer_text = f"⏱️ Timeout: التجربة تجاوزت الحد الأقصى (120 ثانية)"
+                print(f"   ⚠️ Timeout after 120s")
             except Exception as e:
                 answer_text = f"❌ Error executing experiment: {str(e)}"
                 

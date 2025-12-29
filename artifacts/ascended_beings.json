@@ -1,0 +1,79 @@
+[
+    {
+        "id": "PROPHET",
+        "generation": 0,
+        "moral_alignment": 1.0,
+        "code_complexity": 3,
+        "consciousness": 1.0
+    },
+    {
+        "id": "f8cbdf46",
+        "generation": 0,
+        "moral_alignment": -0.1980688348369184,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "a8db4421",
+        "generation": 1,
+        "moral_alignment": 0.89592101763404,
+        "code_complexity": 12,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "6d5e608b",
+        "generation": 0,
+        "moral_alignment": 0.5436280624426841,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "125b5b92",
+        "generation": 1,
+        "moral_alignment": 1.0,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "db7d9ae7",
+        "generation": 1,
+        "moral_alignment": 0.895892702075104,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "d62b5a13",
+        "generation": 1,
+        "moral_alignment": 0.8818532159891179,
+        "code_complexity": 12,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "7ca9c4e6",
+        "generation": 1,
+        "moral_alignment": 0.9216982072409915,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "0cca808d",
+        "generation": 1,
+        "moral_alignment": 0.840772187178674,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "a1453eae",
+        "generation": 1,
+        "moral_alignment": 1.0,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "a5331893",
+        "generation": 1,
+        "moral_alignment": 0.9529882705792752,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    }
+]

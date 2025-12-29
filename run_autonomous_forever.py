@@ -16,6 +16,10 @@ if repo_copy_dir not in sys.path:
 import agl_paths
 agl_paths.setup_sys_path()
 
+# Ensure root dir is in path for autonomous_agent import
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
+
 # Import the agent
 from autonomous_agent import AutonomousAgent
 

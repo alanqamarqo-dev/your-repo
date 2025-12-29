@@ -45,18 +45,29 @@ except ImportError:
 try:
     from Core_Engines.Volition_Engine import VolitionEngine
 except ImportError:
-    sys.path.append(os.path.join(root_dir, 'repo-copy', 'Core_Engines'))
-    from Volition_Engine import VolitionEngine
+    try:
+        # Try AGL_Engines (Strong Structure)
+        from AGL_Engines.Volition_Engine import VolitionEngine
+        print("✅ Loaded VolitionEngine from AGL_Engines")
+    except ImportError:
+        sys.path.append(os.path.join(root_dir, 'repo-copy', 'Core_Engines'))
+        from Volition_Engine import VolitionEngine
 
 try:
     from Core_Engines.Dreaming_Cycle import DreamingEngine
 except ImportError:
-    sys.path.append(os.path.join(root_dir, 'repo-copy', 'Core_Engines'))
-    from Dreaming_Cycle import DreamingEngine
+    try:
+        # Try AGL_Engines (Strong Structure)
+        from AGL_Engines.Dreaming_Cycle import DreamingEngine
+        print("✅ Loaded DreamingEngine from AGL_Engines")
+    except ImportError:
+        sys.path.append(os.path.join(root_dir, 'repo-copy', 'Core_Engines'))
+        from Dreaming_Cycle import DreamingEngine
 
 try:
     from Core_Engines.Recursive_Improver import RecursiveImprover
-except ImportError:
+except ImportError as e:
+    print(f"⚠️ Import Error (Core_Engines.Recursive_Improver): {e}")
     sys.path.append(os.path.join(root_dir, 'repo-copy', 'Core_Engines'))
     from Recursive_Improver import RecursiveImprover
 
@@ -85,6 +96,7 @@ except ImportError:
 try:
     from Core_Engines.Heikal_Quantum_Core import HeikalQuantumCore
     from Core_Engines.Heikal_Holographic_Memory import HeikalHolographicMemory
+    from Core_Engines.Heikal_Metaphysics_Engine import HeikalMetaphysicsEngine
     HEIKAL_AVAILABLE = True
 except ImportError:
     print("⚠️ Could not import Heikal Modules. Agent will run without ethical phase lock.")
@@ -109,10 +121,12 @@ class AutonomousAgent:
         if HEIKAL_AVAILABLE:
             self.heikal_core = HeikalQuantumCore()
             self.heikal_memory = HeikalHolographicMemory()
-            print("🌌 [Agent] Heikal Quantum Core & Holographic Memory Attached.")
+            self.heikal_metaphysics = HeikalMetaphysicsEngine()
+            print("🌌 [Agent] Heikal Quantum Core, Holographic Memory & Metaphysics Engine Attached.")
         else:
             self.heikal_core = None
             self.heikal_memory = None
+            self.heikal_metaphysics = None
         
         # Connect to System-Wide Memory (Conscious Bridge)
         self.bridge = ConsciousBridge()
@@ -170,6 +184,16 @@ class AutonomousAgent:
                     i += 1
                     await asyncio.sleep(2)
                     continue
+
+            # [HEIKAL] Metaphysics: Emotional Sensing of Goal
+            if self.heikal_metaphysics:
+                try:
+                    emotional_vector = self.heikal_metaphysics.analyze_emotional_geometry(current_goal)
+                    intensity = sum(abs(x) for x in emotional_vector)
+                    if intensity > 0.5:
+                        print(f"❤️ [Heikal] Goal Emotional Intensity: {intensity:.2f}")
+                except Exception as e:
+                    print(f"⚠️ [Heikal] Emotional Sensing Error: {e}")
 
             # 2. Decide Action (Reasoning)
             # We delegate most cognitive tasks to the Unified AGI System, 
@@ -405,7 +429,11 @@ class AutonomousAgent:
                 print("🧬 Initiating Structural Evolution Cycle (Self-Engineer)...")
                 try:
                     # Lazy import to avoid circular deps
-                    from Learning_System.Self_Engineer import SelfEngineer
+                    try:
+                        from AGL_Engines.Self_Engineer import SelfEngineer
+                        print("✅ Loaded SelfEngineer from AGL_Engines")
+                    except ImportError:
+                        from Learning_System.Self_Engineer import SelfEngineer
                     
                     # Initialize Self-Engineer
                     engineer = SelfEngineer(cfg={'promotion': {'min_rmse_improvement_pct': 0.05}})

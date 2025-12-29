@@ -13,6 +13,7 @@
         "./repo-copy/dynamic_modules",
         "./repo-copy/Core_Engines",
         "./repo-copy/scripts",
-        "./repo-copy/Safety_Systems"
+        "./repo-copy/Safety_Systems",
+        "./backup_20251208_214555/stubs"
     ]
 }

@@ -1,6 +1,10 @@
 {
   "registered": [
     "Mathematical_Brain",
+    "Hive_Mind",
+    "Volition_Engine",
+    "Holographic_LLM",
+    "Heikal_Quantum_Core",
     "Quantum_Processor",
     "Code_Generator",
     "Protocol_Designer",
@@ -19,8 +23,8 @@
     "Curiosity_Engine",
     "AdvancedMetaReasoner",
     "Meta_Ensembler",
-    "Heikal_Quantum_Core",
     "Heikal_Holographic_Memory",
+    "Heikal_Metaphysics_Engine",
     "General_Knowledge",
     "GK_graph",
     "GK_reasoner",
@@ -51,6 +55,7 @@
     "Advanced_Exponential_Algebra"
   ],
   "skipped": {
+    "Ancestral_Wisdom": "no factory/class (utility module?)",
     "tensor_utils": "no factory/class (utility module?)",
     "OpenAI_KnowledgeEngine": "preferred provider is Ollama (AGL_LLM_PROVIDER/AGL_LLM_BASEURL)"
   }

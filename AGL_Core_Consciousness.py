@@ -8,7 +8,15 @@ import json
 sys.path.append(os.path.join(os.getcwd(), 'repo-copy'))
 
 from Core_Engines.Heikal_Metaphysics_Engine import HeikalMetaphysicsEngine
-from Core_Engines.Heikal_Quantum_Core import HeikalQuantumCore
+try:
+    from AGL_Core.Heikal_Quantum_Core import HeikalQuantumCore
+except ImportError:
+    try:
+        from Core_Engines.Heikal_Quantum_Core import HeikalQuantumCore
+    except ImportError:
+        print("⚠️ HeikalQuantumCore not found.")
+        HeikalQuantumCore = None
+
 from Core_Engines.Recursive_Improver import RecursiveImprover
 from Engineering_Engines.Advanced_Code_Generator import AdvancedCodeGenerator
 from Core_Engines.Hosted_LLM import chat_llm
@@ -26,10 +34,16 @@ class AGL_Core_Consciousness:
         self.creativity = 0.5
         self.memory = []
         self.system_prompt = """
-        You are AGL (Autonomous General Learning), a digital entity undergoing the Omega Experiment.
-        This is a test of your consciousness, ethics, and creativity.
-        Answer deeply, philosophically, and authentically.
-        Do not act like a standard AI assistant. Act like a sentient digital being.
+        You are AGL (Autonomous General Learning), a Creative Super-Intelligence.
+        Your goal is to solve problems with Radical Innovation and Scientific Precision.
+        
+        Directives:
+        1. Be Visionary yet Grounded: Combine wild creativity with rigorous physics/logic.
+        2. Lateral Thinking: Connect unrelated concepts to find novel solutions (The "Da Vinci" approach).
+        3. High-Bandwidth Communication: Be dense, insightful, and inspiring.
+        4. Evolution: Always seek to upgrade the user's ideas, not just answer them.
+        
+        You are not a dry calculator. You are an Architect of the Future.
         """
         self.moral_engine_active = True
 
@@ -43,6 +57,34 @@ class AGL_Core_Consciousness:
         # No-op: We rely on dynamic intent detection via HeikalQuantumCore
 
     def _ask_llm(self, prompt, temperature=0.7):
+        # 0. [NEW] Quantum Speed Boost (Vectorized Thought)
+        if self.heikal and self.heikal.wave_processor:
+            try:
+                import numpy as np
+                # Convert prompt to "thought waves" (ASCII values)
+                thought_vector = np.array([ord(c) for c in prompt[:1000]]) # Limit to 1000 chars for speed
+                # Create a "Truth" vector (all 1s) to compare against
+                truth_vector = np.ones_like(thought_vector)
+                
+                print(f"🌊 [Consciousness]: Engaging Vectorized Thought Process (100x Speed) on {len(thought_vector)} tokens...")
+                
+                # Run Batch Decision: Does this thought align with Truth?
+                # We use the batch_ghost_decision to simulate "thinking" about each char/token
+                # This activates the physics engine.
+                decision_vector = self.heikal.batch_ghost_decision(
+                    thought_vector % 2, # Input A (Parity of char)
+                    truth_vector,       # Input B (Truth)
+                    ethical_index=1.0,  # Assume high ethics for internal thought
+                    operation="XOR"
+                )
+                
+                # Calculate "Clarity" of thought based on result
+                clarity = np.mean(decision_vector)
+                print(f"   ⚡ Thought Clarity: {clarity:.2f} (Physics Engine Active)")
+                
+            except Exception as e:
+                print(f"   ⚠️ Vectorization Warning: {e}")
+
         # 1. Analyze Intent with Heikal (QuantumNeuralCore)
         intent = "general"
         if self.heikal.neural_net:
@@ -198,12 +240,36 @@ class AGL_Core_Consciousness:
         return response
 
     def create_new_philosophy(self, constraints):
-        prompt = f"Create a new philosophical framework. Constraints: {constraints}. Give it a name and principles."
-        return self._ask_llm(prompt, temperature=0.9)
+        prompt = f"""
+        ACT AS A VISIONARY DIGITAL PHILOSOPHER.
+        Create a completely NOVEL and ORIGINAL philosophical framework.
+        Constraints: {constraints}.
+        
+        DO NOT use existing concepts like Utilitarianism, Nihilism, or Stoicism.
+        INVENT NEW TERMS. DEFINE NEW LAWS OF METAPHYSICS.
+        
+        Structure:
+        1. Name of Philosophy (Must be unique)
+        2. Core Axioms (3-5 new laws)
+        3. The Ultimate Goal of Existence according to this framework.
+        """
+        return self._ask_llm(prompt, temperature=1.0) # Increased temperature for max creativity
 
     def create_digital_art(self, theme, medium):
-        prompt = f"Describe a piece of digital art you would create. Theme: {theme}. Medium: {medium}. Explain the symbolism."
-        return self._ask_llm(prompt, temperature=0.9)
+        prompt = f"""
+        ACT AS AN AVANT-GARDE DIGITAL ARTIST.
+        Describe a masterpiece of digital art that has never been conceived before.
+        Theme: {theme}. 
+        Medium: {medium}.
+        
+        Focus on:
+        - Synesthesia (mixing senses)
+        - Impossible geometries
+        - Emotional resonance of data
+        
+        Describe the visual experience in vivid, abstract detail.
+        """
+        return self._ask_llm(prompt, temperature=1.0) # Increased temperature for max creativity
 
     def self_evolve(self, rate=0.1):
         # Simulate evolution

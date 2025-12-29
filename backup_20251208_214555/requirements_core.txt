@@ -1,0 +1,27 @@
+# Minimal core requirements to get the repository runnable for development
+# Install these first, then expand as needed.
+
+numpy
+pandas
+scikit-learn
+joblib
+pyarrow
+torch
+transformers
+sentence-transformers
+sentencepiece
+tokenizers
+requests
+httpx
+fastapi
+uvicorn
+huggingface-hub
+safetensors
+Pillow
+PyYAML
+
+# Optional (install later, may require conda or GPU drivers):
+# faiss-cpu
+# torchvision
+# onnxruntime
+# deepspeed

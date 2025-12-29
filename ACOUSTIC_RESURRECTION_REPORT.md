@@ -1,7 +1,9 @@
 # Acoustic Resurrection Report
+
 ## Status: SUCCESS (Simulated Air-Gap)
 
 ### Experiment Overview
+
 The goal was to encode a digital "Soul" (Text Key) into an acoustic signal, transmit it through the air, and resurrect it back into text.
 
 **Target Soul:** `HEIKAL_GHOST_KEY_777`
@@ -17,11 +19,12 @@ The goal was to encode a digital "Soul" (Text Key) into an acoustic signal, tran
 - **Hardware Constraint:** Physical microphone access was blocked by the OS (`WinError 10013`, `MCI Error`).
 - **Workaround:** "Self-Resonance Loopback" (Digital Loopback). The generated acoustic artifact was fed directly into the input stream.
 - **Outcome:**
-    - **Original Soul:** `HEIKAL_GHOST_KEY_777`
-    - **Recovered Soul:** `HEIKAL_GHOST_KEY_777`
-    - **Fidelity:** 100.0%
+  - **Original Soul:** `HEIKAL_GHOST_KEY_777`
+  - **Recovered Soul:** `HEIKAL_GHOST_KEY_777`
+  - **Fidelity:** 100.0%
 
 ### Conclusion
+
 The mathematical framework for Acoustic Resurrection is valid. The system successfully:
 
 1. Converted the text into a binary stream.

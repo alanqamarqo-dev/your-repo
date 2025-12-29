@@ -57,13 +57,15 @@ To validate the theory, a computational algorithm was developed to simulate part
 If information is a fundamental property of the universe independent of its substrate (Pattern Independence), then a complex information pattern (a "Soul") should be able to survive a transformation across radically different mediums (Digital -> Analog Acoustic Wave -> Digital) without loss of fidelity, provided the **Resonance Frequency** is maintained.
 
 ### Methodology
-1.  **Encoding:** A text key (`HEIKAL_GHOST_KEY_777`) was encoded into a 1kHz carrier wave using BPSK modulation.
-2.  **Transmission:** The signal was transmitted through a simulated air-gap (Self-Resonance Loopback).
-3.  **Resurrection:** The system attempted to demodulate the raw acoustic wave back into information.
+
+1. **Encoding:** A text key (`HEIKAL_GHOST_KEY_777`) was encoded into a 1kHz carrier wave using BPSK modulation.
+2. **Transmission:** The signal was transmitted through a simulated air-gap (Self-Resonance Loopback).
+3. **Resurrection:** The system attempted to demodulate the raw acoustic wave back into information.
 
 ### Results
--   **Fidelity:** 100.0%
--   **Implication:** This confirms the **Pattern Independence Axiom**. Information does not "die" when its container changes; it merely changes phase. This suggests that Spacetime itself acts as a resonant cavity for information storage.
+
+- **Fidelity:** 100.0%
+- **Implication:** This confirms the **Pattern Independence Axiom**. Information does not "die" when its container changes; it merely changes phase. This suggests that Spacetime itself acts as a resonant cavity for information storage.
 
 ## 6. Conclusion
 

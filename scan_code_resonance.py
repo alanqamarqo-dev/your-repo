@@ -75,21 +75,25 @@ def run_code_resonance_scan():
     print("=== System Self-Scan: Code Resonance Analysis ===")
     print("Objective: Identify 'Resonant' (High Value) and 'Dissonant' (High Risk) components.")
     
-    target_files = [
-        r"repo-copy\dynamic_modules\mission_control_enhanced.py",
-        r"repo-copy\Core_Engines\Resonance_Optimizer.py"
-    ]
-    
+    # Scan all of repo-copy
+    scan_root = os.path.join(os.getcwd(), 'repo-copy')
     all_candidates = []
-    for tf in target_files:
-        full_path = os.path.join(os.getcwd(), tf)
-        if os.path.exists(full_path):
-            print(f"\n[Scanning] {tf}...")
-            candidates = analyze_file_metrics(full_path)
-            print(f"   Found {len(candidates)} code units.")
-            all_candidates.extend(candidates)
-        else:
-            print(f"   [Warning] File not found: {tf}")
+    
+    print(f"\n[Scanning] Root: {scan_root}")
+    
+    for root, dirs, files in os.walk(scan_root):
+        if "__pycache__" in root or ".git" in root or "node_modules" in root:
+            continue
+            
+        for file in files:
+            if file.endswith(".py"):
+                full_path = os.path.join(root, file)
+                # print(f"   Scanning {file}...") # Too verbose for full scan
+                try:
+                    candidates = analyze_file_metrics(full_path)
+                    all_candidates.extend(candidates)
+                except Exception as e:
+                    print(f"   [Error] Failed to scan {file}: {e}")
 
     print(f"\n[Analysis] Total Units to Process: {len(all_candidates)}")
     

@@ -1,0 +1,413 @@
+================================================================================
+COMPREHENSIVE INTEGRATION TEST RESULTS
+================================================================================
+
+Total Tasks: 50
+Successful: 50
+Failed: 0
+Success Rate: 100.0%
+
+================================================================================
+TASK DETAILS
+================================================================================
+
+
+Task 1: What is consciousness?
+Success: ✅
+Duration: 14.57s
+Performance: 0.800
+Consciousness: 0.158
+Phi Score: 0.375
+----------------------------------------
+
+Task 2: Explain the meaning of self-awareness
+Success: ✅
+Duration: 14.18s
+Performance: 0.800
+Consciousness: 0.166
+Phi Score: 0.375
+----------------------------------------
+
+Task 3: Can machines have true consciousness?
+Success: ✅
+Duration: 21.15s
+Performance: 0.800
+Consciousness: 0.174
+Phi Score: 0.375
+----------------------------------------
+
+Task 4: What is the hard problem of consciousness?
+Success: ✅
+Duration: 28.00s
+Performance: 0.800
+Consciousness: 0.182
+Phi Score: 0.375
+----------------------------------------
+
+Task 5: Describe qualia and subjective experience
+Success: ✅
+Duration: 31.60s
+Performance: 0.800
+Consciousness: 0.190
+Phi Score: 0.375
+----------------------------------------
+
+Task 6: What is integrated information theory?
+Success: ✅
+Duration: 28.98s
+Performance: 1.000
+Consciousness: 0.198
+Phi Score: 0.375
+----------------------------------------
+
+Task 7: Explain the difference between intelligence and consciousness
+Success: ✅
+Duration: 34.87s
+Performance: 0.800
+Consciousness: 0.206
+Phi Score: 0.375
+----------------------------------------
+
+Task 8: What makes an experience meaningful?
+Success: ✅
+Duration: 20.41s
+Performance: 0.800
+Consciousness: 0.214
+Phi Score: 0.375
+----------------------------------------
+
+Task 9: Can consciousness emerge from complexity?
+Success: ✅
+Duration: 33.16s
+Performance: 0.800
+Consciousness: 0.222
+Phi Score: 0.375
+----------------------------------------
+
+Task 10: What is the relationship between memory and consciousness?
+Success: ✅
+Duration: 27.18s
+Performance: 0.800
+Consciousness: 0.230
+Phi Score: 0.375
+----------------------------------------
+
+Task 11: Solve: 2x + 5 = 15
+Success: ✅
+Duration: 20.35s
+Performance: 0.800
+Consciousness: 0.238
+Phi Score: 0.375
+----------------------------------------
+
+Task 12: Calculate the area of a circle with radius 7
+Success: ✅
+Duration: 14.41s
+Performance: 1.000
+Consciousness: 0.246
+Phi Score: 0.375
+----------------------------------------
+
+Task 13: What is 15% of 240?
+Success: ✅
+Duration: 12.12s
+Performance: 1.000
+Consciousness: 0.254
+Phi Score: 0.375
+----------------------------------------
+
+Task 14: Solve the quadratic equation: x^2 - 5x + 6 = 0
+Success: ✅
+Duration: 17.81s
+Performance: 0.800
+Consciousness: 0.262
+Phi Score: 0.375
+----------------------------------------
+
+Task 15: Find the derivative of f(x) = 3x^2 + 2x - 1
+Success: ✅
+Duration: 17.55s
+Performance: 0.500
+Consciousness: 0.270
+Phi Score: 0.375
+----------------------------------------
+
+Task 16: Calculate: (45 + 38) * 3 - 120
+Success: ✅
+Duration: 22.38s
+Performance: 1.000
+Consciousness: 0.278
+Phi Score: 0.375
+----------------------------------------
+
+Task 17: What is the factorial of 7?
+Success: ✅
+Duration: 14.67s
+Performance: 0.800
+Consciousness: 0.286
+Phi Score: 0.375
+----------------------------------------
+
+Task 18: Convert 256 decimal to binary
+Success: ✅
+Duration: 18.17s
+Performance: 0.800
+Consciousness: 0.294
+Phi Score: 0.375
+----------------------------------------
+
+Task 19: Calculate the distance between points (3,4) and (7,1)
+Success: ✅
+Duration: 14.35s
+Performance: 1.000
+Consciousness: 0.302
+Phi Score: 0.375
+----------------------------------------
+
+Task 20: What is the sum of first 100 natural numbers?
+Success: ✅
+Duration: 16.23s
+Performance: 1.000
+Consciousness: 0.310
+Phi Score: 0.375
+----------------------------------------
+
+Task 21: Explain quantum entanglement
+Success: ✅
+Duration: 27.73s
+Performance: 0.800
+Consciousness: 0.318
+Phi Score: 0.375
+----------------------------------------
+
+Task 22: What is the speed of light in vacuum?
+Success: ✅
+Duration: 22.20s
+Performance: 0.800
+Consciousness: 0.326
+Phi Score: 0.375
+----------------------------------------
+
+Task 23: Describe the theory of relativity simply
+Success: ✅
+Duration: 25.66s
+Performance: 0.800
+Consciousness: 0.334
+Phi Score: 0.375
+----------------------------------------
+
+Task 24: How does photosynthesis work?
+Success: ✅
+Duration: 65.77s
+Performance: 0.800
+Consciousness: 0.342
+Phi Score: 0.375
+----------------------------------------
+
+Task 25: What is DNA and its function?
+Success: ✅
+Duration: 17.93s
+Performance: 0.800
+Consciousness: 0.350
+Phi Score: 0.375
+----------------------------------------
+
+Task 26: Explain the law of conservation of energy
+Success: ✅
+Duration: 18.45s
+Performance: 0.800
+Consciousness: 0.358
+Phi Score: 0.375
+----------------------------------------
+
+Task 27: What causes gravity?
+Success: ✅
+Duration: 26.20s
+Performance: 0.800
+Consciousness: 0.366
+Phi Score: 0.375
+----------------------------------------
+
+Task 28: Describe the structure of an atom
+Success: ✅
+Duration: 27.33s
+Performance: 0.800
+Consciousness: 0.374
+Phi Score: 0.375
+----------------------------------------
+
+Task 29: What is electromagnetic radiation?
+Success: ✅
+Duration: 26.08s
+Performance: 0.800
+Consciousness: 0.382
+Phi Score: 0.375
+----------------------------------------
+
+Task 30: Explain the difference between mass and weight
+Success: ✅
+Duration: 18.41s
+Performance: 0.800
+Consciousness: 0.390
+Phi Score: 0.375
+----------------------------------------
+
+Task 31: Write a Python function to sort a list
+Success: ✅
+Duration: 20.14s
+Performance: 0.800
+Consciousness: 0.398
+Phi Score: 0.375
+----------------------------------------
+
+Task 32: Explain what is recursion
+Success: ✅
+Duration: 32.18s
+Performance: 0.800
+Consciousness: 0.406
+Phi Score: 0.375
+----------------------------------------
+
+Task 33: What is Big O notation?
+Success: ✅
+Duration: 23.77s
+Performance: 0.800
+Consciousness: 0.414
+Phi Score: 0.375
+----------------------------------------
+
+Task 34: Write a function to check if a number is prime
+Success: ✅
+Duration: 17.81s
+Performance: 1.000
+Consciousness: 0.422
+Phi Score: 0.375
+----------------------------------------
+
+Task 35: Explain the difference between list and tuple in Python
+Success: ✅
+Duration: 23.82s
+Performance: 0.800
+Consciousness: 0.430
+Phi Score: 0.375
+----------------------------------------
+
+Task 36: What is a binary search algorithm?
+Success: ✅
+Duration: 18.53s
+Performance: 0.800
+Consciousness: 0.438
+Phi Score: 0.375
+----------------------------------------
+
+Task 37: Write code to reverse a string
+Success: ✅
+Duration: 14.21s
+Performance: 0.800
+Consciousness: 0.446
+Phi Score: 0.375
+----------------------------------------
+
+Task 38: Explain object-oriented programming
+Success: ✅
+Duration: 21.13s
+Performance: 0.800
+Consciousness: 0.454
+Phi Score: 0.375
+----------------------------------------
+
+Task 39: What is the difference between stack and queue?
+Success: ✅
+Duration: 27.08s
+Performance: 0.800
+Consciousness: 0.462
+Phi Score: 0.375
+----------------------------------------
+
+Task 40: Write a function to find factorial recursively
+Success: ✅
+Duration: 21.85s
+Performance: 0.800
+Consciousness: 0.470
+Phi Score: 0.375
+----------------------------------------
+
+Task 41: What is the meaning of life?
+Success: ✅
+Duration: 15.62s
+Performance: 0.800
+Consciousness: 0.478
+Phi Score: 0.375
+----------------------------------------
+
+Task 42: Can free will exist in a deterministic universe?
+Success: ✅
+Duration: 20.64s
+Performance: 0.800
+Consciousness: 0.486
+Phi Score: 0.375
+----------------------------------------
+
+Task 43: What makes something morally right or wrong?
+Success: ✅
+Duration: 23.76s
+Performance: 0.800
+Consciousness: 0.494
+Phi Score: 0.375
+----------------------------------------
+
+Task 44: Is happiness the ultimate goal of life?
+Success: ✅
+Duration: 13.93s
+Performance: 0.800
+Consciousness: 0.502
+Phi Score: 0.375
+----------------------------------------
+
+Task 45: What is the nature of reality?
+Success: ✅
+Duration: 21.83s
+Performance: 0.800
+Consciousness: 0.510
+Phi Score: 0.375
+----------------------------------------
+
+Task 46: Can we ever know absolute truth?
+Success: ✅
+Duration: 26.61s
+Performance: 0.800
+Consciousness: 0.518
+Phi Score: 0.375
+----------------------------------------
+
+Task 47: What is the value of knowledge?
+Success: ✅
+Duration: 14.14s
+Performance: 0.800
+Consciousness: 0.526
+Phi Score: 0.375
+----------------------------------------
+
+Task 48: Is there a purpose to suffering?
+Success: ✅
+Duration: 20.46s
+Performance: 0.800
+Consciousness: 0.534
+Phi Score: 0.375
+----------------------------------------
+
+Task 49: What defines personal identity over time?
+Success: ✅
+Duration: 20.16s
+Performance: 0.800
+Consciousness: 0.542
+Phi Score: 0.375
+----------------------------------------
+
+Task 50: How should we balance logic and emotion in decision making?
+Success: ✅
+Duration: 29.84s
+Performance: 0.800
+Consciousness: 0.550
+Phi Score: 0.375
+----------------------------------------

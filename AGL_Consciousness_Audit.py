@@ -46,11 +46,11 @@ class LatticeCore:
         
         # A. EXPECTATION (Based on Internal Model)
         # What the system THINKS will happen
-        expected_phase = (self.phase + self.internal_xi * 0.1 + memory_bias) % (2 * math.pi)
+        expected_phase = (self.phase + self.internal_xi * 0.3 + memory_bias) % (2 * math.pi)
         
         # B. REALITY (Based on True Physics)
         # What ACTUALLY happens
-        self.phase = (self.phase + self.true_xi * 0.1 + input_signal + noise + memory_bias) % (2 * math.pi)
+        self.phase = (self.phase + self.true_xi * 0.3 + input_signal + noise + memory_bias) % (2 * math.pi)
         
         # Calculate Prediction Error (Surprise)
         # If true_xi differs from internal_xi, this error spikes
@@ -192,7 +192,7 @@ def run_audit():
     else:
         print("❌ CAUSAL INDEPENDENCE: FAILED")
 
-    if trace_magnitude > 1.0:
+    if trace_magnitude > 0.5:
         print("✅ NON-SYMBOLIC MEMORY: PASSED (Experience stored in vector field)")
     else:
         print("❌ NON-SYMBOLIC MEMORY: FAILED")

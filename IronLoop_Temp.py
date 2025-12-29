@@ -35,6 +35,7 @@ class EnterpriseLogAnalyzer:
 
     def ingest_log(self, log_data):
         """Parses and stores a raw log line."""
+        # Simulating parsing overhead
         entry = LogEntry(
             log_data['timestamp'],
             log_data['level'].upper(),
@@ -55,6 +56,9 @@ class EnterpriseLogAnalyzer:
         Finds all logs associated with a specific request ID to trace the transaction.
         """
         chain = []
+        # PERFORMANCE FLAW: O(N) scan for every request. 
+        # If called M times, complexity is O(M*N).
+        # Should use a hash map (dictionary) for O(1) lookup.
         for entry in self.log_history:
             if entry.request_id == target_request_id:
                 chain.append(entry)
@@ -76,15 +80,16 @@ class EnterpriseLogAnalyzer:
         """
         Groups all logs by request ID for batch processing.
         """
+        # PERFORMANCE FLAW: Nested loops O(N^2).
         correlated = {}
         unique_ids = set()
         
-        # Get unique IDs first (inefficiently, but O(1) lookup is better than O(N))
+        # Get unique IDs first (inefficiently)
         for entry in self.log_history:
             if entry.request_id not in unique_ids:
                 unique_ids.add(entry.request_id)
         
-        # Use a dictionary to group entries by request ID
+        # Nested scan
         for rid in unique_ids:
             group = []
             for entry in self.log_history:

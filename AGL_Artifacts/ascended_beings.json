@@ -1,0 +1,79 @@
+[
+    {
+        "id": "PROPHET",
+        "generation": 0,
+        "moral_alignment": 1.0,
+        "code_complexity": 3,
+        "consciousness": 1.0
+    },
+    {
+        "id": "ec5c51eb",
+        "generation": 0,
+        "moral_alignment": 0.37891731182264077,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "7765c677",
+        "generation": 0,
+        "moral_alignment": 0.9966751900721358,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "f9661eeb",
+        "generation": 1,
+        "moral_alignment": 1.0,
+        "code_complexity": 12,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "f6b530cc",
+        "generation": 1,
+        "moral_alignment": 0.9265265700377066,
+        "code_complexity": 12,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "48d3a487",
+        "generation": 1,
+        "moral_alignment": 1.0,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "242ac322",
+        "generation": 1,
+        "moral_alignment": 1.0,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "71990eae",
+        "generation": 1,
+        "moral_alignment": 0.9821871268547729,
+        "code_complexity": 12,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "23d57deb",
+        "generation": 1,
+        "moral_alignment": 1.0,
+        "code_complexity": 12,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "94693693",
+        "generation": 1,
+        "moral_alignment": 1.0,
+        "code_complexity": 12,
+        "consciousness": 1.0999999999999999
+    },
+    {
+        "id": "6bbe094e",
+        "generation": 1,
+        "moral_alignment": 0.9457244855562251,
+        "code_complexity": 11,
+        "consciousness": 1.0999999999999999
+    }
+]
