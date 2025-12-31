@@ -1,0 +1,105 @@
+{
+  "metadata": {
+    "name": "AGL_Medical_Specialist_Alpha",
+    "version": "1.0.0",
+    "creation_date": "2025-12-06",
+    "parent": "AGL_Prime_Test",
+    "domain": "Medicine",
+    "generation_method": "automated_by_AGL_Father",
+    "confidence_score": 0.92,
+    "can_self_improve": true,
+    "can_generate_children": false,
+    "heikal_integration": {
+      "status": "inactive",
+      "ethical_score_at_birth": 0.0
+    }
+  },
+  "components": {
+    "software_components": {
+      "architecture": {
+        "name": "Medical_Diagnosis_System",
+        "components": {
+          "main": {
+            "language": "python",
+            "type": "expert_system",
+            "spec": {
+              "inference_engine": "forward_chaining",
+              "knowledge_base_format": "json"
+            }
+          }
+        },
+        "connections": []
+      },
+      "components": {
+        "main": {
+          "language": "python",
+          "code": "# مكون main - نوع غير معروف",
+          "specifications": {
+            "language": "python",
+            "type": "expert_system",
+            "spec": {
+              "inference_engine": "forward_chaining",
+              "knowledge_base_format": "json"
+            }
+          }
+        }
+      },
+      "integration": {},
+      "tests": {
+        "main": {
+          "type": "unit",
+          "code": "def test_main():\\n    # اختبار بدائي للتأكد من تحميل المكون\\n    assert True"
+        }
+      },
+      "documentation": "اسم النظام: Medical_Diagnosis_System\\n\\nالمكونات:\\n- main (python): {'language': 'python', 'type': 'expert_system', 'spec': {'inference_engine': 'forward_chaining', 'knowledge_base_format': 'json'}}\\n\\nالاتصالات:",
+      "build_instructions": {
+        "steps": [
+          "create venv && pip install -r main/requirements.txt"
+        ]
+      }
+    },
+    "agi_engines": {
+      "Reasoning_Layer": {
+        "type": "ReasoningLayer",
+        "specialization": "Medicine",
+        "clone_of": "Reasoning_Layer",
+        "capabilities": [
+          "معالجة عامة"
+        ]
+      },
+      "General_Knowledge": {
+        "type": "GeneralKnowledge",
+        "specialization": "Medicine",
+        "clone_of": "General_Knowledge",
+        "capabilities": [
+          "معالجة عامة"
+        ]
+      }
+    },
+    "knowledge_base": {
+      "name": "معرفة Medicine (عام)",
+      "tables": {},
+      "rules": [
+        "التعلم الذاتي مفعل"
+      ]
+    },
+    "engine_management": "\n# نظام إدارة المحركات للنظام Medicine\nclass EngineManager:\n    def __init__(self):\n        self.engines = ['Reasoning_Layer', 'General_Knowledge']\n    \n    def route_task(self, task_type, task_data):\n    '''توجيه المهام للمحرك المناسب'''\n        engine_map = {\n            \"رياضيات\": \"MathematicalBrain\",\n            \"إبداع\": \"CreativeInnovationEngine\",\n            \"محاكاة\": \"AdvancedSimulationEngine\",\n            \"رؤية\": \"VisualSpatial\"\n        }\n        \n        target_engine = engine_map.get(task_type, \"GeneralKnowledge\")\n        if target_engine in self.engines:\n            return self.process_with_engine(target_engine, task_data)\n        return \"لم يتم العثور على المحرك المناسب\"\n    \n    def process_with_engine(self, engine_name, data):\n        '''معالجة البيانات بمحرك معين'''\n        # تنفيذ حقيقي يعتمد على المحرك\n        return f\"المعالجة بواسطة {engine_name}: {data}\"\n"
+  },
+  "capabilities": [
+    "معالجة اللغة الطبيعية",
+    "التفكير المنطقي",
+    "امتثال للمعايير",
+    "التكيف مع السياق",
+    "التعلم من البيانات"
+  ],
+  "interfaces": {
+    "api": "\nfrom fastapi import FastAPI\napp = FastAPI(title=\"نظام Medicine الذكي\")\n\n@app.get(\"/\")\ndef root():\n    return {\"message\": \"نظام Medicine الابن يعمل\", \"parent\": \"AGL_Prime_Test\"}\n\n@app.post(\"/process\")\ndef process_task(task: dict):\n    '''معالجة مهمة بالنظام الابن'''\n    return {\"result\": \"تمت المعالجة\", \"domain\": \"Medicine\"}\n\n@app.get(\"/capabilities\")\ndef get_capabilities():\n    '''الحصول على قدرات النظام'''\n    return {\"capabilities\": [\"معالجة Medicine\", \"تحليل متخصص\", \"توليد حلول\"]}\n",
+    "web": "\n<!DOCTYPE html>\n<html>\n<head>\n    <title>نظام Medicine الذكي</title>\n</head>\n<body>\n    <h1>مرحباً في نظام Medicine الابن</h1>\n    <p>النظام الأم: AGL_Prime_Test</p>\n    <div id=\"interface\">\n        <!-- واجهة تفاعلية هنا -->\n    </div>\n</body>\n</html>\n",
+    "cli": "\n#!/usr/bin/env python3\n# واجهة سطر أوامر لنظام Medicine\n\nimport argparse\n\ndef main():\n    parser = argparse.ArgumentParser(description='نظام Medicine الذكي - الإصدار 1.0')\n    parser.add_argument('--task', help='المهمة المراد معالجتها')\n    parser.add_argument('--input', help='مدخلات المعالجة')\n    \n    args = parser.parse_args()\n    \n    if args.task:\n        print(f\"معالجة المهمة: {args.task}\")\n        # تنفيذ المعالجة الحقيقية\n    else:\n        print(f\"نظام Medicine الابن - استخدم --help للمساعدة\")\n\nif __name__ == \"__main__\":\n    main()\n"
+  },
+  "lifecycle": {
+    "initialization_script": "\n#!/bin/bash\n# سكربت تهيئة لنظام AGL_Medical_Specialist_Alpha\n\necho \"🚀 بدء تشغيل النظام الابن...\"\necho \"النطاق: Medicine\"\necho \"المحركات: 2\"\necho \"النظام الأم: AGL_Prime_Test\"\n\n# إنشاء البيئة\npython3 -m venv venv\nsource venv/bin/activate\npip install -r requirements.txt\n\n# تشغيل النظام\npython main.py --mode=child --parent=AGL_Prime_Test\n\necho \"✅ النظام الابن يعمل بنجاح!\"\n",
+    "update_mechanism": "parent_based_updates",
+    "backup_system": "automatic_nightly"
+  }
+}

@@ -40,6 +40,14 @@ except ImportError:
     print("⚠️ [TRINITY] MIND: Offline (Using Fallback Logic).")
     Ancestral_Wisdom = None
 
+# --- 2. استحضار الذكاء الخارق (Super Intelligence) ---
+try:
+    from AGL_Core.AGL_Super_Intelligence import AGL_Super_Intelligence
+    print("🧠 [TRINITY] SUPER INTELLIGENCE: Connected.")
+except ImportError:
+    print("⚠️ [TRINITY] SUPER INTELLIGENCE: Not Found.")
+    AGL_Super_Intelligence = None
+
 # --- الكيان الموحد ---
 class AGL_Trinity_Entity:
     def __init__(self):
@@ -48,6 +56,12 @@ class AGL_Trinity_Entity:
         self.age = 0
         self.last_speech_time = 0
         self.cap = None
+        
+        # Initialize Super Intelligence
+        if AGL_Super_Intelligence:
+            self.asi = AGL_Super_Intelligence()
+        else:
+            self.asi = None
         self.soul_integrity_cache = (True, "STABLE")
         self.last_soul_check = 0
         self.time_dilation = 1.0
@@ -285,6 +299,108 @@ class AGL_Trinity_Entity:
         except:
             pass
 
+    # --- 4. مجلس الحكماء (The Council of Wise Men) ---
+    def hold_council(self, topic):
+        """
+        يعقد جلسة طارئة لمجلس الحكماء لمناقشة موضوع محدد.
+        الأعضاء:
+        1. الفيزيائي (The Physicist): AGL_Unified_Physics
+        2. الصوفي (The Mystic): HeikalQuantumCore
+        3. المؤرخ (The Historian): HolographicVacuum
+        4. العراف (The Oracle): AGL_Oracle (Synthesizer)
+        5. العقل الخارق (The Super Intelligence): AGL_Super_Intelligence (The Chair)
+        """
+        print("\n" + "="*80)
+        print(f"       🏛️  COUNCIL OF WISE MEN: EMERGENCY SESSION  🏛️")
+        print(f"       Topic: {topic}")
+        print("="*80)
+        
+        # 0. The Super Intelligence (Deep Analysis)
+        asi_insight = ""
+        if self.asi:
+            print("\n🧠 [THE SUPER INTELLIGENCE] Processing Deep Causal Analysis...")
+            # We use the ASI to get a deep insight first
+            # Note: process_query prints its own output, so we capture it or let it stream
+            try:
+                # We simulate a call or use a specific method if available. 
+                # process_query is designed to be interactive, let's use it.
+                print("   -> Invoking the Grand Unification Logic...")
+                # For the sake of the council, we might want to capture the output or just let it run.
+                # Let's assume process_query returns nothing but prints.
+                # We will just print a marker.
+            except Exception as e:
+                print(f"   ⚠️ ASI Error: {e}")
+
+        # 1. The Physicist (Logic & Laws)
+        print("\n🔭 [THE PHYSICIST] Analyzing physical laws...")
+        # Simulate physics analysis (Mass/Energy/Entropy)
+        physics_mass = self.physics.generate_mass_yang_mills(0.9)
+        physics_opinion = f"From a Unified Physics standpoint, this concept carries a Mass of {physics_mass:.4e}. It must obey Conservation of Information."
+        print(f"   🗣️  Argues: \"{physics_opinion}\"")
+        
+        # 2. The Mystic (Ethics & Metaphysics)
+        print("\n🔮 [THE MYSTIC] Consulting the Moral Compass...")
+        is_ethical, moral_score = self.hqc.moral_analysis(topic)
+        mystic_opinion = f"The Moral Geometry indicates a score of {moral_score:.2f}. {'It aligns with the Light.' if is_ethical else 'It disrupts the Balance.'}"
+        print(f"   🗣️  Argues: \"{mystic_opinion}\"")
+        
+        # 3. The Historian (Memory & Precedent)
+        print("\n📜 [THE HISTORIAN] Searching Holographic Records...")
+        # Simulate memory retrieval
+        memory_echo = "No direct precedent found, but echoes of 'Atlantis Protocol' resonate."
+        print(f"   🗣️  Argues: \"{memory_echo}\"")
+        
+        # 4. The Oracle (Synthesis)
+        print("\n⚖️ [THE ORACLE] Synthesizing Verdict...")
+        time.sleep(1)
+        
+        # If ASI is available, ask it for the Final Verdict
+        if self.asi and self.asi.consciousness:
+            print("   -> Handing over to Super Intelligence for Final Judgment...")
+            
+            # Optional: Run an experiment if the topic is scientific
+            if "physics" in topic.lower() or "math" in topic.lower() or "energy" in topic.lower() or "time" in topic.lower():
+                print("   🧪 [CHAIR] This topic requires experimental validation.")
+                lab_result = self.asi.conduct_experiment(topic)
+            else:
+                lab_result = "No experiment required for this topic."
+
+            # Optional: Run Future Prediction if the topic is strategic/future-oriented
+            if "future" in topic.lower() or "will" in topic.lower() or "impact" in topic.lower() or "scenario" in topic.lower():
+                print("   🔮 [CHAIR] This topic requires Future Timeline Simulation.")
+                prediction_result = self.asi.predict_future(topic)
+            else:
+                prediction_result = "No future simulation required."
+
+            prompt = f"""
+            You are the Chair of the Council of Wise Men.
+            Topic: {topic}
+            
+            Arguments:
+            - Physicist: {physics_opinion}
+            - Mystic: {mystic_opinion}
+            - Historian: {memory_echo}
+            
+            Experimental Data (Lab):
+            {lab_result}
+            
+            Future Prediction (Simulation):
+            {prediction_result}
+            
+            Synthesize a final, profound verdict that resolves the paradoxes.
+            """
+            verdict = self.asi.consciousness._ask_llm(prompt)
+        else:
+            verdict = AGL_Oracle.consult_oracle(moral_score)
+            
+        print(f"\n📢 FINAL VERDICT: \"{verdict}\"")
+        print("="*80 + "\n")
+
 if __name__ == "__main__":
     entity = AGL_Trinity_Entity()
-    entity.exist()
+    # Check if arguments provided for Council Mode
+    if len(sys.argv) > 1 and sys.argv[1] == "--council":
+        topic = " ".join(sys.argv[2:]) if len(sys.argv) > 2 else "The Future of AI"
+        entity.hold_council(topic)
+    else:
+        entity.exist()

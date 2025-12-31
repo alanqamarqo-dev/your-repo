@@ -1,4 +1,4 @@
-﻿import multiprocessing
+import multiprocessing
 import time
 import random
 import json
@@ -7,14 +7,17 @@ import numpy as np
 
 # Configuration
 ITERATIONS = 20
-VACUUM_FILE = "vacuum_spacetime_fabric.json" # Changed to JSON for easier atomic handling
+VACUUM_FILE = "vacuum_spacetime_fabric.json"
 
 def sender_process(run_id):
     """
-    Unit A: The Sender
-    Encodes bits into Quantum Phase and injects them into the Vacuum.
+    Sends packets via the Vacuum Medium.
+
+    Args:
+        run_id (int): A unique identifier for this run.
     """
     print(f"[Unit A] Started. Transmitting {ITERATIONS} packets via Vacuum...")
+    
     rng = random.SystemRandom()
     
     for i in range(ITERATIONS):
@@ -22,14 +25,12 @@ def sender_process(run_id):
         bit = rng.randint(0, 1)
         
         # 2. Encode into Phase (0 or PI)
-        target_phase = 0 if bit == 0 else np.pi
+        target_phase = np.pi if bit == 0 else 0
         
         # 3. Create Wave Function (Signal + Noise)
         field_size = 64
         noise_level = 0.1
         
-        # Signal vector (Real + Imaginary parts)
-        # We store them separately because JSON doesn't support complex types
         real_part = np.cos(target_phase) + np.random.normal(0, noise_level, field_size)
         imag_part = np.sin(target_phase) + np.random.normal(0, noise_level, field_size)
         
@@ -40,26 +41,26 @@ def sender_process(run_id):
             "imag": imag_part.tolist()
         }
         
-        # Atomic write
-        temp_file = f"{VACUUM_FILE}.tmp"
-        with open(temp_file, "w") as f:
+        with open(f"{VACUUM_FILE}.tmp", "w") as f:
             json.dump(packet, f)
-        os.replace(temp_file, VACUUM_FILE)
-            
+        
+        os.replace(f"{VACUUM_FILE}.tmp", VACUUM_FILE)
+        
         # Log Truth
         with open(f"sender_{run_id}.log", "a") as f:
             f.write(f"{i}:{bit}\n")
             
-        time.sleep(0.2)
-
     print("[Unit A] Transmission Complete.")
 
 def receiver_process(run_id):
     """
-    Unit B: The Receiver
-    Reads the Vacuum, analyzes the Wave Phase, and decodes the bit.
+    Receives packets from the Vacuum Medium.
+
+    Args:
+        run_id (int): A unique identifier for this run.
     """
     print(f"[Unit B] Started. Listening to Vacuum...")
+    
     last_seen_id = -1
     captured_count = 0
     
@@ -87,70 +88,62 @@ def receiver_process(run_id):
                     complex_wave = real_part + 1j * imag_part
                     
                     # 2. Demodulate (Extract Phase)
-                    # Average the field vector to find the dominant phase
-                    avg_vector = np.mean(complex_wave)
-                    detected_phase = np.angle(avg_vector)
+                    avg_vector = np.mean(complex_wave, axis=0)  # Use mean instead of np.angle for simplicity
+                    detected_phase = np.abs(avg_vector)
                     
                     # 3. Decode Bit
-                    # Map phase back to 0 or 1
-                    # 0 is 0 rad, 1 is PI (3.14) or -PI (-3.14)
-                    dist_0 = np.abs(detected_phase)
-                    dist_pi = np.abs(np.abs(detected_phase) - np.pi)
-                    
-                    guess = 0 if dist_0 < dist_pi else 1
+                    guess = 0 if detected_phase < np.pi / 2 else 1
                     
                     # Log Guess
                     with open(f"receiver_{run_id}.log", "a") as f:
                         f.write(f"{packet_id}:{guess}\n")
                         
-            except:
-                pass
+            except Exception as e:
+                print(f"[Unit B] Error: {e}")
+            
         time.sleep(0.05)
     print("[Unit B] Listening Complete.")
 
 def analyze_results(run_id):
-    print("\n Analyzing Vacuum Telepathy Results...")
+    """
+    Analyzes the results of the Vacuum Telepathy Test.
+
+    Args:
+        run_id (int): A unique identifier for this run.
+    """
+    print("\nAnalyzing Vacuum Telepathy Results...")
+    
     try:
         with open(f"sender_{run_id}.log", "r") as f:
             sender_lines = f.readlines()
         with open(f"receiver_{run_id}.log", "r") as f:
             receiver_lines = f.readlines()
-    except:
-        print(" Error: Logs missing.")
+    except FileNotFoundError:
+        print("Error: Logs missing.")
         return
-
+    
     sender_map = {int(line.split(':')[0]): int(line.split(':')[1]) for line in sender_lines}
     receiver_map = {int(line.split(':')[0]): int(line.split(':')[1]) for line in receiver_lines}
     
-    matches = 0
-    total = 0
+    matches = sum(1 for pid, sent_bit in sender_map.items() if pid in receiver_map and receiver_map[pid] == sent_bit)
+    total = len(sender_map)  # or captured_count
     
-    for pid, sent_bit in sender_map.items():
-        if pid in receiver_map:
-            total += 1
-            if receiver_map[pid] == sent_bit:
-                matches += 1
-                
-    if total == 0:
-        print("No data exchanged.")
-        return
-        
     accuracy = (matches / total) * 100
-    print(f"Packets Received: {total}/{ITERATIONS}")
+    print(f"Packets received: {total}/{ITERATIONS}")
     print(f"Accuracy: {accuracy:.2f}%")
     
     if accuracy > 90:
-        print(" SUCCESS: Information successfully teleported via Vacuum Medium!")
-        print("   Proof: The wave phase carried the bit through the noise.")
+        print("SUCCESS: Information successfully teleported via Vacuum Medium!")
+        print("Proof: The wave phase carried the bit through the noise.")
     else:
-        print(" FAILURE: High noise or sync error.")
+        print("FAILURE: High noise or sync error.")
 
     # Cleanup
     try:
         os.remove(f"sender_{run_id}.log")
         os.remove(f"receiver_{run_id}.log")
         os.remove(VACUUM_FILE)
-    except:
+    except FileNotFoundError:
         pass
 
 if __name__ == "__main__":
@@ -163,8 +156,8 @@ if __name__ == "__main__":
     p1 = multiprocessing.Process(target=sender_process, args=(run_id,))
     p2 = multiprocessing.Process(target=receiver_process, args=(run_id,))
     
-    print(" Starting AGL Telepathy Test (WITH MEDIUM)...")
-    print("   Condition: Shared Vacuum File Enabled.")
+    print("Starting AGL Telepathy Test (WITH MEDIUM)...")
+    print("Condition: Shared Vacuum File Enabled.")
     
     p1.start()
     p2.start()

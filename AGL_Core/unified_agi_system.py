@@ -69,12 +69,17 @@ except ImportError:
 
 # استيراد Holographic LLM (Infinite Storage)
 try:
-    from Core_Engines.Holographic_LLM import HolographicLLM
+    from AGL_Memory.Holographic_LLM import HolographicLLM
     HOLOGRAPHIC_LLM_AVAILABLE = True
     print("🌌 Holographic LLM: Available (Infinite Storage)")
 except ImportError:
-    HOLOGRAPHIC_LLM_AVAILABLE = False
-    print("⚠️ Holographic LLM: Not available")
+    try:
+        from Core_Engines.Holographic_LLM import HolographicLLM
+        HOLOGRAPHIC_LLM_AVAILABLE = True
+        print("🌌 Holographic LLM: Available (Infinite Storage) [Core_Engines]")
+    except ImportError:
+        HOLOGRAPHIC_LLM_AVAILABLE = False
+        print("⚠️ Holographic LLM: Not available")
 
 # استيراد Resonance Optimizer (Quantum Theory)
 try:
@@ -1450,7 +1455,7 @@ class UnifiedAGISystem:
             try:
                 # تحديد المحركات للتشغيل المتوازي (أسرع 3-4x)
                 engines_to_run = {
-                    'Mathematical_Brain': 'Core_Engines.Mathematical_Brain.MathematicalBrain',
+                    'Mathematical_Brain': 'AGL_Engines.Mathematical_Brain.MathematicalBrain',
                     'Reasoning_Layer': 'Core_Engines.Reasoning_Layer.ReasoningLayer',
                     'Creative_Innovation': 'Core_Engines.Creative_Innovation.CreativeInnovation'
                 }
@@ -1932,14 +1937,35 @@ Please fix the code. Output ONLY the fixed python code inside ```python``` block
             ]
             
             # استخدام holographic_llm بدلاً من الاستدعاء المباشر
-            llm_result = await loop.run_in_executor(
-                None,
-                self.holographic_llm.chat_llm,
-                llm_messages,
-                2048,  # max_new_tokens
-                0.4,   # temperature
-                True   # use_holographic = True
-            )
+            if self.holographic_llm:
+                llm_result = await loop.run_in_executor(
+                    None,
+                    self.holographic_llm.chat_llm,
+                    llm_messages,
+                    2048,  # max_new_tokens
+                    0.4,   # temperature
+                    True   # use_holographic = True
+                )
+            else:
+                # Fallback: استخدام Ollama_KnowledgeEngine إذا كان HolographicLLM غير متاح
+                ollama_engine = self.engine_registry.get('Ollama_KnowledgeEngine')
+                if ollama_engine:
+                    # استخراج الرسائل
+                    system_msg = next((m['content'] for m in llm_messages if m['role'] == 'system'), "")
+                    user_msg = next((m['content'] for m in llm_messages if m['role'] == 'user'), "")
+                    
+                    # استدعاء المحرك
+                    response_dict = await loop.run_in_executor(
+                        None,
+                        ollama_engine.ask,
+                        user_msg,
+                        None, # context
+                        system_msg # system_prompt
+                    )
+                    llm_result = response_dict.get('text', '') if isinstance(response_dict, dict) else str(response_dict)
+                else:
+                    print("⚠️ Holographic LLM and Ollama Engine not available.")
+                    llm_result = ""
             
             llm_response = llm_result if isinstance(llm_result, str) else str(llm_result)
             
@@ -2336,6 +2362,35 @@ Please fix the code. Output ONLY the fixed python code inside ```python``` block
             "log": cycle_log
         }
     
+    def process_query(self, input_text: str) -> str:
+        """
+        Synchronous wrapper for process_with_full_agi.
+        Returns the final string answer.
+        """
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            
+        if loop.is_running():
+            # If we are already in a loop (e.g. Jupyter), we can't block.
+            # But for this script context, we assume we can run_until_complete.
+            # If nested, we might need nest_asyncio or similar, but let's try standard way.
+            print("⚠️ Warning: Event loop is already running. Using existing loop might fail if blocking.")
+            # Fallback for nested loops if needed, but for now:
+            future = asyncio.ensure_future(self.process_with_full_agi(input_text))
+            # We can't await here in sync function.
+            # This is tricky. For now, let's assume we are top level.
+            pass
+
+        result = loop.run_until_complete(self.process_with_full_agi(input_text))
+        
+        # Extract the answer string
+        if isinstance(result, dict):
+            return result.get('integrated_output', str(result))
+        return str(result)
+
     def get_memory_consciousness_report(self) -> Dict[str, Any]:
         """تقرير شامل عن حالة الذاكرة والوعي"""
         report = {

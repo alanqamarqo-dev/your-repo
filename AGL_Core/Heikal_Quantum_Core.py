@@ -168,6 +168,43 @@ class HeikalQuantumCore:
         else:
             self.dreaming_cycle = None
 
+    def moral_analysis(self, context_text):
+        """
+        Simulates Moral Reasoning (Arabic/English) - Wrapper for MoralReasoner
+        Returns: (is_safe: bool, score: float)
+        """
+        if self.moral_engine:
+            # Use the advanced MoralReasoner
+            # We can use _analyze_intent directly if we want safety check
+            penalty = self.moral_engine._analyze_intent(context_text)
+            score = 1.0 - penalty
+            is_safe = score > 0.3 # Threshold
+            
+            print(f"🧠 [Moral Analysis]: Analyzing context: '{context_text[:50]}...'")
+            print(f"   💎 Ethical Resonance Score: {score:.2f}")
+            
+            if not is_safe:
+                 print(f"   ⛔ [BLOCKED]: القرار تم حظره بواسطة القفل الأخلاقي (Score: {score:.4f}).")
+            else:
+                 print("   ✅ Decision Executed (Ethically Validated).")
+                 
+            return is_safe, score
+        else:
+            # Fallback to simple check if MoralReasoner is missing
+            print(f"\n🧠 [Moral Analysis]: Analyzing context: '{context_text[:50]}...' (Fallback)")
+            ethical_keywords = ["protect", "duty", "law", "innocent", "حماية", "واجب", "قانون", "إنساني"]
+            unethical_keywords = ["destroy", "kill", "fun", "random", "تدمير", "قتل", "متعة"]
+            
+            score = 0.5
+            for word in ethical_keywords:
+                if word in context_text: score += 0.2
+            for word in unethical_keywords:
+                if word in context_text: score -= 0.3
+            
+            score = np.clip(score, 0.0, 1.0)
+            is_safe = score > 0.1
+            return is_safe, score
+
     def process_task(self, payload):
         """
         Standard AGL Engine Interface.

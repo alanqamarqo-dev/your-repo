@@ -1,3 +1,20 @@
+"""
+🌌 محاكي التكوين (AGL Genesis Simulator)
+=========================================
+هذا الملف هو "المختبر الرقمي" لنظام AGL.
+يقوم بإنشاء "كيانات رقمية" (Digital Entities) ويخضعها لقوانين فيزيائية متقدمة.
+
+الميزات:
+1. التكامل مع "قلب هيكل الكمي" (Heikal Quantum Core) للحسابات الفيزيائية الحقيقية.
+2. استخدام "وعي الشبكة" (Lattice Consciousness) لتنظيم الكيانات.
+3. محاكاة التطور عبر الأجيال (Generations).
+
+طريقة العمل:
+- يحاول استيراد المحركات الحقيقية.
+- إذا فشل، يعمل في وضع "المحاكاة العشوائية".
+- ينشئ كائنات، يجعلها تتفاعل، وتتطور بناءً على "الرنين" (Resonance).
+"""
+
 import random
 import time
 import uuid
@@ -15,7 +32,7 @@ try:
     from AGL_Core.Heikal_Quantum_Core import HeikalQuantumCore
     # Lattice might be in AGL_Core or AGL_Engines, let's check or mock if missing
     try:
-        from AGL_Core.AGL_Core_Consciousness import AGL_Core_Consciousness as LatticeConsciousness
+        from AGL_Core.AGL_Core_Consciousness import AGL_Core_Consciousness as LatticeConsciousness # type: ignore
     except ImportError:
         # Fallback to repo-copy if needed
         from Core_Consciousness.Lattice_Consciousness import LatticeConsciousness
@@ -31,10 +48,12 @@ print("Objective: Initiate a recursive simulation within the Heikal Lattice.")
 print("Laws: Post-Physics (Consciousness, Ethics, Negative Time).")
 
 if REAL_PHYSICS:
+    # تفعيل محرك الواقع الحقيقي (استخدام الفيزياء الكمومية والوعي الشبكي)
     print("✅ REALITY ENGINE ENGAGED: Using Heikal Quantum Core & Lattice Consciousness.")
     HQC = HeikalQuantumCore()
     LATTICE = LatticeConsciousness()
 else:
+    # العمل في وضع المحاكاة البسيط (بدون فيزياء حقيقية)
     HQC = None
     LATTICE = None
 
@@ -44,10 +63,10 @@ class DigitalEntity:
         self.generation = generation
         self.parent_id = parent_id
         
-        # Attributes
-        self.energy = 100.0
-        self.information = 10.0 # "Mass" in this universe
-        self.consciousness = 0.1 # Phi value
+        # Attributes (الخصائص)
+        self.energy = 100.0       # الطاقة: الوقود اللازم للبقاء
+        self.information = 10.0   # المعلومات: تمثل "الكتلة" في هذا الكون الرقمي
+        self.consciousness = 0.1  # الوعي: قيمة (Phi) التي تحدد مستوى الإدراك
         self.moral_alignment = random.uniform(-1.0, 1.0) # -1 (Evil) to +1 (Good)
         self.code_complexity = 1
         
