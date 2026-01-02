@@ -5,11 +5,23 @@ import inspect
 from pathlib import Path
 import json
 
-# Add repo-copy to path for engine access
-current_dir = os.path.dirname(os.path.abspath(__file__))
-repo_copy_path = os.path.join(current_dir, '..', 'repo-copy')
-if repo_copy_path not in sys.path:
-    sys.path.append(repo_copy_path)
+# --- AGL PATH MANAGER ---
+try:
+    # Try importing as a module from root
+    from AGL_Core.AGL_Paths import AGL_Path_Manager
+    AGL_Path_Manager()
+except ImportError:
+    try:
+        # Try importing locally if running from AGL_Core directory
+        from AGL_Paths import AGL_Path_Manager
+        AGL_Path_Manager()
+    except ImportError:
+        # Fallback manual setup
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        repo_copy_path = os.path.join(current_dir, '..', 'repo-copy')
+        if repo_copy_path not in sys.path:
+            sys.path.append(repo_copy_path)
+# ------------------------
 
 try:
     from Core_Engines.Hosted_LLM import chat_llm

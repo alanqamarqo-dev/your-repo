@@ -19,11 +19,30 @@ import asyncio
 import shutil
 import json
 
-# إضافة المسارات اللازمة للاستيراد
-current_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir = os.path.dirname(current_dir)
-sys.path.append(root_dir)
-sys.path.append(os.path.join(root_dir, "repo-copy"))
+# --- AGL PATH MANAGER ---
+root_dir = None
+try:
+    # Try importing as a module from root
+    from AGL_Core.AGL_Paths import AGL_Path_Manager
+    pm = AGL_Path_Manager()
+    root_dir = pm.root_dir
+except ImportError:
+    try:
+        # Try importing locally if running from AGL_Core directory
+        from AGL_Paths import AGL_Path_Manager
+        pm = AGL_Path_Manager()
+        root_dir = pm.root_dir
+    except ImportError:
+        # Fallback manual setup
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        root_dir = os.path.dirname(current_dir)
+        sys.path.append(root_dir)
+        sys.path.append(os.path.join(root_dir, "repo-copy"))
+
+# Ensure root_dir is set if something weird happened
+if root_dir is None:
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# ------------------------
 
 class SelfAwarenessModule:
     """
@@ -45,27 +64,99 @@ class SelfAwarenessModule:
 
     def scan_for_dormant_power(self):
         """
-        🔍 Scans the system map for 'Inactive' or 'Dormant' high-potential modules.
-        Returns a list of suggestions for activation.
+        🔍 Scans the system map for modules that are NOT currently loaded in memory.
+        Returns a list of dictionaries with module info.
         """
         if not self.system_map:
             return []
             
-        suggestions = []
-        # Simple heuristic: Look for keywords in the map that indicate power but aren't in active memory
+        dormant_modules = []
         keywords = ["Quantum", "Neural", "Holographic", "Resonance", "Evolution", "Metaphysics"]
         
-        # This is a simulation of introspection. In a real scenario, it would check sys.modules vs map.
-        # For now, we parse the map text for clues.
+        # Real Introspection: Check loaded modules
+        loaded_modules = set(sys.modules.keys())
+        
         lines = self.system_map.split('\n')
         for line in lines:
-            for kw in keywords:
-                if kw in line and "Inactive" in line: # Assuming map has status
-                     suggestions.append(f"Found Dormant Power: {line.strip()}")
-                elif kw in line and "TODO" in line:
-                     suggestions.append(f"Found Potential Upgrade: {line.strip()}")
-                     
-        return suggestions
+            # Check for file entries in map like "- **AGL_Core/AGL_Dormant_Powers.py**"
+            if "- **" in line and ".py**" in line:
+                file_path = line.split("**")[1] # e.g., AGL_Core/AGL_Dormant_Powers.py
+                module_name = os.path.basename(file_path).replace('.py', '')
+                
+                # Check if this module is loaded
+                is_loaded = False
+                for m in loaded_modules:
+                    if m.endswith(module_name):
+                        is_loaded = True
+                        break
+                
+                if not is_loaded:
+                    # Check if it's a "Power" module
+                    for kw in keywords:
+                        if kw in module_name:
+                            dormant_modules.append({
+                                'name': module_name,
+                                'path': file_path,
+                                'keyword': kw
+                            })
+                            break
+                            
+        return dormant_modules
+
+class SelfRepairSystem:
+    """
+    🔧 Self-Repair System: Automatically fixes broken imports and missing dependencies.
+    """
+    def __init__(self, root_path):
+        self.root_path = root_path
+        self.repairs_log = []
+
+    def find_file_for_module(self, module_name):
+        # Search recursively in root_path
+        target_file = f"{module_name}.py"
+        for root, dirs, files in os.walk(self.root_path):
+            if target_file in files:
+                return os.path.join(root, target_file)
+        return None
+
+    def force_load_module(self, file_path, class_name=None):
+        try:
+            module_name = os.path.basename(file_path).replace('.py', '')
+            spec = importlib.util.spec_from_file_location(module_name, file_path)
+            if spec and spec.loader:
+                module = importlib.util.module_from_spec(spec)
+                sys.modules[module_name] = module # Register to avoid reload
+                spec.loader.exec_module(module)
+                
+                if class_name:
+                    if hasattr(module, class_name):
+                        return getattr(module, class_name)
+                    else:
+                        return None
+                return module
+        except Exception as e:
+            self.repairs_log.append(f"Failed to force load {file_path}: {e}")
+            return None
+
+    def repair_import(self, module_name, class_name):
+        print(f"🔧 [REPAIR] Attempting to fix import: {module_name}.{class_name}...")
+        
+        # 1. Find the file
+        file_path = self.find_file_for_module(module_name)
+        if not file_path:
+            print(f"   ❌ File for {module_name} not found.")
+            return None
+            
+        print(f"   📍 Found file: {file_path}")
+        
+        # 2. Force load
+        obj = self.force_load_module(file_path, class_name)
+        if obj:
+            print(f"   ✅ Repair Successful: {class_name} loaded directly from source.")
+            return obj
+        else:
+            print(f"   ❌ Failed to extract {class_name} from {file_path}.")
+            return None
 
 # --- 1. استيراد المحركات (Dynamic Imports) ---
 
@@ -154,6 +245,48 @@ try:
 except ImportError:
     print("⚠️ [LOAD] Recursive Improver: Failed")
     RecursiveImprover = None
+
+# S. محرك المحاكاة المتقدم (The Simulator)
+try:
+    from Core_Engines.Advanced_Simulation_Engine import AdvancedSimulationEngine
+    print("✅ [LOAD] Advanced Simulation Engine: Online")
+except ImportError:
+    print("⚠️ [LOAD] Advanced Simulation Engine: Failed")
+    AdvancedSimulationEngine = None
+
+# --- GRAND INTEGRATION: ORPHANED POWER MODULES (ACTIVATED) ---
+
+# 1. Unified Physics Engine (Reality Simulation)
+try:
+    from AGL_Physics_Engine import AGL_Unified_Physics
+    print("✅ [LOAD] Unified Physics Engine: Online")
+except ImportError as e:
+    print(f"⚠️ [LOAD] Unified Physics Engine: Failed ({e})")
+    AGL_Unified_Physics = None
+
+# 2. Core Consciousness (Higher Self)
+try:
+    from AGL_Core_Consciousness import AGL_Core_Consciousness
+    print("✅ [LOAD] Core Consciousness Module: Online")
+except ImportError as e:
+    print(f"⚠️ [LOAD] Core Consciousness Module: Failed ({e})")
+    AGL_Core_Consciousness = None
+
+# 3. Heikal Quantum Core (Root Version)
+try:
+    from AGL_Heikal_Core import HeikalQuantumCore as HeikalQuantumCore_Root
+    print("✅ [LOAD] Heikal Quantum Core (Root): Online")
+except ImportError as e:
+    print(f"⚠️ [LOAD] Heikal Quantum Core (Root): Failed ({e})")
+    HeikalQuantumCore_Root = None
+
+# 4. Holographic Memory Library (Deep Storage)
+try:
+    import AGL_Holographic_Memory
+    print("✅ [LOAD] Holographic Memory Lib: Online")
+except ImportError as e:
+    print(f"⚠️ [LOAD] Holographic Memory Lib: Failed ({e})")
+    AGL_Holographic_Memory = None
 
 # --- GRAND INTEGRATION: NEW ENGINES (AUTONOMY & CAUSALITY) ---
 
@@ -257,6 +390,9 @@ class AGL_Super_Intelligence:
         
         # 5. Self-Awareness (System Map)
         self.self_awareness = SelfAwarenessModule(os.path.join(root_dir, "AGL_SYSTEM_MAP.md"))
+        
+        # 5.1 Self-Repair System (The Mechanic)
+        self.repair_system = SelfRepairSystem(root_dir)
 
         # 5.5 Causal Engine (Deep Understanding)
         self.causal_engine = CausalGraphEngine() if CausalGraphEngine else None
@@ -276,12 +412,38 @@ class AGL_Super_Intelligence:
         # 9. Recursive Improver (The Architect)
         self.recursive_improver = RecursiveImprover() if RecursiveImprover else None
         
+        # 9.5 Advanced Simulation Engine (The Simulator)
+        self.simulation_engine = AdvancedSimulationEngine() if AdvancedSimulationEngine else None
+
         # 10. Unified Lib
         self.lib = UnifiedLib if UnifiedLib else None
 
         # 11. Dormant Powers (Activated)
         self.neural_bridge = NeuralResonanceBridge() if NeuralResonanceBridge else None
         self.holo_projector = HolographicRealityProjector() if HolographicRealityProjector else None
+
+        # --- GRAND INTEGRATION: ORPHANED POWER MODULES (INITIALIZATION) ---
+        
+        # 11.1 Unified Physics (Reality Simulation)
+        self.physics_engine = AGL_Unified_Physics() if AGL_Unified_Physics else None
+        
+        # 11.2 Core Consciousness (Higher Self)
+        self.core_consciousness_module = AGL_Core_Consciousness() if AGL_Core_Consciousness else None
+        
+        # 11.3 Heikal Quantum Core (Root)
+        self.heikal_core_root = HeikalQuantumCore_Root() if HeikalQuantumCore_Root else None
+        if self.heikal_core_root is None:
+            # Attempt Repair
+            repaired_class = self.repair_system.repair_import('Heikal_Quantum_Core', 'HeikalQuantumCore')
+            if repaired_class:
+                try:
+                    self.heikal_core_root = repaired_class()
+                    print("   ✨ [REPAIR] Heikal Quantum Core (Root) successfully restored.")
+                except Exception as e:
+                    print(f"   ❌ [REPAIR] Failed to instantiate HeikalQuantumCore: {e}")
+        
+        # 11.4 Holographic Memory Lib
+        self.holographic_memory_lib = AGL_Holographic_Memory if AGL_Holographic_Memory else None
 
         # --- GRAND INTEGRATION: INITIALIZATION ---
         
@@ -317,6 +479,7 @@ class AGL_Super_Intelligence:
             'Mission_Control': self.focus_controller,
             'Meta_Cognition': self.meta_cognition,
             'Recursive_Improver': self.recursive_improver,
+            'AdvancedSimulationEngine': self.simulation_engine,
             'Neural_Resonance_Bridge': self.neural_bridge,
             'Holographic_Reality_Projector': self.holo_projector,
             # Grand Integration Updates
@@ -329,6 +492,11 @@ class AGL_Super_Intelligence:
             'Creative_Innovation': self.creative_innovation, 
             'Self_Reflective': self.self_reflective,
             'Reasoning_Layer': self.reasoning_layer,
+            # Orphaned Power Modules (Newly Integrated)
+            'Unified_Physics_Engine': self.physics_engine,
+            'Core_Consciousness_Module': self.core_consciousness_module,
+            'Heikal_Quantum_Core_Root': self.heikal_core_root,
+            'Holographic_Memory_Lib': self.holographic_memory_lib,
         }
 
         # 11. Unified AGI System (The Backbone)
@@ -354,6 +522,37 @@ class AGL_Super_Intelligence:
         
         # Store for dynamically discovered modules
         self.discovered_modules = {}
+
+        # [NEW] Run initial scan for dormant power
+        if self.self_awareness:
+            suggestions = self.self_awareness.scan_for_dormant_power()
+            if suggestions:
+                self.activate_dormant_modules(suggestions)
+
+    def activate_dormant_modules(self, modules):
+        """
+        ⚡ ACTIVATION: Dynamically loads discovered dormant modules.
+        """
+        print(f"\n⚡ [ACTIVATION] Attempting to awaken {len(modules)} dormant modules...")
+        
+        for mod_info in modules:
+            name = mod_info['name']
+            path = mod_info['path']
+            keyword = mod_info['keyword']
+            
+            # Construct full path
+            full_path = os.path.join(root_dir, path)
+            
+            if os.path.exists(full_path):
+                print(f"   >> Awakening {name} ({keyword})...")
+                module = import_module_from_path(name, full_path)
+                if module:
+                    self.discovered_modules[name] = module
+                    print(f"      ✅ Success: {name} is now ACTIVE.")
+                else:
+                    print(f"      ❌ Failed to load {name}.")
+            else:
+                print(f"      ⚠️ File not found: {full_path}")
 
     def discover_unused_capabilities(self):
         """
@@ -413,6 +612,7 @@ class AGL_Super_Intelligence:
         if self.focus_controller: self.active_components.append("SmartFocusController")
         if self.meta_cognition: self.active_components.append("MetaCognitionEngine")
         if self.recursive_improver: self.active_components.append("RecursiveImprover")
+        if self.simulation_engine: self.active_components.append("AdvancedSimulationEngine")
         if self.unified_system: self.active_components.append("UnifiedAGISystem")
         
         self.state = "AWAKE"

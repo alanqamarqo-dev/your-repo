@@ -2,12 +2,12 @@ import json
 import os
 import logging
 try:
-    from Core_Engines.Hosted_LLM import HostedLLM
+    # Import the standalone chat_llm function which connects to Ollama directly
+    from Core_Engines.Hosted_LLM import chat_llm
 except ImportError:
-    # Fallback if Core_Engines is not in path directly but via repo-copy
-    import sys
-    # Assuming repo-copy is in sys.path or relative
-    from Core_Engines.Hosted_LLM import HostedLLM
+    # Fallback
+    def chat_llm(messages, **kwargs):
+        return {"text": "LLM Unavailable"}
 
 class HiveMind:
     """
@@ -113,12 +113,24 @@ class HiveMind:
         )
         
         # Use the HostedLLM to generate the response
-        response = HostedLLM.chat_llm(system_prompt, query)
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": query}
+        ]
+        
+        response_obj = chat_llm(messages, temperature=0.7)
+        
+        # Extract text from response object
+        response_text = ""
+        if isinstance(response_obj, dict):
+            response_text = response_obj.get("text") or response_obj.get("content") or str(response_obj)
+        else:
+            response_text = str(response_obj)
         
         return {
             "ok": True,
             "engine": "Hive_Mind",
             "stats": {k: v for k, v in stats.items() if k != "lead_entity"}, # Exclude full entity obj for brevity
             "lead_entity_id": lead['id'],
-            "text": response
+            "text": response_text
         }

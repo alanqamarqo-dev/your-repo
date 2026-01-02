@@ -1,0 +1,200 @@
+﻿   + [Active] EngineRegistry (Core_Engines)
+   + [Active] ExternalInfoProvider (Core_Engines)
+   + [Active] GeneralKnowledge (Core_Engines)
+   + [Active] GeneralKnowledgeEngine (Core_Engines)
+   + [Active] GKGraph (Core_Engines)
+   ! [Skip] GKReasoner: requires constructor args: graph,verifier
+   + [Stub] GKReasoner: registered fallback stub (safe defaults).
+   ! [Skip] GKReasoner: requires constructor args: graph,verifier
+   + [Stub] GKReasoner: registered fallback stub (safe defaults).
+   ! [Skip] GKRetriever: requires constructor args: kb_adapters
+   + [Stub] GKRetriever: registered fallback stub (safe defaults).
+   ! [Skip] GKAnswer: requires constructor args: answer_text,confidence,supporting_facts,contradictions
+   + [Stub] GKAnswer: registered fallback stub (safe defaults).
+   ! [Skip] GKEvidence: requires constructor args: text,source
+   + [Stub] GKEvidence: registered fallback stub (safe defaults).
+   ! [Skip] GKFact: requires constructor args: subject,predicate,obj,confidence,provenance
+   + [Stub] GKFact: registered fallback stub (safe defaults).
+   ! [Skip] GKQuery: requires constructor args: text
+   + [Stub] GKQuery: registered fallback stub (safe defaults).
+   ! [Skip] GKSource: requires constructor args: uri,title,provider
+   + [Stub] GKSource: registered fallback stub (safe defaults).
+   + [Active] GKVerifier (Core_Engines)
+   + [Active] HostedLLM (Core_Engines)
+   + [Active] HumorIronyStylist (Core_Engines)
+   + [Active] HybridReasoner (Core_Engines)
+   + [Active] HypothesisGenerator (Core_Engines)
+   + [Active] HypothesisGeneratorEngine (Core_Engines)
+   + [Active] KnowledgeOrchestrator (Core_Engines)
+   ! [Skip] LawMatcher: requires constructor args: store,parser
+   + [Stub] LawMatcher: registered fallback stub (safe defaults).
+   + [Active] LawParser (Core_Engines)
+   + [Active] AdvancedLinearAlgebra (Core_Engines)
+   + [Active] CalculusEngine (Core_Engines)
+   + [Active] MathematicalBrain (Core_Engines)
+   + [Active] MathProverLite (Core_Engines)
+   ! [Skip] CandidateSignal: requires constructor args: name,y_pred
+   + [Stub] CandidateSignal: registered fallback stub (safe defaults).
+   + [Active] MetaEnsembler (Core_Engines)
+   + [Active] MetaLearningEngine (Core_Engines)
+   + [Active] MetaLearningEngine (Core_Engines)
+   + [Active] MicroPlanner (Core_Engines)
+   ! [Skip] StructureCandidate: requires constructor args: id,expr
+   + [Stub] StructureCandidate: registered fallback stub (safe defaults).
+   + [Active] MoralReasoner (Core_Engines)
+   ! [Skip] IntentResult: requires constructor args: intent,confidence,slots
+   + [Stub] IntentResult: registered fallback stub (safe defaults).
+   ! [Skip] NLPAdvanced: typing.Protocol (interface)
+   + [Stub] NLPAdvanced: registered fallback stub (safe defaults).
+   ! [Skip] NLPAdvancedEngine: typing.Protocol (interface)
+   + [Stub] NLPAdvancedEngine: registered fallback stub (safe defaults).
+   ! [Skip] NLPUtterance: requires constructor args: role,text
+   + [Stub] NLPUtterance: registered fallback stub (safe defaults).
+   ! [Skip] SentimentResult: requires constructor args: label,score
+   + [Stub] SentimentResult: registered fallback stub (safe defaults).
+   + [Active] ShortTermMemory (Core_Engines)
+   + [Active] OllamaAdapter (Core_Engines)
+   + [Active] OllamaKnowledgeEngine (Core_Engines)
+   + [Active] OpenAIAdapter (Core_Engines)
+   + [Active] OpenAIKnowledgeEngine (Core_Engines)
+   + [Active] OpenAI_KnowledgeEngine (Core_Engines)
+   + [Active] Orchestrator (Core_Engines)
+   + [Active] PerceptionContext (Core_Engines)
+   + [Active] PlanAndExecuteMicroPlanner (Core_Engines)
+   + [Active] PromptComposerV2 (Core_Engines)
+   + [Active] ProtocolDesigner (Core_Engines)
+   + [Active] ProtocolDesignerEngine (Core_Engines)
+   + [Active] QuantumNeuralCore (Core_Engines)
+   + [Active] QuantumAlgorithmEngine (Core_Engines)
+   + [Active] QuantumCircuitDesigner (Core_Engines)
+   + [Active] QuantumProcessor (Core_Engines)
+   + [Active] QuantumSimulatorWrapper (Core_Engines)
+   + [Active] ReasoningLayer (Core_Engines)
+   + [Active] PlannerHFSM (Core_Engines)
+   + [Active] ReasoningPlanner (Core_Engines)
+   + [Active] RobustRegression (Core_Engines)
+   + [Active] RobustRegressor (Core_Engines)
+   + [Active] RubricEnforcer (Core_Engines)
+   + [Active] SelfCritiqueAndRevise (Core_Engines)
+   + [Active] SelfCritiqueAndRevise (Core_Engines)
+   + [Active] CuriosityEngine (Core_Engines)
+   + [Active] SelfReflectiveEngine (Core_Engines)
+   + [Active] ToolRunner (Core_Engines)
+   ! [Skip] SocialInteraction: typing.Protocol (interface)
+   + [Stub] SocialInteraction: registered fallback stub (safe defaults).
+   ! [Skip] SocialInteractionEngine: typing.Protocol (interface)
+   + [Stub] SocialInteractionEngine: registered fallback stub (safe defaults).
+   + [Active] EngineBase (Core_Engines)
+   + [Active] StrategicThinking (Core_Engines)
+   + [Active] StrategicThinkingEngine (Core_Engines)
+   + [Active] UnitsValidator (Core_Engines)
+   + [Active] VisualSpatial (Core_Engines)
+   ! [Skip] VisualSpatialEngine: typing.Protocol (interface)
+   + [Stub] VisualSpatialEngine: registered fallback stub (safe defaults).
+   + [Active] Visual_Spatial (Core_Engines)
+   + [Active] AutomatedTheoremProver (Scientific_Systems)
+   + [Active] LogicalReasoningEngine (Scientific_Systems)
+   + [Active] NumericVerifier (Scientific_Systems)
+   + [Active] ProofStepGenerator (Scientific_Systems)
+   + [Active] IntegratedSimulationEngine (Scientific_Systems)
+   + [Active] CitationAnalyzer (Scientific_Systems)
+   + [Active] MathematicalContentAnalyzer (Scientific_Systems)
+   + [Active] QuantumClaimVerifier (Scientific_Systems)
+   + [Active] ScientificResearchAssistant (Scientific_Systems)
+   + [Active] AlgebraSolver (Solvers)
+   + [Active] BaseSolver (Solvers)
+   + [Active] ChemistrySolver (Solvers)
+   + [Active] PhysicsSolver (Solvers)
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+   + [Active] QuantumSolver (Solvers)
+   + [Active] EmergencyDoctor (Safety_Systems)
+   + [Active] EmergencyIntegration (Safety_Systems)
+   + [Active] EmergencyDoctorFallback (Safety_Systems)
+   + [Active] EmergencyIntegrationFallback (Safety_Systems)
+   + [Active] EmergencyProtocols (Safety_Systems)
+   ! [Skip] RollbackMechanism: requires constructor args: target_file
+   + [Stub] RollbackMechanism: registered fallback stub (safe defaults).
+   + [Active] AdvancedCodeGenerator (Engineering_Engines)
+   + [Active] CodeOptimizer (Engineering_Engines)
+   + [Active] CppSpecialist (Engineering_Engines)
+   + [Active] JavaScriptSpecialist (Engineering_Engines)
+   + [Active] PythonCodeSpecialist (Engineering_Engines)
+   + [Active] SoftwareArchitect (Engineering_Engines)
+   + [Active] VerilogSpecialist (Engineering_Engines)
+>> [Core] Γ£à System is Fully Operational (111 Engines Active).
+≡ƒºá [Self-Awareness] I am aware of my 29806 components across 3 directories.
+>> [Server] Ready to interact.
+>>> [Debug] user_input repr: '┘à╪▒╪¡╪¿┘ï╪º╪î ╪¡╪º┘ä ╪º┘ä┘å╪╕╪º┘à╪ƒ'
+INFO:     127.0.0.1:52380 - "POST /chat HTTP/1.1" 200 OK
+D:\AGL\repo-copy\dynamic_modules\mission_control_enhanced.py:1059: RuntimeWarning: coroutine 
+'run_enhanced_creative_mission' was never awaited
+  return {"error": str(e)}
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+>>> [Debug] user_input repr: '╪╡┘à┘à ┘à╪¡╪º┘â╪º┘ç ┘ä╪½┘é╪¿ ╪º╪│┘ê╪»'
+≡ƒÜÇ [Router] Strategic Intent Detected. Routing to Mission Control.
+INFO:     127.0.0.1:60885 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60650 - "GET / HTTP/1.1" 200 OK
+>>> [Debug] user_input repr: '┘à╪▒╪¡╪¿┘ï╪º╪î ╪¡╪º┘ä ╪º┘ä┘å╪╕╪º┘à╪ƒ'
+INFO:     127.0.0.1:60650 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61396 - "GET /favicon.ico HTTP/1.1" 200 OK
+>>> [Debug] user_input repr: '┘å┘ü╪░ ┘à╪¡╪º┘â╪º┘ç ┘ä╪¡╪▒┘â╪⌐ ╪º┘ä╪½┘é╪¿ ╪º┘ä╪º╪│┘ê╪»'
+INFO:     127.0.0.1:49993 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56763 - "GET / HTTP/1.1" 200 OK
+>>> [Debug] user_input repr: '┘à╪▒╪¡╪¿┘ï╪º╪î ╪¡╪º┘ä ╪º┘ä┘å╪╕╪º┘à╪ƒ'
+INFO:     127.0.0.1:56763 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56514 - "GET /favicon.ico HTTP/1.1" 200 OK
+>>> [Debug] user_input repr: '┘à╪º┘ç┘è ┘ê╪╕┘è┘ü╪¬┘â'
+INFO:     127.0.0.1:62612 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51999 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51999 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51999 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57410 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57410 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57410 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52926 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56881 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52695 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54009 - "GET /api/log HTTP/1.1" 200 OK
+>>> [Debug] user_input repr: ''
+≡ƒÜÇ [Mission] Dispatching mission 'science' -> topic preview: ╪╡┘à┘à ┘à╪¡╪º┘â╪º╪⌐ ┘ä╪½┘é╪¿ ╪ú╪│┘ê╪»
+≡ƒö¼ ╪¿╪»╪í ╪º┘ä╪»┘à╪¼ ╪º┘ä╪╣┘ä┘à┘è ╪º┘ä┘à╪¬┘é╪»┘à...
+≡ƒÄ» ╪¬┘ü╪╣┘è┘ä ┘â┘ä╪º╪│╪¬╪▒ scientific_reasoning...
+   [Quantum Core] ≡ƒîî Collapsing wave function for: ╪╡┘à┘à ┘à╪¡╪º┘â╪º╪⌐ ┘ä╪½┘é╪¿ ╪ú╪│┘ê╪»...
+INFO:     127.0.0.1:62340 - "GET /api/log HTTP/1.1" 200 OK
+   [Quantum Core] Γ£à Wave function collapsed successfully.
+INFO:     127.0.0.1:65080 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54028 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56190 - "GET /api/log HTTP/1.1" 200 OK
+>>> [Debug] user_input repr: ''
+≡ƒÜÇ [Mission] Dispatching mission 'science' -> topic preview: ╪╡┘à┘à ┘à╪¡╪º┘â╪º╪⌐ ┘ä╪½┘é╪¿ ╪ú╪│┘ê╪»
+≡ƒö¼ ╪¿╪»╪í ╪º┘ä╪»┘à╪¼ ╪º┘ä╪╣┘ä┘à┘è ╪º┘ä┘à╪¬┘é╪»┘à...
+≡ƒÄ» ╪¬┘ü╪╣┘è┘ä ┘â┘ä╪º╪│╪¬╪▒ scientific_reasoning...
+   [Quantum Core] ≡ƒîî Collapsing wave function for: ╪╡┘à┘à ┘à╪¡╪º┘â╪º╪⌐ ┘ä╪½┘é╪¿ ╪ú╪│┘ê╪»...
+   [Quantum Core] Γ£à Wave function collapsed successfully.
+INFO:     127.0.0.1:51567 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56193 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51673 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51673 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52316 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52316 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52316 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50125 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50125 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55931 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55931 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55931 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55931 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55931 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55931 - "GET /api/log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55931 - "GET /api/log HTTP/1.1" 200 OK
+䑛䉅䝕啟䕓归义啐嵔✠ധ嬊楍獳潩嵮䐠獩慰捴㩨猠楣湥散ⴠ‾뗘藙藙������₩蓙ꯘ苙꣘����ද钟€꣘꿘ꇘ�����€Ꟙ蓙맘蓙藙諙�������⺅⸮਍鿰꾎�����₄菙蓙Ꟙ돘꫘뇘猠楣湥楴楦彣敲獡湯湩⹧⸮਍啛嵉删瑥牵楮杮洠獩楳湯爠灥祬瑟硥⁴氨湥ㄽㄵ⤴਍䑛䉅䝕啟䕓归义啐嵔✠藙뇘귘꣘诙Ꟙ賘���₄Ꟙ蓙蛙룘Ꟙ藙鿘ധ嬊牐浯瑰䤠橮捥楴湯⁝摁敤⁤潃瑮硥㩴䜠湥獥獩䅟灬慨਍䑛䉅䝕啟䕓归义啐嵔✠뗘藙藙������₇蓙ꯘ苙꣘����➯਍偛潲灭⁴湉敪瑣潩嵮䄠摤摥䌠湯整瑸›敇敮楳彳汁桰ൡ嬊䕄啂彇单剅䥟偎呕⁝�������₌귘Ꟙ蓙�������➟਍偛潲灭⁴湉敪瑣潩嵮䄠摤摥䌠湯整瑸›敇敮楳彳汁桰ൡ嬊䕄啂彇单剅䥟偎呕⁝���₅藙귘Ꟙ菙Ꟙ蟙����₨Ꟙ돘裙꿘ധ嬊牐浯瑰䤠橮捥楴湯⁝摁敤⁤潃瑮硥㩴䜠湥獥獩䅟灬慨਍䑛䉅䝕啟䕓归义啐嵔✠ധ嬊楍獳潩嵮䐠獩慰捴㩨猠楣湥散ⴠ‾뗘藙藙������₩蓙ꯘ苙꣘����ද钟€꣘꿘ꇘ�����€Ꟙ蓙맘蓙藙諙�������⺅⸮਍鿰꾎�����₄菙蓙Ꟙ돘꫘뇘猠楣湥楴楦彣敲獡湯湩⹧⸮਍啛嵉删瑥牵楮杮洠獩楳湯爠灥祬瑟硥⁴氨湥ㄽ㠸⤹਍䑛䉅䝕啟䕓归义啐嵔✠ധ嬊楍獳潩嵮䐠獩慰捴㩨猠楣湥散ⴠ‾뗘藙藙������₩蓙ꯘ苙꣘����ද钟€꣘꿘ꇘ�����€Ꟙ蓙맘蓙藙諙�������⺅⸮਍鿰꾎�����₄菙蓙Ꟙ돘꫘뇘猠楣湥楴楦彣敲獡湯湩⹧⸮਍啛嵉删瑥牵楮杮洠獩楳湯爠灥祬瑟硥⁴氨湥㈽㔲⤵਍䑛䉅䝕啟䕓归义啐嵔✠ധ嬊楍獳潩嵮䐠獩慰捴㩨猠楣湥散ⴠ‾뗘藙藙������₩蓙ꯘ苙꣘����ද钟€꣘꿘ꇘ�����€Ꟙ蓙맘蓙藙諙�������⺅⸮਍鿰꾎�����₄菙蓙Ꟙ돘꫘뇘猠楣湥楴楦彣敲獡湯湩⹧⸮਍啛嵉删瑥牵楮杮洠獩楳湯爠灥祬瑟硥⁴氨湥ㄽㄴ⤷਍

@@ -17,3 +17,19 @@ Run these scripts from the root directory:
 ```powershell
 python scripts/verify_integration.py
 ```
+
+## How to Run (General)
+
+**Important:** Always run these scripts from the **project root directory** (`D:\AGL`) to ensure all imports work correctly.
+
+### Examples:
+
+```bash
+# Correct way (from D:\AGL)
+python scripts/run_strict_test.py
+python scripts/activate_mother_system.py
+
+# Incorrect way (do not do this)
+cd scripts
+python run_strict_test.py  # This will likely fail with ImportError
+```

@@ -14,6 +14,7 @@
         "./repo-copy/Core_Engines",
         "./repo-copy/scripts",
         "./repo-copy/Safety_Systems",
-        "./backup_20251208_214555/stubs"
+        "./backup_20251208_214555/stubs",
+        "./backups/backup_20251216_033127_FINAL/repo-copy/stubs"
     ]
 }

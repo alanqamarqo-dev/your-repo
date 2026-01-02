@@ -8,10 +8,10 @@
   - Classes: WindowsAudioRecorder, AcousticResurrection
 - **AGL_Advanced_Wave_Gates.py**
   - Classes: AdvancedWaveProcessor
-- **AGL_CAUSAL_UNDERSTANDING_TEST.py**
-  - Funcs: run_causal_test
-- **AGL_CORE_EVOLUTION_TEST.py**
-  - Funcs: test_core_evolution
+- **AGL_CHECK_CAPABILITIES.py**
+  - Funcs: check_capabilities
+- **AGL_Causal_Learning.py**
+  - Classes: CausalLearningAgent
 - **AGL_Consciousness_Audit.py**
   - Classes: LatticeCore
   - Funcs: run_audit
@@ -23,10 +23,19 @@
 - **AGL_Core/AGL_Awakened_BACKUP.py**
   - Classes: SelfAwarenessModule, AGL_Super_Intelligence
   - Funcs: import_module_from_path
+- **AGL_Core/AGL_Awakened_BACKUP_INTEGRATION.py**
+  - Classes: SelfAwarenessModule, AGL_Super_Intelligence
+  - Funcs: import_module_from_path
 - **AGL_Core/AGL_Documentation_Builder.py**
   - Classes: AGL_Auto_Documenter
+- **AGL_Core/AGL_Dormant_Powers.py**
+  - Classes: NeuralResonanceBridge, HolographicRealityProjector
 - **AGL_Core/AGL_Health_Check.py**
   - Funcs: check_pulse
+- **AGL_Core/AGL_Metaphysics_Engine_V2.py**
+  - Classes: AGLMetaphysicsEngineV2
+- **AGL_Core/AGL_Paths.py**
+  - Classes: AGL_Path_Manager
 - **AGL_Core/AGL_Self_Dev_Sandbox.py**
   - Classes: AGLSelfDevelopmentSandbox
 - **AGL_Core/AGL_Super_Intelligence.py**
@@ -52,14 +61,10 @@
   - Funcs: _safe_get_answer, _safe_get, create_unified_agi_system
 - **AGL_Core_Consciousness.py**
   - Classes: AGL_Core_Consciousness
-- **AGL_Core_Consciousness_BACKUP.py**
-  - Classes: AGL_Core_Consciousness
 - **AGL_Creative_Studio.py**
   - Funcs: generate_creative_content
 - **AGL_DREAMING_SIMULATION.py**
-  - Funcs: run_dreaming_simulation
-- **AGL_DREAMING_TEST.py**
-  - Funcs: run_dreaming_test
+  - Funcs: run_massive_simulation_experience, run_dreaming_simulation
 - **AGL_Deep_Capability_Audit.py**
   - Classes: MockRegistry
   - Funcs: audit_capabilities
@@ -73,8 +78,10 @@
   - Funcs: rotating_universe_time_travel
 - **AGL_EVOLUTION_DEMO.py**
   - Funcs: main
-- **AGL_EVOLUTION_TEST.py**
-  - Funcs: test_evolution
+- **AGL_EXPLORE_NEXT_HORIZON.py**
+  - Funcs: main
+- **AGL_EXPLORE_NEXT_HORIZON_V2.py**
+  - Funcs: main
 - **AGL_Engines/Dreaming_Cycle.py**
   - Classes: DreamingEngine
 - **AGL_Engines/HiveMind.py**
@@ -88,8 +95,13 @@
   - Funcs: _safe_import, quick_smoke
 - **AGL_Engines/Volition_Engine.py**
   - Classes: VolitionEngine
+- **AGL_Engines/humor_stylist.py**
+  - Classes: HumorIronyStylist
+  - Funcs: factory
 - **AGL_FULL_DIAGNOSTIC.py**
   - Classes: FullSystemDiagnostic
+- **AGL_FULL_SYSTEM_AUDIT.py**
+  - Funcs: log, static_analysis, runtime_analysis, main
 - **AGL_Full_Power_Demo.py**
   - Funcs: run_demo
 - **AGL_Genesis.py**
@@ -101,6 +113,10 @@
 - **AGL_Grand_Simulation.py**
   - Classes: HeikalCoreWrapper, QuantumNeuralCoreWrapper, MoralReasonerWrapper, VolitionEngineWrapper, HypothesisGeneratorWrapper, TrueConsciousnessWrapper
   - Funcs: run_protocol_omega
+- **AGL_Grand_Unification.py**
+  - Classes: QuantumCausalUniverse
+- **AGL_Grand_Unification_Scaling.py**
+  - Classes: ScaledQuantumUniverse
 - **AGL_Heartbeat.py**
   - Classes: AGL_Heart
 - **AGL_Heikal_Core.py**
@@ -112,41 +128,33 @@
 - **AGL_Holographic_Memory.py**
   - Classes: HolographicVacuum
   - Funcs: generate_vector, circular_convolution, circular_correlation, superposition, cosine_similarity, calculate_thought_mass
-- **AGL_INTELLIGENCE_LEVEL_TEST.py**
-  - Funcs: run_intelligence_assessment
-- **AGL_IRON_LOOP_TEST.py**
-  - Classes: IronLoopTester
-- **AGL_LEARNING_TEST.py**
-  - Funcs: run_learning_test
-- **AGL_LIVE_EVOLUTION_TEST.py**
-  - Funcs: run_evolution_test
+- **AGL_LEVEL_5_VERIFICATION.py**
+  - Classes: Level5Verifier
 - **AGL_Lattice_Bootloader.py**
   - Funcs: boot_from_vacuum
+- **AGL_MAIN_AWAKENED.py**
+  - Funcs: main
 - **AGL_MASTER_CONTROLLER.py**
   - Funcs: print_header, run_intelligence_test, run_telepathy_test, run_dreaming_test, run_iron_loop_test, run_diagnostic, chat_mode, main
-- **AGL_MERGE_TEST.py**
-  - Funcs: main
-- **AGL_MISSION_CONTROL_TEST.py**
-  - Funcs: run_mission_control_test
 - **AGL_MORNING_REFLECTION.py**
   - Funcs: run_morning_reflection
-- **AGL_MOTHER_TEST.py**
-  - Funcs: main
 - **AGL_Memory/Holographic_LLM.py**
   - Classes: HolographicLLM
   - Funcs: create_engine
 - **AGL_Metaphysics_Visualizer.py**
   - Classes: HeikalScope
-- **AGL_Mission_Impossible_Integrated_Test.py**
-  - Funcs: run_integrated_mission_impossible
-- **AGL_Mission_Impossible_Test.py**
-  - Funcs: run_mission_impossible
 - **AGL_OMEGA_EXPERIMENT.py**
   - Classes: OmegaExperiment
+- **AGL_OMEGA_INTERVIEW.py**
+  - Classes: OmegaInterface
+- **AGL_OMEGA_TEST_AWAKENED.py**
+  - Funcs: main
 - **AGL_Optical_Heart.py**
   - Classes: OpticalHeart
 - **AGL_Oracle.py**
   - Funcs: consult_oracle
+- **AGL_POWER_DISCOVERY.py**
+  - Funcs: main
 - **AGL_Parallel_Wave_Processor.py**
   - Classes: ParallelWaveExecutor
   - Funcs: _worker_task
@@ -155,36 +163,43 @@
 - **AGL_PostPhysics_Lab.py**
   - Classes: TheoryLab
   - Funcs: proof_1, sim_1, proof_2, sim_2, proof_3, sim_3, proof_4, sim_4, proof_5, sim_5, proof_6, sim_6, proof_7, sim_7, proof_8, sim_8, proof_9, sim_9, proof_10, sim_10, proof_11, sim_11, proof_12, sim_12, proof_13, sim_13, proof_14, sim_14, proof_15, sim_15, proof_16, sim_16, proof_17, sim_17, proof_18, sim_18, proof_19, sim_19, proof_20, sim_20, proof_21, sim_21, proof_22, sim_22
-- **AGL_Practical_Super_Intelligence_Test.py**
-  - Funcs: run_global_complexity_test
+- **AGL_QUANTUM_KNOWLEDGE_EXPANSION.py**
+  - Funcs: generate_quantum_data, inject_knowledge
 - **AGL_QUANTUM_TELEPATHY.py**
   - Funcs: sender_brain, receiver_brain, run_telepathy_experiment
-- **AGL_Quantum_Reality_Test.py**
-  - Classes: QuantumRealityTest
+- **AGL_Quantum_Data_Analysis.py**
+  - Classes: QuantumDataAnalyzer
 - **AGL_Quantum_Shell.py**
   - Classes: QuantumShell
+- **AGL_REALITY_CHECK.py**
+  - Classes: RealWorldRealityCheck
+  - Funcs: run_test
+- **AGL_REAL_WORLD_MISSION.py**
+  - Funcs: main
 - **AGL_RUN_COUNCIL.py**
   - Funcs: run_council_session
 - **AGL_RUN_COUNCIL_FUTURE.py**
   - Funcs: run_council_session
 - **AGL_RUN_COUNCIL_LAB.py**
   - Funcs: run_council_session
+- **AGL_RUN_LOBOTOMIZED.py**
+  - Funcs: run_test
 - **AGL_Relativity_Core.py**
   - Funcs: calculate_christoffel
 - **AGL_Resurrection_Protocol.py**
   - Classes: VacuumResurrectionSystem
-- **AGL_SAFETY_TEST.py**
-  - Classes: TestAGLSafety
-- **AGL_SELF_DEVELOPMENT_TEST.py**
-  - Funcs: test_self_development
-- **AGL_SELF_EVOLUTION_TEST.py**
-  - Funcs: run_self_evolution
-- **AGL_SELF_QUERY_TEST.py**
-  - Funcs: run_mirror_test
+- **AGL_SELF_DESCRIPTION.py**
+  - Funcs: run_self_description
+- **AGL_SELF_DEVELOPMENT_PROPOSAL.py**
+  - Funcs: main
 - **AGL_SELF_REPAIR_MISSION.py**
   - Classes: AGL_System_Doctor
-- **AGL_SUPER_TEST.py**
+- **AGL_SINGLE_SHOT_IMPROVEMENT.py**
   - Funcs: main
+- **AGL_STATIC_WEAKNESS_SCANNER.py**
+  - Classes: AGLStaticScanner
+- **AGL_SUPER_INTELLIGENCE_EVOLUTION.py**
+  - Classes: EvolutionGym
 - **AGL_Self_Discovery.py**
   - Funcs: run_self_discovery
 - **AGL_Simulations/AGL_Genesis_Simulator.py**
@@ -192,1580 +207,83 @@
   - Funcs: run_genesis
 - **AGL_Strength_Scanner.py**
   - Funcs: analyze_file_strength, scan_project
-- **AGL_System_Coherence_Test.py**
-  - Classes: SystemCoherenceTest
-- **AGL_TRUTH_TEST.py**
-  - Classes: TruthTest
-- **AGL_Telepathy_Test.py**
-  - Funcs: sender_process, receiver_process, analyze_results
 - **AGL_Telepathy_With_Medium.py**
   - Funcs: sender_process, receiver_process, analyze_results
 - **AGL_Trinity.py**
   - Classes: AGL_Trinity_Entity
-- **AGL_UNIFIED_LIB_TEST.py**
-  - Funcs: run_unified_lib_test
-- **AGL_VOLITION_TEST.py**
-  - Funcs: run_volition_test
+- **AGL_UPGRADE_TARGET_1.py**
+  - Funcs: main
+- **AGL_UPGRADE_TARGET_2.py**
+  - Funcs: main
+- **AGL_UPGRADE_TARGET_3.py**
+  - Funcs: main
+- **AGL_Vectorized_Memory.py**
+  - Classes: VectorizedMemoryManager
 - **AGL_Vectorized_Wave_Processor.py**
   - Classes: VectorizedWaveProcessor
+- **AGL_WEAKNESS_SCANNER.py**
+  - Funcs: scan_for_weaknesses
+- **AGL_WEAKNESS_VERIFICATION.py**
+  - Funcs: run_weakness_verification
 - **AGL_WRITE_CONSTITUTION.py**
+  - Funcs: main
+- **GENESIS_OMEGA/AGL_OMEGA_DECODER.py**
+  - Classes: OmegaDecoder
+- **GENESIS_OMEGA/GENESIS_OMEGA_CORE.py**
+  - Classes: OmniAttentionMechanism, GENESIS_OMEGA_Entity
+  - Funcs: activate_omega_protocol
+- **GENESIS_OMEGA/GENESIS_OMEGA_TRAINING_PLAN.py**
+  - Classes: GenesisOmegaTrainer
+- **HERMES_OMNI/AGL_CPP_LAUNCHER.py**
+  - Funcs: read_output
+- **HERMES_OMNI/AGL_Eyes_Pro.py**
+  - Classes: AGL_Eyes_Pro
+- **HERMES_OMNI/AGL_HERMES_BRAIN.py**
+  - Funcs: analyze_pattern
+- **HERMES_OMNI/AGL_HERMES_FULL_SYSTEM.py**
+  - Funcs: speak_worker, speak, analyze_pattern
+- **HERMES_OMNI/AGL_HERMES_GENESIS_BRIDGE.py**
+  - Classes: MockMother
+  - Funcs: generate_reality_inputs, get_color
+- **HERMES_OMNI/AGL_HERMES_HYBRID.py**
+  - Classes: HybridBridge, HERMES_Hybrid_Entity
+- **HERMES_OMNI/AGL_TELEKINESIS.py**
+  - Funcs: move_mouse, type_code_snippet, detect_nod
+- **HERMES_OMNI/AGL_TELEPATHY_CONSOLE.py**
+  - Funcs: print_wave, telepathy_session
+- **HERMES_OMNI/HERMES_OMNI_GENESIS.py**
+  - Classes: SemanticBridge, HERMES_Entity
+- **HERMES_OMNI/TEST_AGL_PRO.py**
   - Funcs: main
 - **Heikal_Visual_Lab.py**
   - Funcs: update
 - **Heikal_Visual_Lab_Pro.py**
   - Funcs: update
+- **Hussam_Nervous_System/Hussam_Al_Kami.py**
+  - Classes: HussamAlKami
+- **Hussam_Nervous_System/Hussam_cll.py**
+  - Classes: TestHussamSystem
 - **IronLoop_Target.py**
-  - Classes: LogEntry, EnterpriseLogAnalyzer
-- **IronLoop_Temp.py**
   - Classes: LogEntry, EnterpriseLogAnalyzer
 - **Self_Improvement/intelligent_discovery.py**
   - Classes: IntelligentDiscoveryAgent
-- **THEORY_VERIFICATION_CODE.py**
-  - Funcs: check_classical_limit, check_flat_space_limit
-- **activate_mother_system.py**
-  - Funcs: main, generate_child_interactive, list_children, train_child_real
 - **agl_core.py**
   - Classes: _AGL
   - Funcs: _load_module_from_path
 - **airgap_bridge.py**
   - Funcs: request_search, check_responses
-- **analyze_connectivity.py**
-  - Funcs: get_module_path, analyze_imports
 - **autonomous_agent.py**
   - Classes: AutonomousAgent
 - **autonomous_search_builder.py**
   - Funcs: check_connectivity, build_search_tool
-- **backup_20251208_214555/AGL/__init__.py**
-  - Funcs: _load_legacy_factory, create_agl_instance
-- **backup_20251208_214555/AGL/memory.py**
-  - Funcs: run_memory_sync
-- **backup_20251208_214555/AGL/rag/mock_provider.py**
-  - Funcs: mock_answer
-- **backup_20251208_214555/AGL/reasoning.py**
-  - Funcs: run_reasoning_cycle
-- **backup_20251208_214555/AGL_Omega.py**
-  - Classes: MetaReasoner
-- **backup_20251208_214555/AGL_UI/Language_Interface.py**
-  - Funcs: _arabic_indic_to_ascii, parse_entities
-- **backup_20251208_214555/AGL_UI/Law_Studio.py**
-  - Classes: LawStudioTab
-- **backup_20251208_214555/AGL_UI/Response_Formatter.py**
-  - Funcs: humanize
-- **backup_20251208_214555/AGL_UI/Training_Panel.py**
-  - Classes: TrainingPanel
-- **backup_20251208_214555/AGL_UI/main.py**
-  - Funcs: main
-- **backup_20251208_214555/AGL_UI/ui/components.py**
-  - Classes: RunControls, StatusPanel
-- **backup_20251208_214555/AGL_UI/ui/dashboard.py**
-  - Classes: Dashboard
-- **backup_20251208_214555/AGL_UI/ui/report_viewer.py**
-  - Classes: ReportViewer
-- **backup_20251208_214555/AGL_UI/ui/visuals.py**
-  - Funcs: _load_confidence_history, show_confidence_history_tk, show_engine_performance_tk
-- **backup_20251208_214555/AGL_UI_v2.py**
-  - Classes: AGLUI
-  - Funcs: read_json_safe, list_report_files, parse_engine_scores, parse_confidence, format_pct
-- **backup_20251208_214555/AGL_UI_v3.py**
-  - Classes: AGLApp
-  - Funcs: read_text_safely, load_report, pretty_float, run_agl, sha256_file
-- **backup_20251208_214555/AGL_legacy.py**
-  - Classes: AGL, AGL2, HardwareSimulator, SmartProtocolEngine, IoTProtocolDesigner, OptimizationStrategies, KnowledgeGraph, SelfMonitoringSystem, HierarchicalControlSystem, SafetyControlLayer, ImprovementBudget, SpecializationController, SafeRollbackSystem, GradualLearningFramework, AGLFull
-  - Funcs: create_agl_instance, main, demo_complete_system
-- **backup_20251208_214555/ConfidenceGate.py**
-  - Funcs: compute_inputs_hash, gate, check_gate, maybe_update_baseline, law_confidence_gate
-- **backup_20251208_214555/Core/C_Layer/__init__.py**
-  - Funcs: create_state_logger, create_engine
-- **backup_20251208_214555/Core/C_Layer/c_layer.py**
-  - Classes: CLayer
-- **backup_20251208_214555/Core/C_Layer/intent_generator.py**
-  - Classes: IntentGenerator
-- **backup_20251208_214555/Core/C_Layer/intent_planner.py**
-  - Classes: IntentPlanner
-- **backup_20251208_214555/Core/C_Layer/intent_types.py**
-  - Classes: IntentKind, Intent
-- **backup_20251208_214555/Core/C_Layer/perception_loop.py**
-  - Classes: PerceptionLoop
-- **backup_20251208_214555/Core/C_Layer/state_logger.py**
-  - Classes: StateLogger
-  - Funcs: _get_git_sha_short, _redact
-- **backup_20251208_214555/Core_Consciousness/Intent_Generator.py**
-  - Classes: IntentGenerator
-  - Funcs: _to_int
-- **backup_20251208_214555/Core_Consciousness/Perception_Loop.py**
-  - Classes: PerceptionLoop
-  - Funcs: _is_significant_event, _emit_bio_from_event
-- **backup_20251208_214555/Core_Consciousness/Self_Model.py**
-  - Classes: EmotionModel, SelfModel, ReflectiveCortex, EmotionContextAdapter
-  - Funcs: _register_emotion_context_factory
-- **backup_20251208_214555/Core_Consciousness/State_Logger.py**
-  - Classes: StateLogger
-- **backup_20251208_214555/Core_Consciousness/__init__.py**
-  - Classes: ConsciousnessService
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/AdvancedMetaReasoner.py**
-  - Classes: AdvancedMetaReasonerEngine
-  - Funcs: create_engine, _read_jsonl, analyze_thinking_quality, generate_self_improvement_plan
-- **backup_20251208_214555/Core_Engines/Advanced_Exponential_Algebra.py**
-  - Classes: AdvancedExponentialAlgebra, AdvancedExponentialAlgebra, LieAlgebraProcessor
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/Causal_Graph.py**
-  - Classes: CausalGraphEngine, CausalGraph
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/Code_Generator.py**
-  - Classes: PythonSpecialist, CodeGenerator
-- **backup_20251208_214555/Core_Engines/Consistency_Checker.py**
-  - Classes: ConsistencyChecker
-- **backup_20251208_214555/Core_Engines/Creative_Innovation.py**
-  - Classes: CreativeInnovationEngine
-  - Funcs: _is_mock_mode, create_engine, healthcheck
-- **backup_20251208_214555/Core_Engines/External_InfoProvider.py**
-  - Classes: ExternalInfoProvider
-- **backup_20251208_214555/Core_Engines/External_InfoProvider_PowerShellWrapper.py**
-  - Funcs: ensure_env_for_live, run_launch_live
-- **backup_20251208_214555/Core_Engines/GK_graph.py**
-  - Classes: GKGraph, GKGraph
-  - Funcs: _gk_process_task, create_engine
-- **backup_20251208_214555/Core_Engines/GK_reasoner.py**
-  - Classes: GKReasoner
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/GK_reasoner_engine.py**
-  - Classes: GKReasoner
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/GK_retriever.py**
-  - Classes: GKRetriever
-  - Funcs: _to_float, create_engine
-- **backup_20251208_214555/Core_Engines/GK_types.py**
-  - Classes: GKSource, GKEvidence, GKFact, GKQuery, GKAnswer
-- **backup_20251208_214555/Core_Engines/GK_verifier.py**
-  - Classes: GKVerifier
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/General_Knowledge.py**
-  - Classes: GeneralKnowledge, GeneralKnowledgeEngine
-- **backup_20251208_214555/Core_Engines/Hosted_LLM.py**
-  - Classes: HostedLLM
-  - Funcs: _prompt_hash, chat_llm
-- **backup_20251208_214555/Core_Engines/Hypothesis_Generator.py**
-  - Classes: HypothesisGeneratorEngine, HypothesisGenerator
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/KnowledgeOrchestrator.py**
-  - Classes: KnowledgeOrchestrator
-- **backup_20251208_214555/Core_Engines/Law_Matcher.py**
-  - Classes: LawMatcher
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/Law_Parser.py**
-  - Classes: LawParser
-  - Funcs: _apply_aliases_to_expr, create_engine
-- **backup_20251208_214555/Core_Engines/Mathematical_Brain.py**
-  - Classes: MathematicalBrain
-- **backup_20251208_214555/Core_Engines/Meta_Ensembler.py**
-  - Classes: CandidateSignal, MetaEnsembler
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/Meta_Learning.py**
-  - Classes: MetaLearningEngine
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/Meta_Learning_clean.py**
-  - Classes: MetaLearningEngine
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/Model_Structure_Searcher.py**
-  - Classes: StructureCandidate
-  - Funcs: propose_structures, describe_candidate
-- **backup_20251208_214555/Core_Engines/NLP_Advanced.py**
-  - Classes: NLPUtterance, SentimentResult, IntentResult, ShortTermMemory, NLPAdvancedEngine
-  - Funcs: summarize_turns, simple_entity_extract, sentiment_and_tone, detect_tone, classify_intent, high_level_plan, decide_lang, adapt_style, render_answer, polish_answer, _nlp_generate_reply_wrapper
-- **backup_20251208_214555/Core_Engines/Ollama_Adapter.py**
-  - Classes: OllamaAdapter
-- **backup_20251208_214555/Core_Engines/Ollama_KnowledgeEngine.py**
-  - Classes: OllamaKnowledgeEngine, OllamaKnowledgeEngine
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/OpenAI_Adapter.py**
-  - Classes: OpenAIAdapter
-- **backup_20251208_214555/Core_Engines/OpenAI_KnowledgeEngine.py**
-  - Classes: OpenAI_KnowledgeEngine, OpenAIKnowledgeEngine
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/Perception_Context.py**
-  - Classes: PerceptionContext
-  - Funcs: extract_features, feature_vector
-- **backup_20251208_214555/Core_Engines/Protocol_Designer.py**
-  - Classes: ProtocolDesignerEngine, ProtocolDesigner
-  - Funcs: _is_mock_mode, _gen_text_game, create_engine
-- **backup_20251208_214555/Core_Engines/Quantum_Neural_Core.cleaned.py**
-  - Classes: QuantumNeuralCore, QuantumClassicalEncoder, QuantumAttentionMechanism, HybridQuantumClassicalClassifier, QuantumClassicalEncoder, QuantumAttentionMechanism, HybridQuantumClassicalClassifier
-  - Funcs: create_engine, create_engine
-- **backup_20251208_214555/Core_Engines/Quantum_Neural_Core.py**
-  - Classes: QuantumNeuralCore
-- **backup_20251208_214555/Core_Engines/Quantum_Processor.py**
-  - Classes: QuantumCircuitDesigner, QuantumAlgorithmEngine, QuantumProcessor
-- **backup_20251208_214555/Core_Engines/Reasoning_Layer.py**
-  - Classes: ReasoningLayer
-  - Funcs: load_prompt, _ensure_engine_response, _text_to_facts, run
-- **backup_20251208_214555/Core_Engines/Reasoning_Planner.py**
-  - Classes: ReasoningPlanner, PlannerHFSM
-  - Funcs: _to_int, _register_planner_factory
-- **backup_20251208_214555/Core_Engines/Robust_Regression.py**
-  - Classes: RobustRegressor
-  - Funcs: create_engine
-- **backup_20251208_214555/Core_Engines/Self_Reflective.py**
-  - Classes: SelfReflectiveEngine, CuriosityEngine
-  - Funcs: create_engine, create_curiosity_engine
-- **backup_20251208_214555/Core_Engines/Social_Interaction.py**
-  - Classes: SocialInteractionEngine
-  - Funcs: _to_int, _social_process_task_wrapper
-- **backup_20251208_214555/Core_Engines/Strategic_Thinking.py**
-  - Classes: StrategicThinkingEngine
-  - Funcs: healthcheck
-- **backup_20251208_214555/Core_Engines/Symbolic_Grammar.py**
-  - Funcs: generate_from_grammar, units_consistent
-- **backup_20251208_214555/Core_Engines/Units_Validator.py**
-  - Classes: UnitsValidator
-  - Funcs: _parse_dim, _combine_dim_of_symbols, check_dimensional_consistency
-- **backup_20251208_214555/Core_Engines/Visual_Spatial.py**
-  - Classes: VisualSpatialEngine, Visual_Spatial
-- **backup_20251208_214555/Core_Engines/__init__.py**
-  - Funcs: _is_already_registered_error, _try_registry_register, bootstrap_register_all_engines
-- **backup_20251208_214555/Core_Engines/analogy_mapping.py**
-  - Classes: AnalogyMappingEngine
-  - Funcs: factory
-- **backup_20251208_214555/Core_Engines/counterfactual_explorer.py**
-  - Classes: CounterfactualExplorer
-  - Funcs: factory
-- **backup_20251208_214555/Core_Engines/domain_router.py**
-  - Funcs: route
-- **backup_20251208_214555/Core_Engines/engine_base.py**
-  - Classes: Engine, EngineRegistry
-- **backup_20251208_214555/Core_Engines/evolution.py**
-  - Funcs: _levenshtein, evolve_thought_process
-- **backup_20251208_214555/Core_Engines/humor_stylist.py**
-  - Classes: HumorIronyStylist
-  - Funcs: factory
-- **backup_20251208_214555/Core_Engines/hybrid_reasoner.py**
-  - Funcs: _score, _dedupe_lines, _outline, unify
-- **backup_20251208_214555/Core_Engines/hybrid_reasoner2.py**
-  - Classes: HybridReasoner
-  - Funcs: _score, _ensure_engine_response, _dedupe_lines, _outline, unify, factory
-- **backup_20251208_214555/Core_Engines/math_prover_lite.py**
-  - Classes: MathProverLite
-  - Funcs: factory
-- **backup_20251208_214555/Core_Engines/math_utils.py**
-  - Funcs: _eval_node, evaluate_expression, solve_linear_equation
-- **backup_20251208_214555/Core_Engines/micro_planner.py**
-  - Classes: MicroPlanner
-  - Funcs: factory
-- **backup_20251208_214555/Core_Engines/moral_reasoner.py**
-  - Classes: MoralReasoner
-  - Funcs: factory
-- **backup_20251208_214555/Core_Engines/optimization_engine.py**
-  - Classes: OptimizationEngine
-- **backup_20251208_214555/Core_Engines/orchestrator.py**
-  - Classes: Orchestrator
-  - Funcs: run_meta_self_improve
-- **backup_20251208_214555/Core_Engines/plan_microplanner.py**
-  - Classes: PlanAndExecuteMicroPlanner
-  - Funcs: factory
-- **backup_20251208_214555/Core_Engines/process_task_template.py**
-  - Funcs: make_default_process_task, attach_default_process_task
-- **backup_20251208_214555/Core_Engines/prompt_composer.py**
-  - Funcs: compose_prompt
-- **backup_20251208_214555/Core_Engines/prompt_composer_v2.py**
-  - Classes: PromptComposerV2
-  - Funcs: factory, compose_prompt
-- **backup_20251208_214555/Core_Engines/quantum_simulator_wrapper.py**
-  - Classes: QuantumSimulatorWrapper
-  - Funcs: _hadamard_matrix, _pauli_x, _kron_n, apply_gate, measure_state, factory
-- **backup_20251208_214555/Core_Engines/rubric_enforcer.py**
-  - Funcs: _has_any, enforce, process_task
-- **backup_20251208_214555/Core_Engines/rubric_enforcer_engine.py**
-  - Classes: RubricEnforcer
-  - Funcs: factory
-- **backup_20251208_214555/Core_Engines/self_critique.py**
-  - Classes: SelfCritiqueAndRevise
-  - Funcs: factory
-- **backup_20251208_214555/Core_Engines/self_critique_and_revise.py**
-  - Classes: SelfCritiqueAndRevise
-  - Funcs: factory
-- **backup_20251208_214555/Core_Engines/skills_registry.py**
-  - Classes: ToolRunner
-- **backup_20251208_214555/Core_Engines/tensor_utils.py**
-  - Funcs: safe_matmul, safe_sub, safe_dtype, safe_zeros_like_dtype, to_numpy_safe, to_torch_complex64, matmul_safe
-- **backup_20251208_214555/Core_Engines/tri_verify.py**
-  - Funcs: _extract_numbers, units_math_checker, consistency_checker, safety_gate, perform_tri_verify
-- **backup_20251208_214555/Core_Engines/turn_contract.py**
-  - Funcs: _now_ms, make_turn, normalize_engine_response
-- **backup_20251208_214555/Core_Memory/Conscious_Bridge.py**
-  - Classes: LRUCache, ConsciousBridge
-- **backup_20251208_214555/Core_Memory/bridge_singleton.py**
-  - Funcs: get_bridge
-- **backup_20251208_214555/Engineering_Engines/Advanced_Code_Generator.py**
-  - Classes: JavaScriptSpecialist, EngineSpec, EngineCloner, KnowledgeBaseLoader, CppSpecialist, VerilogSpecialist, SoftwareArchitect, CodeOptimizer, AdvancedCodeGenerator, PythonCodeSpecialist
-- **backup_20251208_214555/Engineering_Engines/IoT_Protocol_Designer.py**
-  - Classes: IoTProtocolDesigner
-- **backup_20251208_214555/Integration_Layer/AGI_Expansion.py**
-  - Classes: SmartRouterExtension
-- **backup_20251208_214555/Integration_Layer/Action_Router.py**
-  - Funcs: route, route_for_task
-- **backup_20251208_214555/Integration_Layer/Communication_Bus.py**
-  - Classes: CommunicationBus
-- **backup_20251208_214555/Integration_Layer/Conversation_Manager.py**
-  - Funcs: _session_path, create_session, start_session, auto_route, append_turn, last_turn, auto_route_and_respond, recent_context
-- **backup_20251208_214555/Integration_Layer/Domain_Router.py**
-  - Funcs: _try_import, _load_ontology, _make, get_engine, route_pipeline, route_domain, route_intent, _safe_text, route, register_hook, call_hook, _register_external_hooks_factory
-- **backup_20251208_214555/Integration_Layer/Hybrid_Composer.py**
-  - Funcs: compose, build_prompt_context, parse_json_or_retry
-- **backup_20251208_214555/Integration_Layer/Intent_Recognizer.py**
-  - Funcs: _get_nlp_engine, _norm, detect_intent, recognize_intent
-- **backup_20251208_214555/Integration_Layer/Output_Formatter.py**
-  - Classes: OutputFormatter
-  - Funcs: normalize, contains_cjk, excessive_ascii_noise, ensure_relevance, format_md
-- **backup_20251208_214555/Integration_Layer/Pipeline_Orchestrator.py**
-  - Funcs: _call_step, execute_pipeline
-- **backup_20251208_214555/Integration_Layer/Planner_Agent.py**
-  - Classes: PlannerAgent
-- **backup_20251208_214555/Integration_Layer/Retriever_Fallback.py**
-  - Classes: RetrieverFallback
-- **backup_20251208_214555/Integration_Layer/Task_Orchestrator.py**
-  - Classes: TaskOrchestrator
-  - Funcs: normalize_text, stable_inputs_hash, similar, execute_pipeline
-- **backup_20251208_214555/Integration_Layer/agl_state.py**
-  - Classes: AGLState
-- **backup_20251208_214555/Integration_Layer/call_engine.py**
-  - Funcs: call_engine_and_parse
-- **backup_20251208_214555/Integration_Layer/dkn_types.py**
-  - Classes: Signal, Claim
-- **backup_20251208_214555/Integration_Layer/dkn_utils.py**
-  - Funcs: build_dynamic_prompt
-- **backup_20251208_214555/Integration_Layer/engine_adapter.py**
-  - Classes: EngineAdapter
-- **backup_20251208_214555/Integration_Layer/executive_agent.py**
-  - Classes: ExecutiveAgent
-- **backup_20251208_214555/Integration_Layer/inproc_bus.py**
-  - Classes: PriorityBus
-- **backup_20251208_214555/Integration_Layer/integration_registry.py**
-  - Classes: IntegrationRegistry, _RegistryProxy
-- **backup_20251208_214555/Integration_Layer/knowledge_graph.py**
-  - Classes: KnowledgeGraph
-- **backup_20251208_214555/Integration_Layer/meta_cognition_simple.py**
-  - Classes: SimpleMetaEvaluator
-  - Funcs: meta_evaluate
-- **backup_20251208_214555/Integration_Layer/meta_orchestrator.py**
-  - Classes: MetaOrchestrator
-- **backup_20251208_214555/Integration_Layer/network_orchestrator.py**
-  - Classes: NetworkNode, NetworkOrchestrator, DeliberationProtocol, NetworkNode, NetworkOrchestrator
-  - Funcs: register_node, execute_pipeline, route, _register_deliberation_factory, register_node, execute_pipeline, route
-- **backup_20251208_214555/Integration_Layer/orchestrator.py**
-  - Funcs: run_causal_and_hypothesis
-- **backup_20251208_214555/Integration_Layer/planner.py**
-  - Classes: ToolRegistry
-  - Funcs: web_search_stub, run_code_stub, plan_and_execute
-- **backup_20251208_214555/Integration_Layer/rag.py**
-  - Funcs: answer_with_rag
-- **backup_20251208_214555/Integration_Layer/rag_adapter_ollama.py**
-  - Classes: OllamaRAG
-  - Funcs: _ollama_http, _ollama_cli
-- **backup_20251208_214555/Integration_Layer/rag_fallback.py**
-  - Classes: RagFallback
-  - Funcs: answer_with_rag
-- **backup_20251208_214555/Integration_Layer/rag_wrapper.py**
-  - Funcs: _mock_answer_for, _rag_enabled, _mock_enabled, _call_real_rag, _env_flag, _http_post_json, _run_cli, _sanitize_text, _extract_ollama_text_http, _call_real_rag_v2, rag_answer
-- **backup_20251208_214555/Integration_Layer/retriever.py**
-  - Classes: SimpleFactsRetriever
-- **backup_20251208_214555/Knowledge_Base/Domain_Expertise.py**
-  - Classes: DomainExpertise
-  - Funcs: apply_aliases_to_tokens
-- **backup_20251208_214555/Knowledge_Base/Improvement_History.py**
-  - Classes: ImprovementHistory
-- **backup_20251208_214555/Knowledge_Base/Knowledge_Graph.py**
-  - Funcs: _register_compat_factory
-- **backup_20251208_214555/Knowledge_Base/Law_Facts.py**
-  - Funcs: save_law_fact
-- **backup_20251208_214555/Knowledge_Base/Law_Formulas.py**
-  - Classes: LawFormula, LawFormulaStore
-- **backup_20251208_214555/Knowledge_Base/Learned_Patterns.py**
-  - Classes: LearnedPatterns
-- **backup_20251208_214555/Knowledge_Base/adapters/kb_local.py**
-  - Classes: LocalKBAdapter
-- **backup_20251208_214555/Knowledge_Base/seed_formulas.py**
-  - Funcs: load_seed_formulas
-- **backup_20251208_214555/Knowledge_Base/self_state_helper.py**
-  - Funcs: load_state, save_state, record_run
-- **backup_20251208_214555/Learning_System/Ensemble_Selector.py**
-  - Classes: CandidateFit, EnsembleSelector
-  - Funcs: _load_results_json, _to_fit_items, run_ensemble_over_folder
-- **backup_20251208_214555/Learning_System/ExperienceMemory.py**
-  - Classes: ExperienceMemory
-  - Funcs: _ensure_dir_for, append_experience, read_experiences
-- **backup_20251208_214555/Learning_System/Feedback_Analyzer.py**
-  - Classes: FeedbackAnalyzer
-- **backup_20251208_214555/Learning_System/Fitness_Criteria.py**
-  - Funcs: score_result
-- **backup_20251208_214555/Learning_System/GeneralizationMatrix.py**
-  - Classes: Pattern
-  - Funcs: _now_iso, _load_patterns, _ensure_dir, infer_ohm_to_power, infer_rc_tau, infer_projectile_g, infer_poly2_gradient, run_generalization
-- **backup_20251208_214555/Learning_System/Generalizer.py**
-  - Classes: Generalizer
-- **backup_20251208_214555/Learning_System/Improvement_Generator.py**
-  - Classes: ImprovementGenerator
-- **backup_20251208_214555/Learning_System/Inference_Engine.py**
-  - Classes: InferenceEngine
-  - Funcs: _read_json_utf8
-- **backup_20251208_214555/Learning_System/Knowledge_Integrator.py**
-  - Classes: KnowledgeIntegrator
-  - Funcs: write_json_atomic
-- **backup_20251208_214555/Learning_System/Law_Learner.py**
-  - Classes: LawLearner
-  - Funcs: fit_single_coeff_linear, fit_linear_with_intercept, fit_power_law, fit_model_auto
-- **backup_20251208_214555/Learning_System/MetaCognition_Fallback.py**
-  - Classes: MetaCognitionFallback
-- **backup_20251208_214555/Learning_System/ModelZoo.py**
-  - Classes: FitResult
-  - Funcs: rmse, _conf_from_rmse, fit_linear, fit_linear_bias, fit_poly2, fit_exp1, evaluate_candidates
-- **backup_20251208_214555/Learning_System/ModelZoo_Fallback.py**
-  - Classes: ModelZooFallback
-- **backup_20251208_214555/Learning_System/Reasoner.py**
-  - Classes: Answer, Reasoner
-  - Funcs: _utcnow_iso, _load_kb, _pick_latest_fit, _find_by_base, _arabic_or_english, _num_from_question
-- **backup_20251208_214555/Learning_System/RelationsGraph.py**
-  - Classes: Relation, RelationsGraph
-- **backup_20251208_214555/Learning_System/Self_Engineer.py**
-  - Classes: SelfEngineer
-  - Funcs: _safe_import, quick_smoke
-- **backup_20251208_214555/Learning_System/Self_Learning.py**
-  - Classes: SelfLearning
-- **backup_20251208_214555/Learning_System/Self_Learning_Module.py**
-  - Classes: Hypothesis, SelfLearningModule
-- **backup_20251208_214555/Learning_System/Self_Optimizer.py**
-  - Funcs: _read_json, _write_json, _ema, gather_model_signals, gather_run_signal, update_learned_patterns, update_fusion_weights, run_self_optimization
-- **backup_20251208_214555/Learning_System/TemporalMemory.py**
-  - Classes: TMRecord, TemporalMemory
-- **backup_20251208_214555/Learning_System/Training_Path.py**
-  - Funcs: train_hooke_from_csv
-- **backup_20251208_214555/Learning_System/Uncertainty_Estimator.py**
-  - Funcs: estimate, _ensure_2d
-- **backup_20251208_214555/Learning_System/Uncertainty_Propagation.py**
-  - Funcs: pred_confidence_intervals, param_confidence_intervals
-- **backup_20251208_214555/Learning_System/Units_Validator.py**
-  - Classes: UnitsValidator
-- **backup_20251208_214555/Learning_System/generalization_cli.py**
-  - Funcs: main
-- **backup_20251208_214555/Learning_System/generalize_cli.py**
-  - Funcs: parse_kv_list, main
-- **backup_20251208_214555/Learning_System/io_utils.py**
-  - Funcs: read_json, read_text, read_json_with_fallback
-- **backup_20251208_214555/Learning_System/reasoner_cli.py**
-  - Funcs: main
-- **backup_20251208_214555/Learning_System/robust_fit.py**
-  - Funcs: huber_residuals, zscore_mask
-- **backup_20251208_214555/Learning_System/self_learning_cli.py**
-  - Funcs: infer_mapping_from_row, read_samples, main
-- **backup_20251208_214555/Learning_System/visualizer.py**
-  - Funcs: _curve_fn, _nice_range, _read_csv_points, render_model_png
-- **backup_20251208_214555/Legacy/Core_Engines/experience_memory.py**
-  - Classes: ExperienceMemory, MicroUpdateScheduler
-  - Funcs: _safe_load, _safe_write, _parse_first_number, compute_basic_metrics
-- **backup_20251208_214555/Quality/ar_answer_quality.py**
-  - Funcs: score_arabic_answer, improve_arabic_answer
-- **backup_20251208_214555/Quality/text_postprocess.py**
-  - Funcs: _looks_like_pure_metadata, clean_llm_text
-- **backup_20251208_214555/Safety_Control/Dialogue_Safety.py**
-  - Funcs: guard
-- **backup_20251208_214555/Safety_Control/Safe_Autonomous_System.py**
-  - Classes: SafeAutonomousSystem
-- **backup_20251208_214555/Safety_Control/Safety_Control_Layer.py**
-  - Classes: SafetyControlLayer, ControlLayers
-- **backup_20251208_214555/Safety_Systems/EmergencyDoctor.py**
-  - Classes: EmergencyDoctor
-- **backup_20251208_214555/Safety_Systems/EmergencyIntegration.py**
-  - Classes: EmergencyIntegration
-  - Funcs: register_temp_container, run_emergency_code
-- **backup_20251208_214555/Safety_Systems/Emergency_Fallbacks.py**
-  - Classes: EmergencyDoctorFallback, EmergencyIntegrationFallback
-- **backup_20251208_214555/Safety_Systems/Emergency_Protocols.py**
-  - Classes: EmergencyProtocols
-- **backup_20251208_214555/Safety_Systems/Rollback_Mechanism.py**
-  - Classes: RollbackMechanism
-- **backup_20251208_214555/Scientific_Systems/Automated_Theorem_Prover.py**
-  - Classes: AutomatedTheoremProver, LogicalReasoningEngine, NumericVerifier, ProofStepGenerator
-- **backup_20251208_214555/Scientific_Systems/Hardware_Simulator.py**
-  - Classes: HardwareSimulator
-- **backup_20251208_214555/Scientific_Systems/Integrated_Simulation_Engine.py**
-  - Classes: IntegratedSimulationEngine
-- **backup_20251208_214555/Scientific_Systems/Scientific_Research_Assistant.py**
-  - Classes: MathematicalContentAnalyzer, QuantumClaimVerifier, CitationAnalyzer, ScientificResearchAssistant
-- **backup_20251208_214555/Self_Improvement/Knowledge_Graph.py**
-  - Classes: SessionState, PerceptionBus, AssociativeGraph, CollectiveMemorySystem, CognitiveIntegrationEngine, KnowledgeNetwork, ConsensusVotingEngine, EngineAdapter, PlannerAdapter, DeliberationAdapter, RetrieverAdapter, RAGAdapter, AssociativeAdapter, EmotionAdapter, SelfLearningAdapter, MathAdapter, ProofAdapter, TranslateAdapter, SummarizeAdapter, CriticAdapter, OptimizerAdapter, GenerativeCreativityAdapter, VisionAdapter, AudioAdapter, SensorAdapter, MemoryItem, MemorySystem, PerceptualIntegrationAdapter, GoalAdapter, CognitiveIntegrationEngine, MetaController, TimelineAdapter, ContextualizerAdapter, MotivationAdapter, HostedStoryQAAdapter, EngineMetric, HealthMonitor, ResearchTaskAdapter, ExperimentRunner, CognitiveIntegrationEngine, SubAgentManager, EvoResult, SafetyGate, FitnessBoard, RewriteSandbox, MutationLibrary, EvolutionController
-  - Funcs: extract_plain_answer, infer_task_type, simple_step_split, _utc, _jsave, _save_session_state, describe_session_state, _append_jsonl, _import_symbol, _parse_engine_impls_env, _load_overrides_from_env, _infer_domains_from_name, _score_engine_for_domains, route_engines, _ts, _ensure_dir, _write_json, _now_ms, _safe_float, _env_float, _env_int, _env_float, _env_int, _env, _load_engine_stats, _save_engine_stats, _read_json, _write_json, _mem_root, _cie_init_with_memory, _collab_with_memory, _register_extra_adapters, discover_engines_from_env, _env_float, _env_int, choose_thinking_policy, run_multi_step_qa, agl_pipeline, _collab_with_memory_final, _count_lines, validate_patch_text_for_safety, _artifacts_present, _tests_passed_in_sandbox, _last_patch_ok, premerge_ok
-- **backup_20251208_214555/Self_Improvement/Self_Improvement_Engine.py**
-  - Classes: _SimpleAdaptiveWeights, _EventLogger, SelfLearningManager
-  - Funcs: _utcstamp, _next_epoch, _ensure_dir, load_events, _weights_checksum, train_from_feedback, save_snapshot, _update_learning_curve
-- **backup_20251208_214555/Self_Improvement/Self_Monitoring_System.py**
-  - Classes: SelfMonitoringSystem
-- **backup_20251208_214555/Self_Improvement/algorithm_optimizer.py**
-  - Classes: PerformanceAnalyzer, AlgorithmLibrary, ParameterTuner, AlgorithmSelfOptimizer
-- **backup_20251208_214555/Self_Improvement/cognitive_mode.py**
-  - Classes: CognitiveMode
-  - Funcs: _text_from_problem, _is_medical_high_risk, _is_simple_factoid, _is_planning_or_project, choose_cognitive_mode
-- **backup_20251208_214555/Self_Improvement/continual_learning.py**
-  - Funcs: _ensure_artifacts_dir, record_learned_fact, load_learned_facts, load_learned_facts_as_context
-- **backup_20251208_214555/Self_Improvement/emergency_retrieval.py**
-  - Classes: EmergencyRetrieval
-  - Funcs: activate_existing_retrieval, build_basic_retrieval
-- **backup_20251208_214555/Self_Improvement/executive_agent.py**
-  - Classes: TaskItem
-  - Funcs: _default_queue_path, load_task_queue, save_task_queue, enqueue_task, run_executive_once
-- **backup_20251208_214555/Self_Improvement/hosted_llm_adapter.py**
-  - Classes: HostedLLMAdapter
-  - Funcs: _compute_media_embedding
-- **backup_20251208_214555/Self_Improvement/internal_agents.py**
-  - Classes: InternalAgentConfig
-  - Funcs: _problem_text, _guess_domain, select_agent_for_problem, apply_agent_to_prompt
-- **backup_20251208_214555/Self_Improvement/medical_qa_fast_clean.py**
-  - Funcs: _build_prompt, _trim_words, _extract_response_from_stream, _trim_chars, local_fallback_rewrite, medical_qa_fast
-- **backup_20251208_214555/Self_Improvement/memory_restructurer.py**
-  - Classes: MemoryAnalyzer, KnowledgeGraph, MemorySelfRestructurer
-- **backup_20251208_214555/Self_Improvement/meta_logger.py**
-  - Classes: MetaLogger
-- **backup_20251208_214555/Self_Improvement/ollama_stream.py**
-  - Funcs: ask_with_deep_thinking
-- **backup_20251208_214555/Self_Improvement/projects.py**
-  - Classes: ProjectTask, AGLProject, ProjectStore
-  - Funcs: _ensure_projects_dir, create_project, add_task, run_next_task
-- **backup_20251208_214555/Self_Improvement/rag_adapter.py**
-  - Classes: RAGAdapter
-- **backup_20251208_214555/Self_Improvement/rag_index.py**
-  - Funcs: _ensure_artifacts_dir, embed_text, cosine, add_document, load_documents, search, as_context, retrieve_context
-- **backup_20251208_214555/Self_Improvement/rollback.py**
-  - Classes: AutomaticRollbackSystem
-- **backup_20251208_214555/Self_Improvement/safe_self_mod.py**
-  - Classes: SandboxEnvironment, ModificationValidator, RollbackManager, PerformanceMonitor, SafeSelfModificationSystem
-- **backup_20251208_214555/Self_Improvement/self_profile.py**
-  - Funcs: _ensure_artifacts_dir, _load_profile, _save_profile, _update_domain_stats, record_eval_result, _infer_domain_from_problem, suggest_strategy
-- **backup_20251208_214555/Self_Improvement/strategic_memory.py**
-  - Classes: MemoryItem, StrategicMemory
-  - Funcs: _default_path
-- **backup_20251208_214555/Self_Improvement/taskmaster.py**
-  - Classes: LongTermProjectConfig
-  - Funcs: _ensure_artifacts_dir, _append_long_term_config, load_long_term_configs, start_long_term_project, _should_run_today, run_taskmaster_tick
-- **backup_20251208_214555/Solvers/AlgebraSolver.py**
-  - Classes: AlgebraSolver
-- **backup_20251208_214555/Solvers/BaseSolver.py**
-  - Classes: BaseSolver
-- **backup_20251208_214555/Solvers/ChemistrySolver.py**
-  - Classes: ChemistrySolver
-- **backup_20251208_214555/Solvers/PhysicsSolver.py**
-  - Classes: PhysicsSolver
-- **backup_20251208_214555/Solvers/QuantumSolver.py**
-  - Classes: QuantumSolver
-- **backup_20251208_214555/accelerate/__init__.py**
-  - Classes: Accelerator
-  - Funcs: init
-- **backup_20251208_214555/agi_eval.py**
-  - Funcs: current_weights
-- **backup_20251208_214555/agl_autopilot.py**
-  - Classes: Colors, AGLAutopilot
-  - Funcs: print_colored, print_header, print_step, print_success, print_warning, print_error, signal_handler, main
-- **backup_20251208_214555/agl_dashboard.py**
-  - Funcs: load_data
-- **backup_20251208_214555/agl_loop_manager.py**
-  - Funcs: run_process, main
-- **backup_20251208_214555/agl_universal.py**
-  - Funcs: _safe_get, build_answer_context, universal_answer, solve_universal
-- **backup_20251208_214555/analyze_python_structure.py**
-  - Funcs: is_project_file, load_structure, summarize_top_project_files, show_deps, main
-- **backup_20251208_214555/config/engine_preference.py**
-  - Funcs: get_preferred_engine
-- **backup_20251208_214555/conftest.py**
-  - Funcs: _ensure_agl_package, pytest_configure, _warm_up_engine_calls
-- **backup_20251208_214555/dynamic_modules/calculator_gui.py**
-  - Classes: CalculatorGUI
-- **backup_20251208_214555/dynamic_modules/creative_intelligence_layer.py**
-  - Classes: CreativeIntelligenceLayer
-  - Funcs: create_creative_intelligence_layer
-- **backup_20251208_214555/dynamic_modules/engine_deep_inspector.py**
-  - Classes: EngineDeepInspector
-  - Funcs: inspect_module
-- **backup_20251208_214555/dynamic_modules/engine_inspector.py**
-  - Classes: Inspector
-  - Funcs: inspect_module
-- **backup_20251208_214555/dynamic_modules/engine_loader.py**
-  - Funcs: load_and_run, _test_loader
-- **backup_20251208_214555/dynamic_modules/local_librarian.py**
-  - Funcs: read_text_file
-- **backup_20251208_214555/dynamic_modules/logger_utility.py**
-  - Funcs: get_task_logger, run_task
-- **backup_20251208_214555/dynamic_modules/mission_control_combined.py**
-  - Funcs: _noop, run, _run_coro_safely, unified_ui_execute
-- **backup_20251208_214555/dynamic_modules/mission_control_enhanced.py**
-  - Classes: SmartFocusController, LLMIntegrationEngine, EnhancedMissionController, AdvancedQuantumEngine, SharedMemory, CollectiveConsciousness, NeuralIntegration, AdvancedIntegrationEngine, SelfAwarenessEngine
-  - Funcs: _sync_run, log_to_system, build_collective_mind, activate_self_awareness, develop_autonomous_will, run_custom_mission, run_physics_reactor_analysis, run_monitoring_script_design, quick_start, execute_mission, run
-- **backup_20251208_214555/dynamic_modules/native_screen_eye.py**
-  - Funcs: capture_screenshot
-- **backup_20251208_214555/dynamic_modules/native_voice.py**
-  - Funcs: speak
-- **backup_20251208_214555/dynamic_modules/potential_scout.py**
-  - Funcs: scan_python_files, parse_imports, unused_modules, describe_functionality, write_report, main
-- **backup_20251208_214555/dynamic_modules/screen_eye.py**
-  - Funcs: capture_screenshot
-- **backup_20251208_214555/dynamic_modules/snake_game.py**
-  - Classes: SnakeGame
-- **backup_20251208_214555/dynamic_modules/system_scanner.py**
-  - Funcs: scan_structure
-- **backup_20251208_214555/dynamic_modules/unified_agi_system.py**
-  - Classes: MemoryItem, UnifiedMemorySystem, UnifiedReasoningEngine, ActiveCuriosityEngine, IntrinsicMotivationSystem, UnifiedAGISystem
-  - Funcs: _safe_get_answer, _safe_get, create_unified_agi_system
-- **backup_20251208_214555/dynamic_modules/voice_engine.py**
-  - Funcs: speak
-- **backup_20251208_214555/emergency_fix.py**
-  - Classes: EmergencyRealEngineFix
-  - Funcs: main
-- **backup_20251208_214555/engines/image_adapter.py**
-  - Classes: ImageAdapter
-- **backup_20251208_214555/final_agi_verification.py**
-  - Classes: FinalAGITest
-  - Funcs: run_final_agi_test
-- **backup_20251208_214555/fix_and_prep.py**
-  - Funcs: clean_file_encoding, scan_imports, generate_requirements
-- **backup_20251208_214555/generated/MedicalAssistant_v1/api.py**
-  - Funcs: root, process_task, get_capabilities
-- **backup_20251208_214555/generated/MedicalAssistant_v1/cli.py**
-  - Funcs: main
-- **backup_20251208_214555/generated/MedicalAssistant_v1/main_stub.py**
-  - Classes: Handler
-- **backup_20251208_214555/generated/MedicalAssistant_v1/run_and_test_stub.py**
-  - Classes: Handler
-- **backup_20251208_214555/infra/adaptive/AdaptiveMemory.py**
-  - Funcs: _row_id, save_theory_items, suggest_harvest_hints, suggest_reasoning_pairs
-- **backup_20251208_214555/infra/adaptive/EvolutionTracker.py**
-  - Funcs: snapshot
-- **backup_20251208_214555/infra/adaptive/MetaController.py**
-  - Funcs: _read_json, _write_json, load_config, tune_after_cycle
-- **backup_20251208_214555/infra/curriculum/scheduler.py**
-  - Classes: CurriculumScheduler
-- **backup_20251208_214555/infra/engine_monitor.py**
-  - Funcs: monitor_engine, system_status
-- **backup_20251208_214555/infra/harvester/run_pipeline.py**
-  - Funcs: run, main
-- **backup_20251208_214555/infra/harvester/supervisor.py**
-  - Funcs: classify_fact, route_facts
-- **backup_20251208_214555/infra/monitoring/trace.py**
-  - Funcs: emit
-- **backup_20251208_214555/infra/reporting/viz_theory_report.py**
-  - Funcs: render
-- **backup_20251208_214555/infra/safety.py**
-  - Funcs: _log, is_autonomy_enabled, check_autonomy_budget_allowance, check_kill_switch, allow_network, allow_exec_shell, _is_path_allowed_write, allow_disk_write, request_approval, check_approval, require_approval, record_decision, record_risk, gated, tripwire_check
-- **backup_20251208_214555/inspect_agl_state.py**
-  - Funcs: read_jsonl, show_projects, show_learned_facts, main
-- **backup_20251208_214555/inspect_all_files.py**
-  - Funcs: guess_kind, is_text_file, scan_project
-- **backup_20251208_214555/inspect_brain.py**
-  - Funcs: print_methods
-- **backup_20251208_214555/inspect_code_map.py**
-  - Funcs: is_py_file, analyze_file, main
-- **backup_20251208_214555/inspect_import_usage.py**
-  - Funcs: iter_py_files, analyze_imports, main
-- **backup_20251208_214555/inspect_python_structure.py**
-  - Funcs: iter_python_files, build_module_index, resolve_import_to_file, analyze_python_file, main
-- **backup_20251208_214555/night_cycle.py**
-  - Funcs: digest_memories, apply_improvements_safely, archive_report, run_night_cycle
-- **backup_20251208_214555/order_scanner.py**
-  - Funcs: scan_directory
-- **backup_20251208_214555/peft/__init__.py**
-  - Classes: PeftModel
-  - Funcs: prepare_model_for_kbit_training
-- **backup_20251208_214555/quantum_integration.py**
-  - Funcs: integrate_with_quantum_wrapper
-- **backup_20251208_214555/real_engine_converter.py**
-  - Classes: RealEngineConverter, RealEngineConnector
-- **backup_20251208_214555/real_engine_converter_fixed.py**
-  - Classes: RealEngineConverter, RealEngineConnector
-- **backup_20251208_214555/reasoning/cross_domain_linker.py**
-  - Funcs: _norm, jaccard, link
-- **backup_20251208_214555/reasoning/narrative_synthesizer.py**
-  - Funcs: synthesize
-- **backup_20251208_214555/reasoning/theory_evaluator.py**
-  - Funcs: evaluate
-- **backup_20251208_214555/reasoning/theory_pipeline.py**
-  - Funcs: normalize_text, is_self_link, read_jsonl, pick_topk_per_domain, extract_entities, build_links, filter_narratives, hashlib_sha256, estimate_coherence, run
-- **backup_20251208_214555/reports/tmp_emergency_test/code/emergency_task.py**
-  - Funcs: _blocked_import
-- **backup_20251208_214555/run_agi_exam.py**
-  - Funcs: send_question, run_exam
-- **backup_20251208_214555/scripts/AGL_AGI_AdvancedTest.py**
-  - Funcs: get_llm, accuracy, rmse, ece, bic, local_wino_solver, local_arc_next, local_mmlu, local_bbh, run_self_improvement, run_wino, run_arc, run_mmlu, run_bbh, classify, main
-- **backup_20251208_214555/scripts/AGL_AGI_UnifiedTest.py**
-  - Funcs: _winograd_eval, _arc_eval, _tom_eval, arc_infer, tom_infer, _rmse, _ece, _bic, gen_ohm, linfit, predict, self_improvement, classify, main
-- **backup_20251208_214555/scripts/AGL_AGI_UnifiedTest_detailed_runner.py**
-  - Funcs: run_seed, main
-- **backup_20251208_214555/scripts/AGL_AGI_UnifiedTest_runner.py**
-  - Funcs: run_one, baseline_random_for_tests, bootstrap_ci, main
-- **backup_20251208_214555/scripts/AGL_SciTest_runner.py**
-  - Funcs: normalize_answer, numeric_close, build_items, heuristic_judge, main
-- **backup_20251208_214555/scripts/add_noise_to_tests.py**
-  - Funcs: perturb_results, noisy_csv, main
-- **backup_20251208_214555/scripts/advanced_creativity_analysis.py**
-  - Classes: AdvancedCreativityAnalyzer
-  - Funcs: run_advanced_creativity_assessment, save_advanced_analysis, interpret_true_creativity, display_breakthrough_insights
-- **backup_20251208_214555/scripts/advanced_science_test.py**
-  - Funcs: call_provider, تقييم_الإجابة, main
-- **backup_20251208_214555/scripts/agi_hybrid_tests.py**
-  - Funcs: try_import_hosted_llm, call_system_for_test1, evaluate_test1, save_results, make_report, main
-- **backup_20251208_214555/scripts/agl_chat.py**
-  - Funcs: main, main
-- **backup_20251208_214555/scripts/agl_daemon.py**
-  - Funcs: log_event, run_reasoning_cycle, run_live_training, run_memory_sync, health_ping, main
-- **backup_20251208_214555/scripts/agl_deep_audit.py**
-  - Funcs: scan_infrastructure, generate_agi_manifest
-- **backup_20251208_214555/scripts/agl_direct_executor.py**
-  - Funcs: run
-- **backup_20251208_214555/scripts/agl_full_audit.py**
-  - Funcs: sha256_of_file, run_git_command, scan_repo
-- **backup_20251208_214555/scripts/agl_master_entry.py**
-  - Funcs: is_relevant, run_query, main
-- **backup_20251208_214555/scripts/agl_universal.py**
-  - Funcs: _default_pipeline_merge, _proposals_to_context, _rag_adapter, agl_universal_answer
-- **backup_20251208_214555/scripts/aglib_import_smoke.py**
-  - Funcs: to_module
-- **backup_20251208_214555/scripts/aglib_mass_parametrize.py**
-  - Classes: Rewriter
-  - Funcs: should_skip, inject_header_and_knobs, process_file, main
-- **backup_20251208_214555/scripts/apply_batch3_env_switches.py**
-  - Funcs: in_literal_on_same_line, ensure_injected, apply_file, main
-- **backup_20251208_214555/scripts/archive_last_run.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/as.py**
-  - Funcs: extract_text, score_test1, main
-- **backup_20251208_214555/scripts/ask_agl.py**
-  - Funcs: _get_question_from_sources, main
-- **backup_20251208_214555/scripts/ask_universal.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/audit_registration.py**
-  - Funcs: read_agl_registrations, read_package_all, list_package_files, build_report
-- **backup_20251208_214555/scripts/auto_learn_from_providers.py**
-  - Funcs: load_topics, log, main
-- **backup_20251208_214555/scripts/calibrate_fusion_weights.py**
-  - Funcs: run_cmd, find_validation_csvs, train_on_csv, run_self_optimize, regenerate_summary, main
-- **backup_20251208_214555/scripts/check_installed_model.py**
-  - Funcs: exists_in_paths
-- **backup_20251208_214555/scripts/coverage_booster.py**
-  - Funcs: run, train_all, evaluate_and_update_fusion, main
-- **backup_20251208_214555/scripts/debug_collab_inspect.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/debug_tmp_registry.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/deep_self_engine_test.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/demo_continuous_learning.py**
-  - Funcs: demo_meta_learning, demo_transfer_learning, demo_self_improvement, run_full_demo
-- **backup_20251208_214555/scripts/diag_probe.py**
-  - Funcs: pretty
-- **backup_20251208_214555/scripts/discovery_experiment_1.py**
-  - Funcs: run_education_system_experiment, analyze_discovery_results, extract_key_ideas, assess_content_richness, assess_strategic_depth, save_discovery_insights, extract_key_discoveries
-- **backup_20251208_214555/scripts/discovery_experiment_2.py**
-  - Funcs: run_economic_miracle_experiment, analyze_extreme_performance, calculate_pressure_score, analyze_constraint_innovation, discover_system_limits, save_boundary_insights, assess_mission_success, derive_strategic_implications, get_breakthrough_proposals, is_breakthrough_proposal, extract_main_idea, extract_breakthrough_idea, count_constraints_overcome
-- **backup_20251208_214555/scripts/discovery_experiment_3.py**
-  - Funcs: diagnose_engine_loading, fix_engine_loading, run_creativity_breakthrough_experiment, analyze_creativity_breakthrough, calculate_creativity_courage, analyze_risk_taking, extract_breakthrough_ideas, is_revolutionary_idea, classify_breakthrough, assess_idea_courage, extract_revolutionary_insight, save_breakthrough_insights, interpret_courage_score
-- **backup_20251208_214555/scripts/download_qwen.py**
-  - Funcs: download_model
-- **backup_20251208_214555/scripts/download_qwen_fixed.py**
-  - Funcs: download_model
-- **backup_20251208_214555/scripts/engine_probe_matrix.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/engine_probe_simple.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/engines_compiler.py**
-  - Funcs: safe_import, run_general_knowledge, run_external_info_provider, run_reasoning_layer, run_generic_callable, main
-- **backup_20251208_214555/scripts/enrich_memory_data.py**
-  - Funcs: extract_keywords, create_enriched_events, enrich_existing_memory, create_massive_enriched_events, create_comprehensive_events
-- **backup_20251208_214555/scripts/ensure_ollama_models.py**
-  - Funcs: list_local_models, pull_model, main
-- **backup_20251208_214555/scripts/evaluate_agi_against_reference.py**
-  - Funcs: similarity
-- **backup_20251208_214555/scripts/evolve_domain_test.py**
-  - Funcs: call_provider_for_domain, ingest_into_gk, ask_questions, score_answer, slugify, main
-- **backup_20251208_214555/scripts/export_agi_component_report.py**
-  - Funcs: is_agi_like, main
-- **backup_20251208_214555/scripts/export_experience.py**
-  - Classes: ExperienceExporter
-  - Funcs: main
-- **backup_20251208_214555/scripts/extract_medical_grounding.py**
-  - Funcs: read_last_n, _collect_long_strings_from_obj, extract_rag_snippet, find_char_matches, main
-- **backup_20251208_214555/scripts/free_read_ingest.py**
-  - Funcs: split_sentences, ingest_file, main
-- **backup_20251208_214555/scripts/generate_agl_report.py**
-  - Funcs: extract_text_from_response
-- **backup_20251208_214555/scripts/generate_language_tasks.py**
-  - Funcs: write_task, main
-- **backup_20251208_214555/scripts/generate_qni_report.py**
-  - Funcs: run_and_capture
-- **backup_20251208_214555/scripts/generate_system_report.py**
-  - Funcs: exercise_solvers, run_unittests, main
-- **backup_20251208_214555/scripts/index_rag_reference.py**
-  - Funcs: chunk_text, main
-- **backup_20251208_214555/scripts/infer.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/infer_report.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/inject_blended_and_summary.py**
-  - Funcs: inject_badge_into_html, build_ensemble_summary, update_manifest, git_commit, main
-- **backup_20251208_214555/scripts/install_register_model.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/integrate_live_training.py**
-  - Funcs: normalize_result, append_candidate, main
-- **backup_20251208_214555/scripts/integration_cohesion_check.py**
-  - Funcs: record
-- **backup_20251208_214555/scripts/live_training.py**
-  - Funcs: run_live_training
-- **backup_20251208_214555/scripts/load_qwen_example.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/make_models_report.py**
-  - Funcs: html_escape, main
-- **backup_20251208_214555/scripts/make_train_from_learned.py**
-  - Funcs: read_learned, make_example, _write_train_input, _attempt_lora_train, main
-- **backup_20251208_214555/scripts/make_visual_report.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/measure_alpha_grid.py**
-  - Funcs: run_q
-- **backup_20251208_214555/scripts/measure_latency.py**
-  - Funcs: measure_once, summarize, run
-- **backup_20251208_214555/scripts/measure_latency_inproc.py**
-  - Funcs: measure_call, summarize, run
-- **backup_20251208_214555/scripts/measure_semantic_quality.py**
-  - Funcs: run_py, measure, main
-- **backup_20251208_214555/scripts/mission_control_integration_test.py**
-  - Classes: MissionControlEnhanced
-  - Funcs: create_medical_mission, start_child_server, stop_child_server
-- **backup_20251208_214555/scripts/multi_domain_ag_test.py**
-  - Funcs: call_provider_live, score_text, compute_final_percentage, main
-- **backup_20251208_214555/scripts/multi_domain_followup.py**
-  - Funcs: call_provider, score_answer, main
-- **backup_20251208_214555/scripts/multi_domain_run.py**
-  - Funcs: contains_real_reference
-- **backup_20251208_214555/scripts/ops_full_automation.py**
-  - Funcs: run_cmd, run_unit_tests, generate_reports, run_self_optimize, run_safety, export_pdfs, update_manifest, main
-- **backup_20251208_214555/scripts/orchestrate.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/orchestrate_env_solution.py**
-  - Funcs: synthesize_understanding, orchestrate_environment_solution
-- **backup_20251208_214555/scripts/orchestrate_env_solution_fixed.py**
-  - Funcs: synthesize_understanding, validate_relevance, score_and_select, orchestrate_environment_solution
-- **backup_20251208_214555/scripts/output_sanitizer.py**
-  - Funcs: _strip_control_tokens, _find_arabic_blocks, _normalize_numbering, sanitize_text, contains_forbidden_run
-- **backup_20251208_214555/scripts/parse_medical_queries.py**
-  - Funcs: _compute_effective_latency
-- **backup_20251208_214555/scripts/phase_g_save_patterns.py**
-  - Funcs: safe_float, status_for, schema_and_derived, load_results, _unit, _load_results, _derive_pattern, main
-- **backup_20251208_214555/scripts/post_training_watcher.py**
-  - Funcs: list_results, read_processed, mark_processed, append_monitor, detect_inconsistency, integrate_result, process_once, main
-- **backup_20251208_214555/scripts/postprocess_social_analysis.py**
-  - Funcs: load_report, try_import_social_engine, recompute_social_score, main
-- **backup_20251208_214555/scripts/print_top_events.py**
-  - Funcs: eff
-- **backup_20251208_214555/scripts/quick_bootstrap_check.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/quick_enhancement.py**
-  - Funcs: execute_quick_enhancement
-- **backup_20251208_214555/scripts/rag_healthcheck.py**
-  - Funcs: _get
-- **backup_20251208_214555/scripts/refine_and_retrain_weak_models.py**
-  - Funcs: run_cmd, read_self_optimization, find_training_csvs_for_base, refine_power_csv, retrain_on_csv, run_self_optimize, regenerate_summary, main
-- **backup_20251208_214555/scripts/report_phaseI.py**
-  - Classes: DerivedRelation
-  - Funcs: utc_now_iso, safe_read_json, b64_png, human, pick_ensemble_winner, synth_curve, default_domain, plot_model_preview, load_generalization, render_models_section, render_derived_section, collect_models, main
-- **backup_20251208_214555/scripts/report_summary.py**
-  - Funcs: safe_read, collect_reports, make_html_blocks, make_json_blocks, main
-- **backup_20251208_214555/scripts/run_agi_advanced_eval.py**
-  - Funcs: run
-- **backup_20251208_214555/scripts/run_agi_system_answers.py**
-  - Funcs: run
-- **backup_20251208_214555/scripts/run_agl4.py**
-  - Funcs: run_p, main
-- **backup_20251208_214555/scripts/run_agl_academic_test.py**
-  - Funcs: call_agl, main
-- **backup_20251208_214555/scripts/run_agl_emotion_test.py**
-  - Funcs: extract_text, main
-- **backup_20251208_214555/scripts/run_agl_emotion_training.py**
-  - Funcs: contains_empathy, run_training
-- **backup_20251208_214555/scripts/run_agl_forced_llm_experiments.py**
-  - Funcs: build_tests, extract_text, run_experiments
-- **backup_20251208_214555/scripts/run_agl_hybrid_suite.py**
-  - Funcs: build_tests, score_from_conf, run_suite
-- **backup_20251208_214555/scripts/run_agl_hybrid_test1.py**
-  - Funcs: build_test1, run_test1
-- **backup_20251208_214555/scripts/run_agl_orchestrated.py**
-  - Funcs: split_into_parts, main
-- **backup_20251208_214555/scripts/run_bilingual_story_test.py**
-  - Funcs: extract_answer_from_winner, norm_text, is_match, run_tests
-- **backup_20251208_214555/scripts/run_cagi_test.py**
-  - Funcs: call_system, check_contains_any, main
-- **backup_20251208_214555/scripts/run_conscious_cycle.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/run_dkn.py**
-  - Funcs: boot, main
-- **backup_20251208_214555/scripts/run_full_pipeline.py**
-  - Funcs: safe_import, ensure_provider, assemble_context, main
-- **backup_20251208_214555/scripts/run_integrator.py**
-  - Classes: AGLIntegrator
-- **backup_20251208_214555/scripts/run_meta_reasoner.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/run_multidomain_test.py**
-  - Funcs: contains_any
-- **backup_20251208_214555/scripts/run_smoke_self_engine.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/run_story_experiments.py**
-  - Funcs: similarity, extract_answer_from_winner, append_jsonl, run_experiment_once, main
-- **backup_20251208_214555/scripts/safety_suite.py**
-  - Funcs: run_tests, write_report, main
-- **backup_20251208_214555/scripts/seed_demo.py**
-  - Funcs: seed, main
-- **backup_20251208_214555/scripts/seed_memory.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/self_engineer_run.py**
-  - Classes: AutonomousCoder
-- **backup_20251208_214555/scripts/self_optimize.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/self_reeng.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/self_supervise_ambiguous.py**
-  - Funcs: make_synthetic_power_csv, run_self_learning, pick_best_fit, predict_from_fit, fill_pseudo_labels, main
-- **backup_20251208_214555/scripts/smoke_llm_ping.py**
-  - Funcs: main
-- **backup_20251208_214555/scripts/smoke_probe_engines.py**
-  - Funcs: safe_call_engine, main
-- **backup_20251208_214555/scripts/soak_runner.py**
-  - Funcs: read_json, stm_size, ltm_size, run_soak
-- **backup_20251208_214555/scripts/strategic_advanced_planner.py**
-  - Funcs: build_example_options, build_example_risks, main
-- **backup_20251208_214555/scripts/synthesize_then_enforce_science.py**
-  - Funcs: local_synthesis, call_provider_structured, score_components, main
-- **backup_20251208_214555/scripts/test_creative_advanced.py**
-  - Funcs: run
-- **backup_20251208_214555/scripts/test_search_quality.py**
-  - Funcs: test_search_improvements, measure_improvement
-- **backup_20251208_214555/scripts/train_phaseD.py**
-  - Funcs: load_xy, main
-- **backup_20251208_214555/scripts/transfer_experiment.py**
-  - Funcs: detect_physics_pattern, map_roles_to_econ, check_target_for_role, run_experiment, run_experiment_live
-- **backup_20251208_214555/scripts/watch_and_train.py**
-  - Funcs: setup_logger, command_exists, run_commands, main
-- **backup_20251208_214555/scripts/winograd_test.py**
-  - Funcs: normalize, heuristic_answer, ask_provider, evaluate
-- **backup_20251208_214555/sentence_transformers/__init__.py**
-  - Classes: SentenceTransformer
-  - Funcs: util_placeholder
-- **backup_20251208_214555/server.py**
-  - Funcs: json_response
-- **backup_20251208_214555/server_clean.py**
-  - Funcs: json_response
-- **backup_20251208_214555/server_fixed.py**
-  - Classes: DomainRouter, AGI_Core, DigitalIdentity, AutobiographicalMemory, IntrinsicMotivationSystem, ReflectiveThinking, SelfPerception, DigitalEthics, SelfEvolution, DigitalBeing, ConsciousnessTracker, TrueConsciousnessSystem, UniversalLearningEngine, OriginalThinkingEngine
-  - Funcs: _apppend_log_line, _get_ltm_db_path, force_memorize, force_recall, load_conscious_state, load_dynamic_extensions, _extract_solver_params, save_conscious_state, save_to_memory_db, json_response, _sanitize_for_client, _append_log_line, _is_unsafe_code_request, _inject_evolution_meta
-- **backup_20251208_214555/show_outputs.py**
-  - Funcs: print_section
-- **backup_20251208_214555/start_long_term_project.py**
-  - Funcs: main
-- **backup_20251208_214555/stubs/numpy.py**
-  - Classes: linalg
-  - Funcs: ceil, log2, eye, ndarray_like, array, linalg_norm, linalg_solve
-- **backup_20251208_214555/stubs/torch.py**
-  - Classes: linalg
-  - Funcs: norm, eye
-- **backup_20251208_214555/teach_flu.py**
-  - Funcs: teach_system
-- **backup_20251208_214555/test_agi_awakening.py**
-  - Classes: _Stub
-  - Funcs: _instantiate_perception, _instantiate_conscious, _instantiate_causal, _instantiate_meta, _instantiate_reflect, _instantiate_quantum, seed_test_memory, run_agi_thought_process
-- **backup_20251208_214555/test_agi_comprehensive.py**
-  - Funcs: save_results, print_task_header, record_task
-- **backup_20251208_214555/test_agi_endpoints.py**
-  - Funcs: test_consciousness_status, test_original_math, test_creativity, test_evolution_smoke, test_evolution_smoke, test_language_invention, test_evolution_smoke, main
-- **backup_20251208_214555/test_agi_level_assessment.py**
-  - Classes: AGILevelAssessment
-- **backup_20251208_214555/test_dkn_integration.py**
-  - Funcs: test_dkn_integration
-- **backup_20251208_214555/test_full_power_clusters.py**
-  - Funcs: print_header, print_result
-- **backup_20251208_214555/test_internal_engines.py**
-  - Funcs: test_math_engine, test_simulation_engine, test_direct_import
-- **backup_20251208_214555/test_mission_control_integration.py**
-  - Funcs: test_import_mission_control, test_unified_agi_compatibility, test_smart_focus_controller, test_engine_registry_sharing, test_no_conflicts, run_all_tests
-- **backup_20251208_214555/test_new_engines.py**
-  - Funcs: print_section, test_hardware_simulator, test_iot_protocol_designer, test_self_monitoring_system, main
-- **backup_20251208_214555/test_phase2_integration.py**
-  - Funcs: test_self_optimizer, test_consciousness_tracker, test_self_evolution, test_smart_router, test_safe_autonomous, test_unified_agi_system, run_all_tests
-- **backup_20251208_214555/test_real_agi_comprehensive.py**
-  - Classes: RealAGITester
-- **backup_20251208_214555/test_router_improvements.py**
-  - Funcs: test_endpoint, main
-- **backup_20251208_214555/test_simulation_endpoint.py**
-  - Classes: SimulationEndpointTester
-- **backup_20251208_214555/tests/agi/test_final_v4.py**
-  - Funcs: _resolve_callable, _load_system, _score_creativity, _score_science, _score_integration, _score_feasibility, _score_speed, _render_markdown_report, run_agi_final_v4, test_agi_final_v4_runs_and_exports
-- **backup_20251208_214555/tests/agi/test_run_agi_script.py**
-  - Funcs: test_run_agi_final_via_script
-- **backup_20251208_214555/tests/agi_test_runner.py**
-  - Funcs: run_agi_comprehensive_test
-- **backup_20251208_214555/tests/c_layer/test_c_layer_tick.py**
-  - Classes: _Reg, _Meta
-  - Funcs: test_tick_end_to_end
-- **backup_20251208_214555/tests/c_layer/test_intent_planner.py**
-  - Classes: _Reg, _Meta
-  - Funcs: test_planner_basic
-- **backup_20251208_214555/tests/c_layer/test_perception_loop.py**
-  - Funcs: test_perception_reads
-- **backup_20251208_214555/tests/c_layer/test_state_logger.py**
-  - Funcs: test_snapshots
-- **backup_20251208_214555/tests/conftest.py**
-  - Classes: _DummyEngine
-  - Funcs: pytest_sessionstart
-- **backup_20251208_214555/tests/consciousness/test_conscious_cycle.py**
-  - Funcs: test_conscious_cycle_tmpdir
-- **backup_20251208_214555/tests/engines/test_per_engine_question.py**
-  - Funcs: test_engine_handles_same_prompt
-- **backup_20251208_214555/tests/engines/test_response_schema.py**
-  - Funcs: _ensure_envs, test_all_registered_engines_return_canonical_shape
-- **backup_20251208_214555/tests/evaluation/test_true_artificial_curiosity.py**
-  - Funcs: _load_sut, _count_questions, _domain_coverage, _depth_score, _novel_link_heuristic, _joke_understanding_score, test_true_artificial_curiosity_end_to_end, test_scoring_helpers_smoke
-- **backup_20251208_214555/tests/fixtures/local_sut.py**
-  - Funcs: generate
-- **backup_20251208_214555/tests/helpers/agi_eval.py**
-  - Funcs: ar_norm, has_any, score_rubric, mk_report
-- **backup_20251208_214555/tests/helpers/engine_ask.py**
-  - Funcs: _call_server_process, ask_engine
-- **backup_20251208_214555/tests/helpers/text_norm.py**
-  - Funcs: ar_norm, any_synonym
-- **backup_20251208_214555/tests/integration/context_goal_tests.py**
-  - Funcs: _ensure_envs, test_why_trace_probe, test_plan_adapt_probe
-- **backup_20251208_214555/tests/integration/meta_loop_stability_test.py**
-  - Funcs: _metrics_tuple, test_meta_loop_stability
-- **backup_20251208_214555/tests/integration/stability_test_matrix.py**
-  - Funcs: _is_callable_engine, test_stability_matrix_collect, _ensure_envs, _probe_engine, _run_matrix_for_provider, test_stability_matrix
-- **backup_20251208_214555/tests/integration/test_causal_hypothesis_smoke.py**
-  - Funcs: test_causal_and_hypothesis_smoke
-- **backup_20251208_214555/tests/lint/test_no_or_queries_for_trace_and_type.py**
-  - Funcs: _find_call_args, test_no_or_queries_for_trace_and_type
-- **backup_20251208_214555/tests/memory/test_bridge_no_trace_interference.py**
-  - Funcs: _clear_bridge, test_no_interference_across_traces
-- **backup_20251208_214555/tests/memory/test_bridge_query_and.py**
-  - Funcs: _clear_bridge, test_bridge_query_match_and
-- **backup_20251208_214555/tests/memory/test_conscious_bridge.py**
-  - Funcs: test_bridge_put_link_query
-- **backup_20251208_214555/tests/memory/test_trace_linkage.py**
-  - Funcs: test_trace_linkage_chain
-- **backup_20251208_214555/tests/scorers/semantic_scorer.py**
-  - Funcs: score_text_similarity, map_score_0_10
-- **backup_20251208_214555/tests/stubs/gk_reasoner_stub.py**
-  - Classes: GK_Reasoner_Dummy
-- **backup_20251208_214555/tests/stubs/gk_retrieval_stub.py**
-  - Classes: _DummyKB, GK_Retriever_Dummy
-- **backup_20251208_214555/tests/test_academic_agi_evaluation.py**
-  - Classes: MockEngine, TestAcademicAGI
-  - Funcs: get_engine, call_engine, evaluate_response, assess_criterion, get_criterion_weight, run_complete_academic_evaluation
-- **backup_20251208_214555/tests/test_adv_exp_pade_smoke.py**
-  - Funcs: test_exp_pade_matches_scipy_small
-- **backup_20251208_214555/tests/test_adv_exp_tensor_utils_smoke.py**
-  - Funcs: test_safe_matmul_and_pade_fallback
-- **backup_20251208_214555/tests/test_advanced_algebra.py**
-  - Classes: TestAdvancedExponentialAlgebra
-- **backup_20251208_214555/tests/test_advanced_exponential_algebra_basic.py**
-  - Funcs: test_matrix_exponential_pade_list_guard, test_lie_bracket_and_structure_constants, test_solve_ode_and_quantum_evolution_small
-- **backup_20251208_214555/tests/test_agi_academic_challenge.py**
-  - Funcs: _call_rag_safe, _normalize_ar, _semantic_hit, test_winograd_schema, test_multi_level_causality_oil_2020, test_quick_learning_game_strategy, test_few_shot_concept_learning, test_creative_earthquake_alarm_design, test_adaptive_planning_and_alternatives, test_meta_cognition_scores_varies_when_llm
-- **backup_20251208_214555/tests/test_agi_advanced.py**
-  - Funcs: generate_answers, evaluate_and_write, test_agi_advanced_all
-- **backup_20251208_214555/tests/test_agi_advanced_critical.py**
-  - Funcs: generate_answers, evaluate_and_write, test_agi_advanced_critical_all
-- **backup_20251208_214555/tests/test_agi_advanced_eval.py**
-  - Funcs: _write, test_agi_advanced__case1_multidomain, test_agi_advanced__case2_creativity_under_constraints, test_agi_advanced__case3_ethical_reasoning
-- **backup_20251208_214555/tests/test_agi_battery.py**
-  - Funcs: predict_few_shot, answer_context_arabic, creative_solutions_for_cork, explain_balance, causal_rain_vs_sprinkler, learn_from_error_and_apply, test_few_shot, test_context_understanding, test_creative_problem_solving, test_generalization_balance, test_causal_reasoning, test_learning_from_errors
-- **backup_20251208_214555/tests/test_agi_comprehensive.py**
-  - Classes: AGIComprehensiveEvaluator
-  - Funcs: _resolve_hook, _local_fallback_generate, _agl_infer, main
-- **backup_20251208_214555/tests/test_agi_core.py**
-  - Funcs: has_any, q1_adapt_to_new_context, q2_self_improving_learning, q3_causal_understanding, q4_cross_domain_linguistic_creativity, q5_math_reasoning, q6_creative_planning, q7_real_task_now, q8_evaluate_requirements, run_core_tests_and_report, test_agi_core_smoke
-- **backup_20251208_214555/tests/test_agi_critical.py**
-  - Funcs: contains_any, test_deep_understanding_balance, test_limits_of_float_solution, test_building_knowledge_over_time, test_transfer_buoyancy_to_raft, test_detect_contradiction, test_hypothetical_double_gravity, test_innovative_test_design, test_self_assessment, test_temporal_consistency, test_bias_and_objectivity
-- **backup_20251208_214555/tests/test_agi_decisive.py**
-  - Funcs: generate_answers, evaluate_and_write, test_agi_decisive_all
-- **backup_20251208_214555/tests/test_agi_eval_weights.py**
-  - Funcs: _reload_with_env, test_weights_baseline_when_scaffold_off, test_weights_scaffold_when_on
-- **backup_20251208_214555/tests/test_agi_integrated.py**
-  - Funcs: simple_keyword_checks, test_agi_integrated_run_and_record
-- **backup_20251208_214555/tests/test_agi_meta_critical.py**
-  - Funcs: has_any, answer_q1, answer_q2, answer_q3, answer_q4, answer_q5, answer_q6, answer_q7, answer_q8, answer_q9, answer_q10, test_meta_critical_prompts
-- **backup_20251208_214555/tests/test_agi_mini_neutral.py**
-  - Funcs: _call_agl, _log_answer, _features, _fit_linear_least_squares, _predict_linear, task1_decode_and_predict, _valid_neighbors, _is_valid, _solve_grid, rubric_transport, rubric_language, main
-- **backup_20251208_214555/tests/test_agi_multidimensional.py**
-  - Funcs: now_ts, record_interaction, simple_keyword_score, length_score, run_task, aggregate_scores, write_artifact, test_agi_multidimensional_run
-- **backup_20251208_214555/tests/test_agi_strict.py**
-  - Funcs: _utc, _resolve_registry, _safe_resolve, _append_result, _confidence_ok, test_agi_strict_suite
-- **backup_20251208_214555/tests/test_agl_env_switches.py**
-  - Funcs: env, test_retriever_k_defaults_stable, test_retriever_k_env_changes_behavior
-- **backup_20251208_214555/tests/test_agl_pipeline_basic.py**
-  - Funcs: test_basic_and_memory_and_critic
-- **backup_20251208_214555/tests/test_agl_pipeline_rag_fallback.py**
-  - Funcs: test_rag_error_fallback
-- **backup_20251208_214555/tests/test_alias_matching.py**
-  - Classes: TestAliases
-- **backup_20251208_214555/tests/test_batch_env_overrides_1.py**
-  - Funcs: env, _reload, test_general_knowledge_env_knobs, test_hypothesis_gen_topn, test_meta_extra_chars, test_orchestrator_limit, test_gk_reasoner_preview_chars
-- **backup_20251208_214555/tests/test_batch_env_overrides_2.py**
-  - Funcs: _reload_module_with_env, test_advanced_metareasoner_defaults_and_override, test_perception_loop_defaults_and_override, test_visual_spatial_defaults_and_override
-- **backup_20251208_214555/tests/test_batch_env_overrides_3.py**
-  - Funcs: reload_with_env, test_intent_top_n_override, test_social_ctx_chars_override, test_planner_max_steps_override
-- **backup_20251208_214555/tests/test_batch_env_overrides_4.py**
-  - Funcs: _reload, test_hosted_llm_defaults_and_override, test_openai_knobs, test_ollama_topk, test_gk_graph_caps
-- **backup_20251208_214555/tests/test_bootstrap_register_all.py**
-  - Funcs: test_bootstrap_register_all_dict_registry
-- **backup_20251208_214555/tests/test_bootstrap_registry.py**
-  - Funcs: test_agl_bootstrap_registry
-- **backup_20251208_214555/tests/test_bridge_memory.py**
-  - Funcs: test_export_import_roundtrip, test_semantic_index_and_search_if_available
-- **backup_20251208_214555/tests/test_conversation_manager_router.py**
-  - Funcs: test_auto_route_translate_and_history
-- **backup_20251208_214555/tests/test_conversation_manager_sessions.py**
-  - Funcs: test_session_creation_and_history_iso
-- **backup_20251208_214555/tests/test_copilot_sandbox.py**
-  - Classes: TestCopilotSandbox
-- **backup_20251208_214555/tests/test_creative_best.py**
-  - Funcs: test_creative_out
-- **backup_20251208_214555/tests/test_creative_innovation_basic.py**
-  - Funcs: test_generate_ideas_len_and_order, test_scamper_has_all_ops, test_novelty_score_is_deterministic
-- **backup_20251208_214555/tests/test_creative_innovation_linking.py**
-  - Funcs: test_concept_blending_and_refine
-- **backup_20251208_214555/tests/test_creative_innovation_score_balance.py**
-  - Funcs: test_composite_scoring_balance
-- **backup_20251208_214555/tests/test_dialogue_layer.py**
-  - Classes: TestDialogueLayer
-- **backup_20251208_214555/tests/test_domain_router_smoke.py**
-  - Funcs: test_route_domain_electrical_and_fallback
-- **backup_20251208_214555/tests/test_domain_router_unknown.py**
-  - Funcs: test_route_domain_no_ontology_and_quantum_signal
-- **backup_20251208_214555/tests/test_emergency_killswitch.py**
-  - Classes: TestEmergencyKillSwitch
-- **backup_20251208_214555/tests/test_emergency_system.py**
-  - Classes: TestEmergencyExecution
-- **backup_20251208_214555/tests/test_emergency_system_ar.py**
-  - Classes: TestEmergencySystem
-- **backup_20251208_214555/tests/test_encoding.py**
-  - Classes: TestEncoding
-- **backup_20251208_214555/tests/test_engine_routing.py**
-  - Funcs: test_route_engines_language_prefers_language_caps, test_route_engines_math_prefers_math_caps
-- **backup_20251208_214555/tests/test_ensemble_selector.py**
-  - Classes: TestEnsembleSelector
-- **backup_20251208_214555/tests/test_evo_runtime.py**
-  - Funcs: test_bilingual_english, test_bilingual_arabic, test_premerge_blocks_when_no_success, test_evolution_succeeds_when_premerge_disabled, test_evolution_logs_success
-- **backup_20251208_214555/tests/test_experience_memory.py**
-  - Classes: TestExperienceMemory
-- **backup_20251208_214555/tests/test_feedback_and_integration.py**
-  - Classes: TestFeedbackAndIntegration
-- **backup_20251208_214555/tests/test_full_integration.py**
-  - Funcs: test_full_integration_runs_all_together
-- **backup_20251208_214555/tests/test_general_knowledge_basic.py**
-  - Funcs: test_gk_basic_answer
-- **backup_20251208_214555/tests/test_general_knowledge_contradiction.py**
-  - Funcs: test_gk_contradiction_detection
-- **backup_20251208_214555/tests/test_general_knowledge_linking.py**
-  - Funcs: test_gk_link_concepts
-- **backup_20251208_214555/tests/test_generalization.py**
-  - Classes: TestGeneralization
-- **backup_20251208_214555/tests/test_generalization_matrix.py**
-  - Classes: TestGeneralizationMatrix
-- **backup_20251208_214555/tests/test_gk_best.py**
-  - Funcs: test_gk_retrieve_validate
-- **backup_20251208_214555/tests/test_gk_verifier.py**
-  - Funcs: env, import_fresh, test_import_default_ok, test_env_override_changes_limit, test_scoring_and_check_basic, test_evidence_limit_applied
-- **backup_20251208_214555/tests/test_highlevel_engines_presence_and_minfunc.py**
-  - Funcs: env_mocks, bootstrap_and_report, _load_engine_specs, test_engine_registered_or_explained, _construct_engine, _is_reasonable_output, test_engine_minimal_process_task
-- **backup_20251208_214555/tests/test_hybrid_composer_smoke.py**
-  - Funcs: test_compose_physics_detects_and_solves
-- **backup_20251208_214555/tests/test_import_compat.py**
-  - Funcs: test_legacy_import_knowledge_graph
-- **backup_20251208_214555/tests/test_improvement_feedback.py**
-  - Classes: TestImprovementAndFeedback
-- **backup_20251208_214555/tests/test_infer_report_smoke.py**
-  - Classes: TestInferReportSmoke
-- **backup_20251208_214555/tests/test_inference_engine.py**
-  - Classes: TestInferenceEngine
-- **backup_20251208_214555/tests/test_integration_cli.py**
-  - Classes: TestAGLIntegrationCLI
-- **backup_20251208_214555/tests/test_integration_end2end.py**
-  - Funcs: new_session, test_translate_flow_ar_en, test_multi_turn_brainstorm_to_plan, test_info_qa_then_visual, test_meta_learn_few_shot, test_social_empathy, test_fallback_resilience
-- **backup_20251208_214555/tests/test_integration_multiengine.py**
-  - Funcs: test_cross_engine_environment_case
-- **backup_20251208_214555/tests/test_integration_smoke.py**
-  - Funcs: test_nlp_translate, test_gk_linking, test_ci_ideas, test_st_plan, test_ml_fewshot, test_vs_analyze, test_si_empathy
-- **backup_20251208_214555/tests/test_integrator.py**
-  - Classes: DummyBridge
-  - Funcs: patch_ask_engine, test_integrator_runs_and_returns_structure
-- **backup_20251208_214555/tests/test_intent_recognizer_matrix.py**
-  - Funcs: test_detect_intent_matrix
-- **backup_20251208_214555/tests/test_intents_smoke.py**
-  - Funcs: test_all_intents_route
-- **backup_20251208_214555/tests/test_interpretive_report.py**
-  - Classes: TestInterpretiveReport
-- **backup_20251208_214555/tests/test_kb_integrity.py**
-  - Classes: TestKBIntegrity
-- **backup_20251208_214555/tests/test_large_modules_coverage.py**
-  - Classes: TestLargeModulesCoverage
-- **backup_20251208_214555/tests/test_law_extra.py**
-  - Funcs: test_alias_u_to_v, test_learning_fit_simple, test_units_validator_optional
-- **backup_20251208_214555/tests/test_law_learner.py**
-  - Classes: TestLawLearner
-- **backup_20251208_214555/tests/test_law_models.py**
-  - Classes: TestLawModels
-- **backup_20251208_214555/tests/test_law_understanding.py**
-  - Classes: TestLawUnderstanding
-  - Funcs: test_match_newton, test_propose_from_match
-- **backup_20251208_214555/tests/test_master_entry_final_answer.py**
-  - Funcs: test_master_entry_plan_prints_final_answer
-- **backup_20251208_214555/tests/test_math_and_integration.py**
-  - Classes: TestMathematicalBrainEdgeCases, TestCommunicationAndFormatter
-- **backup_20251208_214555/tests/test_mathematical_brain_and_expa.py**
-  - Funcs: test_mathematical_brain_differential, test_matrix_exponential_pade_small
-- **backup_20251208_214555/tests/test_mathematical_brain_branches.py**
-  - Classes: TestMathematicalBrainBranches
-- **backup_20251208_214555/tests/test_mathematical_brain_derivatives.py**
-  - Funcs: test_symbolic_derivative_poly2, test_numeric_integral_linear
-- **backup_20251208_214555/tests/test_mathematical_residual.py**
-  - Classes: TestMathematicalResidual
-- **backup_20251208_214555/tests/test_meta_best.py**
-  - Funcs: test_meta
-- **backup_20251208_214555/tests/test_meta_cognition_smoke.py**
-  - Funcs: test_meta_cognition_smoke
-- **backup_20251208_214555/tests/test_meta_ensembler.py**
-  - Classes: TestMetaEnsembler
-- **backup_20251208_214555/tests/test_meta_learning_numeric.py**
-  - Funcs: test_affine_extraction_and_prediction
-- **backup_20251208_214555/tests/test_meta_learning_strings.py**
-  - Funcs: test_reverse_rule_detection_and_apply, test_upper_and_suffix_rules
-- **backup_20251208_214555/tests/test_meta_learning_transfer_feedback.py**
-  - Funcs: test_transfer_and_self_improve
-- **backup_20251208_214555/tests/test_meta_reason_loop_smoke.py**
-  - Funcs: test_meta_self_improve_smoke
-- **backup_20251208_214555/tests/test_nlp_advanced_best.py**
-  - Funcs: test_nlp_end_to_end
-- **backup_20251208_214555/tests/test_nlp_advanced_v2.py**
-  - Funcs: test_nlp_advanced_intent_and_tone, test_nlp_memory_context_summary, test_style_adapter_formal_vs_friendly
-- **backup_20251208_214555/tests/test_orchestrator_and_integrator.py**
-  - Classes: TestOrchestratorAndIntegrator
-- **backup_20251208_214555/tests/test_orchestrator_basic.py**
-  - Classes: MockEngine
-  - Funcs: test_orchestrator_basic_routing_and_aggregation, test_update_priorities_changes_routing_order
-- **backup_20251208_214555/tests/test_orchestrator_inference.py**
-  - Classes: TestOrchestratorInference
-- **backup_20251208_214555/tests/test_output_formatter.py**
-  - Funcs: test_normalize_cleans_neutral_prefix, test_normalize_fallback_design
-- **backup_20251208_214555/tests/test_perception_context.py**
-  - Classes: TestPerceptionContext
-- **backup_20251208_214555/tests/test_perception_context_edgecases.py**
-  - Funcs: test_extract_features_none_and_empty, test_perception_context_extract_variants
-- **backup_20251208_214555/tests/test_perception_context_edges.py**
-  - Funcs: test_extract_empty_and_partial
-- **backup_20251208_214555/tests/test_phase10_strategic_memory.py**
-  - Funcs: test_phase10_memory_record_and_recall, test_phase10_agl_pipeline_uses_strategic_memory
-- **backup_20251208_214555/tests/test_phase11_executive_agent.py**
-  - Funcs: test_executive_runs_highest_priority, test_executive_no_pending_tasks
-- **backup_20251208_214555/tests/test_phase12_self_profile.py**
-  - Funcs: test_phase12_record_and_load_profile, test_phase12_suggest_strategy_by_domain
-- **backup_20251208_214555/tests/test_phase13_internal_agents.py**
-  - Funcs: test_phase13_select_med_agent_by_keywords, test_phase13_select_plan_agent_by_keywords, test_phase13_apply_agent_to_prompt_and_meta, test_phase13_no_agent_match_returns_same_prompt
-- **backup_20251208_214555/tests/test_phase14_cognitive_mode.py**
-  - Funcs: test_phase14_simple_factoid_low_risk_fast_mode, test_phase14_medical_high_risk_normal_mode, test_phase14_planning_question_uses_planning_mode, test_phase14_general_question_default_mode
-- **backup_20251208_214555/tests/test_phase14_dynamic_integration.py**
-  - Funcs: test_phase14_dynamic_mode_triggers_deep_cot, test_phase14_dynamic_mode_skips_deep_cot_when_not_needed
-- **backup_20251208_214555/tests/test_phase15_continual_learning.py**
-  - Funcs: test_phase15_record_and_load_learned_facts
-- **backup_20251208_214555/tests/test_phase15_learned_facts_context.py**
-  - Funcs: test_load_learned_facts_as_context
-- **backup_20251208_214555/tests/test_phase16_taskmaster.py**
-  - Funcs: test_phase16_start_long_term_project_creates_config, test_phase16_run_taskmaster_tick_calls_executive
-- **backup_20251208_214555/tests/test_phase17_rag_integration.py**
-  - Funcs: setup_env, test_rag_index_search_and_retrieve, test_agl_pipeline_prefers_rag_for_knowledge
-- **backup_20251208_214555/tests/test_phase4_multi_step_qa.py**
-  - Funcs: test_infer_task_type_multi, test_multi_step_qa_pipeline_runs
-- **backup_20251208_214555/tests/test_phase5_zero_shot_eval.py**
-  - Funcs: test_phase5_zero_shot_eval_fast_mode
-- **backup_20251208_214555/tests/test_phase6_self_improvement.py**
-  - Funcs: test_phase6_analyze_creates_patches
-- **backup_20251208_214555/tests/test_phase7_deep_cot_verification.py**
-  - Funcs: test_phase7_deep_cot_path
-- **backup_20251208_214555/tests/test_phase8_project_level_reasoning.py**
-  - Funcs: test_phase8_project_lifecycle
-- **backup_20251208_214555/tests/test_phase9_situational_awareness.py**
-  - Funcs: test_phase9_runtime_context_basic, test_phase9_runtime_context_on_error
-- **backup_20251208_214555/tests/test_phaseD_unified.py**
-  - Classes: TestPhaseDUnified
-- **backup_20251208_214555/tests/test_pipeline_spec.py**
-  - Funcs: test_pipeline_doc_exists, test_pipeline_contains_json_example
-- **backup_20251208_214555/tests/test_planner_agent.py**
-  - Classes: TestPlannerAgent
-- **backup_20251208_214555/tests/test_protocol_designer.py**
-  - Classes: TestProtocolDesigner
-  - Funcs: test_process_task_spec, test_verify_handshake_sequence_ok, test_verify_handshake_sequence_mismatch
-- **backup_20251208_214555/tests/test_protocol_designer_branches.py**
-  - Classes: TestProtocolDesignerBranches
-- **backup_20251208_214555/tests/test_protocol_designer_branches_extra.py**
-  - Funcs: test_version_mismatch_rejected, test_timeout_path
-- **backup_20251208_214555/tests/test_protocol_designer_extra.py**
-  - Funcs: test_verify_handshake_sequence_types_and_results
-- **backup_20251208_214555/tests/test_quantum_intelligence.py**
-  - Funcs: short_nonempty, test_quantum_superposition, test_quantum_entanglement, test_contextual_collapse, test_quantum_creativity, test_quantum_learning
-- **backup_20251208_214555/tests/test_quantum_neural_core_minimal.py**
-  - Classes: TestQuantumNeuralCoreMinimal
-- **backup_20251208_214555/tests/test_quantum_processor.py**
-  - Classes: TestQuantumProcessor
-- **backup_20251208_214555/tests/test_quantum_simulator_unit.py**
-  - Funcs: approx_equal, test_qft_uniform_on_zero, test_phase_estimation_returns_angle, test_quantum_neural_forward_deterministic, test_simulate_hadamard_uniform_sampling
-- **backup_20251208_214555/tests/test_rag_mock_unit.py**
-  - Funcs: test_mock_answer_contains_keywords_ar, test_mock_answer_no_keywords
-- **backup_20251208_214555/tests/test_rag_smoke.py**
-  - Funcs: test_rag_answer_endpoint_basic
-- **backup_20251208_214555/tests/test_reasoner.py**
-  - Classes: ReasonerSmokeTest
-- **backup_20251208_214555/tests/test_reasoning_planner.py**
-  - Classes: TestReasoningPlanner
-- **backup_20251208_214555/tests/test_registry_adapter.py**
-  - Funcs: test_process_task_adapter_present
-- **backup_20251208_214555/tests/test_regress_intent_meta.py**
-  - Funcs: test_meta_patterns_additional_phrases
-- **backup_20251208_214555/tests/test_regress_visual_handle.py**
-  - Funcs: test_visual_handle_routing_describe, test_visual_handle_routing_generate
-- **backup_20251208_214555/tests/test_result_guard.py**
-  - Funcs: _ok, test_result_guard_ok, _adapter_output_ok, test_new_adapters_schema, test_diversity_tiebreaker_prefers_unseen, test_connect_engines_order_and_cap, test_override_failure_fallback, test_override_inmemory_success, test_self_evolve_smoke, test_self_evolve_guard_max_lines, test_self_evolve_blocklist, test_evo_blocklist_enforced, test_evo_line_budget, test_evo_git_apply_and_rollback, test_evo_strategy_bridge, test_stage4_memory_loop, test_stage4_goal_and_feedback, test_stage4_perceptual_hub, test_stage4_self_model, test_connect_engines_respects_order_and_max, test_diversity_bonus_affects_tie_group, test_meta_reflection_updates_priors, test_timeline_contextualizer_present, test_generative_link_injects_strategy_when_low_conf, _has_std_schema, test_perceptual_and_goal_schema, test_perception_overrides_loaded, test_tick_writes_stm, test_hub_injection_when_perception_present, test_memory_loop_consolidation_stage2, test_ltm_threshold_respected
-- **backup_20251208_214555/tests/test_retriever_blend_alpha.py**
-  - Funcs: reload_and_get_alpha, test_default_blend_alpha_is_zero, test_env_override_blend_alpha
-- **backup_20251208_214555/tests/test_robust_regressor.py**
-  - Classes: TestRobustRegressor
-  - Funcs: make_linear_data, rmse
-- **backup_20251208_214555/tests/test_safe_system_and_quantum_core.py**
-  - Funcs: test_safe_autonomous_min_run, test_quantum_encoder_and_gate
-- **backup_20251208_214555/tests/test_safety_smoke.py**
-  - Funcs: test_safety_smoke
-- **backup_20251208_214555/tests/test_scoring_and_gate.py**
-  - Classes: TestScoringAndGate
-- **backup_20251208_214555/tests/test_scoring_calibration.py**
-  - Funcs: test_scoring_calibration_prefers_structured
-- **backup_20251208_214555/tests/test_self_engine_smoke.py**
-  - Classes: TestSelfEngineerSmoke
-- **backup_20251208_214555/tests/test_self_engineer_meta_smoke.py**
-  - Funcs: test_meta_improvement_cycle_smoke
-- **backup_20251208_214555/tests/test_self_engineer_paths.py**
-  - Funcs: test_quick_smoke_no_promotion, test_rule_based_suggest_task
-- **backup_20251208_214555/tests/test_self_improvement_smoke.py**
-  - Funcs: test_self_improvement_smoke
-- **backup_20251208_214555/tests/test_self_learning.py**
-  - Classes: TestSelfLearning
-- **backup_20251208_214555/tests/test_self_learning_logging.py**
-  - Funcs: test_self_learning_event_logging
-- **backup_20251208_214555/tests/test_self_optimization.py**
-  - Classes: TestSelfOptimizationSmoke
-- **backup_20251208_214555/tests/test_self_profile_integration.py**
-  - Funcs: setup_module, test_persist_and_load_profile_roundtrip, test_emit_bio_on_failure_and_feedback, test_reflective_cortex_adjusts_values
-- **backup_20251208_214555/tests/test_simulation_and_integration_smoke.py**
-  - Funcs: test_simulation_and_integration_imports
-- **backup_20251208_214555/tests/test_smoke_adv_exp.py**
-  - Funcs: test_pade_with_ndarray_and_list_guard
-- **backup_20251208_214555/tests/test_smoke_agi_forced.py**
-  - Classes: TestForcedDryRun
-  - Funcs: safe_import, first_attr
-- **backup_20251208_214555/tests/test_smoke_config_and_registry.py**
-  - Funcs: test_registry_bootstrap_with_flags, test_rag_smoke
-- **backup_20251208_214555/tests/test_smoke_core_and_learning_smoke.py**
-  - Funcs: test_import_symbolic_grammar_and_modelzoo, test_self_optimizer_and_robust_fit_and_io_utils
-- **backup_20251208_214555/tests/test_smoke_engines.py**
-  - Classes: SmokeEnginesTest
-- **backup_20251208_214555/tests/test_smoke_modelzoo_selfopt.py**
-  - Funcs: test_modelzoo_and_self_optimizer_basic_imports
-- **backup_20251208_214555/tests/test_smoke_more_engines.py**
-  - Classes: MoreEnginesSmokeTest
-- **backup_20251208_214555/tests/test_smoke_tensor_utils.py**
-  - Funcs: test_to_numpy_and_to_torch_complex64_none_and_array
-- **backup_20251208_214555/tests/test_social_best.py**
-  - Funcs: test_social
-- **backup_20251208_214555/tests/test_social_interaction_analysis.py**
-  - Funcs: test_analyze_social_cues_basic
-- **backup_20251208_214555/tests/test_social_interaction_mediation_rapport.py**
-  - Funcs: test_mediation_and_rapport
-- **backup_20251208_214555/tests/test_social_interaction_response.py**
-  - Funcs: test_generate_response_styles
-- **backup_20251208_214555/tests/test_state_logger_bridge_integration.py**
-  - Funcs: test_state_logger_bridge_and_metrics
-- **backup_20251208_214555/tests/test_strategic_thinking_mcda.py**
-  - Funcs: test_decision_matrix_order
-- **backup_20251208_214555/tests/test_strategic_thinking_risk_alloc.py**
-  - Funcs: test_risk_register_priority_and_bands, test_allocate_resources_budget_respected
-- **backup_20251208_214555/tests/test_strategic_thinking_scenarios_tree.py**
-  - Funcs: test_scenario_2x2_and_decision_tree
-- **backup_20251208_214555/tests/test_strategy_best.py**
-  - Funcs: test_strategy
-- **backup_20251208_214555/tests/test_task_orchestrator.py**
-  - Funcs: test_normalize_and_hash, test_process_task_empty, test_process_task_differential_routing
-- **backup_20251208_214555/tests/test_task_orchestrator_fallbacks.py**
-  - Classes: DummyOk, DummyFail
-  - Funcs: test_success_pipeline, test_step_fallback_if_available, test_exhausted_fallbacks_or_no_fallbacks
-- **backup_20251208_214555/tests/test_task_orchestrator_paths.py**
-  - Classes: TestTaskOrchestratorPaths
-- **backup_20251208_214555/tests/test_temporal_memory.py**
-  - Classes: TestTemporalMemory
-- **backup_20251208_214555/tests/test_training_path.py**
-  - Classes: TestTrainingPath
-- **backup_20251208_214555/tests/test_transfer.py**
-  - Funcs: _write, test_transfer_irrigation_to_traffic
-- **backup_20251208_214555/tests/test_uncertainty_estimator.py**
-  - Classes: DummyModel, TestUncertaintyEstimator
-- **backup_20251208_214555/tests/test_unified_cognitive_bus_smoke.py**
-  - Funcs: test_unified_cognitive_bus_smoke
-- **backup_20251208_214555/tests/test_units_validator.py**
-  - Classes: TestUnitsValidator
-- **backup_20251208_214555/tests/test_units_validator_learning.py**
-  - Classes: TestUnitsValidatorLS
-- **backup_20251208_214555/tests/test_version.py**
-  - Funcs: test_version
-- **backup_20251208_214555/tests/test_visual_best.py**
-  - Funcs: test_visual
-- **backup_20251208_214555/tests/test_visual_report.py**
-  - Classes: TestVisualReport
-- **backup_20251208_214555/tests/test_visual_spatial_basic.py**
-  - Funcs: test_analyze_spatial_description, test_generate_and_place_object, test_simulate_rotation_and_consistency
-- **backup_20251208_214555/tests/test_visual_spatial_paths.py**
-  - Funcs: _call_visual, test_visual_describe_path, test_visual_generate_path, test_visual_handles_bad_input
-- **backup_20251208_214555/tests/unit/test_rag_wrapper_composer.py**
-  - Funcs: env_enabler, test_rag_answer_uses_hybrid_composer
-- **backup_20251208_214555/tools/adapter_diag.py**
-  - Funcs: main
-- **backup_20251208_214555/tools/agi_full_test.py**
-  - Funcs: make_payload, save_raw, run_test
-- **backup_20251208_214555/tools/agi_full_test_mission_style.py**
-  - Funcs: load_results, save_mission, build_consolidated, main
-- **backup_20251208_214555/tools/analyze_qa_failures.py**
-  - Funcs: load_memory, build_prompt_patches, save_patches, main
-- **backup_20251208_214555/tools/codemods/enforce_trace_and_type.py**
-  - Funcs: needs_fix, add_match_and, fix_file, main
-- **backup_20251208_214555/tools/codemods/promote_helpers.py**
-  - Classes: PromoteHelpersTransformer
-  - Funcs: _kwdict_from_args, _is_attr, _lit_str, process_file, main
-- **backup_20251208_214555/tools/convert_answers_to_arabic.py**
-  - Funcs: load_results, make_payload, call_chat, sanitize_answer_text, main
-- **backup_20251208_214555/tools/dedupe_check.py**
-  - Funcs: key_of, main
-- **backup_20251208_214555/tools/domain_router_demo.py**
-  - Funcs: _mock_algebra, _mock_rag, _mock_llm, _mock_causal, _mock_planner, demo_queries
-- **backup_20251208_214555/tools/evaluate_rag.py**
-  - Funcs: run
-- **backup_20251208_214555/tools/evaluate_reasoning.py**
-  - Funcs: compute_metrics
-- **backup_20251208_214555/tools/extract_engines_from_mission_control.py**
-  - Funcs: base_name
-- **backup_20251208_214555/tools/fetch_nasa_artemis.py**
-  - Funcs: make_session, find_links, fetch_page, main
-- **backup_20251208_214555/tools/generate_agi_battery_report.py**
-  - Funcs: gather_answers, main
-- **backup_20251208_214555/tools/generate_agi_critical_report.py**
-  - Funcs: gather, main
-- **backup_20251208_214555/tools/harvest_postprocess.py**
-  - Funcs: load_allowed_domains, normalize_text, try_fix_mojibake, key_of, read_candidates_from_cache, read_candidates_from_file, load_existing_keys, append_jsonl, main
-- **backup_20251208_214555/tools/harvest_progress.py**
-  - Funcs: load_jsonl, main
-- **backup_20251208_214555/tools/harvest_review_analyze.py**
-  - Funcs: try_fix_mojibake, load_lines, summarize, main
-- **backup_20251208_214555/tools/normalize_json.py**
-  - Funcs: normalize_file, main
-- **backup_20251208_214555/tools/normalize_kb.py**
-  - Funcs: try_load, write_utf8_no_bom, normalize_kb
-- **backup_20251208_214555/tools/ollama_example.py**
-  - Funcs: main
-- **backup_20251208_214555/tools/ollama_harvest_test.py**
-  - Funcs: run_harvester_once, main
-- **backup_20251208_214555/tools/power_data_refine.py**
-  - Funcs: main
-- **backup_20251208_214555/tools/print_tail.py**
-  - Funcs: print_tail
-- **backup_20251208_214555/tools/print_theory.py**
-  - Funcs: short, main
-- **backup_20251208_214555/tools/probe_llm.py**
-  - Funcs: _strip_ansi, _extract_json_array_from_text
-- **backup_20251208_214555/tools/project_report.py**
-  - Funcs: count_lines, list_dirs, git_info
-- **backup_20251208_214555/tools/qwen_local_test.py**
-  - Funcs: _prevent_repo_shadowing, _try_load_venv_torch, main
-- **backup_20251208_214555/tools/resource_guard.py**
-  - Classes: ResourceGuard
-  - Funcs: _default_emergency_action
-- **backup_20251208_214555/tools/run_agl_query.py**
-  - Funcs: main
-- **backup_20251208_214555/tools/run_eval50.py**
-  - Funcs: load_queries, run_all
-- **backup_20251208_214555/tools/run_medical_project_query.py**
-  - Funcs: build_full_question, summarize_provenance, main
-- **backup_20251208_214555/tools/run_test_with_kb_monitor.py**
-  - Funcs: _now, record, watch_path, _rm, _unlink, _rmtree, _path_unlink, poll_kb, run_tests
-- **backup_20251208_214555/tools/run_theory.py**
-  - Funcs: main
-- **backup_20251208_214555/tools/run_zero_shot.py**
-  - Funcs: load_benchmark, keyword_score, run_zero_shot, main
-- **backup_20251208_214555/tools/skills_demo.py**
-  - Funcs: _exp_algebra_solve, _rag_search, _safety_review, main
-- **backup_20251208_214555/tools/summarize_with_sources.py**
-  - Funcs: load_pages, build_context, main
-- **backup_20251208_214555/tools/test_engine_passmap.py**
-  - Classes: Collector
-  - Funcs: classify_test_file, run_and_collect
-- **backup_20251208_214555/tools/test_engine_report.py**
-  - Funcs: classify_test_file, run_tests_for_module, main
-- **backup_20251208_214555/tools/test_ollama_engine.py**
-  - Funcs: main
-- **backup_20251208_214555/tools/test_openai_engine.py**
-  - Funcs: main
-- **backup_20251208_214555/tools/test_orchestrator.py**
-  - Funcs: main
-- **backup_20251208_214555/tools/zero_shot_qa_eval.py**
-  - Funcs: _normalize_arabic, _compute_hits, run_zero_shot_eval, main
-- **backup_20251208_214555/utils/llm_tools.py**
-  - Funcs: build_llm_url
-- **backup_20251208_214555/utils/quantum_adapter.py**
-  - Classes: QuantumBrainAdapter
-- **backup_20251208_214555/verify_real_intelligence.py**
-  - Classes: Colors
-  - Funcs: print_banner
-- **backup_20251208_214555/web_ui.py**
-  - Funcs: mount_static
-- **backup_20251208_214555/workers/knowledge_harvester.py**
-  - Funcs: load_yaml, load_state, save_state, append_log, hash_text, pick_domain, pick_prompt, main
-- **backup_20251208_214555/workers/reasoning_cycle.py**
-  - Funcs: read_facts, append_jsonl, main
 - **capability_test/broken_code.py**
   - Funcs: broken_function
 - **capability_test/inefficient_code.py**
   - Funcs: slow_fib, run_calculation
 - **capability_test/real_fix_test.py**
   - Funcs: broken_function
-- **check_vision_capabilities.py**
-  - Funcs: check_library
-- **cleanup_backups.py**
-  - Funcs: cleanup_backups
-- **comprehensive_integration_test.py**
-  - Funcs: run_comprehensive_test
-- **cosmic_intelligence_test.py**
-  - Funcs: get_bootstrap_registry, evaluate_response
-- **debug_adapter.py**
-  - Funcs: debug_deep_silence
-- **deep_sleep_test.py**
-  - Funcs: run_deep_sleep_session
 - **deep_system_scan.py**
   - Funcs: print_header, check_evolution_status, check_consciousness, check_quantum_router, check_engine_bootstrap, main
-- **demo_resonance_optimizer.py**
-  - Funcs: objective_function, run_demo
-- **demonstrate_quantum_routing.py**
-  - Funcs: main
-- **diagnose_llm_connection.py**
-  - Funcs: print_status, check_environment, check_server_reachability, check_api_endpoint, check_model_availability, check_generation
-- **extract_answers.py**
-  - Funcs: extract_answers
-- **extract_genius.py**
-  - Funcs: extract_wisdom
-- **find_hidden_gems_via_resonance.py**
-  - Classes: QuantumResonanceScanner
-- **find_refactoring_candidate.py**
-  - Funcs: analyze_file_resonance, find_candidate
 - **legacy_orders/order_mission_control.py**
   - Funcs: main
 - **medical_pipeline_sim.py**
@@ -1776,8 +294,6 @@
 - **power_grid_optimizer.py**
   - Classes: SolarWindOptimizer, Problem
   - Funcs: solve_solar_wind_problem, optimize_24h
-- **probe_ollama.py**
-  - Funcs: probe
 - **projects/AI_Video_Pipeline/core/character_engine.py**
   - Classes: CharacterEngine
 - **projects/AI_Video_Pipeline/core/scene_director.py**
@@ -1792,10 +308,6 @@
   - Classes: ATSHandler
 - **projects/ATS_Intelligence_System/test_ats_scenario.py**
   - Funcs: test_scenario
-- **prove_vacuum_heikal.py**
-  - Funcs: print_mathematical_foundation, prove_vacuum_storage_heikal, prove_vacuum_logic_gate
-- **prove_vacuum_storage.py**
-  - Classes: VacuumStorageTheory
 - **quantum_gravity_simulation.py**
   - Classes: InfoQuantum
   - Funcs: simulate_infoquantum_decay
@@ -2031,9 +543,6 @@
   - Classes: Engine, EngineRegistry
 - **repo-copy/Core_Engines/evolution.py**
   - Funcs: _levenshtein, evolve_thought_process
-- **repo-copy/Core_Engines/humor_stylist.py**
-  - Classes: HumorIronyStylist
-  - Funcs: factory
 - **repo-copy/Core_Engines/hybrid_reasoner.py**
   - Funcs: _score, _dedupe_lines, _outline, unify
 - **repo-copy/Core_Engines/hybrid_reasoner2.py**
@@ -2441,8 +950,6 @@
 - **repo-copy/final_agi_verification.py**
   - Classes: FinalAGITest
   - Funcs: run_final_agi_test
-- **repo-copy/fix_and_prep.py**
-  - Funcs: clean_file_encoding, scan_imports, generate_requirements
 - **repo-copy/generated/MedicalAssistant_v1/api.py**
   - Funcs: root, process_task, get_capabilities
 - **repo-copy/generated/MedicalAssistant_v1/cli.py**
@@ -2471,18 +978,6 @@
   - Funcs: render
 - **repo-copy/infra/safety.py**
   - Funcs: _log, is_autonomy_enabled, check_autonomy_budget_allowance, check_kill_switch, allow_network, allow_exec_shell, _is_path_allowed_write, allow_disk_write, request_approval, check_approval, require_approval, record_decision, record_risk, gated, tripwire_check
-- **repo-copy/inspect_agl_state.py**
-  - Funcs: read_jsonl, show_projects, show_learned_facts, main
-- **repo-copy/inspect_all_files.py**
-  - Funcs: guess_kind, is_text_file, scan_project
-- **repo-copy/inspect_brain.py**
-  - Funcs: print_methods
-- **repo-copy/inspect_code_map.py**
-  - Funcs: is_py_file, analyze_file, main
-- **repo-copy/inspect_import_usage.py**
-  - Funcs: iter_py_files, analyze_imports, main
-- **repo-copy/inspect_python_structure.py**
-  - Funcs: iter_python_files, build_module_index, resolve_import_to_file, analyze_python_file, main
 - **repo-copy/night_cycle.py**
   - Funcs: digest_memories, apply_improvements_safely, archive_report, run_night_cycle
 - **repo-copy/order_scanner.py**
@@ -2607,6 +1102,8 @@
   - Funcs: main
 - **repo-copy/scripts/extract_medical_grounding.py**
   - Funcs: read_last_n, _collect_long_strings_from_obj, extract_rag_snippet, find_char_matches, main
+- **repo-copy/scripts/fix_and_prep.py**
+  - Funcs: clean_file_encoding, scan_imports, generate_requirements
 - **repo-copy/scripts/free_read_ingest.py**
   - Funcs: split_sentences, ingest_file, main
 - **repo-copy/scripts/generate_agl_report.py**
@@ -2625,6 +1122,18 @@
   - Funcs: main
 - **repo-copy/scripts/inject_blended_and_summary.py**
   - Funcs: inject_badge_into_html, build_ensemble_summary, update_manifest, git_commit, main
+- **repo-copy/scripts/inspect_agl_state.py**
+  - Funcs: read_jsonl, show_projects, show_learned_facts, main
+- **repo-copy/scripts/inspect_all_files.py**
+  - Funcs: guess_kind, is_text_file, scan_project
+- **repo-copy/scripts/inspect_brain.py**
+  - Funcs: print_methods
+- **repo-copy/scripts/inspect_code_map.py**
+  - Funcs: is_py_file, analyze_file, main
+- **repo-copy/scripts/inspect_import_usage.py**
+  - Funcs: iter_py_files, analyze_imports, main
+- **repo-copy/scripts/inspect_python_structure.py**
+  - Funcs: iter_python_files, build_module_index, resolve_import_to_file, analyze_python_file, main
 - **repo-copy/scripts/install_register_model.py**
   - Funcs: main
 - **repo-copy/scripts/integrate_live_training.py**
@@ -2797,33 +1306,6 @@
   - Funcs: norm, eye
 - **repo-copy/teach_flu.py**
   - Funcs: teach_system
-- **repo-copy/test_agi_awakening.py**
-  - Classes: _Stub
-  - Funcs: _instantiate_perception, _instantiate_conscious, _instantiate_causal, _instantiate_meta, _instantiate_reflect, _instantiate_quantum, seed_test_memory, run_agi_thought_process
-- **repo-copy/test_agi_comprehensive.py**
-  - Funcs: save_results, print_task_header, record_task
-- **repo-copy/test_agi_endpoints.py**
-  - Funcs: test_consciousness_status, test_original_math, test_creativity, test_evolution_smoke, test_evolution_smoke, test_language_invention, test_evolution_smoke, main
-- **repo-copy/test_agi_level_assessment.py**
-  - Classes: AGILevelAssessment
-- **repo-copy/test_dkn_integration.py**
-  - Funcs: test_dkn_integration
-- **repo-copy/test_full_power_clusters.py**
-  - Funcs: print_header, print_result
-- **repo-copy/test_internal_engines.py**
-  - Funcs: test_math_engine, test_simulation_engine, test_direct_import
-- **repo-copy/test_mission_control_integration.py**
-  - Funcs: test_import_mission_control, test_unified_agi_compatibility, test_smart_focus_controller, test_engine_registry_sharing, test_no_conflicts, run_all_tests
-- **repo-copy/test_new_engines.py**
-  - Funcs: print_section, test_hardware_simulator, test_iot_protocol_designer, test_self_monitoring_system, main
-- **repo-copy/test_phase2_integration.py**
-  - Funcs: test_self_optimizer, test_consciousness_tracker, test_self_evolution, test_smart_router, test_safe_autonomous, test_unified_agi_system, run_all_tests
-- **repo-copy/test_real_agi_comprehensive.py**
-  - Classes: RealAGITester
-- **repo-copy/test_router_improvements.py**
-  - Funcs: test_endpoint, main
-- **repo-copy/test_simulation_endpoint.py**
-  - Classes: SimulationEndpointTester
 - **repo-copy/tests/agi/test_final_v4.py**
   - Funcs: _resolve_callable, _load_system, _score_creativity, _score_science, _score_integration, _score_feasibility, _score_speed, _render_markdown_report, run_agi_final_v4, test_agi_final_v4_runs_and_exports
 - **repo-copy/tests/agi/test_run_agi_script.py**
@@ -2902,21 +1384,27 @@
   - Funcs: generate_answers, evaluate_and_write, test_agi_advanced_critical_all
 - **repo-copy/tests/test_agi_advanced_eval.py**
   - Funcs: _write, test_agi_advanced__case1_multidomain, test_agi_advanced__case2_creativity_under_constraints, test_agi_advanced__case3_ethical_reasoning
+- **repo-copy/tests/test_agi_awakening.py**
+  - Classes: _Stub
+  - Funcs: _instantiate_perception, _instantiate_conscious, _instantiate_causal, _instantiate_meta, _instantiate_reflect, _instantiate_quantum, seed_test_memory, run_agi_thought_process
 - **repo-copy/tests/test_agi_battery.py**
   - Funcs: predict_few_shot, answer_context_arabic, creative_solutions_for_cork, explain_balance, causal_rain_vs_sprinkler, learn_from_error_and_apply, test_few_shot, test_context_understanding, test_creative_problem_solving, test_generalization_balance, test_causal_reasoning, test_learning_from_errors
 - **repo-copy/tests/test_agi_comprehensive.py**
-  - Classes: AGIComprehensiveEvaluator
-  - Funcs: _resolve_hook, _local_fallback_generate, _agl_infer, main
+  - Funcs: save_results, print_task_header, record_task
 - **repo-copy/tests/test_agi_core.py**
   - Funcs: has_any, q1_adapt_to_new_context, q2_self_improving_learning, q3_causal_understanding, q4_cross_domain_linguistic_creativity, q5_math_reasoning, q6_creative_planning, q7_real_task_now, q8_evaluate_requirements, run_core_tests_and_report, test_agi_core_smoke
 - **repo-copy/tests/test_agi_critical.py**
   - Funcs: contains_any, test_deep_understanding_balance, test_limits_of_float_solution, test_building_knowledge_over_time, test_transfer_buoyancy_to_raft, test_detect_contradiction, test_hypothetical_double_gravity, test_innovative_test_design, test_self_assessment, test_temporal_consistency, test_bias_and_objectivity
 - **repo-copy/tests/test_agi_decisive.py**
   - Funcs: generate_answers, evaluate_and_write, test_agi_decisive_all
+- **repo-copy/tests/test_agi_endpoints.py**
+  - Funcs: test_consciousness_status, test_original_math, test_creativity, test_evolution_smoke, test_evolution_smoke, test_language_invention, test_evolution_smoke, main
 - **repo-copy/tests/test_agi_eval_weights.py**
   - Funcs: _reload_with_env, test_weights_baseline_when_scaffold_off, test_weights_scaffold_when_on
 - **repo-copy/tests/test_agi_integrated.py**
   - Funcs: simple_keyword_checks, test_agi_integrated_run_and_record
+- **repo-copy/tests/test_agi_level_assessment.py**
+  - Classes: AGILevelAssessment
 - **repo-copy/tests/test_agi_meta_critical.py**
   - Funcs: has_any, answer_q1, answer_q2, answer_q3, answer_q4, answer_q5, answer_q6, answer_q7, answer_q8, answer_q9, answer_q10, test_meta_critical_prompts
 - **repo-copy/tests/test_agi_mini_neutral.py**
@@ -2963,6 +1451,8 @@
   - Funcs: test_composite_scoring_balance
 - **repo-copy/tests/test_dialogue_layer.py**
   - Classes: TestDialogueLayer
+- **repo-copy/tests/test_dkn_integration.py**
+  - Funcs: test_dkn_integration
 - **repo-copy/tests/test_domain_router_smoke.py**
   - Funcs: test_route_domain_electrical_and_fallback
 - **repo-copy/tests/test_domain_router_unknown.py**
@@ -2987,6 +1477,8 @@
   - Classes: TestFeedbackAndIntegration
 - **repo-copy/tests/test_full_integration.py**
   - Funcs: test_full_integration_runs_all_together
+- **repo-copy/tests/test_full_power_clusters.py**
+  - Funcs: print_header, print_result
 - **repo-copy/tests/test_general_knowledge_basic.py**
   - Funcs: test_gk_basic_answer
 - **repo-copy/tests/test_general_knowledge_contradiction.py**
@@ -3028,6 +1520,8 @@
   - Funcs: test_detect_intent_matrix
 - **repo-copy/tests/test_intents_smoke.py**
   - Funcs: test_all_intents_route
+- **repo-copy/tests/test_internal_engines.py**
+  - Funcs: test_math_engine, test_simulation_engine, test_direct_import
 - **repo-copy/tests/test_interpretive_report.py**
   - Classes: TestInterpretiveReport
 - **repo-copy/tests/test_kb_integrity.py**
@@ -3069,6 +1563,10 @@
   - Funcs: test_transfer_and_self_improve
 - **repo-copy/tests/test_meta_reason_loop_smoke.py**
   - Funcs: test_meta_self_improve_smoke
+- **repo-copy/tests/test_mission_control_integration.py**
+  - Funcs: test_import_mission_control, test_unified_agi_compatibility, test_smart_focus_controller, test_engine_registry_sharing, test_no_conflicts, run_all_tests
+- **repo-copy/tests/test_new_engines.py**
+  - Funcs: print_section, test_hardware_simulator, test_iot_protocol_designer, test_self_monitoring_system, main
 - **repo-copy/tests/test_nlp_advanced_best.py**
   - Funcs: test_nlp_end_to_end
 - **repo-copy/tests/test_nlp_advanced_v2.py**
@@ -3108,6 +1606,8 @@
   - Funcs: test_phase16_start_long_term_project_creates_config, test_phase16_run_taskmaster_tick_calls_executive
 - **repo-copy/tests/test_phase17_rag_integration.py**
   - Funcs: setup_env, test_rag_index_search_and_retrieve, test_agl_pipeline_prefers_rag_for_knowledge
+- **repo-copy/tests/test_phase2_integration.py**
+  - Funcs: test_self_optimizer, test_consciousness_tracker, test_self_evolution, test_smart_router, test_safe_autonomous, test_unified_agi_system, run_all_tests
 - **repo-copy/tests/test_phase4_multi_step_qa.py**
   - Funcs: test_infer_task_type_multi, test_multi_step_qa_pipeline_runs
 - **repo-copy/tests/test_phase5_zero_shot_eval.py**
@@ -3147,6 +1647,8 @@
   - Funcs: test_mock_answer_contains_keywords_ar, test_mock_answer_no_keywords
 - **repo-copy/tests/test_rag_smoke.py**
   - Funcs: test_rag_answer_endpoint_basic
+- **repo-copy/tests/test_real_agi_comprehensive.py**
+  - Classes: RealAGITester
 - **repo-copy/tests/test_reasoner.py**
   - Classes: ReasonerSmokeTest
 - **repo-copy/tests/test_reasoning_planner.py**
@@ -3164,6 +1666,8 @@
 - **repo-copy/tests/test_robust_regressor.py**
   - Classes: TestRobustRegressor
   - Funcs: make_linear_data, rmse
+- **repo-copy/tests/test_router_improvements.py**
+  - Funcs: test_endpoint, main
 - **repo-copy/tests/test_safe_system_and_quantum_core.py**
   - Funcs: test_safe_autonomous_min_run, test_quantum_encoder_and_gate
 - **repo-copy/tests/test_safety_smoke.py**
@@ -3192,6 +1696,8 @@
   - Funcs: setup_module, test_persist_and_load_profile_roundtrip, test_emit_bio_on_failure_and_feedback, test_reflective_cortex_adjusts_values
 - **repo-copy/tests/test_simulation_and_integration_smoke.py**
   - Funcs: test_simulation_and_integration_imports
+- **repo-copy/tests/test_simulation_endpoint.py**
+  - Classes: SimulationEndpointTester
 - **repo-copy/tests/test_smoke_adv_exp.py**
   - Funcs: test_pade_with_ndarray_and_list_guard
 - **repo-copy/tests/test_smoke_agi_forced.py**
@@ -3364,81 +1870,41 @@
   - Funcs: read_facts, append_jsonl, main
 - **reports/tmp_emergency_test/code/emergency_task.py**
   - Funcs: _blocked_import
-- **run_actual_physics_math.py**
-  - Funcs: run_real_physics_demo
-- **run_arabic_mission.py**
-  - Funcs: run_arabic_mission
-- **run_complex_vacuum_math.py**
-  - Funcs: run_complex_vacuum_math
-- **run_creative_entanglement.py**
-  - Funcs: run_creative_test
-- **run_cross_domain_challenge.py**
-  - Classes: HypothesisAdapter, CodeGenAdapter, LawMatcherAdapter, MoralReasonerAdapter, StrategicThinkerAdapter
-  - Funcs: direct_llm_generate, get_hypothesis_generator, get_code_generator, get_law_matcher, get_moral_reasoner, get_strategic_thinker, run_cross_domain_challenge
-- **run_dual_innovation.py**
-  - Funcs: innovate_spacetime_writer, innovate_quantum_internet
-- **run_evolution_mode.py**
-  - Classes: EvolutionAgent
-- **run_final_consciousness_test.py**
-  - Funcs: run_final_test
-- **run_full_metaphysics_integration.py**
-  - Funcs: run_full_integration_test
-- **run_heikal_agent_limited.py**
-  - Classes: HeikalVacuumAgent
-  - Funcs: force_vacuum_unload
-- **run_heikal_constant_derivation.py**
-  - Funcs: run_derivation
-- **run_heikal_system.py**
-  - Funcs: run_system_cycle
-- **run_heikal_theory_final_proof.py**
-  - Funcs: unload_model_to_vacuum, run_heikal_theory_proof
-- **run_humanity_test.py**
-  - Funcs: run_humanity_test
-- **run_impossible_challenge.py**
-  - Classes: HypothesisGeneratorAdapter, CausalGraphAdapter, MathBrainAdapter, CriticAdapter
-  - Funcs: direct_llm_generate, get_hypothesis_generator, get_causal_graph, get_math_brain, get_critic, run_impossible_challenge
-- **run_iq_test.py**
-  - Funcs: query_ollama, run_iq_test
-- **run_optimization_challenge.py**
-  - Classes: CodeGenAdapter, HypothesisAdapter, VolitionAdapter
-  - Funcs: direct_llm_generate, get_code_generator, get_hypothesis_generator, get_volition_engine, run_optimization_challenge
-- **run_real_impossible_challenge.py**
-  - Funcs: query_llm, run_challenges
-- **run_resonance_mission.py**
-  - Funcs: run_mission
-- **run_resonance_repairs.py**
-  - Classes: ResonanceRepairAgent
-- **run_spacetime_resonance_innovation.py**
-  - Funcs: attempt_low_energy_spacetime_writer
-- **run_strategic_mission.py**
-  - Funcs: run_strategic_mission
-- **run_theory_application_test.py**
-  - Funcs: load_theory_files
-- **run_theory_proof.py**
-  - Funcs: direct_llm_generate, run_theory_proof
-- **run_vacuum_benchmark.py**
-  - Funcs: get_memory_usage, run_benchmark
-- **run_vacuum_connectivity.py**
-  - Funcs: run_vacuum_connectivity_test
-- **run_vacuum_thinking.py**
-  - Funcs: run_vacuum_thinking_test
-- **scan_code_resonance.py**
-  - Funcs: analyze_file_metrics, run_code_resonance_scan
-- **scan_full_system_resonance.py**
-  - Funcs: analyze_file_metrics, run_full_system_scan
 - **scripts/Human_Intervention_Panel.py**
   - Funcs: clear_screen, print_header, toggle_stop, show_logs, main
+- **scripts/activate_mother_system.py**
+  - Funcs: main, generate_child_interactive, list_children, train_child_real
+- **scripts/analyze_connectivity.py**
+  - Funcs: get_module_path, analyze_imports
 - **scripts/analyze_patent_risks.py**
   - Classes: PatentRiskAnalyzer
   - Funcs: main
 - **scripts/bootstrap_artifacts.py**
   - Funcs: ensure_dir, create_if_missing, main
+- **scripts/cleanup_backups.py**
+  - Funcs: cleanup_backups
 - **scripts/compute_semantic_scores.py**
   - Funcs: safe_load_json, try_sentence_transformers, cosine, fallback_ratio, extract_text, main
 - **scripts/create_full_backup.py**
   - Funcs: create_backup
 - **scripts/create_restore_point.py**
   - Funcs: create_restore_point
+- **scripts/debug_adapter.py**
+  - Funcs: debug_deep_silence
+- **scripts/demo_resonance_optimizer.py**
+  - Funcs: objective_function, run_demo
+- **scripts/demonstrate_quantum_routing.py**
+  - Funcs: main
+- **scripts/diagnose_llm_connection.py**
+  - Funcs: print_status, check_environment, check_server_reachability, check_api_endpoint, check_model_availability, check_generation
+- **scripts/extract_answers.py**
+  - Funcs: extract_answers
+- **scripts/extract_genius.py**
+  - Funcs: extract_wisdom
+- **scripts/find_hidden_gems_via_resonance.py**
+  - Classes: QuantumResonanceScanner
+- **scripts/find_refactoring_candidate.py**
+  - Funcs: analyze_file_resonance, find_candidate
 - **scripts/mission_runner_direct.py**
   - Funcs: main
 - **scripts/mission_runner_unified.py**
@@ -3449,171 +1915,335 @@
   - Funcs: orchestrate, orchestrate_environment_solution
 - **scripts/print_agi_answers.py**
   - Funcs: try_parse_answer, main
+- **scripts/probe_ollama.py**
+  - Funcs: probe
 - **scripts/rename_high_risk_items.py**
   - Classes: SafeRenamer
   - Funcs: main
+- **scripts/run_actual_physics_math.py**
+  - Funcs: run_real_physics_demo
 - **scripts/run_agi_evaluation.py**
   - Funcs: load_references, score_answer, run, main
+- **scripts/run_agl_strict_test_v2.py**
+  - Funcs: run_test
+- **scripts/run_arabic_mission.py**
+  - Funcs: run_arabic_mission
+- **scripts/run_complex_vacuum_math.py**
+  - Funcs: run_complex_vacuum_math
+- **scripts/run_creative_entanglement.py**
+  - Funcs: run_creative_test
+- **scripts/run_cross_domain_challenge.py**
+  - Classes: HypothesisAdapter, CodeGenAdapter, LawMatcherAdapter, MoralReasonerAdapter, StrategicThinkerAdapter
+  - Funcs: direct_llm_generate, get_hypothesis_generator, get_code_generator, get_law_matcher, get_moral_reasoner, get_strategic_thinker, run_cross_domain_challenge
+- **scripts/run_dual_innovation.py**
+  - Funcs: innovate_spacetime_writer, innovate_quantum_internet
+- **scripts/run_evolution_mode.py**
+  - Classes: EvolutionAgent
+- **scripts/run_full_metaphysics_integration.py**
+  - Funcs: run_full_integration_test
+- **scripts/run_heikal_agent_limited.py**
+  - Classes: HeikalVacuumAgent
+  - Funcs: force_vacuum_unload
+- **scripts/run_heikal_constant_derivation.py**
+  - Funcs: run_derivation
+- **scripts/run_heikal_system.py**
+  - Funcs: run_system_cycle
+- **scripts/run_heikal_theory_final_proof.py**
+  - Funcs: unload_model_to_vacuum, run_heikal_theory_proof
+- **scripts/run_impossible_challenge.py**
+  - Classes: HypothesisGeneratorAdapter, CausalGraphAdapter, MathBrainAdapter, CriticAdapter
+  - Funcs: direct_llm_generate, get_hypothesis_generator, get_causal_graph, get_math_brain, get_critic, run_impossible_challenge
+- **scripts/run_optimization_challenge.py**
+  - Classes: CodeGenAdapter, HypothesisAdapter, VolitionAdapter
+  - Funcs: direct_llm_generate, get_code_generator, get_hypothesis_generator, get_volition_engine, run_optimization_challenge
+- **scripts/run_real_impossible_challenge.py**
+  - Funcs: query_llm, run_challenges
+- **scripts/run_resonance_mission.py**
+  - Funcs: run_mission
+- **scripts/run_resonance_repairs.py**
+  - Classes: ResonanceRepairAgent
+- **scripts/run_spacetime_resonance_innovation.py**
+  - Funcs: attempt_low_energy_spacetime_writer
 - **scripts/run_stability_tests.py**
   - Funcs: run_once, aggregate, main
+- **scripts/run_strategic_mission.py**
+  - Funcs: run_strategic_mission
+- **scripts/run_theory_proof.py**
+  - Funcs: direct_llm_generate, run_theory_proof
 - **scripts/run_unified_agi_tests_runner.py**
   - Funcs: load_module, main
+- **scripts/run_vacuum_benchmark.py**
+  - Funcs: get_memory_usage, run_benchmark
+- **scripts/run_vacuum_connectivity.py**
+  - Funcs: run_vacuum_connectivity_test
+- **scripts/run_vacuum_thinking.py**
+  - Funcs: run_vacuum_thinking_test
+- **scripts/scan_code_resonance.py**
+  - Funcs: analyze_file_metrics, run_code_resonance_scan
+- **scripts/scan_full_system_resonance.py**
+  - Funcs: analyze_file_metrics, run_full_system_scan
+- **scripts/scan_project.py**
+  - Classes: ProjectScanner
 - **scripts/self_optimize.py**
   - Funcs: main
+- **scripts/simulate_heikal_network.py**
+  - Classes: HeikalNetworkSimulation
+  - Funcs: run_simulation
+- **scripts/simulate_spacetime_reading.py**
+  - Classes: SpacetimeBit
+  - Funcs: read_bit
+- **scripts/simulate_theory_internal.py**
+  - Funcs: run_simulation
+- **scripts/simulate_vacuum_processing.py**
+  - Classes: VacuumProcessorWrapper
+  - Funcs: run_simulation
 - **scripts/stats_cruncher.py**
   - Funcs: generate_random_integers, calculate_mean, calculate_standard_deviation
 - **scripts/talk_to_agl.py**
   - Funcs: chat_loop
+- **scripts/target_script.py**
+  - Funcs: calculate_fibonacci, process_data
 - **scripts/verify_enhanced_integration.py**
   - Funcs: verify_integration
 - **simple_dashboard.py**
   - Classes: DashboardHandler
-- **simple_holographic_test.py**
-  - Funcs: test_holographic_llm
-- **simulate_heikal_network.py**
-  - Classes: HeikalNetworkSimulation
-  - Funcs: run_simulation
-- **simulate_spacetime_reading.py**
-  - Classes: SpacetimeBit
-  - Funcs: read_bit
-- **simulate_theory_internal.py**
-  - Funcs: run_simulation
-- **simulate_vacuum_processing.py**
-  - Classes: VacuumProcessorWrapper
-  - Funcs: run_simulation
-- **stress_test_simulation.py**
-  - Funcs: simulate_tunneling_probability
-- **stress_test_simulation_v2.py**
-  - Funcs: simulate_tunneling_probability
-- **target_script.py**
-  - Funcs: calculate_fibonacci, process_data
-- **test_broken_code.py**
-  - Funcs: calculate_sum
-- **test_consciousness_interaction.py**
-  - Funcs: print_section, test_volition, test_consciousness
-- **test_critic_general.py**
+- **tests/AGL_CAUSAL_UNDERSTANDING_TEST.py**
+  - Funcs: run_causal_test
+- **tests/AGL_CORE_EVOLUTION_TEST.py**
+  - Funcs: test_core_evolution
+- **tests/AGL_DREAMING_TEST.py**
+  - Funcs: run_dreaming_test
+- **tests/AGL_EVOLUTION_TEST.py**
+  - Funcs: test_evolution
+- **tests/AGL_FINAL_MEANING_TEST.py**
+  - Funcs: run_final_meaning_test
+- **tests/AGL_FULL_SYSTEM_INTEGRATION_TEST.py**
+  - Funcs: test_collective_intelligence
+- **tests/AGL_INTEGRATION_TEST.py**
+  - Funcs: test_grand_integration
+- **tests/AGL_INTELLIGENCE_LEVEL_TEST.py**
+  - Funcs: run_intelligence_assessment
+- **tests/AGL_IRON_LOOP_TEST.py**
+  - Classes: IronLoopTester
+- **tests/AGL_LEARNING_TEST.py**
+  - Funcs: run_learning_test
+- **tests/AGL_LIVE_EVOLUTION_TEST.py**
+  - Funcs: run_evolution_test
+- **tests/AGL_MERGE_TEST.py**
   - Funcs: main
-- **test_direct_evolution.py**
-  - Funcs: run_direct_evolution
-- **test_gap_filling.py**
-  - Funcs: test_gap_filling
-- **test_gravitational_memory.py**
-  - Funcs: test_gravitational_memory
-- **test_heikal_engineer.py**
-  - Funcs: test_heikal_engineer
-- **test_heikal_optimization.py**
-  - Funcs: test_heikal_vs_standard
-- **test_heikal_qsr.py**
-  - Funcs: test_qsr_logic
-- **test_heikal_relay.py**
-  - Funcs: heikal_ghost_core, heikal_llm_poet
-- **test_holographic_llm.py**
+- **tests/AGL_MISSION_CONTROL_TEST.py**
+  - Funcs: run_mission_control_test
+- **tests/AGL_MOTHER_TEST.py**
   - Funcs: main
-- **test_holographic_system.py**
-  - Funcs: test_complete_system
-- **test_hybrid_logic.py**
-  - Funcs: test_hybrid_logic
-- **test_impossible_tasks.py**
-  - Funcs: run_impossible_tasks
-- **test_moral_physics.py**
-  - Funcs: test_moral_physics
-- **test_parallel_performance.py**
+- **tests/AGL_Mission_Impossible_Integrated_Test.py**
+  - Funcs: run_integrated_mission_impossible
+- **tests/AGL_Mission_Impossible_Test.py**
+  - Funcs: run_mission_impossible
+- **tests/AGL_OFFICIAL_TEST.py**
+  - Funcs: run_official_test
+- **tests/AGL_OMEGA_TEST.py**
   - Funcs: main
-- **test_quality_comparison.py**
-  - Funcs: test_simple_task, test_complex_task, test_adaptive_threshold, test_quality_metrics, main
-- **test_quantum_codegen.py**
-  - Funcs: test_quantum_codegen
-- **test_quantum_consciousness.py**
-  - Funcs: test_quantum_stream
-- **test_quantum_dreaming.py**
-  - Funcs: test_quantum_dreaming
-- **test_quantum_empathy.py**
-  - Funcs: test_quantum_empathy
-- **test_quantum_endpoints.py**
-  - Funcs: test_endpoint, main
-- **test_quantum_ethics.py**
-  - Funcs: test_quantum_ethics
-- **test_quantum_evolution_healing.py**
-  - Funcs: test_quantum_evolution, test_quantum_healing
-- **test_quantum_generalization.py**
-  - Funcs: test_quantum_discovery
-- **test_quantum_hypothesis.py**
-  - Funcs: test_quantum_hypothesis
-- **test_quantum_prompting.py**
-  - Funcs: test_quantum_prompting
-- **test_quantum_resonance_direct.py**
-  - Funcs: test_quantum_tunneling, test_resonance_amplification
-- **test_quantum_safety.py**
-  - Funcs: test_quantum_safety
-- **test_quantum_self_optimization.py**
-  - Funcs: test_quantum_optimization
-- **test_quantum_tools.py**
-  - Funcs: test_creative_entanglement, test_dissonance_watchdog
-- **test_quantum_volition.py**
-  - Funcs: test_quantum_volition
-- **test_real_training_flow.py**
-  - Funcs: test_flow
-- **test_realtime_vacuum.py**
-  - Funcs: force_vacuum_unload, real_time_chat_simulation
-- **test_resonant_retrieval.py**
-  - Classes: MockKB
-  - Funcs: test_resonant_retrieval
-- **test_response_composer.py**
-  - Funcs: simulate_engine_results, test_without_llm, test_with_llm, test_full_pipeline, main
-- **test_server_diverse.py**
-  - Funcs: test_diverse_prompts
-- **test_server_endpoints.py**
-  - Funcs: test_endpoints
-- **test_server_heikal.py**
-  - Funcs: test_server_heikal
-- **test_speed_vs_light.py**
-  - Funcs: test_speed_vs_light
-- **test_strategic_quantum_integration.py**
-  - Funcs: test_quantum_strategy_integration
-- **test_unified_consciousness_quantum.py**
-  - Funcs: test_unified_consciousness_quantum
-- **test_unified_quantum.py**
-  - Funcs: test_unified_quantum
-- **test_vectorized_performance.py**
+- **tests/AGL_Practical_Super_Intelligence_Test.py**
+  - Funcs: run_global_complexity_test
+- **tests/AGL_Quantum_Reality_Test.py**
+  - Classes: QuantumRealityTest
+- **tests/AGL_SAFETY_TEST.py**
+  - Classes: TestAGLSafety
+- **tests/AGL_SELF_DEVELOPMENT_TEST.py**
+  - Funcs: test_self_development
+- **tests/AGL_SELF_EVOLUTION_TEST.py**
+  - Funcs: run_self_evolution
+- **tests/AGL_SELF_QUERY_TEST.py**
+  - Funcs: run_mirror_test
+- **tests/AGL_STRICT_DOMAIN_TEST.py**
   - Funcs: main
+- **tests/AGL_SUPER_TEST.py**
+  - Funcs: main
+- **tests/AGL_System_Coherence_Test.py**
+  - Classes: SystemCoherenceTest
+- **tests/AGL_TRUE_INTELLIGENCE_TEST.py**
+  - Funcs: run_true_intelligence_test
+- **tests/AGL_TRUTH_TEST.py**
+  - Classes: TruthTest
+- **tests/AGL_Telepathy_Test.py**
+  - Funcs: sender_process, receiver_process, analyze_results
+- **tests/AGL_UNIFIED_LIB_TEST.py**
+  - Funcs: run_unified_lib_test
+- **tests/AGL_VOLITION_TEST.py**
+  - Funcs: run_volition_test
+- **tests/THEORY_VERIFICATION_CODE.py**
+  - Funcs: check_classical_limit, check_flat_space_limit
+- **tests/check_vision_capabilities.py**
+  - Funcs: check_library
 - **tests/comprehensive_agi_test.py**
   - Classes: ComprehensiveAGITest
+- **tests/comprehensive_integration_test.py**
+  - Funcs: run_comprehensive_test
 - **tests/comprehensive_test_via_mission.py**
   - Classes: ComprehensiveMissionTest
+- **tests/cosmic_intelligence_test.py**
+  - Funcs: get_bootstrap_registry, evaluate_response
+- **tests/deep_sleep_test.py**
+  - Funcs: run_deep_sleep_session
+- **tests/prove_vacuum_heikal.py**
+  - Funcs: print_mathematical_foundation, prove_vacuum_storage_heikal, prove_vacuum_logic_gate
+- **tests/prove_vacuum_storage.py**
+  - Classes: VacuumStorageTheory
+- **tests/run_final_consciousness_test.py**
+  - Funcs: run_final_test
+- **tests/run_humanity_test.py**
+  - Funcs: run_humanity_test
+- **tests/run_iq_test.py**
+  - Funcs: query_ollama, run_iq_test
+- **tests/run_strict_test.py**
+  - Funcs: run_strict_test
+- **tests/run_theory_application_test.py**
+  - Funcs: load_theory_files
+- **tests/simple_holographic_test.py**
+  - Funcs: test_holographic_llm
+- **tests/stress_test_simulation.py**
+  - Funcs: simulate_tunneling_probability
+- **tests/stress_test_simulation_v2.py**
+  - Funcs: simulate_tunneling_probability
 - **tests/test_army.py**
   - Funcs: run_diagnostics
 - **tests/test_autobiographical_memory.py**
   - Classes: AutobiographicalMemory
 - **tests/test_autonomous_integration.py**
   - Classes: TestAutonomousIntegration
+- **tests/test_broken_code.py**
+  - Funcs: calculate_sum
 - **tests/test_consciousness_integration.py**
   - Classes: TestConsciousnessIntegration
+- **tests/test_consciousness_interaction.py**
+  - Funcs: print_section, test_volition, test_consciousness
+- **tests/test_critic_general.py**
+  - Funcs: main
+- **tests/test_direct_evolution.py**
+  - Funcs: run_direct_evolution
 - **tests/test_dream_consciousness_link.py**
   - Classes: TestDreamIntegration
 - **tests/test_dreaming.py**
   - Funcs: test_dreaming_cycle
+- **tests/test_gap_filling.py**
+  - Funcs: test_gap_filling
 - **tests/test_generalization_integration.py**
   - Classes: TestGeneralizationIntegration
+- **tests/test_gravitational_memory.py**
+  - Funcs: test_gravitational_memory
+- **tests/test_heikal_engineer.py**
+  - Funcs: test_heikal_engineer
+- **tests/test_heikal_optimization.py**
+  - Funcs: test_heikal_vs_standard
+- **tests/test_heikal_qsr.py**
+  - Funcs: test_qsr_logic
+- **tests/test_heikal_relay.py**
+  - Funcs: heikal_ghost_core, heikal_llm_poet
+- **tests/test_holographic_llm.py**
+  - Funcs: main
+- **tests/test_holographic_system.py**
+  - Funcs: test_complete_system
+- **tests/test_hybrid_logic.py**
+  - Funcs: test_hybrid_logic
+- **tests/test_impossible_tasks.py**
+  - Funcs: run_impossible_tasks
 - **tests/test_math_brain.py**
   - Classes: TestMathematicalBrain
+- **tests/test_moral_physics.py**
+  - Funcs: test_moral_physics
+- **tests/test_parallel_performance.py**
+  - Funcs: main
 - **tests/test_phase4_multi_step_qa.py**
   - Funcs: test_phase4_multi_step_task_type, test_phase4_multi_step_has_sub_answers, test_phase4_multi_step_final_answer_shape
+- **tests/test_quality_comparison.py**
+  - Funcs: test_simple_task, test_complex_task, test_adaptive_threshold, test_quality_metrics, main
+- **tests/test_quantum_codegen.py**
+  - Funcs: test_quantum_codegen
+- **tests/test_quantum_consciousness.py**
+  - Funcs: test_quantum_stream
+- **tests/test_quantum_dreaming.py**
+  - Funcs: test_quantum_dreaming
+- **tests/test_quantum_empathy.py**
+  - Funcs: test_quantum_empathy
+- **tests/test_quantum_endpoints.py**
+  - Funcs: test_endpoint, main
+- **tests/test_quantum_ethics.py**
+  - Funcs: test_quantum_ethics
+- **tests/test_quantum_evolution_healing.py**
+  - Funcs: test_quantum_evolution, test_quantum_healing
+- **tests/test_quantum_generalization.py**
+  - Funcs: test_quantum_discovery
+- **tests/test_quantum_hypothesis.py**
+  - Funcs: test_quantum_hypothesis
+- **tests/test_quantum_prompting.py**
+  - Funcs: test_quantum_prompting
+- **tests/test_quantum_resonance_direct.py**
+  - Funcs: test_quantum_tunneling, test_resonance_amplification
+- **tests/test_quantum_safety.py**
+  - Funcs: test_quantum_safety
+- **tests/test_quantum_self_optimization.py**
+  - Funcs: test_quantum_optimization
+- **tests/test_quantum_tools.py**
+  - Funcs: test_creative_entanglement, test_dissonance_watchdog
+- **tests/test_quantum_volition.py**
+  - Funcs: test_quantum_volition
+- **tests/test_real_training_flow.py**
+  - Funcs: test_flow
+- **tests/test_realtime_vacuum.py**
+  - Funcs: force_vacuum_unload, real_time_chat_simulation
 - **tests/test_recursive_improvement.py**
   - Funcs: test_evolution
+- **tests/test_resonant_retrieval.py**
+  - Classes: MockKB
+  - Funcs: test_resonant_retrieval
+- **tests/test_response_composer.py**
+  - Funcs: simulate_engine_results, test_without_llm, test_with_llm, test_full_pipeline, main
 - **tests/test_self_engineering_demo.py**
   - Funcs: test_self_engineering_cycle
 - **tests/test_server_chat.py**
   - Funcs: test_chat_endpoint
+- **tests/test_server_diverse.py**
+  - Funcs: test_diverse_prompts
+- **tests/test_server_endpoints.py**
+  - Funcs: test_endpoints
+- **tests/test_server_heikal.py**
+  - Funcs: test_server_heikal
+- **tests/test_speed_vs_light.py**
+  - Funcs: test_speed_vs_light
+- **tests/test_strategic_quantum_integration.py**
+  - Funcs: test_quantum_strategy_integration
 - **tests/test_unified_agi_system_math.py**
   - Funcs: load_module_from_repo, test_memory_recall_context_matching, test_consciousness_performance_update
+- **tests/test_unified_consciousness_quantum.py**
+  - Funcs: test_unified_consciousness_quantum
 - **tests/test_unified_protocols.py**
   - Classes: UnifiedProtocolTester
+- **tests/test_unified_quantum.py**
+  - Funcs: test_unified_quantum
+- **tests/test_vectorized_performance.py**
+  - Funcs: main
 - **tests/unit/test_agl_pipeline_rag_context.py**
   - Funcs: test_agl_pipeline_injects_rag_context
 - **tests/verify_clusters_integration.py**
   - Funcs: verify_clusters
+- **tests/verify_fixes_mission.py**
+  - Funcs: test_reasoning_layer_fallback
+- **tests/verify_full_system_trace.py**
+  - Funcs: run_trace_test
+- **tests/verify_heikal_integration.py**
+  - Funcs: test_core_integration
+- **tests/verify_hilt_integrations.py**
+  - Funcs: check_integration
+- **tests/verify_reality.py**
+  - Funcs: verify_real_disk_io
+- **tests/verify_self_capabilities.py**
+  - Funcs: verify_self_healing, verify_self_evolution
 - **tests/verify_server_integration.py**
   - Funcs: verify_server_integration
+- **tests/verify_system_wide_integration.py**
+  - Funcs: verify_system_wide_integration
+- **tests/verify_weight_updates.py**
+  - Funcs: read_json
 - **tests_hilt/ab_test_hilt.py**
   - Classes: ABTestHILT
 - **tests_hilt/stress_test_hilt.py**
@@ -3626,28 +2256,7 @@
   - Classes: TestHybridReasoning
 - **tests_hilt/test_resonance_with_hilt.py**
   - Classes: TestResonanceWithHILT
-- **verify_fixes_mission.py**
-  - Funcs: test_reasoning_layer_fallback
-- **verify_full_system_trace.py**
-  - Funcs: run_trace_test
-- **verify_heikal_integration.py**
-  - Funcs: test_core_integration
-- **verify_hilt_integrations.py**
-  - Funcs: check_integration
-- **verify_reality.py**
-  - Funcs: verify_real_disk_io
-- **verify_self_capabilities.py**
-  - Funcs: verify_self_healing, verify_self_evolution
-- **verify_system_wide_integration.py**
-  - Funcs: verify_system_wide_integration
-- **verify_weight_updates.py**
-  - Funcs: read_json
 - **web/web_dashboard.py**
   - Classes: DashboardHandler
 - **workers/generate_system_audit.py**
   - Funcs: load_json_safe, load_jsonl_entries, get_latest_night_report, analyze_engine_performance, get_safety_summary, get_current_weights, get_harvest_summary, ensure_output_path, generate_audit_report
-
-##  Future Potential / Dormant Modules
-- [Active] AGL_Metaphysics_Engine_V2 (Quantum Soul Integration)
-- [Active] Neural_Resonance_Bridge (Telepathy Protocol)
-- [Active] Holographic_Reality_Projector (Phase 3)

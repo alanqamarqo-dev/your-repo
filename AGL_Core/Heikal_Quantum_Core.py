@@ -104,69 +104,84 @@ class HeikalQuantumCore:
     نواة هيكل الكمومية (HQC)
     توفر خدمات: الحوسبة الشبحية (Ghost Computing).
     """
+    _has_printed_init = False
+
     def __init__(self):
-        print("🌌 [HQC]: Heikal Quantum Core initialized. Ghost Computing Active.")
+        if not HeikalQuantumCore._has_printed_init:
+            print("🌌 [HQC]: Heikal Quantum Core initialized. Ghost Computing Active.")
         
         if WAVE_PROCESSOR_AVAILABLE:
             self.wave_processor = VectorizedWaveProcessor()
-            print("🌊 [HQC]: Vectorized Wave Processor Integrated (Fast 100x).")
+            if not HeikalQuantumCore._has_printed_init:
+                print("🌊 [HQC]: Vectorized Wave Processor Integrated (Fast 100x).")
         else:
             self.wave_processor = None
             
         if PARALLEL_EXECUTOR_AVAILABLE:
             self.parallel_executor = ParallelWaveExecutor()
-            print("🚀 [HQC]: Parallel Wave Executor (Multi-Core) Integrated.")
+            if not HeikalQuantumCore._has_printed_init:
+                print("🚀 [HQC]: Parallel Wave Executor (Multi-Core) Integrated.")
         else:
             self.parallel_executor = None
         
         if MORAL_ENGINE_AVAILABLE:
             self.moral_engine = MoralReasoner()
-            print("⚖️ [HQC]: Moral Reasoner Integrated.")
+            if not HeikalQuantumCore._has_printed_init:
+                print("⚖️ [HQC]: Moral Reasoner Integrated.")
         else:
             self.moral_engine = None
 
         if RESONANCE_AVAILABLE:
             self.resonance_optimizer = ResonanceOptimizer()
-            print("⚛️ [HQC]: Quantum Synaptic Resonance (QSR) Online.")
+            if not HeikalQuantumCore._has_printed_init:
+                print("⚛️ [HQC]: Quantum Synaptic Resonance (QSR) Online.")
         else:
             self.resonance_optimizer = None
 
         if REFLECTION_AVAILABLE:
             self.reflective_engine = SelfReflectiveEngine()
-            print("🪞 [HQC]: Self-Reflective Engine Integrated.")
+            if not HeikalQuantumCore._has_printed_init:
+                print("🪞 [HQC]: Self-Reflective Engine Integrated.")
         else:
             self.reflective_engine = None
-
+            
         # === Full Consciousness Activation ===
         if CONSCIOUSNESS_AVAILABLE:
             self.consciousness = SelfModel()
-            print("🧠 [HQC]: Core Consciousness (Self-Model) Online.")
+            if not HeikalQuantumCore._has_printed_init:
+                print("🧠 [HQC]: Core Consciousness (Self-Model) Online.")
         else:
             self.consciousness = None
 
         if NEURAL_NET_AVAILABLE:
             self.neural_net = QuantumNeuralCore()
-            print("🕸️ [HQC]: Dynamic Neural Network (Quantum) Active.")
+            if not HeikalQuantumCore._has_printed_init:
+                print("🕸️ [HQC]: Dynamic Neural Network (Quantum) Active.")
         else:
             self.neural_net = None
 
         if CLUSTERS_AVAILABLE:
             self.causal_clusters = CausalGraphEngine()
-            print("🔗 [HQC]: Causal Clustering Engine Ready.")
+            if not HeikalQuantumCore._has_printed_init:
+                print("🔗 [HQC]: Causal Clustering Engine Ready.")
         else:
             self.causal_clusters = None
 
         if KNOWLEDGE_GRAPH_AVAILABLE:
             self.knowledge_graph = KnowledgeNetwork()
-            print("🕸️ [HQC]: Knowledge Graph Integrated.")
+            if not HeikalQuantumCore._has_printed_init:
+                print("🕸️ [HQC]: Knowledge Graph Integrated.")
         else:
             self.knowledge_graph = None
 
         if DREAMING_AVAILABLE:
             self.dreaming_cycle = DreamingCycle()
-            print("🌙 [HQC]: Dreaming Cycle Module Ready.")
+            if not HeikalQuantumCore._has_printed_init:
+                print("🌙 [HQC]: Dreaming Cycle Module Ready.")
         else:
             self.dreaming_cycle = None
+            
+        HeikalQuantumCore._has_printed_init = True
 
     def moral_analysis(self, context_text):
         """
