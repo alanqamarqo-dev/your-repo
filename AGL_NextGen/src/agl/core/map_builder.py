@@ -9,7 +9,7 @@ class AGL_System_Map_Builder:
         self.ignore_dirs = {
             '.git', '__pycache__', 'venv', '.venv', 'env', 'node_modules', 'artifacts', 'backups', 'dist', 'build', 
             'ل', 'لا', 'venv_cv2', 'repo-copy-HILT-experiment', 'repo-copy_test_run.info', 'htmlcov', 'htmlcov_after_retriever_fix',
-            '.venvا', '.venv_embed', 'site-packages'
+            '.venvا', '.venv_embed', 'site-packages', 'legacy_backups'
         }
         self.system_map = {}
 
@@ -55,27 +55,30 @@ class AGL_System_Map_Builder:
                         system_structure[rel_path] = structure
 
         # Save as JSON for machine reading
-        # json_path = self.root_dir / "AGL_SYSTEM_MAP.json"
-        # with open(json_path, 'w', encoding='utf-8') as f:
-        #     json.dump(system_structure, f, indent=2)
+        json_path = self.root_dir / "AGL_SYSTEM_MAP.json"
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(system_structure, f, indent=2)
         
         self.system_map = system_structure # Store in memory for access
             
         # Save as Concise Markdown for LLM Context
-        # md_path = self.root_dir / "AGL_SYSTEM_MAP.md"
-        # with open(md_path, 'w', encoding='utf-8') as f:
-        #     f.write("# 🗺️ AGL System Map (Concise)\n\n")
-        #     for path, content in sorted(system_structure.items()):
-        #         f.write(f"- **{path}**\n")
-        #         if content['classes']:
-        #             f.write(f"  - Classes: {', '.join(content['classes'])}\n")
-        #         if content['functions']:
-        #             f.write(f"  - Funcs: {', '.join(content['functions'])}\n")
+        md_path = self.root_dir / "AGL_SYSTEM_MAP.md"
+        with open(md_path, 'w', encoding='utf-8') as f:
+            f.write("# 🗺️ AGL System Map (Concise)\n\n")
+            for path, content in sorted(system_structure.items()):
+                f.write(f"- **{path}**\n")
+                if content['classes']:
+                    f.write(f"  - Classes: {', '.join(content['classes'])}\n")
+                if content['functions']:
+                    f.write(f"  - Funcs: {', '.join(content['functions'])}\n")
         
-        # print(f"✅ System Map (JSON) generated at: {json_path}")
-        # print(f"✅ System Map (MD) generated at: {md_path}")
+        print(f"✅ System Map (JSON) generated at: {json_path}")
+        print(f"✅ System Map (MD) generated at: {md_path}")
 
 if __name__ == "__main__":
-    root = Path(r"d:\AGL")
+    # Detect root automatically (3 levels up from src/agl/core)
+    current_file_dir = os.path.dirname(os.path.abspath(__file__))
+    root = os.path.dirname(os.path.dirname(os.path.dirname(current_file_dir)))
+    print(f"🚀 Running Map Builder on: {root}")
     builder = AGL_System_Map_Builder(root)
     builder.build_map()

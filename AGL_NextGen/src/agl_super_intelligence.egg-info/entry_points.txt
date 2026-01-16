@@ -1,0 +1,5 @@
+[console_scripts]
+agl-run = agl.core.master_controller:main
+agl-verify-asi = agl.verification.full_asi_test:main
+agl-verify-dynamic = agl.verification.verify_dynamic:verify_dynamic_mechanism
+agl-verify-protocol = agl.verification.protocol_v2:run_protocol

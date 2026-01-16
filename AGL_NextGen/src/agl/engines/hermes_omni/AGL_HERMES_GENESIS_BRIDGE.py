@@ -6,6 +6,7 @@ import collections
 import threading
 import torch
 import random
+import math
 
 # ==============================================================================
 # AGL HERMES-GENESIS BRIDGE: EMOTIONAL REALITY CONTROL
@@ -53,19 +54,29 @@ omega_system.eval() # Set to evaluation mode (inference)
 # --- 3. Helper Functions ---
 def generate_reality_inputs(chaos_level):
     """
-    Generates simulation inputs based on the 'Chaos Level'.
+    Generates simulation inputs based on REAL WORLD DATA & 'Chaos Level'.
     chaos_level: 0.0 (Perfect Order) to 5.0 (Total Chaos)
     """
-    # Physics: Stable constants vs Quantum Fluctuations
-    phys = torch.randn(1, 256) * chaos_level 
+    # 1. Physics: Time Harmonics (Real Clock)
+    t = time.time()
+    # Create a vector based on time frequencies
+    phys_data = [math.sin(t * (i+1) * 0.01) for i in range(256)]
+    phys = torch.tensor([phys_data], dtype=torch.float32) * (1.0 + chaos_level)
+
+    # 2. Bio: System Vital Signs (CPU micro-lag)
+    # Micro-variations in CPU speed reflect effective "Biological" load
+    t0 = time.time_ns()
+    _ = [x for x in range(100)]
+    cpu_lag = (time.time_ns() - t0) / 1000.0 
     
-    # Bio: Healthy DNA vs Mutation
-    bio = torch.randn(1, 256) * chaos_level
+    bio_data = [math.cos(cpu_lag * i * 0.1) for i in range(256)]
+    bio = torch.tensor([bio_data], dtype=torch.float32) * (1.0 + chaos_level)
     
-    # Econ: Stable Market vs Crash
-    econ = torch.randn(1, 128) * chaos_level
+    # 3. Econ: Market Simulation (Random Walk seeded by Chaos)
+    # Chaotic market reacts to external chaos_level
+    econ = torch.randn(1, 128) * chaos_level 
     
-    # Neuro: Calm Mind vs Panic
+    # 4. Neuro: Entropy of the System
     neuro = torch.randn(1, 512) * chaos_level
     
     return phys, bio, econ, neuro

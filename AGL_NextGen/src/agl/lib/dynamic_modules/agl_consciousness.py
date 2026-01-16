@@ -6,10 +6,14 @@ from typing import List, Dict, Any, Optional
 
 # Try to import ResonanceOptimizer for Quantum Consciousness
 try:
-    from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
+    from agl.engines.resonance_optimizer import VectorizedResonanceOptimizer as ResonanceOptimizer
     _HAS_QUANTUM = True
 except ImportError:
-    _HAS_QUANTUM = False
+    try:
+        from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
+        _HAS_QUANTUM = True
+    except ImportError:
+        _HAS_QUANTUM = False
 
 # === Global State & Configuration ===
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) # dynamic_modules

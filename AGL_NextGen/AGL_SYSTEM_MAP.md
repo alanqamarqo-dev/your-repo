@@ -1,0 +1,472 @@
+# 🗺️ AGL System Map (Concise)
+
+- **AGL_ASI_PERPETUAL_PULSE.py**
+  - Funcs: update_dashboard_state, signal_handler, start_perpetual_pulse
+- **AGL_BENCH_COMPARE.py**
+  - Funcs: _configure_utf8_console, main
+- **AGL_BENCH_RUN.py**
+  - Funcs: _configure_utf8_console, main
+- **AGL_MATH_DEEP_TEST.py**
+  - Classes: MathDeepDive
+- **AGL_NextGen_ASI_Launch.py**
+  - Funcs: main
+- **AGL_REAL_DATA_GENERATOR.py**
+  - Classes: RealDataGenerator
+- **AGL_SCIENTIFIC_DEEP_TEST.py**
+  - Classes: ScientificDeepDive
+- **AGL_SELF_IMPROVE.py**
+  - Funcs: _configure_utf8_console, main
+- **AGL_STRICT_TEST_4_FIELDS.py**
+  - Funcs: print_header, test_strategic, test_moral, test_scientific, test_creative
+- **scripts/AGL_FULL_DIAGNOSTIC.py**
+  - Classes: FullSystemDiagnostic
+- **scripts/AGL_QUANTUM_TELEPATHY.py**
+  - Funcs: sender_brain, receiver_brain, run_telepathy_experiment
+- **seed_hologram.py**
+  - Funcs: seed_holographic_memory
+- **src/AGL_Entropy_Harvester.py**
+  - Classes: SystemEnvironment, HeikalEntropyHarvester
+  - Funcs: run_demonstration
+- **src/AGL_GENESIS_ACTIVATE.py**
+  - Classes: HeikalWorldSimulator
+  - Funcs: run_activation
+- **src/AGL_ULTRA_TEST.py**
+  - Funcs: run_ultra_hyper_test
+- **src/agl/bench/baselines.py**
+  - Classes: _LinearParseError, BaselineAnswer, BaselineEngine
+  - Funcs: _insert_implicit_mul, _linear_from_ast, _solve_linear_equation, baseline_ask
+- **src/agl/bench/central_control_10_domains.py**
+  - Classes: DomainTask
+  - Funcs: _tasks, run_via_central_control, main
+- **src/agl/bench/compare.py**
+  - Classes: BenchComparator
+  - Funcs: _project_root, _artifacts_dir, _jsonl_append
+- **src/agl/bench/evaluators.py**
+  - Classes: EvalResult
+  - Funcs: _norm_text, _normalize_digits, exact_match, contains_keywords, hypothesis_with_prediction, plan_with_fallback, causal_intervention_answer, numeric_answer, causal_edges, json_field_truthy, json_field_equals, holo_cache_speedup, math_solution_with_steps, plan_steps, plan_steps_with_keywords, plan_steps_keywords_in_steps, plan_with_fallback_keywords_in_steps, causal_intervention_numeric
+- **src/agl/bench/gate.py**
+  - Classes: GateConfig
+  - Funcs: _parse_regression_suites, _default_regression_suites, _parse_suite_list, _mean, _project_root_from_here, _artifacts_dir, _default_gate_log, _jsonl_append, _python_exe, _extract_last_json, _run_bench_summary, _copy_for_sandbox, _mod_plan_micro_planner_keyword_steps, run_gate_once
+- **src/agl/bench/real_world_set_cover_test.py**
+  - Funcs: _bruteforce_min_set_cover, _parse_indices, _covers, main
+- **src/agl/bench/runner.py**
+  - Classes: BenchRunner
+  - Funcs: _project_root, _artifacts_dir, _jsonl_append
+- **src/agl/bench/self_improve.py**
+  - Classes: SelfImproveConfig, SelfImproveIteration
+  - Funcs: _project_root_from_here, _default_artifacts_path, _jsonl_append, _tasks_for_suite, _diagnose, run_self_improve
+- **src/agl/bench/tasks.py**
+  - Classes: BenchTask
+  - Funcs: deterministic_tasks, deterministic_holdout_tasks, causal_tasks, causal_holdout_tasks, planning_tasks, planning_holdout_tasks, planner_tasks, planner_holdout_tasks, planner_strict_holdout_tasks, criteria_1_autonomy_tasks, criteria_1_autonomy_tasks_strict, criteria_2_superiority_tasks, criteria_3_self_learning_tasks, criteria_4_subgoals_tasks, criteria_4_subgoals_tasks_strict, criteria_5_causal_tasks_strict, criteria_5_causal_tasks, criteria_suite_names, criteria_all_hard_tasks, nextgen_smoke_tasks, criteria_tasks_for_suite, default_tasks, task_index
+- **src/agl/core/base.py**
+  - Classes: _AGL
+  - Funcs: _load_module_from_path
+- **src/agl/core/consciousness.py**
+  - Classes: AGL_Core_Consciousness
+- **src/agl/core/map_builder.py**
+  - Classes: AGL_System_Map_Builder
+- **src/agl/core/master_controller.py**
+  - Funcs: find_project_root, print_header, run_intelligence_test, run_telepathy_test, run_dreaming_test, run_iron_loop_test, run_diagnostic, chat_mode, main
+- **src/agl/core/super_intelligence.py**
+  - Classes: SelfAwarenessModule, SelfRepairSystem, AGL_Super_Intelligence
+  - Funcs: find_project_root, import_module_from_path, _project_root_from_here
+- **src/agl/core/unified_system.py**
+  - Classes: MemoryItem, UnifiedMemorySystem, UnifiedReasoningEngine, ActiveCuriosityEngine, IntrinsicMotivationSystem, UnifiedAGISystem
+  - Funcs: _safe_get_answer, _safe_get, create_unified_agi_system
+- **src/agl/engines/ExperienceMemory.py**
+  - Classes: ExperienceMemory
+  - Funcs: _ensure_dir_for, append_experience, read_experiences
+- **src/agl/engines/adaptive_memory.py**
+  - Classes: AdaptiveMemoryItem, AdaptiveMemory
+- **src/agl/engines/advanced_exponential_algebra.py**
+  - Classes: AdvancedExponentialAlgebra, AdvancedExponentialAlgebra, LieAlgebraProcessor
+  - Funcs: create_engine
+- **src/agl/engines/advanced_meta_reasoner.py**
+  - Classes: AdvancedMetaReasonerEngine
+  - Funcs: create_engine, _read_jsonl, analyze_thinking_quality, generate_self_improvement_plan
+- **src/agl/engines/advanced_simulation.py**
+  - Classes: AdvancedSimulationEngine
+  - Funcs: factory
+- **src/agl/engines/agl_optimization_target.py**
+  - Classes: AGL_Optimization_Target
+- **src/agl/engines/analogy_mapping.py**
+  - Classes: AnalogyMappingEngine
+  - Funcs: factory
+- **src/agl/engines/bootstrap.py**
+  - Funcs: _is_already_registered_error, bootstrap_register_all_engines
+- **src/agl/engines/causal_graph.py**
+  - Classes: CausalGraphEngine, CausalGraph
+  - Funcs: create_engine
+- **src/agl/engines/consciousness/__init__.py**
+  - Classes: ConsciousnessService
+  - Funcs: create_engine
+- **src/agl/engines/consistency_checker.py**
+  - Classes: ConsistencyChecker
+- **src/agl/engines/counterfactual_explorer.py**
+  - Classes: CounterfactualExplorer
+  - Funcs: factory
+- **src/agl/engines/creative_innovation.py**
+  - Classes: CreativeInnovation
+- **src/agl/engines/dormant_powers.py**
+  - Classes: NeuralResonanceBridge, HolographicRealityProjector
+- **src/agl/engines/dummy_target.py**
+  - Classes: DummyProcessor
+- **src/agl/engines/engineering/Advanced_Code_Generator.py**
+  - Classes: JavaScriptSpecialist, EngineSpec, EngineCloner, KnowledgeBaseLoader, CppSpecialist, VerilogSpecialist, SoftwareArchitect, CodeOptimizer, AdvancedCodeGenerator, PythonCodeSpecialist
+- **src/agl/engines/engineering/IoT_Protocol_Designer.py**
+  - Classes: RealWorldBridge, IoTProtocolDesigner
+- **src/agl/engines/evolution.py**
+  - Funcs: _levenshtein, evolve_thought_process
+- **src/agl/engines/evolution_test_engine.py**
+  - Classes: EvolutionTestEngine, ImprovedEvolutionTestEngine
+- **src/agl/engines/gen_general_solver.py**
+  - Funcs: solve
+- **src/agl/engines/gen_xylos_solver.py**
+  - Funcs: find_operating_law
+- **src/agl/engines/genesis_omega/AGL_OMEGA_DECODER.py**
+  - Classes: OmegaDecoder
+- **src/agl/engines/genesis_omega/GENESIS_OMEGA_CORE.py**
+  - Classes: OmniAttentionMechanism, GENESIS_OMEGA_Entity
+  - Funcs: activate_omega_protocol
+- **src/agl/engines/genesis_omega/GENESIS_OMEGA_TRAINING_PLAN.py**
+  - Classes: GenesisOmegaTrainer
+- **src/agl/engines/heikal_hybrid_logic.py**
+  - Classes: HeikalLogicUnit, HeikalHybridLogicCore
+- **src/agl/engines/hermes_omni/AGL_CPP_LAUNCHER.py**
+  - Funcs: read_output
+- **src/agl/engines/hermes_omni/AGL_Eyes_Pro.py**
+  - Classes: AGL_Eyes_Pro
+- **src/agl/engines/hermes_omni/AGL_HERMES_BRAIN.py**
+  - Funcs: analyze_pattern
+- **src/agl/engines/hermes_omni/AGL_HERMES_FULL_SYSTEM.py**
+  - Funcs: speak_worker, speak, analyze_pattern
+- **src/agl/engines/hermes_omni/AGL_HERMES_GENESIS_BRIDGE.py**
+  - Classes: MockMother
+  - Funcs: generate_reality_inputs, get_color
+- **src/agl/engines/hermes_omni/AGL_HERMES_HYBRID.py**
+  - Classes: HybridBridge, HERMES_Hybrid_Entity
+- **src/agl/engines/hermes_omni/AGL_TELEKINESIS.py**
+  - Funcs: move_mouse, type_code_snippet, detect_nod
+- **src/agl/engines/hermes_omni/AGL_TELEPATHY_CONSOLE.py**
+  - Funcs: print_wave, telepathy_session
+- **src/agl/engines/hermes_omni/HERMES_OMNI_GENESIS.py**
+  - Classes: SemanticBridge, HERMES_Entity
+- **src/agl/engines/hermes_omni/TEST_AGL_PRO.py**
+  - Funcs: main
+- **src/agl/engines/hermes_omni/hermes_engine.py**
+  - Classes: HermesOmniEngine
+- **src/agl/engines/holographic_llm.py**
+  - Classes: HolographicLLM
+  - Funcs: create_engine
+- **src/agl/engines/holographic_memory.py**
+  - Classes: HeikalHolographicMemory
+- **src/agl/engines/hypothesis_generator.py**
+  - Classes: HypothesisGeneratorEngine, HypothesisGenerator
+  - Funcs: create_engine
+- **src/agl/engines/integration/agi_expansion.py**
+  - Classes: SmartRouterExtension
+- **src/agl/engines/integration/dkn_types.py**
+  - Classes: Signal, Claim
+- **src/agl/engines/integration/engine_adapter.py**
+  - Classes: EngineAdapter
+- **src/agl/engines/integration/inproc_bus.py**
+  - Classes: PriorityBus
+- **src/agl/engines/integration/knowledge_graph.py**
+  - Classes: KnowledgeGraph
+- **src/agl/engines/integration/meta_orchestrator.py**
+  - Classes: MetaOrchestrator
+- **src/agl/engines/learning.py**
+  - Classes: SelfLearning
+- **src/agl/engines/learning_system/ExperienceMemory.py**
+  - Classes: ExperienceMemory
+  - Funcs: _ensure_dir_for, append_experience, read_experiences
+- **src/agl/engines/learning_system/Feedback_Analyzer.py**
+  - Classes: FeedbackAnalyzer
+- **src/agl/engines/learning_system/Fitness_Criteria.py**
+  - Funcs: score_result
+- **src/agl/engines/learning_system/GeneralizationMatrix.py**
+  - Classes: Pattern
+  - Funcs: _now_iso, _load_patterns, _ensure_dir, infer_ohm_to_power, infer_rc_tau, infer_projectile_g, infer_poly2_gradient, quantum_discover_relations, run_generalization
+- **src/agl/engines/learning_system/Generalizer.py**
+  - Classes: Generalizer
+- **src/agl/engines/learning_system/Improvement_Generator.py**
+  - Classes: ImprovementGenerator
+- **src/agl/engines/learning_system/Knowledge_Integrator.py**
+  - Classes: KnowledgeIntegrator
+  - Funcs: write_json_atomic
+- **src/agl/engines/learning_system/Law_Learner.py**
+  - Classes: LawLearner
+  - Funcs: fit_single_coeff_linear, fit_linear_with_intercept, fit_power_law, fit_model_auto
+- **src/agl/engines/learning_system/MetaCognition_Fallback.py**
+  - Classes: MetaCognitionFallback
+- **src/agl/engines/learning_system/ModelZoo.py**
+  - Classes: FitResult
+  - Funcs: rmse, _conf_from_rmse, fit_linear, fit_linear_bias, fit_poly2, fit_exp1, evaluate_candidates
+- **src/agl/engines/learning_system/ModelZoo_Fallback.py**
+  - Classes: ModelZooFallback
+- **src/agl/engines/learning_system/Reasoner.py**
+  - Classes: Answer, Reasoner
+  - Funcs: _utcnow_iso, _load_kb, _pick_latest_fit, _find_by_base, _arabic_or_english, _num_from_question
+- **src/agl/engines/learning_system/RelationsGraph.py**
+  - Classes: Relation, RelationsGraph
+- **src/agl/engines/learning_system/Self_Learning_Module.py**
+  - Classes: Hypothesis, SelfLearningModule
+- **src/agl/engines/learning_system/Self_Optimizer.py**
+  - Funcs: _read_json, _write_json, _ema, gather_model_signals, gather_run_signal, update_learned_patterns, update_fusion_weights, quantum_update_fusion_weights, run_self_optimization
+- **src/agl/engines/learning_system/TemporalMemory.py**
+  - Classes: TMRecord, TemporalMemory
+- **src/agl/engines/learning_system/Training_Path.py**
+  - Funcs: train_hooke_from_csv
+- **src/agl/engines/learning_system/Uncertainty_Estimator.py**
+  - Funcs: estimate, _ensure_2d
+- **src/agl/engines/learning_system/Uncertainty_Propagation.py**
+  - Funcs: pred_confidence_intervals, param_confidence_intervals
+- **src/agl/engines/learning_system/Units_Validator.py**
+  - Classes: UnitsValidator
+- **src/agl/engines/learning_system/generalization_cli.py**
+  - Funcs: main
+- **src/agl/engines/learning_system/generalize_cli.py**
+  - Funcs: parse_kv_list, main
+- **src/agl/engines/learning_system/io_utils.py**
+  - Funcs: read_json, read_text, read_json_with_fallback
+- **src/agl/engines/learning_system/robust_fit.py**
+  - Funcs: huber_residuals, zscore_mask
+- **src/agl/engines/learning_system/visualizer.py**
+  - Funcs: _curve_fn, _nice_range, _read_csv_points, render_model_png
+- **src/agl/engines/math_engine.py**
+  - Classes: AdvancedExponentialAlgebra, AdvancedExponentialAlgebra, LieAlgebraProcessor
+  - Funcs: create_engine
+- **src/agl/engines/math_prover_lite.py**
+  - Classes: MathProverLite
+  - Funcs: factory
+- **src/agl/engines/mathematical_brain.py**
+  - Classes: MathematicalBrain
+- **src/agl/engines/meta_learning.py**
+  - Classes: MetaLearningEngine
+  - Funcs: create_engine
+- **src/agl/engines/metaphysics.py**
+  - Classes: HeikalMetaphysicsEngine
+  - Funcs: create_engine
+- **src/agl/engines/micro_planner.py**
+  - Classes: MicroPlanner
+  - Funcs: factory
+- **src/agl/engines/moral.py**
+  - Classes: MoralReasoner
+  - Funcs: factory
+- **src/agl/engines/offensive_security.py**
+  - Classes: OffensiveSecurityEngine
+- **src/agl/engines/optical_heart.py**
+  - Classes: OpticalHeart
+- **src/agl/engines/optimization_engine.py**
+  - Classes: OptimizationEngine
+- **src/agl/engines/parallel_executor.py**
+  - Classes: ParallelEngineExecutor
+  - Funcs: _process_engine_task
+- **src/agl/engines/parallel_wave_processor.py**
+  - Classes: ParallelWaveExecutor
+  - Funcs: _worker_task
+- **src/agl/engines/quantum_neural.py**
+  - Classes: QuantumNeuralCore
+- **src/agl/engines/quantum_simulator_wrapper.py**
+  - Classes: QuantumSimulatorWrapper
+  - Funcs: _hadamard_matrix, _pauli_x, _kron_n, apply_gate, measure_state, factory
+- **src/agl/engines/reasoning_layer.py**
+  - Classes: ReasoningLayer
+  - Funcs: load_prompt, _ensure_engine_response, _text_to_facts, run
+- **src/agl/engines/reasoning_planner.py**
+  - Classes: ReasoningPlanner, PlannerHFSM
+  - Funcs: _to_int, _register_planner_factory
+- **src/agl/engines/recursive_improver.py**
+  - Classes: RecursiveImprover
+  - Funcs: create_engine
+- **src/agl/engines/resonance_optimizer.py**
+  - Classes: VectorizedResonanceOptimizer
+- **src/agl/engines/rubric_enforcer.py**
+  - Funcs: _has_any, enforce, process_task
+- **src/agl/engines/rubric_enforcer_engine.py**
+  - Classes: RubricEnforcer
+  - Funcs: factory
+- **src/agl/engines/safety/Dialogue_Safety.py**
+  - Funcs: guard
+- **src/agl/engines/safety/Safety_Control_Layer.py**
+  - Classes: SafetyControlLayer, ControlLayers
+  - Funcs: _ensure_repo_copy_on_path
+- **src/agl/engines/scientific/Automated_Theorem_Prover.py**
+  - Classes: AutomatedTheoremProver, LogicalReasoningEngine, NumericVerifier, ProofStepGenerator
+- **src/agl/engines/scientific/Hardware_Simulator.py**
+  - Classes: HardwareSimulator
+- **src/agl/engines/scientific/Scientific_Research_Assistant.py**
+  - Classes: MathematicalContentAnalyzer, QuantumClaimVerifier, CitationAnalyzer, ScientificResearchAssistant, MathematicalValidator, EnhancedScientificValidator
+- **src/agl/engines/scientific_systems/Automated_Theorem_Prover.py**
+  - Classes: AutomatedTheoremProver, LogicalReasoningEngine, NumericVerifier, ProofStepGenerator
+- **src/agl/engines/scientific_systems/Hardware_Simulator.py**
+  - Classes: HardwareSimulator
+- **src/agl/engines/scientific_systems/Integrated_Simulation_Engine.py**
+  - Classes: IntegratedSimulationEngine
+- **src/agl/engines/scientific_systems/PhysicsSolver_Extended.py**
+  - Classes: ExtendedPhysicsSolver
+- **src/agl/engines/scientific_systems/Scientific_Research_Assistant.py**
+  - Classes: MathematicalContentAnalyzer, QuantumClaimVerifier, CitationAnalyzer, ScientificResearchAssistant, MathematicalValidator, EnhancedScientificValidator
+- **src/agl/engines/self_critique_and_revise.py**
+  - Classes: SelfCritiqueAndRevise
+  - Funcs: factory
+- **src/agl/engines/self_improvement/Self_Improvement/Self_Improvement_Engine.py**
+  - Classes: _SimpleAdaptiveWeights, _EventLogger, SelfLearningManager
+  - Funcs: _utcstamp, _next_epoch, _ensure_dir, load_events, _weights_checksum, train_from_feedback, save_snapshot, _update_learning_curve
+- **src/agl/engines/self_improvement/Self_Improvement/Self_Monitoring_System.py**
+  - Classes: SelfMonitoringSystem
+- **src/agl/engines/self_improvement/Self_Improvement/algorithm_optimizer.py**
+  - Classes: PerformanceAnalyzer, AlgorithmLibrary, ParameterTuner, AlgorithmSelfOptimizer
+- **src/agl/engines/self_improvement/Self_Improvement/cognitive_mode.py**
+  - Classes: CognitiveMode
+  - Funcs: _text_from_problem, _is_medical_high_risk, _is_simple_factoid, _is_planning_or_project, choose_cognitive_mode
+- **src/agl/engines/self_improvement/Self_Improvement/continual_learning.py**
+  - Funcs: _ensure_artifacts_dir, record_learned_fact, load_learned_facts, load_learned_facts_as_context
+- **src/agl/engines/self_improvement/Self_Improvement/emergency_retrieval.py**
+  - Classes: EmergencyRetrieval
+  - Funcs: activate_existing_retrieval, build_basic_retrieval
+- **src/agl/engines/self_improvement/Self_Improvement/internal_agents.py**
+  - Classes: InternalAgentConfig
+  - Funcs: _problem_text, _guess_domain, select_agent_for_problem, apply_agent_to_prompt
+- **src/agl/engines/self_improvement/Self_Improvement/memory_restructurer.py**
+  - Classes: MemoryAnalyzer, KnowledgeGraph, MemorySelfRestructurer
+- **src/agl/engines/self_improvement/Self_Improvement/meta_logger.py**
+  - Classes: MetaLogger
+- **src/agl/engines/self_improvement/Self_Improvement/ollama_stream.py**
+  - Funcs: ask_with_deep_thinking
+- **src/agl/engines/self_improvement/Self_Improvement/projects.py**
+  - Classes: ProjectTask, AGLProject, ProjectStore
+  - Funcs: _ensure_projects_dir, create_project, add_task, run_next_task
+- **src/agl/engines/self_improvement/Self_Improvement/rag_index.py**
+  - Funcs: _ensure_artifacts_dir, embed_text, cosine, add_document, load_documents, search, as_context, retrieve_context
+- **src/agl/engines/self_improvement/Self_Improvement/rollback.py**
+  - Classes: AutomaticRollbackSystem
+- **src/agl/engines/self_improvement/Self_Improvement/safe_self_mod.py**
+  - Classes: SandboxEnvironment, ModificationValidator, RollbackManager, PerformanceMonitor, SafeSelfModificationSystem
+- **src/agl/engines/self_improvement/Self_Improvement/self_profile.py**
+  - Funcs: _ensure_artifacts_dir, _load_profile, _save_profile, _update_domain_stats, record_eval_result, _infer_domain_from_problem, suggest_strategy
+- **src/agl/engines/self_improvement/Self_Improvement/strategic_memory.py**
+  - Classes: MemoryItem, StrategicMemory
+  - Funcs: _default_path
+- **src/agl/engines/self_improvement/Self_Improvement_Engine.py**
+  - Classes: _SimpleAdaptiveWeights, _EventLogger, SelfLearningManager
+  - Funcs: _utcstamp, _next_epoch, _ensure_dir, load_events, _weights_checksum, train_from_feedback, save_snapshot, _update_learning_curve
+- **src/agl/engines/self_improvement/Self_Monitoring_System.py**
+  - Classes: SelfMonitoringSystem
+- **src/agl/engines/self_reflective.py**
+  - Classes: SelfReflectiveEngine, CuriosityEngine
+  - Funcs: create_engine, create_curiosity_engine
+- **src/agl/engines/strategic.py**
+  - Classes: StrategicThinkingEngine
+  - Funcs: healthcheck
+- **src/agl/engines/target_bad_code.py**
+  - Funcs: slow_function
+- **src/agl/engines/tensor_utils.py**
+  - Funcs: safe_matmul, safe_sub, safe_dtype, safe_zeros_like_dtype, to_numpy_safe, to_torch_complex64, matmul_safe
+- **src/agl/engines/units_validator.py**
+  - Classes: UnitsValidator
+  - Funcs: _parse_dim, _combine_dim_of_symbols, check_dimensional_consistency
+- **src/agl/engines/vectorized_wave_processor.py**
+  - Classes: VectorizedWaveProcessor
+- **src/agl/engines/volition_engine.py**
+  - Classes: VolitionEngine
+- **src/agl/engines/web_search.py**
+  - Classes: WebSearchEngine
+- **src/agl/genesis.py**
+  - Classes: AGL_Prime_Entity
+- **src/agl/lib/AGL_Paths.py**
+  - Classes: PathManager
+- **src/agl/lib/core_memory/Conscious_Bridge.py**
+  - Classes: LRUCache, ConsciousBridge
+- **src/agl/lib/core_memory/Core_Memory/bridge_singleton.py**
+  - Funcs: get_bridge
+- **src/agl/lib/core_memory/bridge_singleton.py**
+  - Funcs: get_bridge
+- **src/agl/lib/dynamic_modules/agl_consciousness.py**
+  - Classes: DigitalIdentity, AutobiographicalMemory, SelfEvolution, ConsciousnessTracker, TrueConsciousnessSystem
+  - Funcs: load_conscious_state, save_conscious_state
+- **src/agl/lib/dynamic_modules/calculator_gui.py**
+  - Classes: CalculatorGUI
+- **src/agl/lib/dynamic_modules/complex_math_solver.py**
+  - Classes: ComplexMathSolver
+- **src/agl/lib/dynamic_modules/creative_intelligence_layer.py**
+  - Classes: CreativeIntelligenceLayer
+  - Funcs: create_creative_intelligence_layer
+- **src/agl/lib/dynamic_modules/engine_deep_inspector.py**
+  - Classes: EngineDeepInspector
+  - Funcs: inspect_module
+- **src/agl/lib/dynamic_modules/engine_inspector.py**
+  - Classes: Inspector
+  - Funcs: inspect_module
+- **src/agl/lib/dynamic_modules/engine_loader.py**
+  - Funcs: load_and_run, _test_loader
+- **src/agl/lib/dynamic_modules/local_librarian.py**
+  - Funcs: read_text_file
+- **src/agl/lib/dynamic_modules/logger_utility.py**
+  - Funcs: get_task_logger, run_task
+- **src/agl/lib/dynamic_modules/mission_control_combined.py**
+  - Funcs: _noop, run, _run_coro_safely, unified_ui_execute
+- **src/agl/lib/dynamic_modules/mission_control_enhanced.py**
+  - Classes: SmartFocusController, LLMIntegrationEngine, EnhancedMissionController, AdvancedQuantumEngine, SharedMemory, CollectiveConsciousness, NeuralIntegration, AdvancedIntegrationEngine, SelfAwarenessEngine
+  - Funcs: _sync_run, log_to_system, build_collective_mind, activate_self_awareness, develop_autonomous_will, run_custom_mission, run_physics_reactor_analysis, run_monitoring_script_design, quick_start, execute_mission, run
+- **src/agl/lib/dynamic_modules/native_screen_eye.py**
+  - Funcs: capture_screenshot
+- **src/agl/lib/dynamic_modules/native_voice.py**
+  - Funcs: speak
+- **src/agl/lib/dynamic_modules/potential_scout.py**
+  - Funcs: scan_python_files, parse_imports, unused_modules, describe_functionality, write_report, main
+- **src/agl/lib/dynamic_modules/screen_eye.py**
+  - Funcs: capture_screenshot
+- **src/agl/lib/dynamic_modules/snake_game.py**
+  - Classes: SnakeGame
+- **src/agl/lib/dynamic_modules/system_scanner.py**
+  - Funcs: scan_structure
+- **src/agl/lib/dynamic_modules/voice_engine.py**
+  - Funcs: speak
+- **src/agl/lib/integration/hybrid_composer.py**
+  - Funcs: compose, build_prompt_context, parse_json_or_retry
+- **src/agl/lib/integration/rag_wrapper.py**
+  - Funcs: _mock_answer_for, _rag_enabled, _mock_enabled, _call_real_rag, _env_flag, _http_post_json, _run_cli, _sanitize_text, _extract_ollama_text_http, _call_real_rag_v2, rag_answer
+- **src/agl/lib/knowledge_base/Improvement_History.py**
+  - Classes: ImprovementHistory
+- **src/agl/lib/learning_system/Law_Learner.py**
+  - Classes: LawLearner
+  - Funcs: fit_single_coeff_linear, fit_linear_with_intercept, fit_power_law, fit_model_auto
+- **src/agl/lib/llm/Ollama_KnowledgeEngine.py**
+  - Classes: LocalKnowledgeEngine, LocalKnowledgeEngine
+  - Funcs: _to_int, create_engine
+- **src/agl/lib/llm/gateway.py**
+  - Funcs: _truthy_env, get_holographic_llm, chat_llm
+- **src/agl/lib/llm/hosted_llm.py**
+  - Classes: HostedLLM
+  - Funcs: _prompt_hash, chat_llm
+- **src/agl/lib/llm/turn_contract.py**
+  - Funcs: _now_ms, make_turn, normalize_engine_response
+- **src/agl/lib/solvers/BaseSolver.py**
+  - Classes: BaseSolver
+- **src/agl/lib/solvers/ChemistrySolver.py**
+  - Classes: ChemistrySolver
+- **src/agl/lib/solvers/PhysicsSolver.py**
+  - Classes: PhysicsSolver
+- **src/agl/lib/solvers/QuantumSolver.py**
+  - Classes: QuantumSolver
+- **src/agl/lib/unified_lib.py**
+  - Classes: AGL_Unified_Python
+  - Funcs: evolved_capability_1767044807
+- **src/agl/lib/utils/llm_tools.py**
+  - Funcs: build_llm_url
+- **tests/AGL_CORE_BRAINSTEM_TEST.py**
+  - Classes: TestAGLBrainStem
+- **tests/AGL_IRON_LOOP_TEST.py**
+  - Classes: IronLoopTester
+- **tests/AGL_Quantum_Reality_Test.py**
+  - Classes: QuantumRealityTest
+- **tests/AGL_System_Coherence_Test.py**
+  - Classes: SystemCoherenceTest
+- **tests/ASI_ULTIMATE_LEVEL_TEST.py**
+  - Classes: ASIUltimateLevelTest
+  - Funcs: find_project_root
+- **tests/deep_research_synthesis.py**
+  - Funcs: run_deep_research
+- **tests/evolution_verify.py**
+  - Funcs: run_evolution

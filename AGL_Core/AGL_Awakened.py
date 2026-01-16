@@ -371,6 +371,14 @@ except ImportError:
     NeuralResonanceBridge = None
     HolographicRealityProjector = None
 
+# L. البصر (The Eyes - Optical Heart)
+try:
+    from AGL_Optical_Heart import OpticalHeart
+    print("✅ [LOAD] Optical Heart: Online")
+except ImportError:
+    print("⚠️ [LOAD] Optical Heart: Failed")
+    OpticalHeart = None
+
 
 class AGL_Super_Intelligence:
     def __init__(self):
@@ -421,6 +429,13 @@ class AGL_Super_Intelligence:
         # 11. Dormant Powers (Activated)
         self.neural_bridge = NeuralResonanceBridge() if NeuralResonanceBridge else None
         self.holo_projector = HolographicRealityProjector() if HolographicRealityProjector else None
+
+        # 11.5 Optical Heart (Vision)
+        if OpticalHeart:
+            self.optical_heart = OpticalHeart()
+            print("   -> Optical Heart Active (Vision & Light Entropy)")
+        else:
+            self.optical_heart = None
 
         # --- GRAND INTEGRATION: ORPHANED POWER MODULES (INITIALIZATION) ---
         
@@ -1000,7 +1015,7 @@ class AGL_Super_Intelligence:
             if target_module_name == 'Core_Engines.Heikal_Quantum_Core' or target_module_name == 'AGL_Core.Heikal_Quantum_Core':
                 # Determine which one was actually imported
                 if 'Core_Engines.Heikal_Quantum_Core' in sys.modules:
-                    from Core_Engines.Heikal_Quantum_Core import HeikalQuantumCore
+                    from Core_Engines.Heikal_Quantum_Core import HeikalQuantumCore # type: ignore
                 else:
                     from AGL_Core.Heikal_Quantum_Core import HeikalQuantumCore
             

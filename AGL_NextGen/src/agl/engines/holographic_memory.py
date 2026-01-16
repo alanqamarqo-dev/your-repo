@@ -52,7 +52,7 @@ class HeikalHolographicMemory:
     
     _has_printed_init = False
 
-    def __init__(self, key_seed=42):
+    def __init__(self, key_seed=42, frequency=None):
         """
         Initialize the memory system with a specific encryption key.
         
@@ -61,12 +61,21 @@ class HeikalHolographicMemory:
         Args:
             key_seed (int): The secret key used to generate the phase mask.
                             المفتاح السري المستخدم لتوليد قناع الطور.
+            frequency (float | None): Optional carrier frequency. When provided,
+                it is mixed into the phase modulation as a deterministic offset.
+                تردد اختياري للموجة الحاملة. عند تمريره يتم دمجه كإزاحة طور ثابتة.
         """
         self.memory_file = "core_state.hologram.npy" # Changed to .npy for numpy binary
         self.key_seed = key_seed 
+        self.frequency = frequency
         
         if not HeikalHolographicMemory._has_printed_init:
             print(f"🌌 [HOLO]: Holographic Memory Module Initialized (Key: {key_seed}).")
+            if frequency is not None:
+                try:
+                    print(f"   [INFO]: Carrier Frequency: {float(frequency)}")
+                except Exception:
+                    print(f"   [INFO]: Carrier Frequency: {frequency}")
             print("   [INFO]: Data will be stored as complex interference patterns.")
             HeikalHolographicMemory._has_printed_init = True
 
@@ -110,9 +119,18 @@ class HeikalHolographicMemory:
         # 4. Generate Carrier Wave (Noise Mask) / توليد الموجة الحاملة
         # We use the same RNG state (advanced by the permutation call)
         noise_mask = rng.random(len(normalized))
+
+        # Optional frequency locking: mix frequency as deterministic phase offset
+        freq_phase = 0.0
+        if self.frequency is not None:
+            # Keep the offset bounded and stable
+            try:
+                freq_phase = (float(self.frequency) % 1.0) * 2 * np.pi
+            except Exception:
+                freq_phase = 0.0
         
         # 5. Phase Modulation (Encoding) / تشفير الطور
-        hologram_layer = normalized * np.exp(1j * noise_mask * 2 * np.pi)
+        hologram_layer = normalized * np.exp(1j * (noise_mask * 2 * np.pi + freq_phase))
         
         return hologram_layer
 
@@ -131,9 +149,17 @@ class HeikalHolographicMemory:
         
         # 3. Generate Noise Mask / توليد قناع الضجيج
         noise_mask = rng.random(len(holog_matrix))
+
+        # Must match _text_to_matrix frequency phase behavior
+        freq_phase = 0.0
+        if self.frequency is not None:
+            try:
+                freq_phase = (float(self.frequency) % 1.0) * 2 * np.pi
+            except Exception:
+                freq_phase = 0.0
         
         # 4. Demodulation (Decoding) / فك التشفير
-        decoded_signal = holog_matrix * np.exp(-1j * noise_mask * 2 * np.pi)
+        decoded_signal = holog_matrix * np.exp(-1j * (noise_mask * 2 * np.pi + freq_phase))
         
         # 5. Extract Magnitude / استخراج القيمة المطلقة
         restored_shuffled = np.abs(decoded_signal)
@@ -202,6 +228,68 @@ class HeikalHolographicMemory:
         except Exception as e:
             print(f"❌ [HOLO Error]: Data corruption. {e}")
             return None
+
+    def prune_and_merge(self):
+        """
+        [HEIKAL] Active Forgetting & Consolidation.
+        - Prunes low importance memories.
+        - Merges similar memories (abstraction).
+        """
+        data = self.load_memory()
+        if not data or not isinstance(data, dict):
+            return
+
+        memories = data.get("memories", [])
+        if not memories:
+            return 
+            
+        print(f"🌌 [HOLO]: Pruning & Merging {len(memories)} memories...")
+        
+        # 1. Prune (Active Forgetting)
+        kept_memories = [m for m in memories if m.get("importance", 0.5) > 0.3]
+        
+        # 2. Merge (Abstraction)
+        merged_memories = []
+        skip_indices = set()
+        
+        for i in range(len(kept_memories)):
+            if i in skip_indices: continue
+            
+            mem_i = kept_memories[i]
+            content_i = str(mem_i.get("content", ""))
+            
+            merged_content = content_i
+            merge_count = 1
+            
+            for j in range(i+1, len(kept_memories)):
+                if j in skip_indices: continue
+                
+                mem_j = kept_memories[j]
+                content_j = str(mem_j.get("content", ""))
+                
+                # Check similarity (Set Jaccard)
+                set_i = set(content_i.split())
+                set_j = set(content_j.split())
+                if not set_i or not set_j: continue
+                
+                intersection = len(set_i.intersection(set_j))
+                union = len(set_i.union(set_j))
+                similarity = intersection / union if union > 0 else 0
+                
+                if similarity > 0.7: 
+                    skip_indices.add(j)
+                    merge_count += 1
+                    if len(content_j) > len(merged_content):
+                        merged_content = content_j
+            
+            new_mem = mem_i.copy()
+            new_mem["content"] = merged_content
+            new_mem["merge_count"] = merge_count
+            merged_memories.append(new_mem)
+            
+        data["memories"] = merged_memories
+        print(f"🌌 [HOLO]: Memory condensed from {len(memories)} to {len(merged_memories)} items.")
+        self.save_memory(data)
 
 # ==========================================
 # Integration Test / اختبار التكامل

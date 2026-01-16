@@ -103,17 +103,14 @@ def infer_poly2_gradient(p: Pattern) -> Optional[Dict[str, Any]]:
 # ---------- Quantum Generalization ----------
 
 try:
-    # Attempt import from Core_Engines
-    import sys
-    # Add repo-copy to path if needed
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    repo_root = os.path.dirname(os.path.dirname(current_dir))
-    if repo_root not in sys.path:
-        sys.path.append(repo_root)
-        
-    from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
+    # Attempt local NextGen import first
+    from agl.engines.resonance_optimizer import VectorizedResonanceOptimizer as ResonanceOptimizer
 except ImportError:
-    ResonanceOptimizer = None
+    try:
+        # Attempt import from Core_Engines for backward compatibility
+        from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
+    except ImportError:
+        ResonanceOptimizer = None
 
 def quantum_discover_relations(patterns: List[Pattern]) -> List[Dict[str, Any]]:
     """

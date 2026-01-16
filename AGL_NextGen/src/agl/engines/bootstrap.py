@@ -97,9 +97,6 @@ ENGINE_SPECS = {
     "Genesis_Omega_Trainer":     ("agl.engines.genesis_omega.GENESIS_OMEGA_TRAINING_PLAN", "GenesisOmegaTrainer"),
     "Hermes_Omni_Engine":        ("agl.engines.hermes_omni", "HermesOmniEngine"),
     "Hermes_Genesis_Bridge":     ("agl.engines.hermes_omni.AGL_HERMES_GENESIS_BRIDGE", None), # Script only
-
-    # --- Legacy / Not Yet Migrated (Will fail gracefully) ---
-    "Hive_Mind":                 ("Core_Engines.HiveMind",                 "HiveMind"),
 }
 
 def _is_already_registered_error(e: Exception) -> bool:

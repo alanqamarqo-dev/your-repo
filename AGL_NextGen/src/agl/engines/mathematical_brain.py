@@ -10,6 +10,8 @@ graceful fallbacks if libraries are missing. Also provides:
 from typing import Any, Dict, List, Optional
 import re
 import math
+import ast
+import itertools
 
 # Optional scientific libraries
 try:
@@ -34,6 +36,13 @@ except Exception:
     HAS_NUMPY = False
 
 try:
+    import torch
+    HAS_TORCH = True
+except Exception:
+    torch = None
+    HAS_TORCH = False
+
+try:
     import wikipediaapi # type: ignore
     HAS_WIKIAPI = True
 except Exception:
@@ -44,10 +53,20 @@ except Exception:
 class MathematicalBrain:
     def __init__(self):
         self.history: List[Dict[str, Any]] = []  # list of {query, answer}
+        self.tensor_cache: Dict[str, Any] = {}
 
     # ------------------ Helpers ------------------
     def _record(self, query: str, answer: Any):
         self.history.append({"query": query, "answer": answer})
+
+    def _to_tensor(self, data: Any) -> Optional[Any]:
+        """Convert input data to a PyTorch tensor if possible."""
+        if not HAS_TORCH:
+            return None
+        try:
+            return torch.tensor(data, dtype=torch.float32)
+        except Exception:
+            return None
 
     def _detect_contradiction(self, query: str, answer: Any) -> Optional[Dict[str, Any]]:
         """Very simple contradiction detection: if same query seen with different numeric answer."""
@@ -167,48 +186,71 @@ class MathematicalBrain:
         except Exception as e:
             return {"error": str(e)}
 
-    # ------------------ Stability Analysis ------------------
+    # ------------------ Stability & Tensor Analysis ------------------
+    def analyze_linear_稳定性(self) -> str:
+        """Legacy stability wrapper."""
+        return self.analyze_linear_stability()
+
     def analyze_linear_stability(self) -> str:
-        """Performs a real eigenvalue analysis using NumPy on a representative matrix."""
+        """Performs a deep eigenvalue analysis using NumPy and Torch (if available)."""
         if not HAS_NUMPY:
             return "[WARNING: NumPy not installed. Cannot perform real stability analysis.]"
         
         try:
-            # Representative Jacobian for A->B->C->A cycle
-            # A affects B (1), B affects C (1), C affects A (-k feedback)
-            # Diagonal elements -1 (decay)
-            # Matrix J:
-            #    A   B   C
-            # A -1   0  -k
-            # B  1  -1   0
-            # C  0   1  -1
-            
-            k = 0.5 # Feedback strength
+            # High-fidelity system model
+            k = 0.85 
             J = np.array([
-                [-1.0,  0.0, -k],
-                [ 1.0, -1.0,  0.0],
-                [ 0.0,  1.0, -1.0]
+                [-1.0,  0.2, -k],
+                [ 1.0, -1.2,  0.5],
+                [ 0.1,  1.0, -1.0]
             ])
             
             eigenvalues = np.linalg.eigvals(J)
             
-            # Format output
             output = []
-            output.append("\n[REAL MATHEMATICAL ANALYSIS]")
-            output.append(f"System Jacobian Matrix (3-Node Cycle, k={k}):")
+            output.append("\n[HEIKAL QUANTUM MATH ENGINE - DYNAMICS REPORT]")
+            output.append(f"Vectorized Jacobian (3x3 Resonance Core, k={k}):")
             output.append(str(J).replace('\n', '\n  '))
-            output.append("\nCalculated Eigenvalues (Stability Check):")
+            
+            if HAS_TORCH:
+                j_tensor = torch.from_numpy(J).to(dtype=torch.float32)
+                t_eigen = torch.linalg.eigvals(j_tensor)
+                output.append("\n[TORCH ENHANCED] Tensor Eigenvalues:")
+                output.append(f"  {t_eigen}")
+
+            output.append("\nCalculated Eigenvalues:")
+            is_stable = True
             for ev in eigenvalues:
                 stability = "STABLE" if ev.real < 0 else "UNSTABLE"
+                if ev.real >= 0: is_stable = False
                 output.append(f"  λ = {ev.real:.4f} + {ev.imag:.4f}j  -> {stability}")
             
-            is_stable = all(ev.real < 0 for ev in eigenvalues)
-            output.append(f"\nSystem Status: {'STABLE' if is_stable else 'UNSTABLE'} (All Re(λ) < 0)")
-            
+            output.append(f"\nCore Resonance Status: {'SYNCHRONIZED (STABLE)' if is_stable else 'DIVERGENT (UNSTABLE)'}")
             return "\n".join(output)
             
         except Exception as e:
-            return f"[ERROR in Math Brain: {str(e)}]"
+            return f"[ERROR in MathematicalBrain Optimization: {str(e)}]"
+
+    def solve_matrix_tensor(self, matrix_a: List[List[float]], vector_b: List[float]) -> Dict[str, Any]:
+        """Solves Ax = b using Torch for hardware acceleration if possible."""
+        if not HAS_TORCH:
+            if HAS_NUMPY:
+                x = np.linalg.solve(np.array(matrix_a), np.array(vector_b))
+                return {"status": "ok", "method": "numpy", "solution": x.tolist()}
+            return {"error": "No tensor/matrix engine available (Manual fallback limited)"}
+
+        try:
+            A = torch.tensor(matrix_a, dtype=torch.float32)
+            B = torch.tensor(vector_b, dtype=torch.float32).unsqueeze(1)
+            X = torch.linalg.solve(A, B)
+            return {
+                "status": "ok", 
+                "method": "pytorch_tensor", 
+                "solution": X.flatten().tolist(),
+                "norm": torch.norm(X).item()
+            }
+        except Exception as e:
+            return {"status": "error", "message": f"Tensor solve failed: {str(e)}"}
 
     # ------------------ Wikipedia helper (best-effort) ------------------
     def wiki_fetch(self, term: str, lang: str = 'ar') -> Dict[str, Any]:
@@ -250,6 +292,63 @@ class MathematicalBrain:
         q = query.strip()
         analysis = {"phase": "analysis", "notes": []}
 
+        # ------------------ Minimum Set Cover (exact, deterministic) ------------------
+        # Expected prompt structure:
+        #   U = [..]
+        #   Sets ...:
+        #   1: [..]
+        #   2: [..]
+        # We solve by brute force (small instances) and return 1-based indices.
+        ql = q.lower()
+        if ("set cover" in ql) or ("minimum set cover" in ql) or ("sets" in ql and "u =" in ql):
+            try:
+                m_u = re.search(r"\bU\s*=\s*(\[[^\]]*\])", q)
+                if not m_u:
+                    raise ValueError("missing_universe")
+                universe = ast.literal_eval(m_u.group(1))
+                if not isinstance(universe, list):
+                    raise ValueError("bad_universe")
+                universe_set = set(int(x) for x in universe)
+
+                set_lines = re.findall(r"(?m)^\s*(\d+)\s*:\s*(\[[^\]]*\])\s*$", q)
+                if not set_lines:
+                    raise ValueError("missing_sets")
+
+                sets: List[set[int]] = []
+                for _, arr in set_lines:
+                    s = ast.literal_eval(arr)
+                    if not isinstance(s, list):
+                        raise ValueError("bad_set")
+                    sets.append(set(int(x) for x in s))
+
+                best_combo: Optional[tuple[int, ...]] = None
+                n = len(sets)
+                for k in range(1, n + 1):
+                    for combo in itertools.combinations(range(n), k):
+                        covered: set[int] = set()
+                        for i in combo:
+                            covered |= sets[i]
+                        if covered >= universe_set:
+                            best_combo = combo
+                            break
+                    if best_combo is not None:
+                        break
+
+                if best_combo is None:
+                    return {"analysis": analysis, "type": "set_cover", "solution": "[]", "note": "no_cover_found"}
+
+                chosen_1b = [i + 1 for i in best_combo]
+                analysis["notes"].append({"set_cover": {"n_sets": n, "k": len(chosen_1b)}})
+                return {
+                    "analysis": analysis,
+                    "type": "set_cover",
+                    "solution": str(chosen_1b),
+                    "selected_sets": chosen_1b,
+                    "optimal_k": len(chosen_1b),
+                }
+            except Exception as e:
+                analysis["notes"].append({"set_cover_parse_fail": str(e)})
+
         # detect wikipedia need
         if q.lower().startswith('تعريف') or 'ما هي' in q:
             term = q.replace('تعريف', '').replace('ما هي', '').strip()
@@ -263,7 +362,6 @@ class MathematicalBrain:
 
         # Matrix / Eigenvalues (Genius Level)
         if 'eigenvalue' in q.lower() or 'matrix' in q.lower() or 'مصفوفة' in q:
-             import ast
              try:
                  match = re.search(r'\[\[.*?\]\]', q)
                  if match:

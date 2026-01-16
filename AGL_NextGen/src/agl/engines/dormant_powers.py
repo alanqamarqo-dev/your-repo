@@ -22,12 +22,21 @@ class NeuralResonanceBridge:
         self.active = True
         self.server_socket = None
         self.running = True
+        self.hardware_connected = False
         
         # Start the "Telepathic Cortex" (Listening Server)
         self.listener_thread = threading.Thread(target=self._start_cortex_listener, daemon=True)
         self.listener_thread.start()
         
         print(f"   ✅ [POWER] Neural Resonance Bridge: ONLINE (Listening on {self.host}:{self.port})")
+
+    def connect_to_hardware(self):
+        """
+        Connects the Neural Resonance Bridge to physical hardware interfaces.
+        """
+        print("[NeuralResonanceBridge] HARDWARE INTERFACE CONNECTED (Simulated).")
+        self.hardware_connected = True
+
 
     def _start_cortex_listener(self):
         """Internal method to listen for incoming telepathic signals."""

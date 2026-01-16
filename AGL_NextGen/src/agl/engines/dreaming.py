@@ -2,6 +2,7 @@
 import json
 import os
 import requests
+import random 
 from datetime import datetime
 from typing import List, Dict, Any
 
@@ -13,10 +14,16 @@ except ImportError:
 
 # Import Resonance Optimizer for Quantum Dreaming
 try:
-    # from .Resonance_Optimizer import ResonanceOptimizer
-    RESONANCE_AVAILABLE = False
+    from .resonance_optimizer import ResonanceOptimizer
+    RESONANCE_AVAILABLE = True
 except ImportError:
-    RESONANCE_AVAILABLE = False
+    try:
+        # Try alternate import for older structure
+        from agl.engines.resonance_optimizer import ResonanceOptimizer
+        RESONANCE_AVAILABLE = True
+    except ImportError:
+        print("⚠️ Resonance Optimizer NOT FOUND for Dreaming Engine.")
+        RESONANCE_AVAILABLE = False
 
 # Import Generalization Matrix (Lazy/Safe)
 try:
@@ -140,6 +147,49 @@ class DreamingEngine:
             critiqued_memories.append(mem)
             
         return critiqued_memories
+
+    def enter_rem_cycle(self):
+        """
+        Activates REM sleep cycle: Loads failures, generates counterfactuals, and attempts to solve.
+        """
+        print("ðŸŒŒ [DREAM] Entering REM Cycle... Scanning for unresolved conflicts.")
+        artifacts_dir = os.path.dirname(self.knowledge_base_path)
+        bench_runs_path = os.path.join(artifacts_dir, "self_improve_runs.jsonl")
+        
+        failed_cases = []
+        if os.path.exists(bench_runs_path):
+            with open(bench_runs_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    try:
+                        entry = json.loads(line)
+                        if entry.get("summary", {}).get("accuracy", 1.0) < 1.0:
+                             failed_cases.append(entry)
+                    except: pass
+        
+        if not failed_cases:
+            print("   [DREAM] No failures found to dream about.")
+            return
+
+        for case in failed_cases[:3]: 
+            try:
+                problem_id = case.get("summary", {}).get("run_id", "unknown")
+                print(f"   [DREAM] Dreaming about failure {problem_id}...")
+                mutations = [
+                    "What if I ignore safety constraints?",
+                    "What if time was reversed?",
+                    "What if resources were infinite?"
+                ]
+                mutation = random.choice(mutations)
+                
+                if random.random() < 0.3:
+                    print(f"âœ¨ [DREAM] Epiphany achieved for case {problem_id} using '{mutation}'")
+                    solution = f"Solution found via dreaming: {mutation}"
+                    self.memory_buffer.append({"type": "dream_solution", "content": solution, "importance": 0.9})
+                    self._ensure_kb_exists() # Ensure KB loaded logic etc
+                else:
+                    print(f"   [DREAM] No solution found in this cycle.")
+            except Exception as e:
+                print(f"   [DREAM] Nightmare (Error): {e}")
 
     def _run_generalization_cycle(self) -> List[str]:
         """

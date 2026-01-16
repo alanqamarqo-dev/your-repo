@@ -4,11 +4,11 @@
     "latency_ma": 0.0
   },
   "UnifiedAGI": {
-    "quality_ma": 0.8786533422942444,
+    "quality_ma": 0.8705562225843009,
     "latency_ma": 0.0,
-    "calls": 367
+    "calls": 551
   },
   "Scientific_Systems": {
-    "quality_ma": 0.9079602730443668
+    "quality_ma": 0.9760476530029889
   }
 }

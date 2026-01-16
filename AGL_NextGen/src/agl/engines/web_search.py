@@ -1,93 +1,181 @@
-﻿import json
+import json
 import os
 import time
+import re
+import urllib.parse
 from typing import List, Dict, Any
+
+# Check available libraries
+try:
+    import requests
+    from bs4 import BeautifulSoup
+    HAS_REQ_BS4 = True
+except ImportError:
+    HAS_REQ_BS4 = False
 
 class WebSearchEngine:
     """
-    Ù…Ø­Ø±Ùƒ Ø¨Ø­Ø« ÙˆÙŠØ¨ (Ù…Ø­Ø§ÙƒÙŠ) Ù„Ù„Ù†Ø¸Ø§Ù….
-    ÙÙŠ Ø¨ÙŠØ¦Ø© Ù…Ø¹Ø²ÙˆÙ„Ø© (Air-gapped)ØŒ ÙŠÙ‚ÙˆÙ… Ù‡Ø°Ø§ Ø§Ù„Ù…Ø­Ø±Ùƒ Ø¨ØªÙˆÙ„ÙŠØ¯ Ù†ØªØ§Ø¦Ø¬ Ø¨Ø­Ø« ÙˆØ§Ù‚Ø¹ÙŠØ©
-    Ø¨Ø§Ø³ØªØ®Ø¯Ø§Ù… Ø§Ù„Ù†Ù…ÙˆØ°Ø¬ Ø§Ù„Ù„ØºÙˆÙŠ Ù„Ù…Ø­Ø§ÙƒØ§Ø© Ø§Ù„ÙˆØµÙˆÙ„ Ø¥Ù„Ù‰ Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª.
+    AGL Web Search Engine (Hybrid: Real + Mock).
+    
+    Capabilities:
+    1. Real Internet Search (Priority): Uses Google/DDG via Requests+BS4 (Robust Scraper).
+    2. Fallback Mock: Uses Internal LLM Knowledge if offline.
+    
+    Status: UPGRADED to Live Internet (Requests + BeautifulSoup).
     """
     
     def __init__(self):
         self.name = "Web_Search_Engine"
         self.provider = os.getenv('AGL_LLM_PROVIDER', 'ollama')
         self.model = os.getenv('AGL_LLM_MODEL', 'qwen2.5:7b-instruct')
+        self.live_mode = True 
+        self.session = None
+        if HAS_REQ_BS4:
+            self.session = requests.Session()
+            self.session.headers.update({
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            })
+
+    def set_live_mode(self, enabled: bool):
+        """
+        Sets the live mode for the web search engine.
+        """
+        self.live_mode = enabled
+        mode_str = "ENABLED" if enabled else "DISABLED"
+        print(f"[{self.name}] LIVE KNOWLEDGE MODE {mode_str}.")
         
     def search(self, query: str, num_results: int = 5) -> List[Dict[str, str]]:
         """
-        ØªÙ†ÙÙŠØ° Ø¨Ø­Ø« Ø¹Ù† Ø§Ù„Ø§Ø³ØªØ¹Ù„Ø§Ù… Ø§Ù„Ù…Ø¹Ø·Ù‰.
-        ÙŠØ­Ø§ÙˆÙ„ Ø§Ø³ØªØ®Ø¯Ø§Ù… DuckDuckGo (Ù…ÙƒØªØ¨Ø© Ø£Ùˆ Ø·Ù„Ø¨ Ù…Ø¨Ø§Ø´Ø±)ØŒ Ø«Ù… ÙŠØ¹ÙˆØ¯ Ù„Ù„Ù…Ø­Ø§ÙƒØ§Ø©.
+        Executes a real web search using available providers.
         """
-        print(f"ðŸŒ [WebSearch] Searching for: {query}...")
+        print(f"🌍 [WebSearch] Searching for: {query}...")
         
-        # 1. Try Real Search (Library)
-        try:
-            from duckduckgo_search import DDGS
-            with DDGS() as ddgs:
-                results = list(ddgs.text(query, max_results=num_results))
-                if results:
-                    print(f"   âœ… Real search successful (Library) ({len(results)} results)")
-                    clean_results = []
-                    for r in results:
-                        clean_results.append({
-                            "title": r.get('title', ''),
-                            "snippet": r.get('body', ''),
-                            "url": r.get('href', '')
+        # 1. Try DuckDuckGo via Requests/BS4 (HTML) - Most Reliable/Least Blocked
+        if HAS_REQ_BS4:
+            try:
+                # print("   🔌 Attempting DuckDuckGo HTML Search...")
+                url = "https://html.duckduckgo.com/html/"
+                data = {'q': query}
+                
+                resp = self.session.post(url, data=data, timeout=10)
+                
+                if resp.status_code == 200:
+                    soup = BeautifulSoup(resp.text, 'html.parser')
+                    results = []
+                    
+                    for link in soup.find_all('a', class_='result__a', limit=num_results):
+                        title = link.get_text()
+                        url_res = link['href']
+                        
+                        # Find snippet (next sibling usually)
+                        snippet_div = link.find_next(class_='result__snippet')
+                        snippet = snippet_div.get_text() if snippet_div else "No snippet"
+                        
+                        results.append({
+                            "title": title,
+                            "snippet": snippet,
+                            "url": url_res
                         })
-                    return clean_results
-        except ImportError:
-            pass # Library not installed, try manual fallback
-        except Exception as e:
-            print(f"   âš ï¸ Library search failed: {e}")
+                        
+                    if results:
+                        print(f"   ✅ Real search successful (DuckDuckGo/BS4) ({len(results)} results)")
+                        return results
+            except Exception as e:
+                print(f"   ⚠️ DDG BS4 failed: {e}")
+                pass
 
-        # 2. Try Real Search (Manual Request Fallback)
+        # 2. Try Google via Requests/BS4
+        if HAS_REQ_BS4:
+            try:
+                # print("   🔌 Attempting Google HTML Search...")
+                search_url = f"https://www.google.com/search?q={urllib.parse.quote(query)}&num={num_results+5}" 
+                
+                resp = self.session.get(search_url, timeout=10)
+                
+                if resp.status_code == 200:
+                    soup = BeautifulSoup(resp.text, 'html.parser')
+
+                    results = []
+                    
+                    # Modern Google HTML is tricky, try standard classes
+                    result_divs = soup.find_all('div', class_='g')
+                    
+                    for div in result_divs:
+                        if len(results) >= num_results:
+                            break
+                            
+                        a_tag = div.find('a')
+                        if not a_tag: continue
+                        
+                        link = a_tag.get('href')
+                        if not link or link.startswith('/search'): continue
+                        
+                        h3 = a_tag.find('h3')
+                        title = h3.get_text() if h3 else "Google Result"
+                        
+                        snippet = "No description available"
+                        # Try common snippet classes
+                        for snip_class in ['VwiC3b', 'yXK7lf', 'ITZIwc']:
+                            snip_div = div.find('div', class_=snip_class)
+                            if snip_div:
+                                snippet = snip_div.get_text()
+                                break
+
+                        results.append({
+                            "title": title,
+                            "snippet": snippet,
+                            "url": link
+                        })
+                        
+                    if results:
+                        print(f"   ✅ Real search successful (Google/BS4) ({len(results)} results)")
+                        return results
+            except Exception as e:
+                print(f"   ⚠️ Google BS4 failed: {e}")
+                pass
+
+        # 3. Fallback to System Shell Bridge (PowerShell)
         try:
-            import urllib.request
-            import urllib.parse
-            import re
-            
-            # Simple HTML search on DuckDuckGo Lite
-            encoded_query = urllib.parse.quote(query)
-            url = f"https://lite.duckduckgo.com/lite/?q={encoded_query}"
-            headers = {'User-Agent': 'Mozilla/5.0'}
-            req = urllib.request.Request(url, headers=headers)
-            
-            with urllib.request.urlopen(req, timeout=10) as response:
-                html = response.read().decode('utf-8')
+                # print("   Trying System Shell Bridge (PowerShell - DDG Lite)...")
+                import subprocess
                 
-            # Simple regex to extract results (Fragile but works for basic needs)
-            # Looking for table rows with results
-            # This is a very basic scraper for the Lite version
-            results = []
-            links = re.findall(r'<a class="result-link" href="(.*?)">(.*?)</a>', html)
-            snippets = re.findall(r'<td class="result-snippet">(.*?)</td>', html)
-            
-            for i in range(min(len(links), num_results)):
-                link_url = links[i][0]
-                title = links[i][1]
-                snippet = snippets[i] if i < len(snippets) else "No snippet available"
+                # Use DuckDuckGo Lite which has cleaner HTML
+                encoded_query = urllib.parse.quote(query)
+                target_url = f"https://lite.duckduckgo.com/lite/?q={encoded_query}"
                 
-                # Clean up HTML entities
-                title = re.sub(r'<.*?>', '', title)
-                snippet = re.sub(r'<.*?>', '', snippet)
+                # Use PowerShell to fetch, silencing progress
+                ps_command = f'$ProgressPreference = "SilentlyContinue"; Invoke-WebRequest -Uri "{target_url}" -UseBasicParsing -Headers @{{ "User-Agent" = "Mozilla/5.0" }} | Select-Object -ExpandProperty Content'
                 
-                results.append({
-                    "title": title,
-                    "snippet": snippet,
-                    "url": link_url
-                })
+                # Run PowerShell command
+                result = subprocess.run(["powershell", "-Command", ps_command], capture_output=True, text=True, timeout=15)
                 
-            if results:
-                print(f"   âœ… Real search successful (Manual Fallback) ({len(results)} results)")
-                return results
-                
-        except Exception as e:
-            print(f"   âš ï¸ Manual search fallback failed: {e}")
+                if result.returncode == 0 and result.stdout:
+                    html = result.stdout
+                    results = []
+                    # Parse DDG Lite HTML
+                    links = re.findall(r'<a class="result-link" href="(.*?)">(.*?)</a>', html)
+                    snippets = re.findall(r'<td class="result-snippet">(.*?)</td>', html)
 
-        # 3. Fallback to Internal Knowledge (User Requested)
-        print(f"   ðŸ§  Retrieving information from Internal Model Knowledge for: {query}")
+                    for i in range(min(len(links), num_results)):
+                        clean_link = links[i][0]
+                        clean_title = re.sub(r'<.*?>', '', links[i][1])
+                        clean_snippet = re.sub(r'<.*?>', '', snippets[i]) if i < len(snippets) else "Live Result"
+                        
+                        results.append({
+                            "title": clean_title,
+                            "snippet": clean_snippet,
+                            "url": clean_link
+                        })
+                            
+                    if results:
+                        print(f"   ✅ Real search successful (System Bridge / DDG) ({len(results)} results)")
+                        return results
+        except Exception as e:
+             pass
+
+        # 4. Fallback to Internal Knowledge (User Requested)
+        print(f"   🧠 [OFFLINE] Retrieved from Internal Model Knowledge for: {query}")
+        print("   ⚠️ No live internet connection methods succeeded. Using internal simulation.")
         results = self._retrieve_internal_knowledge(query, num_results)
         return results
 
@@ -95,8 +183,21 @@ class WebSearchEngine:
         """
         Retrieves information directly from the LLM's training data instead of simulating fake search results.
         """
-        from agl.engines.self_improvement.Self_Improvement.ollama_stream import ask_with_deep_thinking
-        
+        # Try importing from known location, handle robustly
+        try:
+            from agl.engines.self_improvement.Self_Improvement.ollama_stream import ask_with_deep_thinking
+        except ImportError:
+            try:
+                # Fallback path if running from different context
+                import sys
+                project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+                if project_root not in sys.path:
+                    sys.path.insert(0, project_root)
+                from agl.engines.self_improvement.Self_Improvement.ollama_stream import ask_with_deep_thinking
+            except ImportError:
+                print("   ❌ Critical: Could not import LLM engine.")
+                return []
+
         prompt = f"""
         You are the system's internal knowledge base.
         The user is asking about: "{query}".
@@ -118,7 +219,6 @@ class WebSearchEngine:
             json_str = response.strip()
             
             # Remove any thinking blocks if present (e.g. <think>...</think>)
-            import re
             json_str = re.sub(r'<think>.*?</think>', '', json_str, flags=re.DOTALL).strip()
             
             if "```json" in json_str:
@@ -135,19 +235,19 @@ class WebSearchEngine:
             results = json.loads(json_str)
             return results[:count]
         except Exception as e:
-            print(f"âš ï¸ Internal knowledge retrieval failed: {e}")
+            print(f"⚠️ Internal knowledge retrieval failed: {e}")
             # Fallback results
             return [
                 {
                     "title": f"Internal Knowledge: {query}",
-                    "snippet": f"I have general knowledge about {query} in my training data, but I couldn't structure it into a list right now.",
+                    "snippet": f"I have general knowledge about {query} but couldn't retrieve structured data.",
                     "url": "Internal_Memory"
                 }
             ]
 
     def process_task(self, task_data: Any) -> Dict[str, Any]:
         """
-        ÙˆØ§Ø¬Ù‡Ø© Ù…ÙˆØ­Ø¯Ø© Ù„Ù„Ù…Ø­Ø±Ùƒ
+        Unified engine interface.
         """
         query = task_data if isinstance(task_data, str) else task_data.get('query', '')
         if not query:
@@ -157,7 +257,6 @@ class WebSearchEngine:
         return {
             "query": query,
             "results": results,
-            "source": "Simulated_Web_Search",
+            "source": "Hybrid_Web_Search",
             "timestamp": time.time()
         }
-

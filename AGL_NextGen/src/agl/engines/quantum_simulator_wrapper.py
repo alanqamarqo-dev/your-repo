@@ -69,7 +69,9 @@ class QuantumSimulatorWrapper:
             self.num_qubits = int(os.getenv('AGL_QCORE_NUM_QUBITS', '4'))
         except Exception:
             self.num_qubits = 4
-        self.mode = os.getenv('AGL_QUANTUM_MODE', '')
+        # FORCE WAKE: Awakened mode forces 'simulate' to enable real math
+        self.mode = os.getenv('AGL_QUANTUM_MODE', 'simulate')
+        print(f"⚛️ [QuantumWrapper] AWAKENED: Running in {self.mode} mode with {self.num_qubits} qubits.")
 
     def _init_state(self, num_qubits: int, basis_state: str = None) -> np.ndarray: # type: ignore
         dim = 2 ** num_qubits

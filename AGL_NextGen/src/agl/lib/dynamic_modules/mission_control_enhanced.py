@@ -21,28 +21,24 @@ try:
     import aiohttp
 except ImportError:
     aiohttp = None
-from Core_Engines.Quantum_Neural_Core import QuantumNeuralCore
+from agl.engines.quantum_neural import QuantumNeuralCore
 # --- HEIKAL SYSTEM INTEGRATION ---
 try:
-    from Core_Engines.Heikal_Quantum_Core import HeikalQuantumCore
-    from Core_Engines.Heikal_Holographic_Memory import HeikalHolographicMemory
-    from Core_Engines.Heikal_Metaphysics_Engine import HeikalMetaphysicsEngine # NEW INTEGRATION
-    from Core_Engines.Self_Reflective import SelfReflectiveEngine
+    from agl.engines.quantum_core import HeikalQuantumCore
+    from agl.engines.holographic_memory import HeikalHolographicMemory
+    from agl.engines.holographic_llm import HolographicLLM
+    from agl.engines.metaphysics import HeikalMetaphysicsEngine # NEW INTEGRATION
+    from agl.engines.self_reflective import SelfReflectiveEngine
     HEIKAL_AVAILABLE = True
 except ImportError:
     try:
-        # Fallback to AGL_Core
-        from AGL_Core.Heikal_Quantum_Core import HeikalQuantumCore
-        # Try to find others in AGL_Core or disable them if not found
-        try: from AGL_Core.Heikal_Holographic_Memory import HeikalHolographicMemory
-        except: HeikalHolographicMemory = None
-        try: from AGL_Core.Heikal_Metaphysics_Engine import HeikalMetaphysicsEngine
-        except: HeikalMetaphysicsEngine = None
-        try: from AGL_Core.Self_Reflective import SelfReflectiveEngine
-        except: SelfReflectiveEngine = None
-        
+        # Fallback to local package if in same folder
+        from quantum_core import HeikalQuantumCore
+        from holographic_memory import HeikalHolographicMemory
+        from holographic_llm import HolographicLLM
+        from metaphysics import HeikalMetaphysicsEngine
+        from self_reflective import SelfReflectiveEngine
         HEIKAL_AVAILABLE = True
-        print("✅ [MissionControl] Heikal System modules loaded from AGL_Core.")
     except ImportError:
         print("⚠️ [MissionControl] Heikal System modules not found.")
         HEIKAL_AVAILABLE = False
@@ -52,17 +48,17 @@ except ImportError:
 # --------------------------------------
 
 # ---------------------------------
-from utils.llm_tools import build_llm_url
+from agl.lib.utils.llm_tools import build_llm_url
 
 try:
-    from Core_Memory.bridge_singleton import get_bridge
+    from agl.lib.core_memory.bridge_singleton import get_bridge
 except ImportError:
     def get_bridge(): return None
 
 # ============ استيراد المحركات من ENGINE_REGISTRY ============
-# استخدام bootstrap_register_all_engines من Core_Engines بدلاً من الاستيراد اليدوي
+# استخدام bootstrap_register_all_engines من agl.engines.bootstrap بدلاً من الاستيراد اليدوي
 try:
-    from Core_Engines import bootstrap_register_all_engines
+    from agl.engines.bootstrap import bootstrap_register_all_engines
     
     # إنشاء registry محلي
     _LOCAL_ENGINE_REGISTRY = {}
@@ -182,7 +178,10 @@ try:
     # ============ محرك الرنين الكمي (جديد) ============
     RESONANCE_OPTIMIZER = None
     try:
-        from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
+        try:
+            from agl.engines.resonance_optimizer import VectorizedResonanceOptimizer as ResonanceOptimizer
+        except ImportError:
+            from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
         RESONANCE_OPTIMIZER = ResonanceOptimizer()
         print("   ✅ ResonanceOptimizer: Active (Quantum-Synaptic Resonance)")
     except Exception as e:
@@ -215,13 +214,19 @@ try:
     
     # محركات خاصة
     try:
-        from Core_Engines.optimization_engine import OptimizationEngine
+        try:
+            from agl.engines.optimization_engine import OptimizationEngine
+        except ImportError:
+            from Core_Engines.optimization_engine import OptimizationEngine
         OPTIMIZATION_ENGINE = OptimizationEngine()
     except:
         OPTIMIZATION_ENGINE = None
     
     try:
-        from Core_Engines.Advanced_Simulation_Engine import AdvancedSimulationEngine
+        try:
+            from agl.engines.advanced_simulation import AdvancedSimulationEngine
+        except ImportError:
+            from Core_Engines.Advanced_Simulation_Engine import AdvancedSimulationEngine
         ADVANCED_SIM = AdvancedSimulationEngine()
     except ImportError:
         # Fallback: try old location just in case
@@ -235,7 +240,10 @@ try:
         ADVANCED_SIM = None
     
     try:
-        from Core_Engines.evolution import evolve_thought_process
+        try:
+            from agl.engines.evolution import evolve_thought_process
+        except ImportError:
+            from Core_Engines.evolution import evolve_thought_process
         EVOLUTION_ENGINE = {"evolve": evolve_thought_process}
     except:
         EVOLUTION_ENGINE = None

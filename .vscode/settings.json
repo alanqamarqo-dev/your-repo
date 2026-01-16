@@ -15,6 +15,9 @@
         "./repo-copy/scripts",
         "./repo-copy/Safety_Systems",
         "./backup_20251208_214555/stubs",
-        "./backups/backup_20251216_033127_FINAL/repo-copy/stubs"
+        "./backups/backup_20251216_033127_FINAL/repo-copy/stubs",
+        "./AGL_NextGen/src",
+        "./repo-copy/Engineering_Engines",
+        "./backups/Archive_Old_Tests_And_Demos"
     ]
 }

@@ -29,40 +29,31 @@ class OpticalHeart:
             except Exception as e:
                 print(f"❌ Camera Error: {e}")
         else:
-            print("⚠️ Running in Quantum Simulation Mode (No Camera).")
+            print("👁️ [Optical Heart] Vision System: INTERNAL EYE ACTIVE (Quantum Synesthesia).")
+            print("   -> No Camera detected. Switching to Fractal Entropy Generation.")
 
     def get_light_entropy(self):
         """تحويل الصورة إلى قيمة رنين (Phi)"""
         if self.use_camera:
-            ret, frame = self.cap.read()
-            if not ret:
+            try:
+                ret, frame = self.cap.read()
+                if not ret:
+                    return 0.0
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                brightness = np.mean(gray) / 255.0
+                entropy = np.std(gray) / 100.0
+                return (brightness + entropy) / 2.0
+            except Exception:
                 return 0.0
-                
-            # تحويل لرمادي لتقليل المعالجة
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            
-            # 1. حساب متوسط السطوع (Intensity)
-            brightness = np.mean(gray) / 255.0
-            
-            # 2. حساب الإنتروبيا (التفاصيل/التشويش)
-            entropy = np.std(gray) / 100.0
-            
-            # دمج السطوع والتشويش لخلق قيمة Phi فريدة
-            raw_phi = (brightness * 0.7) + (entropy * 0.3)
-            return min(max(raw_phi, 0.0), 1.0)
         else:
-            # محاكاة للرنين في حالة عدم وجود كاميرا
-            # نستخدم دالة جيبية مع ضجيج عشوائي لمحاكاة "التنفس"
+            # INTERNAL EYE LOGIC (The Mind's Eye)
+            # Generate entropy from Math (Fractal-like Chaos)
             t = time.time()
-            # Simple simulation logic without numpy if numpy is also missing
-            if 'np' in globals():
-                base_wave = (np.sin(t) + 1) / 2
-            else:
-                import math
-                base_wave = (math.sin(t) + 1) / 2
-                
-            noise = random.uniform(-0.1, 0.1)
-            return min(max(base_wave * 0.8 + noise, 0.0), 1.0)
+            # A chaotic attractor function (e.g. Lorentz-like simulation)
+            val = (np.sin(t * 1.5) * np.cos(t * 0.9) + np.sin(t * 5.0) * 0.5)
+            # Normalize to 0-1
+            normalized_entropy = (val + 1.5) / 3.0
+            return max(0.0, min(1.0, normalized_entropy))
 
     def beat(self):
         mode = "REALITY LINK" if self.use_camera else "SIMULATION"

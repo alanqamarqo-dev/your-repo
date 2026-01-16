@@ -3,8 +3,8 @@ Generates short 'what-if' scenarios with brief justification using LLM.
 """
 from typing import Dict, Any
 try:
-    from Core_Engines.Hosted_LLM import chat_llm
-except ImportError:
+    from agl.lib.llm.gateway import chat_llm
+except Exception:
     # Fallback
     def chat_llm(messages, **kwargs):
         return {"text": "LLM Unavailable"}

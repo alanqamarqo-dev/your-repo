@@ -8,7 +8,7 @@ class AdvancedExponentialAlgebra:
 
     def process_task(self, payload: dict):
         return {"ok": True, "engine": "advanced_exponential_algebra:stub", "result": "approx"}
-# Core_Engines/Advanced_Exponential_Algebra.py
+# agl/engines/advanced_exponential_algebra.py
 import torch # type: ignore
 import numpy as np # type: ignore
 from scipy import linalg # type: ignore

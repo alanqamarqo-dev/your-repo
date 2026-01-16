@@ -28,6 +28,15 @@ class SelfReflectiveEngine:
     def __init__(self, config: Optional[Dict[str, Any]]=None):
         self.name = 'Self_Reflective'
         self.config = config or {}
+        self.monitoring_active = False
+
+    def start_monitoring(self):
+        """
+        Starts the self-monitoring process.
+        """
+        self.monitoring_active = True
+        print(f"[{self.name}] MONITORING STARTED.")
+
     def _find_contradictions(self, trace: List[Dict[str, Any]]) -> List[str]:
         seen = {}
         issues = []

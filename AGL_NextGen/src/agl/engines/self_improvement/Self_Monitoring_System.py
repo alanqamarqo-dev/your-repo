@@ -49,3 +49,32 @@ class SelfMonitoringSystem:
             ],
             'needs_improvement': score < 0.7
         }
+
+    def detect_anomalies(self, system_registry) -> list:
+        """
+        🔍 Detects runtime anomalies in the system registry.
+        """
+        anomalies = []
+        
+        # 1. Check Heikal Quantum Core for parameter drift
+        hqc = system_registry.get('Heikal_Quantum_Core')
+        if hqc:
+            mult = getattr(hqc, 'resonance_multiplier', 1.0)
+            if mult < 0.1: # Significant drift or sabotage
+                anomalies.append({
+                    'component': 'Heikal_Quantum_Core',
+                    'issue': 'Critical resonance drift detected',
+                    'value': mult,
+                    'severity': 'CRITICAL'
+                })
+                
+        return anomalies
+
+    def propose_correction(self, anomaly: dict) -> str:
+        """
+        🛠️ Proposes and applies a correction for a detected anomaly.
+        """
+        if anomaly['component'] == 'Heikal_Quantum_Core' and 'resonance' in anomaly['issue']:
+            return "Strategy: Recalibrate Resonance Multiplier to 1.0. Reason: Value below operational threshold (0.1)."
+            
+        return "Strategy: No automated correction available."

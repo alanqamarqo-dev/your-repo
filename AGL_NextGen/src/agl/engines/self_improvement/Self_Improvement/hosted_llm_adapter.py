@@ -544,7 +544,18 @@ class HostedLLMAdapter:
             # ensure positive
             use_timeout = max(1.0, float(eff))
             logger.debug("ollama_cli_call", extra={"model": model, "timeout_used": use_timeout})
+            
+            # Check for MOCK mode
+            if os.getenv("AGL_OLLAMA_KB_MOCK", "0") == "1":
+                 return f"Mock response for: {prompt[:50]}...", None
+
             completed = subprocess.run(cmd, capture_output=True, text=True, timeout=use_timeout)
+        except FileNotFoundError:
+             # Ollama executable not found
+             warning_msg = "⚠️ Ollama executable not found.\n   هذا مشروع بحثي متقدم. لتشغيله بنجاح، يجب تثبيت Ollama وضبط مسارات البيئة."
+             logger.error(f"{warning_msg}\n   Please install Ollama from https://ollama.com/")
+             print(f"\n{warning_msg}\n")
+             return None, "Ollama executable not found. Please install Ollama."
         except subprocess.TimeoutExpired as e:
             logger.warning("ollama run timed out", exc_info=True)
             return None, f"cli-timeout: {e!r}"

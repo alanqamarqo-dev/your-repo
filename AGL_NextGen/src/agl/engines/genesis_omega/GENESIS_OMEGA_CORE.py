@@ -47,15 +47,9 @@ class GENESIS_OMEGA_Entity(nn.Module):
         
         # 1. الوراثة المقدسة من الأم
         if mother_system is None:
-             # Create a mock or default if not provided
-             try:
-                 from agl.core.super_intelligence import AGL_Super_Intelligence
-                 self.mother = AGL_Super_Intelligence()
-             except ImportError:
-                 print("   [Mock] Mother System Initialized (Fallback).")
-                 class MockMother:
-                     def __init__(self): pass
-                 self.mother = MockMother()
+             print("   ⚠️ [GENESIS] Booting in Detached Mode (Mother System not provided).")
+             # Do NOT instantiate AGL_Super_Intelligence here to avoid Circular Recursion with Bootstrap.
+             self.mother = None
         else:
              self.mother = mother_system
         self.mother = mother_system

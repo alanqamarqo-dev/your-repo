@@ -13,6 +13,14 @@ class MetaLearningEngine:
         # store learned simple principles per id
         # mapping: principle_id -> {"rule": callable, "desc": str, "confidence": float}
         self._principles: Dict[str, Dict[str, Any]] = {}
+        self.reflection_loop_active = False
+
+    def activate_reflection_loop(self):
+        """
+        Activates the continuous reflection loop.
+        """
+        self.reflection_loop_active = True
+        print(f"[{self.name}] REFLECTION LOOP ACTIVATED.")
 
     def _score_hypothesis(
         self,

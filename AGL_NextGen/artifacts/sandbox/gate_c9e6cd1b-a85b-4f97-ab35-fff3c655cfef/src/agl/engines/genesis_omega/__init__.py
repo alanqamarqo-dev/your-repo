@@ -1,0 +1,1 @@
+from .GENESIS_OMEGA_CORE import GENESIS_OMEGA_Entity

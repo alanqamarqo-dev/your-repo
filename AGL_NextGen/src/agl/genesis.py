@@ -6,14 +6,14 @@ import random
 # sys.path.append(os.path.join(os.getcwd(), "repo-copy"))
 
 try:
-    # from Core_Engines import Ancestral_Wisdom
+    # Ancestral Wisdom (Legacy Stub)
     class Ancestral_Wisdom:
         @staticmethod
         def _derive_risk(entity, data): return "LOW"
 
-    # استيراد القلب البصري (الفيزيائي أو المحاكي)
+    # NextGen Optical Heart
     from agl.engines.optical_heart import OpticalHeart
-    print("✅ [Genesis] Libraries Loaded (Wisdom + Optical Heart).")
+    print("✅ [Genesis] NextGen Libraries Loaded.")
 except ImportError as e:
     print(f"⚠️ [Genesis] Core libraries missing: {e}")
     sys.exit()

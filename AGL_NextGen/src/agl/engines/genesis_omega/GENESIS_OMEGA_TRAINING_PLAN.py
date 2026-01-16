@@ -13,9 +13,17 @@ sys.path.append(os.path.join(root_dir, "repo-copy"))
 
 # Import GENESIS-OMEGA Core
 try:
-    from .GENESIS_OMEGA_CORE import GENESIS_OMEGA_Entity, AGL_Super_Intelligence
-except ImportError:
-    from agl.engines.genesis_omega.GENESIS_OMEGA_CORE import GENESIS_OMEGA_Entity, AGL_Super_Intelligence
+    # Ensure src is in path
+    src_dir = os.path.abspath(os.path.join(current_dir, "../../../"))
+    if src_dir not in sys.path:
+        sys.path.append(src_dir)
+
+    from agl.engines.genesis_omega.GENESIS_OMEGA_CORE import GENESIS_OMEGA_Entity
+
+except ImportError as e:
+    print(f"⚠️ [TRAINER] Critical Import Error: {e}")
+    # Define dummy if needed to prevent crash, but we want it to work
+    class GENESIS_OMEGA_Entity: pass
 
 # Import Advanced Engines for Training
 try:
@@ -31,11 +39,16 @@ except ImportError as e:
     print("   -> Switching to Simulation Mode for missing engines.")
 
 class GenesisOmegaTrainer:
-    def __init__(self):
+    def __init__(self, mother_system=None):
         print("\n🎓 [TRAINER] Initializing GENESIS-OMEGA Advanced Training Protocol...")
         
         # 1. Initialize the Child
-        self.mother = AGL_Super_Intelligence()
+        if mother_system:
+             self.mother = mother_system
+        else:
+             print("   ⚠️ [TRAINER] Booting in Detached Mode (Waiting for Injection).")
+             self.mother = None
+        
         self.child = GENESIS_OMEGA_Entity(self.mother)
         
         # 2. Initialize Training Modules

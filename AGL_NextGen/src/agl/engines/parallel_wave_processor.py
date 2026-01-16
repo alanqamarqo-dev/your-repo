@@ -19,11 +19,14 @@ import os
 # Ensure we can import the gate processor
 sys.path.append(os.getcwd())
 try:
-    from AGL_Advanced_Wave_Gates import AdvancedWaveProcessor
+    from agl.engines.vectorized_wave_processor import VectorizedWaveProcessor as AdvancedWaveProcessor
 except ImportError:
     # Fallback for when running from different directories
-    sys.path.append(os.path.join(os.getcwd(), '..'))
-    from AGL_Advanced_Wave_Gates import AdvancedWaveProcessor
+    try:
+        from vectorized_wave_processor import VectorizedWaveProcessor as AdvancedWaveProcessor
+    except ImportError:
+         print("Warning: Could not import VectorizedWaveProcessor. Parallel Executor disabled.")
+         AdvancedWaveProcessor = None
 
 def _worker_task(chunk_a, chunk_b, operation, noise_floor):
     """
@@ -35,18 +38,21 @@ def _worker_task(chunk_a, chunk_b, operation, noise_floor):
     sys.stdout = open(os.devnull, 'w')
     
     try:
+        if AdvancedWaveProcessor is None:
+            return None
+            
         processor = AdvancedWaveProcessor(noise_floor=noise_floor)
         
         if operation == "XOR":
-            return processor.wave_xor_vectorized(chunk_a, chunk_b)
+            return processor.batch_xor(chunk_a, chunk_b)
         elif operation == "AND":
-            return processor.wave_and_vectorized(chunk_a, chunk_b)
+            return processor.batch_and(chunk_a, chunk_b)
         elif operation == "OR":
-            return processor.wave_or_vectorized(chunk_a, chunk_b)
+            return processor.batch_or(chunk_a, chunk_b)
         elif operation == "NOT":
-            return processor.wave_not_vectorized(chunk_a)
+            return processor.batch_not(chunk_a)
         else:
-            return processor.wave_xor_vectorized(chunk_a, chunk_b)
+            return processor.batch_xor(chunk_a, chunk_b)
     finally:
         sys.stdout = sys.__stdout__
 

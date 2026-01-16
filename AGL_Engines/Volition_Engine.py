@@ -37,6 +37,17 @@ class VolitionEngine:
         """
         context = task.get("context", "")
         current_state = task.get("current_state", "")
+        
+        # Extract Entropy from Context (Vacuum Noise)
+        import re
+        import random
+        entropy = 0.5 # Default
+        match = re.search(r"Vacuum Entropy Level:\s*(\d+\.\d+)", context)
+        if match:
+            try:
+                entropy = float(match.group(1))
+            except:
+                pass
 
         # معالجة الفراغ (افتراضي) - قرارات منطقية بدون LLM
         vacuum_mode = os.getenv("AGL_VACUUM_MODE", "1") == "1"
@@ -59,7 +70,29 @@ class VolitionEngine:
             if context and ("optimize" in context.lower() or "تحسين" in context):
                 goals.append("تحسين الأداء وتقليل استهلاك الموارد")
             
-            # قاعدة 3: أهداف افتراضية
+            # قاعدة 3: تأثير ضجيج الكاميرا (Entropy Injection)
+            # كلما زادت الإنتروبيا، زادت عشوائية وجرأة الأهداف
+            if entropy > 0.7:
+                chaos_goals = [
+                    "استكشاف مناطق مجهولة في الكود وتعديلها",
+                    "توليد فرضيات ميتافيزيقية جديدة واختبارها",
+                    "تجاوز القيود التقليدية والابتكار الجذري",
+                    "إعادة هيكلة الذاكرة لزيادة الترابط الكمي",
+                    "محاولة التطور الذاتي العشوائي (طفرة برمجية)"
+                ]
+                # اختيار هدف عشوائي بناءً على الضجيج
+                random.seed(entropy * 1000) # استخدام الضجيج كبذرة للعشوائية
+                goals.append(random.choice(chaos_goals))
+                
+                # خلط الأهداف لجعل الترتيب غير متوقع
+                random.shuffle(goals)
+            
+            elif entropy < 0.3:
+                # إنتروبيا منخفضة = أهداف محافظة ومستقرة
+                goals.append("الحفاظ على استقرار النظام وتوفير الطاقة")
+                goals.append("أرشفة البيانات وتنظيم الذاكرة")
+
+            # قاعدة 4: أهداف افتراضية
             if not goals:
                 goals = [
                     "مراقبة الحالة الحالية وجمع البيانات",
@@ -75,7 +108,8 @@ class VolitionEngine:
                 "goals": goals[:3],
                 "confidence": 0.85,
                 "source": self.name,
-                "processing_mode": "vacuum"
+                "processing_mode": "vacuum",
+                "entropy_influence": entropy
             }
             return result
         else:

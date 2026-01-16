@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agl-super-intelligence"
-version = "2.0.0"
-description = "AGL: Advanced General Intelligence Framework"
+version = "2.1.0"
+description = "AGL: Portable & Vectorized General Intelligence Framework"
 authors = [{name = "Hossam Heikal"}]
 readme = "README.md"
 requires-python = ">=3.9"
@@ -14,7 +14,16 @@ dependencies = [
     "opencv-python",
     "requests",
     "torch",
-    "scipy"
+    "scipy",
+    "colorama",
+    "aiohttp",
+    "pydantic",
+    "matplotlib",
+    "networkx",
+    "fastapi",
+    "uvicorn",
+    "sympy",
+    "wikipedia-api"
 ]
 
 [project.scripts]

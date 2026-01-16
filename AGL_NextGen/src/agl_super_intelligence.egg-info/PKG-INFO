@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: agl-super-intelligence
+Version: 2.0.0
+Summary: AGL: Advanced General Intelligence Framework
+Author: Hossam Heikal
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: opencv-python
+Requires-Dist: requests
+Requires-Dist: torch
+Requires-Dist: scipy

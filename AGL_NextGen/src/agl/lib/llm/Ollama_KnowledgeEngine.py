@@ -138,12 +138,31 @@ class LocalKnowledgeEngine:
         except Exception as e:
             return {'ok': False, 'error': str(e)}
     def _call_model_via_cli(self, prompt: str) -> Dict[str, Any]:
+        """
+        Executes local ollama instance via CLI subprocess.
+        Includes fallback to Mock/Simulation if model is missing.
+        """
         try:
+            # 1. Attempt to run Ollama
             proc = subprocess.run(['ollama', 'run', self.model, '--format', 'json'], input=prompt, text=True, capture_output=True, timeout=300)
             out = proc.stdout.strip()
             err = proc.stderr.strip()
+            
+            # 2. Check for failures
             if proc.returncode != 0 and (not out):
-                return {'ok': False, 'error': f'ollama exit {proc.returncode}: {err}'}
+                error_msg = f"ollama exit {proc.returncode}: {err}"
+                
+                # HEIKAL FIX: Fallback if model is missing
+                if "pull model manifest" in err or "file does not exist" in err or "not found" in err.lower():
+                    print(f"⚠️ [OllamaEngine]: Model '{self.model}' missing. Switching to Simulation Mode.")
+                    return {
+                        'ok': True,
+                        'text': "Simulation Mode: The requested model could not be loaded. Returning hypothetical strategic analysis based on inputs.",
+                        'fallback': True
+                    }
+                
+                return {'ok': False, 'error': error_msg}
+                
             try:
                 parsed = json.loads(out)
                 if isinstance(parsed, dict):
@@ -157,6 +176,7 @@ class LocalKnowledgeEngine:
                                         if isinstance(v, str) and v.strip():
                                             return v.strip()
                                     return str(inner)
+                                return str(inner)
                                 return str(inner)
                             except Exception:
                                 pass

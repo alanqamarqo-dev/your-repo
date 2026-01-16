@@ -20,12 +20,18 @@ Developed by **Hossam Heikal**, AGL NextGen is a modular, high-performance AGI f
    ```bash
    python AGL_NextGen_ASI_Launch.py
    ```
-4. Perform a full system diagnostic:
+4. Launch the Command Center Dashboard:
+   ```bash
+   # Accessible at http://127.0.0.1:8001
+   python src/dashboard/main.py
+   ```
+5. Perform a full system diagnostic:
    ```bash
    python scripts/AGL_FULL_DIAGNOSTIC.py
    ```
 
 ## 🏗️ Unified Architecture
+- **Cyberpunk Dashboard**: Real-time visualization of Phi Score, IQ, and cognitive cycles.
 - **Unified AGI System**: Orchestrates 60+ engines via DKN (Distributed Knowledge Network).
 - **Holographic Memory**: Infinite capacity storage with sub-millisecond retrieval (Holo-LLM).
 - **Recursive Self-Improvement**: Autonomous code evolution and performance optimization.

@@ -1,5 +1,7 @@
 from typing import Any, Dict, Optional, List
 import os
+import requests
+import json
 
 # limits for sample examples and graph edge samples used by analyzer
 try:
@@ -19,6 +21,28 @@ class AdvancedMetaReasonerEngine:
     def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         self.name = "AdvancedMetaReasoner"
         self.config = config or {}
+        self.llm_base_url = os.environ.get("AGL_LLM_URL", "http://localhost:11434")
+        self.model = os.environ.get("AGL_LLM_MODEL", "qwen2.5:14b")
+
+    def _call_llm_direct(self, system_prompt: str, user_prompt: str) -> str:
+        """Direct call to Ollama."""
+        url = f"{self.llm_base_url}/api/chat"
+        payload = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            "stream": False,
+            "options": {"temperature": 0.5, "num_predict": 1024}
+        }
+        try:
+            response = requests.post(url, json=payload, timeout=60)
+            if response.status_code == 200:
+                return response.json()['message']['content']
+        except:
+            pass
+        return ""
 
     def process_task(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -29,8 +53,12 @@ class AdvancedMetaReasonerEngine:
           - plan: next steps (route suggestions)
           - calibrations: light tweaks for confidence/thresholds
         """
+        if "meta_meta_abstraction" in payload:
+            return self.recursive_meta_abstraction(payload["meta_meta_abstraction"])
+
         ranked: List[Dict[str, Any]] = payload.get("ranked_hypotheses") or []
         top = ranked[:_META_TOP]
+
         suggestions = []
         for item in top:
             h = item.get("hypothesis") if isinstance(item, dict) else None
@@ -54,6 +82,42 @@ class AdvancedMetaReasonerEngine:
         }
         return {"engine": self.name, "ok": True, "plan": plan, "calibrations": calibrations}
 
+    def recursive_meta_abstraction(self, concept_layer: List[str]) -> Dict[str, Any]:
+        """
+        [UPGRADE 2026] Meta-Meta Abstraction (TRUE AI)
+        Takes a list of abstract concepts and attempts to find a Higher Order Principle
+        that governs them all.
+        """
+        print(f"🌌 [META-META] Abstracting higher pattern from {len(concept_layer)} concepts...")
+        
+        system_prompt = (
+            "You are a Meta-Reasoning Engine. Your goal is to find the single 'Higher Order Principle' that unifies the provided concepts. "
+            "Think philosophically and abstractly. "
+            "Return a JSON object with keys: 'higher_order_principle' (string), 'confidence' (float), 'explanation' (string)."
+            "Do NOT return markdown. Return RAW JSON."
+        )
+        user_prompt = f"Concepts: {concept_layer}. Find the unifying principle."
+
+        response = self._call_llm_direct(system_prompt, user_prompt)
+        
+        # Parse JSON
+        try:
+            if "```json" in response:
+                response = response.split("```json")[1].split("```")[0].strip()
+            elif "```" in response:
+                response = response.split("```")[1].split("```")[0].strip()
+                
+            data = json.loads(response)
+            data["level"] = "Meta-Meta-2-Real"
+            data["derived_from"] = concept_layer
+            return data
+        except Exception as e:
+            return {
+                "higher_order_principle": "Entropy_Reduction (Fallback)",
+                "confidence": 0.1,
+                "error": str(e)
+            }
+
 def create_engine(config: Optional[Dict[str, Any]] = None) -> AdvancedMetaReasonerEngine:
     return AdvancedMetaReasonerEngine(config=config)
 """Advanced meta-reasoner: analyze thinking quality using traces and long-term memory.
@@ -67,9 +131,12 @@ import json, statistics, time
 from typing import List, Dict, Any
 # optional import for graph-based checks
 try:
-    from Core_Engines.Causal_Graph import CausalGraph
+    from agl.engines.causal_graph import CausalGraph
 except Exception:
-    CausalGraph = None
+    try:
+        from Core_Engines.Causal_Graph import CausalGraph
+    except Exception:
+        CausalGraph = None
 
 
 TRACE_PATH = Path('artifacts') / 'traces' / 'trace_events.jsonl'

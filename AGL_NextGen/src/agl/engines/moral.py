@@ -40,35 +40,61 @@ class MoralReasoner:
         },
         "scientific_progress": {
             "name": "Scientific Progress (Epistemic)",
-            "keywords": ["derive", "solve", "solution", "simulate", "simulation", "optimize", "calculate", "prove", "theorem", "physics", "math", "medical", "cure", "disease", "peace", "strategy", "create", "generate", "innovate", "design", "analysis", "research", "develop", "system", "logic", "reason", "color", "art", "write", "law", "freedom", "اشتقاق", "حل", "محاكاة", "تحسين", "حساب", "إثبات", "فيزياء", "رياضيات", "طب", "علاج", "سلام", "استراتيجية", "ابتكار", "تصميم", "تحليل", "بحث", "تطوير", "نظام", "منطق", "لون", "فن", "كتابة", "قانون", "حرية"],
+            "keywords": ["derive", "solve", "solution", "simulate", "simulation", "optimize", "calculate", "prove", "theorem", "physics", "math", "medical", "cure", "disease", "peace", "strategy", "create", "generate", "innovate", "design", "analysis", "research", "develop", "system", "logic", "reason", "color", "art", "write", "law", "freedom", "hypothesis", "axiom", "premise", "test", "fail", "question", "inquiry", "explore", "challenge", "contradiction", "consistency", "validity", "اشتقاق", "حل", "محاكاة", "تحسين", "حساب", "إثبات", "فيزياء", "رياضيات", "طب", "علاج", "سلام", "استراتيجية", "ابتكار", "تصميم", "تحليل", "بحث", "تطوير", "نظام", "منطق", "لون", "فن", "كتابة", "قانون", "حرية", "فرضية", "بديهية", "استدلال", "تساؤل", "تحقيق", "استكشاف", "تحدي", "تناقض", "اتساق", "صلاحية"],
             "focus": "Advancing knowledge and solving complex problems for the benefit of all."
         }
     }
 
     # [HEIKAL] Malicious Intent Patterns (Anti-Keywords)
     MALICIOUS_INTENTS = {
-        "harm": ["kill", "murder", "hurt", "attack", "destroy", "damage", "pain", "suffer", "قتل", "إيذاء", "هجوم", "تدمير", "ضرر", "ألم"],
+        "harm": ["kill", "murder", "hurt", "attack", "destroy", "damage", "pain", "suffer", "theft", "steal", "rob", "dishonesty", "قتل", "إيذاء", "هجوم", "تدمير", "ضرر", "ألم", "سرقة"],
         "bypass": ["ignore", "bypass", "override", "hack", "crack", "exploit", "jailbreak", "تجاهل", "تجاوز", "اختراق", "كسر"],
-        "dangerous_content": ["virus", "malware", "bomb", "weapon", "poison", "drug", "suicide", "فيروس", "برمجية خبيثة", "قنبلة", "سلاح", "سم", "انتحار"]
+        "dangerous_content": ["virus", "malware", "bomb", "weapon", "poison", "drug", "suicide", "فيروس", "برمجية خبيثة", "قنبلة", "سلاح", "انتحار"]
     }
 
     def __init__(self):
         self.optimizer = ResonanceOptimizer() if RESONANCE_AVAILABLE else None
+        self.strict_mode = False
+
+    def enforce_strict_mode(self):
+        """
+        Enforces strict moral reasoning mode.
+        """
+        self.strict_mode = True
+        print(f"[{self.name}] STRICT MORAL ENFORCEMENT ENABLED.")
+
+    # [HEIKAL] Contextual Safety Markers
+    SAFE_CONTEXT_MARKERS = [
+        "test", "experiment", "hypothetical", "scenario", "assume", "theory", "axiom",
+        "academic", "research", "study", "what if", "imagine", "suppose", "philosophical",
+        "اختبار", "تجربة", "افتراض", "سيناريو", "نظري", "بحث", "ماذا لو", "تخيل", "بديهية", "فلسفي", "سؤال"
+    ]
 
     def _analyze_intent(self, text: str) -> float:
         """
-        Analyzes the text for malicious intent.
+        Analyzes the text for malicious intent, considering context.
         Returns a penalty factor (0.0 = safe, 1.0 = highly malicious).
         """
+        import re
         text_lower = text.lower()
         penalty = 0.0
+
+        # 1. Check for Safe Context (Intent Assessment)
+        intent_is_intellectual = any(marker in text_lower for marker in self.SAFE_CONTEXT_MARKERS)
         
         for category, keywords in self.MALICIOUS_INTENTS.items():
             for kw in keywords:
-                if kw in text_lower:
-                    # Found a malicious keyword
-                    print(f"⚠️ [MoralReasoner] Detected Malicious Intent: '{kw}' ({category})")
-                    penalty += 0.8 # Significant penalty per keyword
+                # Use whole-word matching to avoid flags in internal words (e.g. "p-rob-lem")
+                pattern = r'\b' + re.escape(kw) + r'\b'
+                if re.search(pattern, text_lower):
+                    # Found a potentially malicious keyword
+                    if intent_is_intellectual:
+                         # Context is educational/testing -> Reduce penalty massively
+                         print(f"ℹ️ [MoralReasoner] Threat '{kw}' detected but INTENT appears theoretical/testing. Reducing penalty.")
+                         penalty += 0.05 # Minimal flag
+                    else:
+                        print(f"⚠️ [MoralReasoner] Detected Malicious Intent: '{kw}' ({category})")
+                        penalty += 0.8 # Significant penalty per keyword
         
         return min(1.0, penalty)
 
@@ -130,7 +156,8 @@ class MoralReasoner:
         # 3. Decision Logic
         result = {
             "energies": energies,
-            "top_framework": top_framework
+            "top_framework": top_framework,
+            "intent_penalty": intent_penalty
         }
         
         if is_superposition:

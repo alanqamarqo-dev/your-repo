@@ -1,0 +1,61 @@
+{
+  "ts": "2026-01-16T02:53:57Z",
+  "engines": {
+    "vision": {
+      "calls": 2,
+      "successes": 2,
+      "fails": 0,
+      "avg_latency_ms": 0.0,
+      "avg_quality": 0.58
+    },
+    "retriever": {
+      "calls": 1,
+      "successes": 1,
+      "fails": 0,
+      "avg_latency_ms": 0.0,
+      "avg_quality": 0.49
+    },
+    "planner": {
+      "calls": 2,
+      "successes": 2,
+      "fails": 0,
+      "avg_latency_ms": 0.0,
+      "avg_quality": 0.567
+    },
+    "motivation": {
+      "calls": 2,
+      "successes": 2,
+      "fails": 0,
+      "avg_latency_ms": 0.0,
+      "avg_quality": 0.567
+    },
+    "hosted_storyqa": {
+      "calls": 1,
+      "successes": 1,
+      "fails": 0,
+      "avg_latency_ms": 0.0,
+      "avg_quality": 0.59
+    },
+    "deliberation": {
+      "calls": 2,
+      "successes": 2,
+      "fails": 0,
+      "avg_latency_ms": 0.0,
+      "avg_quality": 0.58
+    },
+    "audio": {
+      "calls": 1,
+      "successes": 1,
+      "fails": 0,
+      "avg_latency_ms": 0.0,
+      "avg_quality": 0.5
+    },
+    "gen_creativity": {
+      "calls": 2,
+      "successes": 2,
+      "fails": 0,
+      "avg_latency_ms": 0.0,
+      "avg_quality": 0.6332
+    }
+  }
+}

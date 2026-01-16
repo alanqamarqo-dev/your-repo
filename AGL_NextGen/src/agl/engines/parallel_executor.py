@@ -19,7 +19,8 @@ import os
 import sys
 import time
 import multiprocessing as mp
-from concurrent.futures import ProcessPoolExecutor, as_completed
+# Using ThreadPoolExecutor instead of ProcessPoolExecutor to avoid Windows freeze_support/spawn issues
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Dict, List, Optional, Callable
 import traceback
 import json
@@ -89,16 +90,16 @@ def _process_engine_task(engine_name: str, engine_class_path: str, task_input: A
 
 class ParallelEngineExecutor:
     """
-    محرك تنفيذ المحركات بالتوازي باستخدام ProcessPoolExecutor
+    محرك تنفيذ المحركات بالتوازي باستخدام ThreadPoolExecutor (Safe for Windows)
     """
     
     def __init__(self, max_workers: Optional[int] = None):
         """
         Args:
-            max_workers: عدد العمليات المتوازية (افتراضي: CPU_COUNT - 2)
+            max_workers: عدد الخيوط المتوازية (افتراضي: CPU_COUNT - 2)
         """
         self.max_workers = max_workers or DEFAULT_WORKERS
-        print(f"🚀 ParallelEngineExecutor: {self.max_workers} عمليات متوازية")
+        print(f"🚀 ParallelEngineExecutor: {self.max_workers} خيوط (Threads) متوازية [Windows Safe Mode]")
     
     async def run_engines_parallel(
         self,
@@ -125,13 +126,13 @@ class ParallelEngineExecutor:
         results = {}
         errors = {}
         
-        print(f"\n⚡ بدء تشغيل {len(engines_map)} محرك بالتوازي...")
+        print(f"\n⚡ بدء تشغيل {len(engines_map)} محرك بالتوازي (Threads)...")
         
         # تشغيل في event loop منفصل لتجنب مشاكل asyncio
         loop = asyncio.get_event_loop()
         
-        # استخدام ProcessPoolExecutor
-        with ProcessPoolExecutor(max_workers=self.max_workers) as executor:
+        # استخدام ThreadPoolExecutor بدلاً من ProcessPoolExecutor
+        with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             # إنشاء المهام
             future_to_engine = {}
             for engine_name, engine_class_path in engines_map.items():
@@ -233,11 +234,11 @@ async def benchmark_parallel_vs_sequential():
     """
     # محركات تجريبية
     engines = {
-        "Mathematical_Brain": "Core_Engines.Mathematical_Brain.MathematicalBrain",
-        "Causal_Graph": "Core_Engines.Causal_Graph.CausalGraphEngine",
-        "Creative_Innovation": "Core_Engines.Creative_Innovation.CreativeInnovationEngine",
-        "HYPOTHESIS_GENERATOR": "Core_Engines.HYPOTHESIS_GENERATOR.HypothesisGeneratorEngine",
-        "Meta_Learning": "Core_Engines.Meta_Learning.MetaLearningEngine",
+        "Mathematical_Brain": "agl.engines.mathematical_brain.MathematicalBrain",
+        "Causal_Graph": "agl.engines.causal_graph.CausalGraphEngine",
+        "Creative_Innovation": "agl.engines.creative_innovation.CreativeInnovation",
+        "HYPOTHESIS_GENERATOR": "agl.engines.hypothesis_generator.HypothesisGeneratorEngine",
+        "Meta_Learning": "agl.engines.meta_learning.MetaLearningEngine",
     }
     
     task = "What is 2+2? Explain briefly."

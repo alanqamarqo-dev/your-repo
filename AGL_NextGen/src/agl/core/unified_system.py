@@ -30,12 +30,8 @@ try:
     from agl.engines.parallel_executor import ParallelEngineExecutor
     PARALLEL_EXECUTOR_AVAILABLE = True
 except ImportError:
-    try:
-        from Core_Engines.Parallel_Engine_Executor import ParallelEngineExecutor
-        PARALLEL_EXECUTOR_AVAILABLE = True
-    except ImportError:
-        PARALLEL_EXECUTOR_AVAILABLE = False
-        print("⚠️ ParallelEngineExecutor غير متاح - سيتم التشغيل المتسلسل")
+    PARALLEL_EXECUTOR_AVAILABLE = False
+    print("⚠️ ParallelEngineExecutor غير متاح - سيتم التشغيل المتسلسل")
 
 
 def _safe_get_answer(obj: Any) -> str:
@@ -69,13 +65,7 @@ try:
     from agl.engines.metaphysics import HeikalMetaphysicsEngine
     HEIKAL_AVAILABLE = True
 except ImportError:
-    try:
-        from Core_Engines.Heikal_Quantum_Core import HeikalQuantumCore # pyright: ignore[reportMissingImports]
-        from Core_Engines.Heikal_Holographic_Memory import HeikalHolographicMemory
-        from Core_Engines.Heikal_Metaphysics_Engine import HeikalMetaphysicsEngine
-        HEIKAL_AVAILABLE = True
-    except ImportError:
-        HEIKAL_AVAILABLE = False
+    HEIKAL_AVAILABLE = False
 
 # استيراد Holographic LLM (Infinite Storage)
 try:
@@ -83,40 +73,22 @@ try:
     HOLOGRAPHIC_LLM_AVAILABLE = True
     print("🌌 Holographic LLM: Available (Infinite Storage)")
 except ImportError:
-    try:
-        from AGL_Memory.Holographic_LLM import HolographicLLM
-        HOLOGRAPHIC_LLM_AVAILABLE = True
-        print("🌌 Holographic LLM: Available (Infinite Storage) [Core_Engines]")
-    except ImportError:
-        try:
-            from Core_Engines.Holographic_LLM import HolographicLLM # pyright: ignore[reportMissingImports]
-            HOLOGRAPHIC_LLM_AVAILABLE = True
-            print("🌌 Holographic LLM: Available (Infinite Storage) [Core_Engines]")
-        except ImportError:
-            HOLOGRAPHIC_LLM_AVAILABLE = False
-            print("⚠️ Holographic LLM: Not available")
+    HOLOGRAPHIC_LLM_AVAILABLE = False
+    print("⚠️ Holographic LLM: Not available")
 
 # استيراد Resonance Optimizer (Quantum Theory)
 try:
     from agl.engines.resonance_optimizer import ResonanceOptimizer
     RESONANCE_AVAILABLE = True
 except ImportError:
-    try:
-        from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
-        RESONANCE_AVAILABLE = True
-    except ImportError:
-        RESONANCE_AVAILABLE = False
+    RESONANCE_AVAILABLE = False
 
 # استيراد Self-Reflective Engine
 try:
     from agl.engines.self_reflective import SelfReflectiveEngine
     REFLECTION_AVAILABLE = True
 except ImportError:
-    try:
-        from Core_Engines.Self_Reflective import SelfReflectiveEngine
-        REFLECTION_AVAILABLE = True
-    except ImportError:
-        REFLECTION_AVAILABLE = False
+    REFLECTION_AVAILABLE = False
 
 # استيراد DKN System
 try:
@@ -178,19 +150,13 @@ except ImportError as e:
 
 # استيراد Consciousness & Evolution Systems (Phase 2)
 try:
-    # ConsciousnessTracker و SelfEvolution موجودان في dynamic_modules.agl_consciousness
-    # We don't have dynamic_modules anymore, let's try to find where these are or disable them gracefully
-    # Assuming they might be in agl.engines.consciousness or similar
-    # For now, let's disable them if not found to avoid errors
-    from agl.engines.consciousness import ConsciousnessService as ConsciousnessTracker # Placeholder
-    # from dynamic_modules.agl_consciousness import (
-    #     ConsciousnessTracker, 
-    #     SelfEvolution,
-    #     AutobiographicalMemory,
-    #     TrueConsciousnessSystem
-    # )
-    CONSCIOUSNESS_AVAILABLE = False # Temporarily disabled until we locate these classes
-    print("⚠️ Consciousness Systems: Temporarily disabled (Classes not found in new structure)")
+    from agl.lib.dynamic_modules.agl_consciousness import (
+        ConsciousnessTracker,
+        SelfEvolution,
+        AutobiographicalMemory,
+        TrueConsciousnessSystem,
+    )
+    CONSCIOUSNESS_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ Consciousness Systems غير متاح: {e}")
     ConsciousnessTracker = None
@@ -716,13 +682,17 @@ class UnifiedAGISystem:
         self.creative = engine_registry.get('Creative_Innovation')
         self.self_reflective = engine_registry.get('Self_Reflective')
         self.math_brain = engine_registry.get('Mathematical_Brain')
+
+        # Core Consciousness (Main Brain)
+        self.core_consciousness_module = engine_registry.get('Core_Consciousness_Module')
         
         # Heikal Quantum Systems
         if HEIKAL_AVAILABLE:
-            self.heikal_core = HeikalQuantumCore()
-            self.heikal_memory = HeikalHolographicMemory()
-            self.heikal_metaphysics = HeikalMetaphysicsEngine()
-            print("🌌 [UnifiedAGI] Heikal Quantum Core, Holographic Memory & Metaphysics Engine Initialized.")
+            # [Optimization] Use Shared Instances from Registry if available (One Mind)
+            self.heikal_core = engine_registry.get('Heikal_Quantum_Core') or HeikalQuantumCore()
+            self.heikal_memory = engine_registry.get('Heikal_Holographic_Memory') or HeikalHolographicMemory()
+            self.heikal_metaphysics = engine_registry.get('Heikal_Metaphysics_Engine') or HeikalMetaphysicsEngine()
+            print("🌌 [UnifiedAGI] Heikal Quantum Core & Metaphysics Linked (Unified Consciousness).")
         else:
             self.heikal_core = None
             self.heikal_memory = None
@@ -1096,9 +1066,11 @@ class UnifiedAGISystem:
         """تفعيل ConsciousBridge - جسر الذاكرة الواعي (STM+LTM)"""
         # استخدام singleton للحصول على نفس الـ bridge في كل النظام
         self.conscious_bridge = get_bridge()
+        if not self.conscious_bridge:
+            raise RuntimeError("ConsciousBridge singleton is unavailable (get_bridge() returned None)")
         print("🌉 ConsciousBridge: STM (256) + LTM (SQLite) + Graph Relations")
-        print(f"   📊 LTM حالياً: {len(self.conscious_bridge.ltm)} حدث")
-        print(f"   ⚡ STM حالياً: {len(self.conscious_bridge.stm)} حدث")
+        print(f"   📊 LTM حالياً: {len(getattr(self.conscious_bridge, 'ltm', {}))} حدث")
+        print(f"   ⚡ STM حالياً: {len(getattr(self.conscious_bridge, 'stm', []))} حدث")
     
     def _initialize_consciousness_tracking(self):
         """تفعيل نظام تتبع الوعي والتطور الذاتي + السيرة الذاتية + الوعي الحقيقي"""
@@ -1483,9 +1455,9 @@ class UnifiedAGISystem:
             try:
                 # تحديد المحركات للتشغيل المتوازي (أسرع 3-4x)
                 engines_to_run = {
-                    'Mathematical_Brain': 'AGL_Engines.Mathematical_Brain.MathematicalBrain',
-                    'Reasoning_Layer': 'Core_Engines.Reasoning_Layer.ReasoningLayer',
-                    'Creative_Innovation': 'Core_Engines.Creative_Innovation.CreativeInnovation'
+                    'Mathematical_Brain': 'agl.engines.mathematical_brain.MathematicalBrain',
+                    'Reasoning_Layer': 'agl.engines.reasoning_layer.ReasoningLayer',
+                    'Creative_Innovation': 'agl.engines.creative_innovation.CreativeInnovation'
                 }
                 
                 parallel_result = await self._parallel_process_engines(
@@ -1867,10 +1839,38 @@ Please fix the code. Output ONLY the fixed python code inside ```python``` block
 
         # التحقق واستخراج آمن للإجابة
         final_response = _safe_get_answer(reasoning_result)
+
+        # ==================== Core Consciousness (Executive Brain) ====================
+        # إذا كان محرك الوعي الأساسي متاحاً، نعتبره المسار التنفيذي الرئيسي لإنتاج الرد.
+        core_consciousness_result = None
+        core_consciousness_used = False
+        if self.core_consciousness_module and hasattr(self.core_consciousness_module, 'process_task'):
+            try:
+                core_consciousness_result = self.core_consciousness_module.process_task(
+                    {
+                        "query": input_text,
+                        "phase": "unified_system",
+                    }
+                )
+
+                if isinstance(core_consciousness_result, dict):
+                    core_text = core_consciousness_result.get('text')
+                    if core_text and str(core_text).strip():
+                        final_response = str(core_text).strip()
+                        core_consciousness_used = True
+                        context.setdefault('core_consciousness', {})
+                        context['core_consciousness']['ok'] = bool(core_consciousness_result.get('ok'))
+                        context['core_consciousness']['metrics'] = core_consciousness_result.get('metrics', {})
+            except Exception as e:
+                print(f"⚠️ Core Consciousness failed: {e}")
         
         # محاولة استدعاء Ollama LLM إذا كان متاحاً
         try:
-            from Self_Improvement.hosted_llm_adapter import HostedLLMAdapter
+            # إذا تم إنتاج رد عبر Core Consciousness بنجاح، لا نستدعي LLM خارجي.
+            if core_consciousness_used:
+                raise ImportError("Skipping external LLM because Core Consciousness produced a response")
+
+            from agl.engines.self_improvement.Self_Improvement.hosted_llm_adapter import HostedLLMAdapter
             
             # بناء prompt محسّن مع السياق ونتائج المحركات (Reasoning, Scientific, Quantum, Creative)
             context_parts = []
@@ -2000,10 +2000,8 @@ Please fix the code. Output ONLY the fixed python code inside ```python``` block
             if llm_response and llm_response.strip():
                 final_response = llm_response.strip()
         except Exception as e:
-            # إذا فشل LLM، نستخدم الاستدلال الداخلي
+            # إذا فشل LLM (أو تم تخطيه)، نستخدم الاستدلال الداخلي / Core Consciousness
             print(f"⚠️ LLM Generation Failed: {e}")
-            import traceback
-            traceback.print_exc()
             pass
         
         # 5. حفظ في الذاكرة
@@ -2104,7 +2102,7 @@ Please fix the code. Output ONLY the fixed python code inside ```python``` block
                 
                 # 4. حفظ في الذاكرة الاستراتيجية
                 if self.strategic_memory and performance_score > 0.7:
-                    from Self_Improvement.strategic_memory import MemoryItem
+                    from agl.engines.self_improvement.Self_Improvement.strategic_memory import MemoryItem
                     memory_item = MemoryItem(
                         ts=time.time(),
                         task_title=input_text[:100],
@@ -2221,7 +2219,7 @@ Please fix the code. Output ONLY the fixed python code inside ```python``` block
         # ==================== Holographic LLM للتخزين اللانهائي ====================
         # استخدام Holographic LLM لحفظ واسترجاع الردود بسرعة 40,000×
         holographic_used = False
-        if self.holographic_llm_enabled and self.holographic_llm:
+        if (not core_consciousness_used) and self.holographic_llm_enabled and self.holographic_llm:
             try:
                 # إنشاء رسالة للحفظ/الاسترجاع
                 messages = [
@@ -2416,7 +2414,7 @@ Please fix the code. Output ONLY the fixed python code inside ```python``` block
         
         # Extract the answer string
         if isinstance(result, dict):
-            return result.get('integrated_output', str(result))
+            return result.get('final_response', result.get('integrated_output', str(result)))
         return str(result)
 
     def get_memory_consciousness_report(self) -> Dict[str, Any]:

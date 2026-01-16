@@ -113,6 +113,73 @@ class StrategicThinkingEngine(EngineBase): # type: ignore
         out.sort(key=lambda x: x["priority"], reverse=True)
         return out
 
+    def simulate_complex_environment(self, inputs: Dict[str, Any], steps: int = 1) -> Dict[str, Any]:
+        """
+        [UPGRADE 2026] Simulates complex Socio-Economic-Political environments.
+        Inputs: {'economy': 'recession', 'politics': 'unstable', 'society': 'unrest'}
+        Steps: Number of future time steps to simulate.
+        Returns: Strategic Outlook & Stability Score.
+        """
+        print(f"   🌍 [STRATEGY] Simulating Macro-Environment Dynamics (Steps: {steps})...")
+        
+        # 1. Economy
+        economy = inputs.get('economy', 'stable')
+        # Map generic numeric or string inputs
+        econ_score = float(inputs.get('economy_health', 0.5))
+        if economy == 'growth': econ_score = 0.8
+        elif economy == 'recession': econ_score = 0.2
+        
+        # 2. Politics
+        politics = inputs.get('politics', 'stable')
+        pol_score = float(inputs.get('political_stability', 0.5))
+        if politics == 'unstable': pol_score = 0.2
+        
+        # 3. Society
+        society = inputs.get('society', 'calm')
+        soc_score = float(inputs.get('social_unrest', 0.5)) # interpreting as Calmness for score?
+        # Actually social_unrest usually means higher is bad. Let's invert if needed.
+        # But for simpler logic, let's assume inputs are aligned to "Goodness" 0-1 if passed numerically
+        # Or handled via text.
+        
+        # Iterative Simulation
+        history = []
+        
+        for t in range(steps):
+             # Interaction Logic:
+             # Instability in one area bleeds into others over time
+             if pol_score < 0.4:
+                 econ_score *= 0.95
+                 soc_score *= 0.9
+             
+             if econ_score < 0.3:
+                 soc_score *= 0.9
+                 pol_score *= 0.95
+                 
+             # Random Fluctuation (Chaos)
+             import random
+             econ_score += random.uniform(-0.05, 0.05)
+             pol_score += random.uniform(-0.05, 0.05)
+             soc_score += random.uniform(-0.05, 0.05)
+             
+             # Clamp
+             econ_score = max(0.0, min(1.0, econ_score))
+             pol_score = max(0.0, min(1.0, pol_score))
+             soc_score = max(0.0, min(1.0, soc_score))
+             
+             history.append({'t': t+1, 'econ': econ_score, 'pol': pol_score, 'soc': soc_score})
+        
+        # Final Complex Interaction (Non-linear)
+        # If Economy is bad AND Society is Unrest -> Multiplier for collapse
+        stability = (econ_score + pol_score + soc_score) / 3
+        if econ_score < 0.3 and soc_score < 0.3:
+            stability *= 0.5 # Spiral effect
+            
+        return {
+            "strategic_outlook": "Crisis" if stability < 0.3 else "Stable",
+            "stability_index": stability,
+            "recommendation": "Conserve Resources" if stability < 0.4 else "Expand"
+        }
+
     def _suggest_mitigation(self, L: float, I: float) -> str:
         if L >= 0.7 and I >= 0.7:
             return "تجنب/إعادة تصميم الخطة، أو نقل الخطر بالتأمين/الشراكات."

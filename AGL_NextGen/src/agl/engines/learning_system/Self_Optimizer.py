@@ -3,9 +3,12 @@ import json, os, glob, math, datetime
 from typing import Dict, Any, List
 
 try:
-    from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
+    from agl.engines.resonance_optimizer import VectorizedResonanceOptimizer as ResonanceOptimizer
 except ImportError:
-    ResonanceOptimizer = None
+    try:
+        from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
+    except ImportError:
+        ResonanceOptimizer = None
 
 def _read_json(path: str) -> Any:
     try:

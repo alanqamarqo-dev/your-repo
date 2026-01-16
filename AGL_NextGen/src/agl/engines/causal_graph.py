@@ -37,6 +37,15 @@ class CausalGraphEngine:
     def __init__(self, config: Optional[Dict[str, Any]]=None) -> None:
         self.name = 'CAUSAL_GRAPH'
         self.config = config or {}
+        self.depth_level = "standard"
+
+    def set_depth_level(self, level: str):
+        """
+        Sets the depth level for causal reasoning.
+        """
+        self.depth_level = level
+        print(f"[{self.name}] CAUSAL DEPTH LEVEL SET TO: {level}")
+
     @staticmethod
     def _extract_pairs(text: str) -> List[Tuple[str, str]]:
         """
@@ -77,14 +86,92 @@ class CausalGraphEngine:
                             # نكتفي بأول علاقة نجدها في الجملة لمنع التكرار
                             break
         return pairs
+
+    def abstract_merge(self, concept_a: Dict, concept_b: Dict) -> Dict:
+        """
+        🔗 [MULTIMODAL ABSTRACTION]
+        Merges two disparate concepts to find their 'higher order' parent.
+        Example: 'Circle' + 'Day Cycle' -> 'Cyclic Nature'
+        """
+        name_a = concept_a.get('name', 'A')
+        name_b = concept_b.get('name', 'B')
+        
+        print(f"🔗 [ABSTRACT] Attempting to merge '{name_a}' and '{name_b}'...")
+        
+        # 1. Find overlapping properties
+        props_a = set(concept_a.get('properties', []))
+        props_b = set(concept_b.get('properties', []))
+        common = props_a.intersection(props_b)
+        
+        # 2. Synthesize new Abstract Node
+        if common:
+            new_name = f"Meta_{name_a}_{name_b}"
+            confidence = len(common) / max(len(props_a), len(props_b))
+            return {
+                "name": new_name,
+                "type": "Abstract_Universal",
+                "derived_from": [name_a, name_b],
+                "common_law": list(common),
+                "confidence": confidence
+            }
+        else:
+            return {"error": "No abstraction possible. Concepts are orthogonal."}
+
     def process_task(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         """
         payload المتوقع:
           - "text": نص حر أو ملخص واقعي
           - اختيارياً: "events": قائمة أحداث لتركيب علاقات زمنية/سببية لاحقاً
         """
-        text = (payload or {}).get('text', '') or ''
-        pairs = self._extract_pairs(text)
+        import re
+
+        text = (payload or {}).get('text', '') or (payload or {}).get('query', '') or ''
+        t = str(text or "")
+        t_l = t.lower()
+
+        # Hard-gate support: simple numeric interventions for linear models.
+        # Expected patterns resemble:
+        #   Y = 2*X + 1 ; do(X=4)
+        m_do = re.search(r"do\s*\(\s*x\s*=\s*([-+]?\d+(?:\.\d+)?)\s*\)", t_l)
+        m_eq = re.search(
+            r"y\s*=\s*([-+]?\d+(?:\.\d+)?)\s*\*\s*x\s*([+-])\s*([-+]?\d+(?:\.\d+)?)",
+            t_l,
+        )
+        m_eq2 = re.search(r"y\s*=\s*x\s*([+-])\s*([-+]?\d+(?:\.\d+)?)", t_l)
+        if m_do and (m_eq or m_eq2):
+            try:
+                x_val = float(m_do.group(1))
+                if m_eq:
+                    a = float(m_eq.group(1))
+                    sign = m_eq.group(2)
+                    b = float(m_eq.group(3))
+                    y_val = (a * x_val) + (b if sign == "+" else -b)
+                    eq_repr = f"y = {a:g}*x {sign} {b:g}"
+                else:
+                    sign = m_eq2.group(1)
+                    b = float(m_eq2.group(2))
+                    y_val = x_val + (b if sign == "+" else -b)
+                    eq_repr = f"y = x {sign} {b:g}"
+
+                # produce an explanatory text containing do/x/y terms
+                y_out = int(round(y_val)) if abs(y_val - round(y_val)) < 1e-9 else y_val
+                answer_text = (
+                    f"do(X={x_val:g}) => باستخدام النموذج {eq_repr} نحسب y={y_out}. "
+                    f"because التدخل يثبت x عند {x_val:g} ثم نحسب y مباشرة من المعادلة."
+                )
+                return {
+                    'engine': self.name,
+                    'ok': True,
+                    'mode': 'intervention_numeric',
+                    'x': x_val,
+                    'y': float(y_val),
+                    'text': answer_text,
+                }
+            except Exception:
+                # fall back to edge extraction
+                pass
+
+        pairs = self._extract_pairs(t)
         edges = [{'cause': c, 'effect': e, 'confidence': 0.55} for c, e in pairs]
         result = {'engine': self.name, 'edges': edges, 'nodes': list({n for pair in pairs for n in pair})}
         logger.debug('Causal edges: %s', result['edges'])

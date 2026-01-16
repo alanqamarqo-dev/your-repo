@@ -2,16 +2,30 @@
 from typing import Any, Dict, Optional, List
 import os
 import sys
-from Core_Engines.Hosted_LLM import HostedLLM
+
+try:
+    # Prefer unified LLM gateway (holographic-first)
+    from agl.lib.llm.gateway import chat_llm as _chat_llm
+
+    class HostedLLM:  # type: ignore
+        def chat_llm(self, system_prompt: str, user_prompt: str):
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ]
+            resp = _chat_llm(messages)
+            if isinstance(resp, dict):
+                if 'message' in resp and isinstance(resp['message'], dict):
+                    return resp['message'].get('content', '')
+                return resp.get('text') or resp.get('content') or resp.get('answer') or str(resp)
+            return str(resp)
+
+except Exception:
+    HostedLLM = None
 
 # Try to import ResonanceOptimizer
 try:
-    # Add repo-copy to path if needed
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    repo_root = os.path.dirname(os.path.dirname(current_dir))
-    if repo_root not in sys.path:
-        sys.path.append(repo_root)
-    from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
+    from agl.engines.resonance_optimizer import ResonanceOptimizer
     RESONANCE_AVAILABLE = True
 except ImportError:
     RESONANCE_AVAILABLE = False

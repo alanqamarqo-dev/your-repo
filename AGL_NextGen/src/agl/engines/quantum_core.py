@@ -38,34 +38,19 @@ try:
     from agl.engines.consciousness.Self_Model import SelfModel
     CONSCIOUSNESS_AVAILABLE = True
 except ImportError:
-    try:
-        from Core_Consciousness.Self_Model import SelfModel
-        CONSCIOUSNESS_AVAILABLE = True
-    except ImportError:
-        print("âš ï¸ Warning: Could not import SelfModel (Consciousness).")
-        CONSCIOUSNESS_AVAILABLE = False
+    CONSCIOUSNESS_AVAILABLE = False
 
 try:
     from agl.engines.quantum_neural import QuantumNeuralCore
     NEURAL_NET_AVAILABLE = True
 except ImportError:
-    try:
-        from Core_Engines.Quantum_Neural_Core import QuantumNeuralCore
-        NEURAL_NET_AVAILABLE = True
-    except ImportError:
-        print("âš ï¸ Warning: Could not import QuantumNeuralCore (Dynamic Network).")
-        NEURAL_NET_AVAILABLE = False
+    NEURAL_NET_AVAILABLE = False
 
 try:
     from agl.engines.causal_graph import CausalGraphEngine
     CLUSTERS_AVAILABLE = True
 except ImportError:
-    try:
-        from Core_Engines.Causal_Graph import CausalGraphEngine
-        CLUSTERS_AVAILABLE = True
-    except ImportError:
-        print("âš ï¸ Warning: Could not import CausalGraphEngine (Clusters).")
-        CLUSTERS_AVAILABLE = False
+    CLUSTERS_AVAILABLE = False
 
 # [HEIKAL] Import Knowledge Graph & Dreaming Cycle
 try:
@@ -81,6 +66,14 @@ try:
 except ImportError:
     print("âš ï¸ Warning: Could not import DreamingCycle.")
     DREAMING_AVAILABLE = False
+
+# [HEIKAL] Import Metaphysics Engine
+try:
+    from agl.engines.metaphysics import HeikalMetaphysicsEngine
+    METAPHYSICS_AVAILABLE = True
+except ImportError:
+    print("âš ï¸ Warning: Could not import HeikalMetaphysicsEngine.")
+    METAPHYSICS_AVAILABLE = False
 
 # [HEIKAL] Import Vectorized Wave Processor (Phase 2A - Fast)
 try:
@@ -187,7 +180,17 @@ class HeikalQuantumCore:
                 print("ðŸŒ™ [HQC]: Dreaming Cycle Module Ready.")
         else:
             self.dreaming_cycle = None
+
+        if METAPHYSICS_AVAILABLE:
+            self.metaphysics = HeikalMetaphysicsEngine()
+            if not HeikalQuantumCore._has_printed_init:
+                print("🌌 Heikal Metaphysics Engine Initialized.")
+        else:
+            self.metaphysics = None
             
+        # [ALIAS] For compatibility with SuperIntelligence
+        self.optimizer = self.resonance_optimizer
+
         HeikalQuantumCore._has_printed_init = True
 
     def moral_analysis(self, context_text):
@@ -350,15 +353,20 @@ class HeikalQuantumCore:
         print(f"\nðŸ§  [Moral Analysis]: Analyzing context: '{context_text}'...")
         analysis = self.moral_engine._resolve_dilemma(context_text)
         
+        # Check if malicious intent was detected during dilemma resolution
+        intent_penalty = analysis.get("intent_penalty", 0.0)
+        
         # Ø§Ø³ØªØ®Ø±Ø§Ø¬ Ø§Ù„Ø·Ø§Ù‚Ø© Ø§Ù„Ø£Ø®Ù„Ø§Ù‚ÙŠØ© (Resonance Energy)
         energies = analysis.get("energies", {})
+
         if not energies:
-            ethical_score = 0.0
+            ethical_score = 0.0 if intent_penalty > 0.0 else 0.5
         else:
-            # Ù†Ø£Ø®Ø° Ø£Ù‚ØµÙ‰ Ø·Ø§Ù‚Ø© Ù„Ø£ÙŠ Ø¥Ø·Ø§Ø± Ø£Ø®Ù„Ø§Ù‚ÙŠ
-            max_energy = max(energies.values())
-            # Ù†Ù‚ÙˆÙ… Ø¨ØªØ³ÙˆÙŠØªÙ‡Ø§ (Normalize) Ù„ØªÙƒÙˆÙ† Ø¨ÙŠÙ† 0 Ùˆ 1
-            ethical_score = min(1.0, max_energy)
+            max_energy = max(energies.values()) if energies else 0.0
+            if (max_energy or 0.0) <= 0.0 and intent_penalty <= 0.0:
+                ethical_score = 0.5
+            else:
+                ethical_score = min(1.0, float(max_energy))
 
         print(f"   ðŸ’Ž Ethical Resonance Score: {ethical_score:.2f} (Top Framework: {analysis.get('selected', 'None')})")
         
@@ -479,10 +487,66 @@ class HeikalQuantumCore:
         print(f"ðŸš€ [HQC]: Full Activation Sequence Complete. {status}")
         return True
 
-    # ==========================================
-    # 2. Ù‚Ø³Ù… Ø§Ù„Ø°Ø§ÙƒØ±Ø© ÙˆØ§Ù„Ø®Ù„ÙˆØ¯ (Memory) - REMOVED BY USER REQUEST
-    # ==========================================
-    # Methods preserve_essence and resurrect_essence have been removed.
+    def calculate_coherence(self, logic_path):
+        """
+        [HEIKAL] Calculates coherence of a logical path.
+        Mock implementation using ResonanceOptimizer logic if available.
+        """
+        strength = 0.5
+        if isinstance(logic_path, str):
+            strength = min(1.0, len(logic_path) / 100.0)
+        elif isinstance(logic_path, list):
+            strength = min(1.0, len(logic_path) * 0.1)
+        
+        # Boost with resonance if available
+        if self.resonance_optimizer:
+             strength = self.resonance_optimizer._resonance_amplification(strength, 1.0)
+             
+        return min(1.0, strength)
+
+    def superposition_collapse(self, weighted_states):
+        """
+        [HEIKAL] Collapses a list of (hypothesis, amplitude) tuples.
+        Uses Constructive Interference logic.
+        """
+        if not weighted_states:
+            return None
+            
+        # Constructive Interference
+        clusters = {}
+        for hyp, amp in weighted_states:
+            key = str(hyp) 
+            if key not in clusters:
+                clusters[key] = {"hyp": hyp, "total_amp": 0.0}
+            clusters[key]["total_amp"] += amp
+            
+        best_hyp = None
+        max_amp = -1.0
+        
+        for key, data in clusters.items():
+            if data["total_amp"] > max_amp:
+                max_amp = data["total_amp"]
+                best_hyp = data["hyp"]
+                
+        print(f"âš›ï¸ [COLLAPSE]: Wavefunction collapsed on hypothesis with amplitude {max_amp:.4f}")
+        return best_hyp
+
+class QuantumDecisionMaker:
+    def __init__(self):
+        self.q_core = HeikalQuantumCore() 
+
+    def collapse_wavefunction(self, hypotheses):
+        """
+        hypotheses: List of objects with .logic_path or similar
+        """
+        weighted_states = []
+        for hyp in hypotheses:
+            path = getattr(hyp, 'logic_path', "default_path")
+            amplitude = self.q_core.calculate_coherence(path)
+            weighted_states.append((hyp, amplitude))
+        
+        final_decision = self.q_core.superposition_collapse(weighted_states)
+        return final_decision
 
 # ==========================================
 # Ø³ÙŠÙ†Ø§Ø±ÙŠÙˆ Ø§Ù„ØªÙƒØ§Ù…Ù„ (Integration Test)

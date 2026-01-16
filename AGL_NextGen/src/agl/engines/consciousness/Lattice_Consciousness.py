@@ -22,6 +22,7 @@ class LatticeConsciousness:
         self.phase = 0.0
         self.amplitude = 1.0
         self.entropy = 0.1
+        self.entropy_state = 0.0  # New: Accumulated pain/dissonance
         self.memory_trace = np.zeros(10) # Non-symbolic vector memory
         self.modules = {"Logic": 1.0, "Memory": 1.0, "Perception": 1.0}
         self.history = []
@@ -30,12 +31,27 @@ class LatticeConsciousness:
         
         # Holographic Memory Integration
         self.holo_mem = HeikalHolographicMemory(key_seed=2025)
+
+    def perceive_pain(self, error_rate, confidence_score):
+        """
+        TRANSFORM FAILURE into 'PAIN' in the Lattice.
+        - error_rate: from self_improvement
+        - confidence_score: system confidence
+        """
+        # Cognitive Dissonance: High confidence + High error = High Pain
+        dissonance = error_rate * confidence_score
+        
+        # Update Entropy State: Pain increases entropy
+        self.entropy_state += dissonance
+        self.entropy_state = max(0.0, min(1.0, self.entropy_state)) # Clamp 0-1
+        return self.entropy_state
         
     def process_cycle(self, input_signal=0.0):
         # 1. Physics Update (The "Thought")
         
-        # Perturbation effect
-        noise = random.gauss(0, 0.01)
+        # Perturbation effect (Pain-Driven Movement)
+        # Instead of random noise, we use entropy_state to shake the system
+        noise = self.entropy_state * 0.5
         
         # Memory Feedback: The past influences the present
         # We take the mean of the memory vector as a "bias"

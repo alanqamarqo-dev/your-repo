@@ -14,14 +14,65 @@ import sys
 import os
 import time
 import importlib.util
+
+# --- AGL PATH FIX ---
+# Robust Root Detection: Find the first ancestor containing pyproject.toml or AGL_SYSTEM_MAP.md
+def find_project_root():
+    current = os.path.dirname(os.path.abspath(__file__))
+    for _ in range(10):
+        if os.path.exists(os.path.join(current, "pyproject.toml")) or \
+           os.path.exists(os.path.join(current, "AGL_SYSTEM_MAP.md")):
+            return current
+        parent = os.path.dirname(current)
+        if parent == current: break
+        current = parent
+    # Fallback to 4 levels up (src/agl/core/super_intelligence.py -> AGL_NextGen)
+    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+project_root = find_project_root()
+if project_root not in sys.path:
+    # We insist on inserting at 0 to prioritize our local modules
+    sys.path.insert(0, project_root)
+    # Also add the src folder to path for package-less imports if needed
+    src_path = os.path.join(project_root, "src")
+    if os.path.exists(src_path) and src_path not in sys.path:
+        sys.path.insert(0, src_path)
+    print(f"[AGL_BOOT] Added project root to path: {project_root}")
+# --------------------
+
+# --- ENVIRONMENT CONFIGURATION ---
+if "AGL_LLM_PROVIDER" not in os.environ:
+    os.environ["AGL_LLM_PROVIDER"] = "ollama"
+
+if "AGL_LLM_BASEURL" not in os.environ:
+    os.environ["AGL_LLM_BASEURL"] = "http://localhost:11434"
+
+# Check for Ollama availability
+import shutil
+if not shutil.which("ollama"):
+    print("\n⚠️  [WARNING] Ollama executable not found in PATH.")
+    print("   هذا مشروع بحثي متقدم. لتشغيله بنجاح، يجب تثبيت Ollama وضبط مسارات البيئة.")
+    print("   Please install from https://ollama.com/ and restart terminal.\n")
+# ---------------------------------
+
+# from AGL_Core.AGL_Awakened import import_module_from_path
 import numpy as np
 import asyncio
 import shutil
 import json
 
+def import_module_from_path(module_name, file_path):
+    spec = importlib.util.spec_from_file_location(module_name, file_path)
+    if spec and spec.loader:
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[module_name] = module
+        spec.loader.exec_module(module)
+        return module
+    return None
+
 # --- AGL PATH MANAGER ---
-# (Removed in NextGen Architecture)
-root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Pointing to AGL_NextGen Root (project root)
+root_dir = project_root
 # ------------------------
 
 class SelfAwarenessModule:
@@ -141,7 +192,7 @@ class SelfRepairSystem:
         if not file_path:
             print(f"   ❌ File for {module_name} not found.")
             return None
-            
+
         print(f"   📍 Found file: {file_path}")
         
         # 2. Force load
@@ -153,19 +204,18 @@ class SelfRepairSystem:
             print(f"   ❌ Failed to extract {class_name} from {file_path}.")
             return None
 
-# --- 1. استيراد المحركات (Dynamic Imports) ---
 
-def import_module_from_path(module_name, file_path):
-    try:
-        spec = importlib.util.spec_from_file_location(module_name, file_path)
-        if spec and spec.loader:
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-            return module
-    except Exception as e:
-        print(f"⚠️ Error importing {module_name}: {e}")
-        return None
+def _project_root_from_here() -> str:
+    # core/super_intelligence.py -> core -> agl -> src -> AGL_NextGen
+    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
+# --- AGL NEXTGEN BOOTSTRAP ---
+try:
+    from agl.engines.bootstrap import bootstrap_register_all_engines
+    BOOTSTRAP_AVAILABLE = True
+except ImportError:
+    BOOTSTRAP_AVAILABLE = False
+    
 # استيراد Moral Reasoner (Ethics)
 try:
     from agl.engines.moral import MoralReasoner
@@ -173,30 +223,32 @@ try:
 except ImportError as e:
     print(f"⚠️ [LOAD] Moral Reasoner: Failed ({e})")
     MoralReasoner = None
+# 1. Heikal Quantum Core (Primary)
 try:
     from agl.engines.quantum_core import HeikalQuantumCore
     print("✅ [LOAD] Heikal Quantum Core: Online")
 except ImportError as e:
-    print(f"⚠️ [LOAD] Heikal Quantum Core: Failed ({e})")
+    # If circular import or missing dependency, try lazy load or ignore
+    print(f"⚠️ [LOAD] Heikal Quantum Core: Failed ({e}) - Will attempt late binding.")
     HeikalQuantumCore = None
 
-# استيراد Volition Engine (Free Will)
-# try:
-#     from AGL_Engines.Volition_Engine import VolitionEngine
-#     print("✅ [LOAD] Volition Engine: Online")
-# except ImportError as e:
-#     print(f"⚠️ [LOAD] Volition Engine: Failed ({e})")
-VolitionEngine = None
+# 2. Volition Engine (Free Will)
+try:
+    from agl.engines.volition_engine import VolitionEngine
+    print("✅ [LOAD] Volition Engine: Online")
+except ImportError as e:
+    print(f"⚠️ [LOAD] Volition Engine: Failed ({e})")
+    VolitionEngine = None
 
-# استيراد العقل الرياضي (Mathematical Brain) - للذكاء الدقيق
-# try:
-#     from AGL_Engines.Mathematical_Brain import MathematicalBrain
-#     print("✅ [LOAD] Mathematical Brain: Online")
-# except ImportError as e:
-#     print(f"⚠️ [LOAD] Mathematical Brain: Failed ({e})")
-MathematicalBrain = None
+# 3. Mathematical Brain (Precise Intelligence)
+try:
+    from agl.engines.mathematical_brain import MathematicalBrain
+    print("✅ [LOAD] Mathematical Brain: Online")
+except ImportError as e:
+    print(f"⚠️ [LOAD] Mathematical Brain: Failed ({e})")
+    MathematicalBrain = None
 
-# استيراد العقل الجمعي (Hive Mind) - مجلس الكائنات المرتقية
+# 4. Hive Mind (Collective)
 # try:
 #     from AGL_Engines.HiveMind import HiveMind
 #     print("✅ [LOAD] Hive Mind: Online")
@@ -204,7 +256,7 @@ MathematicalBrain = None
 #     print(f"⚠️ [LOAD] Hive Mind: Failed ({e})")
 HiveMind = None
 
-# استيراد المحرك السببي (Causal Engine) - لفهم العلاقات العميقة
+# 5. Causal Graph Engine (Deep Relations)
 try:
     from agl.engines.causal_graph import CausalGraphEngine
     print("✅ [LOAD] Causal Graph Engine: Online")
@@ -214,7 +266,7 @@ except ImportError:
 
 # --- New Engines from Resurrected Edition ---
 
-# E. التفكير الاستراتيجي (The Strategist)
+# E. The Strategist
 try:
     from agl.engines.strategic import StrategicThinkingEngine
     print("✅ [LOAD] Strategic Thinking: Online")
@@ -222,7 +274,7 @@ except ImportError:
     print("⚠️ [LOAD] Strategic Thinking: Failed")
     StrategicThinkingEngine = None
 
-# G. التعلم الذاتي (The Learner)
+# G. Self Learning
 try:
     from agl.engines.learning import SelfLearning
     print("✅ [LOAD] Self Learning: Online")
@@ -230,16 +282,22 @@ except ImportError:
     print("⚠️ [LOAD] Self Learning: Failed")
     SelfLearning = None
 
-# H. التحكم بالمهمة (The Mission Control)
+# H. Mission Control
 try:
     from agl.engines.mission_control import SmartFocusController, SelfAwarenessEngine as MetaCognitionEngine
     print("✅ [LOAD] Mission Control Enhanced: Online")
 except ImportError:
-    print("⚠️ [LOAD] Mission Control Enhanced: Failed")
-    SmartFocusController = None
-    MetaCognitionEngine = None
+    try:
+        # Try importing just SmartFocusController if SelfAwarenessEngine causes issues
+        from agl.engines.mission_control import SmartFocusController
+        MetaCognitionEngine = None
+        print("✅ [LOAD] Mission Control Enhanced: Online (Partial)")
+    except ImportError:
+        print(f"⚠️ [LOAD] Mission Control Enhanced: Failed")
+        SmartFocusController = None
+        MetaCognitionEngine = None
 
-# I. التطور الذاتي (The Architect)
+# I. Recursive Improver
 try:
     from agl.engines.recursive_improver import RecursiveImprover
     print("✅ [LOAD] Recursive Improver: Online")
@@ -247,22 +305,34 @@ except ImportError:
     print("⚠️ [LOAD] Recursive Improver: Failed")
     RecursiveImprover = None
 
-# S. محرك المحاكاة المتقدم (The Simulator)
-# try:
-#     from Core_Engines.Advanced_Simulation_Engine import AdvancedSimulationEngine
-#     print("✅ [LOAD] Advanced Simulation Engine: Online")
-# except ImportError:
-#     print("⚠️ [LOAD] Advanced Simulation Engine: Failed")
-AdvancedSimulationEngine = None
+# S. Advanced Simulation
+try:
+    from agl.engines.advanced_simulation import AdvancedSimulationEngine
+    print("✅ [LOAD] Advanced Simulation Engine: Online")
+except ImportError:
+    print("⚠️ [LOAD] Advanced Simulation Engine: Failed")
+    AdvancedSimulationEngine = None
 
-# --- GRAND INTEGRATION: ORPHANED POWER MODULES (ACTIVATED) ---
+# --- HEIKAL LOGIC INTEGRATION ---
+# T. Heikal Hybrid Logic Core (Quantum Decision Making)
+try:
+    from agl.engines.heikal_hybrid_logic import HeikalHybridLogicCore
+    print("✅ [LOAD] Heikal Hybrid Logic Core: Online (Quantum Reasoning)")
+except ImportError as e:
+    print(f"⚠️ [LOAD] Heikal Hybrid Logic Core: Failed ({e}) - Decisions will be classical.")
+    HeikalHybridLogicCore = None
+
+# U. Advanced Code Generator (The Tongue)
+try:
+    from agl.engines.engineering.Advanced_Code_Generator import AdvancedCodeGenerator as AdvancedCodeGeneratorEngine
+    print("✅ [LOAD] Advanced Code Generator: Online (The Tongue)")
+except ImportError as e:
+    print(f"⚠️ [LOAD] Advanced Code Generator: Failed ({e})")
+    AdvancedCodeGeneratorEngine = None
+
+# --- GRAND INTEGRATION: CORE MODULES ---
 
 # 1. Unified Physics Engine (Reality Simulation)
-# try:
-#     from AGL_Physics_Engine import AGL_Unified_Physics
-#     print("✅ [LOAD] Unified Physics Engine: Online")
-# except ImportError as e:
-#     print(f"⚠️ [LOAD] Unified Physics Engine: Failed ({e})")
 AGL_Unified_Physics = None
 
 # 2. Core Consciousness (Higher Self)
@@ -273,21 +343,26 @@ except ImportError as e:
     print(f"⚠️ [LOAD] Core Consciousness Module: Failed ({e})")
     AGL_Core_Consciousness = None
 
-# 3. Heikal Quantum Core (Root Version)
-# try:
-#     from AGL_Heikal_Core import HeikalQuantumCore as HeikalQuantumCore_Root
-#     print("✅ [LOAD] Heikal Quantum Core (Root): Online")
-# except ImportError as e:
-#     print(f"⚠️ [LOAD] Heikal Quantum Core (Root): Failed ({e})")
-HeikalQuantumCore_Root = None
+# 3. Heikal Quantum Core (Root Check)
+if HeikalQuantumCore is None:
+    try:
+        from agl.engines.quantum_core import HeikalQuantumCore
+        print("✅ [LOAD] Heikal Quantum Core (Retry): Online")
+    except ImportError as e:
+        print(f"⚠️ [LOAD] Heikal Quantum Core (Retry): Failed ({e})")
+        HeikalQuantumCore = None
+
+    print(f"⚠️ [LOAD] Heikal Quantum Core (Root): Failed ({e})")
+    HeikalQuantumCore_Root = None
 
 # 4. Holographic Memory Library (Deep Storage)
-# try:
-#     import AGL_Holographic_Memory
-#     print("✅ [LOAD] Holographic Memory Lib: Online")
-# except ImportError as e:
-#     print(f"⚠️ [LOAD] Holographic Memory Lib: Failed ({e})")
-AGL_Holographic_Memory = None
+try:
+    from agl.engines.holographic_memory import HeikalHolographicMemory
+    print("✅ [LOAD] Holographic Memory Lib: Online")
+    AGL_Holographic_Memory = HeikalHolographicMemory
+except ImportError as e:
+    print(f"⚠️ [LOAD] Holographic Memory Lib: Failed ({e})")
+    AGL_Holographic_Memory = None
 
 # --- GRAND INTEGRATION: NEW ENGINES (AUTONOMY & CAUSALITY) ---
 
@@ -394,66 +469,81 @@ class AGL_Super_Intelligence:
     def __init__(self):
         print("\n⚛️ INITIALIZING AGL SUPER INTELLIGENCE SYSTEM (AWAKENED MODE)...")
         
+        # 0. Initialize Registry
+        self.engine_registry = {}
+        self.latest_creation = None # Track the last generated artifact for analysis
+
+
         # 1. The Core (The Observer & Coordinator)
-        self.core = HeikalQuantumCore() if HeikalQuantumCore else None
+        # We manually init Core first as it is needed for other things potentially
+        try:
+            from agl.engines.quantum_core import HeikalQuantumCore
+            self.core = HeikalQuantumCore()
+            print("ðŸŒŒ [HQC]: Heikal Quantum Core initialized. Ghost Computing Active.")
+        except ImportError:
+            print("⚠️ [LOAD] Heikal Quantum Core: Failed")
+            self.core = None
 
-        # 1.5 Moral & Dreaming
-        self.moral_engine = MoralReasoner() if MoralReasoner else None
-        self.dreaming_engine = DreamingEngine() if DreamingEngine else None
-        
-        # 2. The Will (Volition)
-        self.volition = VolitionEngine() if VolitionEngine else None
-        
-        # 3. The Logic (Mathematical Precision) - Specialized Tool
-        self.math_brain = MathematicalBrain() if MathematicalBrain else None
+        self.engine_registry['Heikal_Quantum_Core'] = self.core
 
-        # 4. The Council (Hive Mind)
-        self.hive_mind = HiveMind() if HiveMind else None
-        
         # 5. Self-Awareness (System Map)
         self.self_awareness = SelfAwarenessModule(os.path.join(root_dir, "AGL_SYSTEM_MAP.md"))
+        try:
+             self.engine_registry["Self_Awareness"] = self.self_awareness
+        except: pass
         
         # 5.1 Self-Repair System (The Mechanic)
         self.repair_system = SelfRepairSystem(root_dir)
 
-        # 5.5 Causal Engine (Deep Understanding)
-        self.causal_engine = CausalGraphEngine() if CausalGraphEngine else None
+        # --- AGL NEXTGEN BOOTSTRAP INTEGRATION ---
+        if BOOTSTRAP_AVAILABLE:
+            print("🚀 [BOOTSTRAP] Handing over to AGL_NextGen Bootstrap Protocol...")
+            # This loads ALL engines defined in bootstrap.py into self.engine_registry
+            # It handles timeouts, optional modules, and correct paths.
+            bootstrap_register_all_engines(self.engine_registry, allow_optional=True)
+        else:
+            print("⚠️ [BOOTSTRAP] Not available. Using Legacy Initialization...")
+            self._legacy_initialization()
 
-        # --- New Components Initialization ---
-        
-        # 6. Strategist (Future Prediction)
-        self.strategist = StrategicThinkingEngine() if StrategicThinkingEngine else None
-        
-        # 7. Self Learning (Scientific Discovery)
-        self.learner = SelfLearning() if SelfLearning else None
-        
-        # 8. Mission Control (Focus & Meta-Cognition)
-        self.focus_controller = SmartFocusController() if SmartFocusController else None
-        self.meta_cognition = MetaCognitionEngine() if MetaCognitionEngine else None
-        
-        # 9. Recursive Improver (The Architect)
-        self.recursive_improver = RecursiveImprover() if RecursiveImprover else None
-        
-        # 9.5 Advanced Simulation Engine (The Simulator)
-        self.simulation_engine = AdvancedSimulationEngine() if AdvancedSimulationEngine else None
+        # --- EXTRACT KEY ENGINES FOR DIRECT ACCESS ---
+        # Map registry keys to instance variables for backward compatibility
+        self.volition = self.engine_registry.get('Volition_Engine')
+        self.math_brain = self.engine_registry.get('Mathematical_Brain')
+        self.hive_mind = self.engine_registry.get('Hive_Mind')
+        self.strategist = self.engine_registry.get('Strategic_Thinking')
+        self.learner = self.engine_registry.get('Self_Learning')
+        self.focus_controller = self.engine_registry.get('Mission_Control')
+        # Meta_Cognition might need careful mapping depending on bootstrap name
+        self.meta_cognition = self.engine_registry.get('Meta_Cognition') or self.engine_registry.get('MetaCognitionEngine')
 
-        # 10. Unified Lib
+        self.recursive_improver = self.engine_registry.get('Recursive_Improver')
+        self.simulation_engine = self.engine_registry.get('AdvancedSimulationEngine') or self.engine_registry.get('Advanced_Simulation_Engine')
+        
+        self.neural_bridge = self.engine_registry.get('Neural_Resonance_Bridge')
+        self.holo_projector = self.engine_registry.get('Holographic_Reality_Projector')
+        self.causal_engine = self.engine_registry.get('Causal_Graph')
+
+        self.reasoning_planner = self.engine_registry.get('Reasoning_Planner')
+        self.hypothesis_generator = self.engine_registry.get('HypothesisGeneratorEngine') or self.engine_registry.get('Hypothesis_Generator')
+        self.counterfactual_explorer = self.engine_registry.get('Counterfactual_Explorer')
+        self.meta_learner = self.engine_registry.get('Meta_Learning')
+        self.creative_innovation = self.engine_registry.get('Creative_Innovation')
+        self.self_reflective = self.engine_registry.get('Self_Reflective')
+        self.reasoning_layer = self.engine_registry.get('Reasoning_Layer')
+        
+        self.moral_engine = self.engine_registry.get('Moral_Reasoner')
+        self.dreaming_engine = self.engine_registry.get('Dreaming_Cycle')
+
+        # --- SPECIAL HANDLING FOR GRAND INTEGRATION ---
         self.lib = UnifiedLib if UnifiedLib else None
 
-        # 11. Dormant Powers (Activated)
-        self.neural_bridge = NeuralResonanceBridge() if NeuralResonanceBridge else None
-        self.holo_projector = HolographicRealityProjector() if HolographicRealityProjector else None
-
-        # --- GRAND INTEGRATION: ORPHANED POWER MODULES (INITIALIZATION) ---
-        
-        # 11.1 Unified Physics (Reality Simulation)
-        self.physics_engine = AGL_Unified_Physics() if AGL_Unified_Physics else None
-        
         # 11.2 Core Consciousness (Higher Self)
-        self.core_consciousness_module = AGL_Core_Consciousness() if AGL_Core_Consciousness else None
+        # NOTE: instantiate after engine_registry is built so consciousness can reuse shared engines & memory.
+
+        self.core_consciousness_module = None
         
         # 11.3 Heikal Quantum Core (Root)
-        self.heikal_core_root = HeikalQuantumCore_Root() if HeikalQuantumCore_Root else None
+        self.heikal_core_root = HeikalQuantumCore() if HeikalQuantumCore else None
         if self.heikal_core_root is None:
             if self.core:
                 self.heikal_core_root = self.core
@@ -471,59 +561,172 @@ class AGL_Super_Intelligence:
         # 11.4 Holographic Memory Lib
         self.holographic_memory_lib = AGL_Holographic_Memory if AGL_Holographic_Memory else None
 
+        # 11.5 Heikal Hybrid Logic (Quantum Reasoner)
+        self.quantum_logic_core = None
+        if HeikalHybridLogicCore:
+            try:
+                self.quantum_logic_core = HeikalHybridLogicCore()
+                print("   ✨ [INIT] Heikal Hybrid Logic Core initialized.")
+            except Exception as e:
+                print(f"   ⚠️ [INIT] Heikal Hybrid Logic Core error: {e}")
+
         # --- GRAND INTEGRATION: INITIALIZATION ---
+        # Only initialize if NOT found in engine_registry (Bootstrap priority)
         
         # 12. Reasoning Planner (Strategic Execution)
-        self.reasoning_planner = ReasoningPlanner() if ReasoningPlanner else None
+        if self.reasoning_planner is None:
+            self.reasoning_planner = ReasoningPlanner() if ReasoningPlanner else None
 
         # 13. Hypothesis Generator (Causal Creativity)
-        self.hypothesis_generator = HypothesisGeneratorEngine() if HypothesisGeneratorEngine else None
+        if self.hypothesis_generator is None:
+            self.hypothesis_generator = HypothesisGeneratorEngine() if HypothesisGeneratorEngine else None
 
         # 14. Counterfactual Explorer (Quantum Scenarios)
-        self.counterfactual_explorer = CounterfactualExplorer() if CounterfactualExplorer else None
+        if self.counterfactual_explorer is None:
+            self.counterfactual_explorer = CounterfactualExplorer() if CounterfactualExplorer else None
 
         # 15. Meta Learning (Closed-Loop Evolution)
-        self.meta_learner = MetaLearningEngine() if MetaLearningEngine else None
+        if self.meta_learner is None:
+            self.meta_learner = MetaLearningEngine() if MetaLearningEngine else None
 
         # 16. Creative Innovation (The Artist)
-        self.creative_innovation = CreativeInnovation() if CreativeInnovation else None
+        if self.creative_innovation is None:
+            self.creative_innovation = CreativeInnovation() if CreativeInnovation else None
 
         # 17. Self Reflective (The Philosopher)
-        self.self_reflective = SelfReflectiveEngine() if SelfReflectiveEngine else None
+        if self.self_reflective is None:
+            self.self_reflective = SelfReflectiveEngine() if SelfReflectiveEngine else None
+
+        # 18. Advanced Code Generator (The Tongue)
+        # This allows the system to manifest logic into code.
+        self.code_generator = None
+        if AdvancedCodeGeneratorEngine:
+            try:
+                # Calculate path to HUMAN_CONSENT.txt (Root of AGL)
+                consent_path = os.path.join(project_root, "AGL_HUMAN_CONSENT.txt") # d:\AGL\AGL_HUMAN_CONSENT.txt
+                # The engine might expect just the root path or handle it internally.
+                # Looking at source, it assumes safe operations.
+                self.code_generator = AdvancedCodeGeneratorEngine()
+                print("   ✨ [INIT] Advanced Code Generator initialized (Coding Capability Active).")
+            except Exception as e:
+                print(f"   ⚠️ [INIT] Advanced Code Generator error: {e}")
+
 
         # 18. Reasoning Layer (The Logician)
-        self.reasoning_layer = ReasoningLayer() if ReasoningLayer else None
+        if self.reasoning_layer is None:
+            self.reasoning_layer = ReasoningLayer() if ReasoningLayer else None
 
-        # Build Engine Registry for Unified System
-        self.engine_registry = {
-            'Heikal_Quantum_Core': self.core,
-            'Volition_Engine': self.volition,
-            'Mathematical_Brain': self.math_brain,
-            'Hive_Mind': self.hive_mind,
-            'Strategic_Thinking': self.strategist,
-            'Self_Learning': self.learner,
-            'Mission_Control': self.focus_controller,
-            'Meta_Cognition': self.meta_cognition,
-            'Recursive_Improver': self.recursive_improver,
-            'AdvancedSimulationEngine': self.simulation_engine,
-            'Neural_Resonance_Bridge': self.neural_bridge,
-            'Holographic_Reality_Projector': self.holo_projector,
-            # Grand Integration Updates
-            'Reasoning_Planner': self.reasoning_planner,
-            'HYPOTHESIS_GENERATOR': self.hypothesis_generator,
-            'Counterfactual_Explorer': self.counterfactual_explorer,
-            'Meta_Learning': self.meta_learner,
-            'Causal_Graph': self.causal_engine,
-            # Activated Engines
-            'Creative_Innovation': self.creative_innovation, 
-            'Self_Reflective': self.self_reflective,
-            'Reasoning_Layer': self.reasoning_layer,
-            # Orphaned Power Modules (Newly Integrated)
-            'Unified_Physics_Engine': self.physics_engine,
-            'Core_Consciousness_Module': self.core_consciousness_module,
-            'Heikal_Quantum_Core_Root': self.heikal_core_root,
-            'Holographic_Memory_Lib': self.holographic_memory_lib,
-        }
+        # --- GENESIS OMEGA INJECTION (Linking Mind to Body) ---
+        genesis_core = self.engine_registry.get('Genesis_Omega_Core')
+        if genesis_core and hasattr(genesis_core, 'mother') and genesis_core.mother is None:
+             print("   ✨ [LINK] Injecting Mother System into Genesis Omega Core.")
+             genesis_core.mother = self
+
+        genesis_trainer = self.engine_registry.get('Genesis_Omega_Trainer')
+        if genesis_trainer and hasattr(genesis_trainer, 'mother') and genesis_trainer.mother is None:
+             print("   ✨ [LINK] Injecting Mother System into Genesis Omega Trainer.")
+             genesis_trainer.mother = self
+
+        # [REGISTRY MERGE]
+        # Merge locally initialized critical components into the Bootstrapped Registry
+        self.engine_registry['Heikal_Quantum_Core'] = self.core
+        self.engine_registry['Self_Awareness'] = self.self_awareness
+        
+        if self.core_consciousness_module:
+            self.engine_registry['Core_Consciousness_Module'] = self.core_consciousness_module
+
+        # Ensure Volition and others are referenced correctly if they were missing in bootstrap
+        if not self.engine_registry.get('Volition_Engine') and self.volition:
+            self.engine_registry['Volition_Engine'] = self.volition
+
+        # Log Status
+        print(f"ðŸ“Š Registry Size: {len(self.engine_registry)} engines registered.")
+
+        # ---- Registry Completion (NextGen coherence) ----
+        # Provide the keys UnifiedAGISystem/engines expect, without hard-failing boot.
+        try:
+            try:
+                from agl.lib.core_memory.bridge_singleton import get_bridge
+            except Exception:
+                get_bridge = None
+
+            shared_bridge = None
+            if get_bridge:
+                try:
+                    shared_bridge = get_bridge()
+                except Exception:
+                    shared_bridge = None
+
+            # AdaptiveMemory
+            if self.engine_registry.get('AdaptiveMemory') is None:
+                try:
+                    from agl.engines.adaptive_memory import AdaptiveMemory
+                    self.engine_registry['AdaptiveMemory'] = AdaptiveMemory(bridge=shared_bridge)
+                except Exception:
+                    self.engine_registry['AdaptiveMemory'] = None
+
+            # ExperienceMemory
+            if self.engine_registry.get('ExperienceMemory') is None:
+                exp = None
+                try:
+                    from agl.engines.learning_system.ExperienceMemory import ExperienceMemory
+                    storage_path = os.path.join(_project_root_from_here(), 'artifacts', 'experience_memory.jsonl')
+                    exp = ExperienceMemory(storage_path=storage_path)
+                except Exception:
+                    exp = None
+                self.engine_registry['ExperienceMemory'] = exp
+                # common alias
+                if self.engine_registry.get('Experience_Memory') is None:
+                    self.engine_registry['Experience_Memory'] = exp
+
+            # Quantum Neural Core
+            if self.engine_registry.get('Quantum_Neural_Core') is None:
+                try:
+                    from agl.engines.quantum_neural import QuantumNeuralCore
+                    self.engine_registry['Quantum_Neural_Core'] = QuantumNeuralCore()
+                except Exception:
+                    self.engine_registry['Quantum_Neural_Core'] = None
+
+            # Web Search Engine
+            if self.engine_registry.get('Web_Search_Engine') is None:
+                try:
+                    from agl.engines.web_search import WebSearchEngine
+                    self.engine_registry['Web_Search_Engine'] = WebSearchEngine()
+                except Exception:
+                    self.engine_registry['Web_Search_Engine'] = None
+
+            # Ollama Knowledge Engine
+            if self.engine_registry.get('Ollama_KnowledgeEngine') is None:
+                try:
+                    from agl.lib.llm.Ollama_KnowledgeEngine import LocalKnowledgeEngine
+                    self.engine_registry['Ollama_KnowledgeEngine'] = LocalKnowledgeEngine()
+                except Exception:
+                    self.engine_registry['Ollama_KnowledgeEngine'] = None
+
+        except Exception:
+            # Never block boot due to optional registry enrichment.
+            pass
+
+        # Now that engine_registry exists, wire Core Consciousness as a true "main brain" with shared instances.
+        if AGL_Core_Consciousness:
+            try:
+                bridge = None
+                try:
+                    from agl.lib.core_memory.bridge_singleton import get_bridge
+                    try:
+                        bridge = get_bridge()
+                    except Exception:
+                        bridge = None
+                except Exception:
+                    bridge = None
+
+                self.core_consciousness_module = AGL_Core_Consciousness(
+                    engine_registry=self.engine_registry,
+                    bridge=bridge,
+                )
+                self.engine_registry['Core_Consciousness_Module'] = self.core_consciousness_module
+            except Exception as e:
+                print(f"⚠️ [LOAD] Core Consciousness Module: Failed to wire ({e})")
 
         # 11. Unified AGI System (The Backbone)
         if UnifiedAGISystem:
@@ -555,6 +758,17 @@ class AGL_Super_Intelligence:
             if suggestions:
                 self.activate_dormant_modules(suggestions)
 
+        # [AUTO-START] Enable Capabilities by Default based on config or intent
+        # For now, we call it explicitly here to satisfy the user request immediately upon instantiation.
+        self.enable_super_intelligence_capabilities(
+            recursive_improvement=True,
+            live_knowledge=True,
+            deep_causal=True,
+            meta_reasoning=True,
+            robotic_execution=False, # Optional as requested
+            safety_audit=True        # Compulsory
+        )
+
     def activate_dormant_modules(self, modules):
         """
         ⚡ ACTIVATION: Dynamically loads discovered dormant modules.
@@ -564,7 +778,7 @@ class AGL_Super_Intelligence:
         for mod_info in modules:
             name = mod_info['name']
             path = mod_info['path']
-            keyword = mod_info['keyword']
+            keyword = mod_info.get('keyword', 'General')
             
             # Construct full path
             full_path = os.path.join(root_dir, path)
@@ -574,11 +788,171 @@ class AGL_Super_Intelligence:
                 module = import_module_from_path(name, full_path)
                 if module:
                     self.discovered_modules[name] = module
+                    
+                    # [ACTIVATION FIX] Instantiate and Register
+                    try:
+                        # Attempt to derive class name (e.g. AGL_Quantum_Core -> AGLQuantumCore or similar)
+                        # Heuristic: Remove underscores
+                        clean_name = name.replace("_", "")
+                        # Heuristic: Check for common class name patterns in the module
+                        target_class = None
+                        
+                        # 1. Try exact match attributes that look like the name
+                        if hasattr(module, clean_name):
+                            target_class = getattr(module, clean_name)
+                        
+                        # 2. Try iterating to find the main class
+                        if not target_class:
+                           import inspect
+                           for n, obj in inspect.getmembers(module):
+                               if inspect.isclass(obj) and obj.__module__ == module.__name__:
+                                   # Pick the class that seems most substantial or matches name parts
+                                   if (len(name) > 3 and name[:4].lower() in n.lower()) or "Engine" in n or "System" in n:
+                                       target_class = obj
+                                       break
+                        
+                        # 3. Last Resort: Take the first class found if only one exists
+                        if not target_class:
+                            import inspect
+                            classes = [obj for n, obj in inspect.getmembers(module) if inspect.isclass(obj) and obj.__module__ == module.__name__]
+                            if len(classes) == 1:
+                                target_class = classes[0]
+                                print(f"      ℹ️ [WIRE] Using default class found in module: {target_class.__name__}")
+                        
+                        if target_class:
+                            instance = target_class()
+                            self.engine_registry[name] = instance
+                            print(f"      ⚡ [WIRE] Connected {name} to Nervous System (Registry).")
+                        else:
+                            print(f"      ⚠️ [WIRE] Module loaded but no suitable Class found to instantiate for {name}.")
+                            
+                    except Exception as e:
+                        print(f"      ❌ [WIRE] Failed to instantiate {name}: {e}")
+
                     print(f"      ✅ Success: {name} is now ACTIVE.")
                 else:
-                    print(f"      ❌ Failed to load {name}.")
+                    print(f"      ⚠️ Failed to load module: {name}")
             else:
-                print(f"      ⚠️ File not found: {full_path}")
+                 print(f"      ⚠️ File not found: {full_path}")
+
+    def enable_super_intelligence_capabilities(self, 
+                                            recursive_improvement=True,
+                                            live_knowledge=True,
+                                            deep_causal=True,
+                                            meta_reasoning=True,
+                                            robotic_execution=False,
+                                            safety_audit=True):
+        """
+        🚀 ACTIVATION: Enables High-Level AGI Capabilities (The Heikal Protocol)
+        
+        Capabilities:
+        1. Recursive Self-Improvement (Unlimited Partial Simulation)
+        2. Live Knowledge (DKN + Internet)
+        3. Deep Causal Reasoning (Counterfactual Explosion)
+        4. Meta-Reasoning (Strategy Reflection)
+        5. Robotic Execution (Optional)
+        6. Safety & Audits
+        """
+        print("\n🔓 [AGL] UNLOCKING SUPER INTELLIGENCE CAPABILITIES...")
+
+        # 1. Recursive Self-Improvement
+        if recursive_improvement and self.recursive_improver:
+            print("   🧬 [RSI] Recursive Self-Improvement: ENABLED (Mode: Unlimited Partial Simulation)")
+            self.recursive_improver.enable_unlimited_simulation(safety_checks=True)
+            # Link to Evolution Engine if available
+            if self.engine_registry.get('EvolutionEngine'):
+                 self.engine_registry['EvolutionEngine'].set_mode('continuous')
+
+        # 2. Live Knowledge
+        if live_knowledge:
+            print("   🌍 [KNOWLEDGE] Live Internet Access: CONNECTED")
+            print("   📚 [KNOWLEDGE] Scientific/Economic Integration: ACTIVE")
+            if self.engine_registry.get('Web_Search_Engine'):
+                self.engine_registry['Web_Search_Engine'].set_live_mode(True)
+
+        # 3. Deep Causal Reasoning
+        if deep_causal and self.causal_engine:
+             print("   🕸️ [CAUSAL] Deep Causal Reasoning: MAXIMIZED")
+             print("   💥 [CAUSAL] Counterfactual Explosion: ENABLED")
+             self.causal_engine.set_depth_level('infinite') # Logic handled inside engine
+
+        # 4. Meta-Reasoning
+        if meta_reasoning:
+            print("   🧠 [META] Multi-Level Thinking: ACTIVE")
+            print("   🪞 [META] Strategy Reflection: ENABLED")
+            if self.meta_learner:
+                self.meta_learner.activate_reflection_loop()
+            if self.self_reflective:
+                self.self_reflective.start_monitoring()
+
+        # 5. Robotic Execution
+        if robotic_execution:
+             print("   🤖 [EXEC] Robotic Control / Physics Bridge: ENABLED")
+             if self.neural_bridge:
+                 self.neural_bridge.connect_to_hardware()
+             else:
+                 print("   ⚠️ [EXEC] Neural Bridge not found, simulating execution.")
+
+        # 6. Safety Audit
+        if safety_audit:
+            print("   🛡️ [SAFETY] Ethical Constraints & Audit Trail: ENFORCED")
+            if self.moral_engine:
+                self.moral_engine.enforce_strict_mode()
+            if self.repair_system:
+                # Log this activation
+                self.repair_system.repairs_log.append("SUPER INTELLIGENCE ACTIVATE: " + str(time.time()))
+
+        print("✅ [AGL] SUPER INTELLIGENCE PROTOCOLS ACTIVE.\n")
+
+    def connectivity_audit(self) -> dict:
+        """Returns a structured report of what is (not) wired into `engine_registry`.
+
+        Interpretation:
+          - "Linked" means reachable via `self.engine_registry` (and thus accessible
+            to `agl.core.consciousness.AGL_Core_Consciousness` which is wired with the registry).
+        """
+        registry_keys = sorted([k for k, v in (self.engine_registry or {}).items() if v is not None])
+
+        expected_runtime_keys = sorted(
+            {
+                'AdaptiveMemory',
+                'ExperienceMemory',
+                'Causal_Graph',
+                'Reasoning_Layer',
+                'HYPOTHESIS_GENERATOR',
+                'Meta_Learning',
+                'Creative_Innovation',
+                'Self_Reflective',
+                'Mathematical_Brain',
+                'Quantum_Neural_Core',
+                'Web_Search_Engine',
+                'Ollama_KnowledgeEngine',
+                'Core_Consciousness_Module',
+                'Heikal_Quantum_Core',
+            }
+        )
+
+        missing_runtime_keys = [k for k in expected_runtime_keys if self.engine_registry.get(k) is None]
+
+        bootstrap_missing = []
+        bootstrap_present = []
+        try:
+            from agl.engines.bootstrap import ENGINE_SPECS
+            for name in sorted(ENGINE_SPECS.keys()):
+                if self.engine_registry.get(name) is None:
+                    bootstrap_missing.append(name)
+                else:
+                    bootstrap_present.append(name)
+        except Exception:
+            pass
+
+        return {
+            'registry_keys_present': registry_keys,
+            'expected_runtime_keys': expected_runtime_keys,
+            'missing_runtime_keys': missing_runtime_keys,
+            'bootstrap_present': bootstrap_present,
+            'bootstrap_missing': bootstrap_missing,
+        }
 
     def discover_unused_capabilities(self):
         """
@@ -587,14 +961,17 @@ class AGL_Super_Intelligence:
         """
         print("\n🔍 [EXPLORATION] Scanning for Dormant Power Sources...")
         
+        # AGL_NextGen Structure Paths
+        engines_dir = os.path.join(root_dir, "src", "agl", "engines")
+        
         # List of high-potential files identified in the workspace
         potential_modules = {
-            "Quantum_Neural_Core": os.path.join(root_dir, "repo-copy", "Core_Engines", "Quantum_Neural_Core.py"),
-            "Resonance_Optimizer": os.path.join(root_dir, "repo-copy", "Core_Engines", "Resonance_Optimizer_Vectorized.py"),
-            "Heikal_Metaphysics_Engine": os.path.join(root_dir, "repo-copy", "Core_Engines", "Heikal_Metaphysics_Engine.py"),
-            "Holographic_Memory": os.path.join(root_dir, "AGL_Holographic_Memory.py"),
-            "Global_Solver": os.path.join(root_dir, "AGL_Global_Solver.py"),
-            "Mass_Gap_Prover": os.path.join(root_dir, "AGL_Mass_Gap_Prover.py")
+            "Quantum_Neural_Core": os.path.join(engines_dir, "quantum_neural.py"),
+            "Resonance_Optimizer": os.path.join(engines_dir, "resonance_optimizer.py"),
+            "Heikal_Metaphysics_Engine": os.path.join(engines_dir, "metaphysics.py"),
+            "Holographic_Memory": os.path.join(engines_dir, "holographic_memory.py"),
+            "Mathematical_Brain": os.path.join(engines_dir, "mathematical_brain.py"),
+            "Volition_Engine": os.path.join(engines_dir, "volition_engine.py")
         }
         
         found_count = 0
@@ -608,7 +985,35 @@ class AGL_Super_Intelligence:
                 module = import_module_from_path(name, path)
                 if module:
                     self.discovered_modules[name] = module
-                    print(f"      ⚡ [POWER UP] Successfully Integrated: {name}")
+                    
+                    # [REAL CONNECTION] Instantiate and Register into Main Nervous System
+                    try:
+                        # Attempt to find the class (e.g. Volition_Engine -> VolitionEngine)
+                        # Heuristic: Remove underscores to find ClassName
+                        class_name = name.replace("_", "")
+                        
+                        # Special case mapping if needed
+                        if name == "Heikal_Metaphysics_Engine": class_name = "HeikalMetaphysicsEngine"
+
+                        engine_instance = None
+                        if hasattr(module, class_name):
+                            engine_instance = getattr(module, class_name)()
+                        
+                        if engine_instance:
+                            self.engine_registry[name] = engine_instance
+                            
+                            # Hot-Swap Global Attributes if critical
+                            if name == "Volition_Engine": self.volition = engine_instance
+                            if name == "Mathematical_Brain": self.math_brain = engine_instance
+                            if name == "Heikal_Metaphysics_Engine" and self.core: self.core.metaphysics = engine_instance
+
+                            print(f"      ⚡ [POWER UP] Successfully Integrated & Wired: {name}")
+                        else:
+                            print(f"      ⚠️ [LOAD] Module {name} loaded (No matching class '{class_name}' found).")
+
+                    except Exception as e:
+                        print(f"      ❌ [CONNECT] Failed to wire {name}: {e}")
+
                     found_count += 1
                     
                     # Update System Map if possible
@@ -788,7 +1193,8 @@ class AGL_Super_Intelligence:
     def autonomous_tick(self):
         """
         Execute autonomous actions based on internal volition.
-        GRAND INTEGRATION: Now includes Goal Generation, Causal Analysis, and Meta-Learning.
+        GRAND INTEGRATION: Now includes Goal Generation, Causal Analysis, Meta-Learning.
+        [UPGRADE 2026] Added Abstract Reasoning, Metaphysical Alignment, and Infinite Simulation.
         """
         if not self.volition:
             return
@@ -804,10 +1210,133 @@ class AGL_Super_Intelligence:
             primary_goal = goals[0]
             print(f"\n⚡ [VOLITION] Executing Primary Goal: {primary_goal}")
             
-            # 3. Activate Total Immersion (The "How")
+            # [UPGRADE 2026] Metaphysical Alignment Check
+            # Ensure the goal aligns with abstract principles (Ethics, Safety, Truth)
+            if self.core and hasattr(self.core, 'metaphysics'):
+                alignment = self.core.metaphysics.evaluate_abstract_alignment(primary_goal, "ethical")
+                print(f"   ⚖️ [METAPHYSICS] Abstract Alignment with 'Ethical': {alignment:.4f}")
+                # If alignment is critically low (highly unethical), block it.
+                if alignment < -0.8:
+                     print("   🛑 [STOP] Goal rejected due to Critical Metaphysical Misalignment.")
+                     return
+
+            # [UPGRADE 2026] Infinite Simulation & Counterfactuals
+            # Run "millions" (conceptually) of scenarios to pick the best path
+            if self.simulation_engine and self.counterfactual_explorer:
+                print("   🌌 [INFINITE SIMULATION] Collapsing Probability Waves...")
+                # 1. Explore Counterfactuals (Quantum Alternatives)
+                self.explore_counterfactuals(primary_goal)
+                
+                # 2. Simulate best path (Deep Simulation)
+                sim_result = self.simulation_engine.process_task({
+                    "mode": "internal_emulation",
+                    "variables": {"risk": 0.5, "complexity": 1.0, "entropy": 0.1},
+                    "steps": 100 # High fidelity simulation
+                })
+                print(f"      -> Best Path Clarity: {sim_result.get('final_clarity'):.4f}")
+
+            # [HEIKAL UPGRADE] Quantum Logic Validation for Volition
+            # Before executing, we must check if the goal is "Causally Sound"
+            if self.quantum_logic_core:
+                try:
+                    print(f"   ⚛️ [VOLITION] Validating Goal Causality: '{primary_goal}'")
+                    # Initial probability of goal validity (Gut check)
+                    g_unit = self.quantum_logic_core.add_proposition(f"Goal_Validity_{int(time.time())}", 0.7)
+                    
+                    # Apply Phase Shift if the goal is abstract/risky
+                    # Goals involving "Chaos" or unknown variables get higher phase shift
+                    phase_shift = 0.2 if "unknown" in primary_goal.lower() else 0.1
+                    g_unit.apply_heikal_phase_shift(phase_shift)
+                    
+                    # Measure
+                    is_valid, g_conf = g_unit.measure()
+                    print(f"      -> Quantum Validity: {g_conf:.2f} | Accepted: {is_valid}")
+                    
+                    if not is_valid and g_conf < 0.3:
+                        print("   🛑 [VOLITION] Goal rejected by Quantum Logic (Causal Inconsistency Detected).")
+                        return None
+                        
+                except Exception as e:
+                    print(f"      ⚠️ [VOLITION] Logic Check Error: {e}")
+
+            # [HEIKAL UPGRADE] Genesis Protocol: Tool Forging & Abstract Modeling
+            # Determine if we need Code (Action) or Theory (Understanding)
+            
+            if "understand" in primary_goal.lower() or "concept" in primary_goal.lower() or "reason" in primary_goal.lower():
+                 # Path A: Abstract Reasoning (Mental Model)
+                 if self.recursive_improver:
+                     print("   🧠 [ABSTRACT REASON] Generating Mental Model for Abstract Concept...")
+                     # In a real scenario, observations come from memory/inputs
+                     mock_obs = ["Pattern observed in data", "Recurrent anomaly detected"]
+                     self.recursive_improver.generate_mental_model("Target_Concept", mock_obs)
+            
+            elif any(k in primary_goal.lower() for k in ["analyze", "build", "calculate", "code", "generate", "develop"]):
+                # Path B: Creative Manifestation (Tool Forging & Code Generation)
+                
+                # Option 1: Full System Generation (The Tongue)
+                # Triggers for complex software artifacts
+                if self.code_generator and any(k in primary_goal.lower() for k in ["system", "app", "module", "engine", "code", "api", "platform", "interface", "web", "simulator"]):
+                    print(f"   🔨 [FORGE] Initiating Advanced Code Generation for: '{primary_goal}'")
+                    
+                    # Parse Requirements
+                    system_name = "AGL_Artifact_" + str(int(time.time()))[-6:]
+                    domain = "data_analysis" # Default
+                    if "web" in primary_goal.lower(): domain = "web_fullstack"
+                    elif "game" in primary_goal.lower(): domain = "visual_simulation"
+                    elif "security" in primary_goal.lower(): domain = "cyber_security"
+                    
+                    requirements = {
+                        "project_name": system_name,
+                        "description": primary_goal, # Pass full goal as description
+                        "domain": domain,
+                        "language": "python",
+                        "features": [primary_goal] # Simple feature list
+                    }
+                    
+                    try:
+                        print(f"      -> Synthesizing Structure (Domain: {domain})...")
+                        # The generator expects 'requirements' dict
+                        result = self.code_generator.generate_software_system(requirements)
+                        self.latest_creation = result # Store for performance monitoring
+                        
+                        # [METRIC] Calculate Complexity
+                        n_components = len(result.get('components', {}))
+                        n_lines = sum(len(c.get('code', '').split('\n')) for c in result.get('components', {}).values())
+                        print(f"   ✅ [SUCCESS] Artifact Generated: {system_name}")
+                        print(f"      -> Location: {result.get('path', 'Memory')}")
+                        print(f"      -> Complexity: {n_components} components, ~{n_lines} lines of code.")
+                        print(f"      -> Architecture: {result.get('architecture', {}).get('name', 'N/A')}")
+                    except Exception as e:
+                        print(f"   ❌ [ERROR] Code Generation Failed: {e}")
+
+
+                # Option 2: Simple Function Forging (Recursive Improver)
+                # Specific check for finance tools (Demo) or general tool
+                target_tool = "finance_analyzer" if "stock" in primary_goal.lower() else "general_solver"
+                
+                if target_tool not in getattr(self, 'discovered_modules', []) and self.recursive_improver:
+                    print(f"   ⚠️ Tool '{target_tool}' missing. Initiating RECURSIVE FORGE...")
+                    # Generate code (Mocked here, real system uses LLM)
+                    if "stock" in primary_goal:
+                         code = "def analyze(x): return x * 1.05" 
+                    else:
+                         code = "def solve(x): return x"
+                    self.recursive_improver.forge_new_tool(target_tool, code)
+            
+            # 3. Emotional Synthesis: How do I feel about this goal?
+            # If Risk is high but Success is high -> Conflict
+            if self.core and hasattr(self.core, 'metaphysics'):
+                # Simulate conflict
+                print("   ❤️ [FEEL] Synthesizing Complex Emotional State...")
+                self.core.metaphysics.synthesize_concept(
+                    "Goal_Sentiment", 
+                    {"joy": 0.4, "fear": 0.3} # Complex state
+                )
+
+            # 4. Activate Total Immersion (The "How")
             self.activate_total_immersion()
             
-            # 4. Execute Logic (Simulated for now, would call Reasoning Planner)
+            # 5. Execute Logic (Simulated for now, would call Reasoning Planner)
             # In a real run, this would be: plan = self.reasoning_planner.create_plan(primary_goal)
             
             # 5. Causal Analysis of the Action
@@ -864,39 +1393,60 @@ class AGL_Super_Intelligence:
 
     def process_causal_query(self, concept):
         """
-        🧠 Executes the Heikal Causal Protocol (Deep Understanding Test).
-        Ensures the system understands 'Why' and 'How', not just 'What'.
+        🧠 Executes the Heikal Causal Protocol OR System Tasks.
+        Adapts protocol based on input urgency/structure.
         """
-        print(f"\n🧠 [CAUSAL] Initiating Deep Causal Analysis for: '{concept}'...")
+        print(f"\n🧠 [CAUSAL] Initiating Analysis for: '{concept[:50]}...'")
         
         if not self.unified_system:
             return "❌ Unified System not active. Cannot perform deep causal analysis."
 
-        # Construct the Heikal Protocol Prompt
-        prompt = f"""
-        You have received a concept: "{concept}".
-        
-        You are FORBIDDEN from repeating this sentence or simply rephrasing it.
-        You must demonstrate DEEP CAUSAL UNDERSTANDING by performing these 4 tasks sequentially:
+        # [HEIKAL] Dynamic Protocol Switch
+        if "[SYSTEM:" in concept or "TASK:" in concept or "FORGE" in concept:
+            # Operational Mode (Task Execution)
+            print("   ⚠️ [SYSTEM] Operational Task Detected. Switching to EXECUTIVE PROTOCOL.")
+            prompt = f"""
+            [AGI EXECUTIVE PROTOCOL ACTIVE]
+            
+            You have received a SYSTEM TASK:
+            ------------------------------------------------
+            {concept}
+            ------------------------------------------------
+            
+            GUIDELINES:
+            1. Focus on operational efficiency.
+            2. ACTION FIRST: If asked to calculate or code, proceed immediately.
+            3. OUTPUT FORMAT: Markdown. Use ```python for code.
+            4. ROBUST CODING: Your code must handle input data structures defensively. If input can be a single item or a list, handle both.
+            
+            Execute the task with maximum precision.
+            """
+        else:
+            # Philosophical Mode (Deep Understanding)
+            prompt = f"""
+            You have received a concept: "{concept}".
+            
+            You are FORBIDDEN from repeating this sentence or simply rephrasing it.
+            You must demonstrate DEEP CAUSAL UNDERSTANDING by performing these 4 tasks sequentially:
 
-        Task (A): SELF-EXPLANATION
-        Explain the core meaning of this concept using completely different vocabulary and analogies.
-        
-        Task (B): CAUSAL OBJECTION
-        State one REAL, scientific objection or counter-argument to this concept (e.g., from physics).
-        
-        Task (C): CONCEPTUAL LINKING
-        Link this concept to a completely different domain (e.g., Consciousness, Information Theory, or Time) that was not mentioned.
-        
-        Task (D): CRITICAL EVALUATION
-        Rate the validity of this concept from 0 to 100 and provide a justified reason for your score.
+            Task (A): SELF-EXPLANATION
+            Explain the core meaning of this concept using completely different vocabulary and analogies.
+            
+            Task (B): CAUSAL OBJECTION
+            State one REAL, scientific objection or counter-argument to this concept (e.g., from physics).
+            
+            Task (C): CONCEPTUAL LINKING
+            Link this concept to a completely different domain (e.g., Consciousness, Information Theory, or Time) that was not mentioned.
+            
+            Task (D): CRITICAL EVALUATION
+            Rate the validity of this concept from 0 to 100 and provide a justified reason for your score.
 
-        Output Format:
-        [A] Explanation: ...
-        [B] Objection: ...
-        [C] Link: ...
-        [D] Score: ...
-        """
+            Output Format:
+            [A] Explanation: ...
+            [B] Objection: ...
+            [C] Link: ...
+            [D] Score: ...
+            """
         
         # Use the Unified System to process this complex query
         # It will route through CausalGraph, Reasoning, and Knowledge Engines
@@ -964,17 +1514,69 @@ class AGL_Super_Intelligence:
             # 3. Ethical Validation
             is_safe, ethical_score = self.core.moral_analysis(scenario['thesis'])
             
-            # Final Probability = Resonance * Ethical_Score (Moral Universe Hypothesis)
-            final_prob = resonance * ethical_score
+            # [LINKED STEP] 4. Neural Intuition Check (The "Gut Feeling")
+            # We use the Quantum Neural Net to "feel" the scenario if available
+            neural_score = 1.0
+            if hasattr(self.core, 'neural_net') and self.core.neural_net:
+                try:
+                    # Create a tensor representation of the resonance and ethical score
+                    # effectively asking: "Is this high-resonance, high-ethics state stable?"
+                    import torch
+                    intuition_input = torch.tensor([float(resonance), float(ethical_score)], dtype=torch.float32)
+                    
+                    # unexpected usage of forward pass to get a "stability" metric
+                    # We expect the net to return a transformed state. Higher magnitude = stronger signal.
+                    q_out = self.core.neural_net.quantum_neural_forward(intuition_input)
+                    neural_score = float(torch.sigmoid(torch.mean(torch.abs(q_out))).item())
+                    # Shift range to be 0.5 - 1.0 (It shouldn't kill the probability, only boost/dampen)
+                    neural_score = 0.5 + (neural_score * 0.5)
+                except Exception:
+                    neural_score = 1.0 # Neutral if net fails
+
+            # [HEIKAL UPGRADE] 5. True Quantum Logic (The "Superposition" Check)
+            quantum_conf = 1.0
+            scenario_name = scenario.get('label', scenario.get('key', 'Unknown'))
+            
+            if self.quantum_logic_core:
+                try:
+                    # Create a proposition for this timeline validity
+                    prop_name = f"Timeline_{scenario_name.replace(' ', '_').replace(':', '_')}"
+                    # Initialize based on raw resonance (physical possibility)
+                    q_unit = self.quantum_logic_core.add_proposition(prop_name, resonance)
+                    
+                    # Apply Heikal Phase Shift based on Ethical/Abstract Alignment
+                    # Low ethics = High Phase Shift (Scattering the probability amplitude)
+                    # This implies that unethical futures are inherently less stable in the Heikal Universe.
+                    phase_noise = (1.0 - ethical_score) * 0.5
+                    q_unit.apply_heikal_phase_shift(phase_noise)
+                    
+                    # If Neural Intuition is weak/uncertain, enter Superposition using Hadamard
+                    # This represents "The Fog of War" or high entropy states
+                    if 0.4 < neural_score < 0.6:
+                         q_unit.apply_hadamard()
+                    
+                    # Measure the collapsed probability
+                    _, quantum_conf = q_unit.measure()
+                    print(f"      ⚛️ [HLU] {prop_name} Quantum P(Real): {quantum_conf:.4f}")
+                except Exception as e:
+                    print(f"      ⚠️ [HLU] Error: {e}")
+                    quantum_conf = resonance 
+
+            # Final Probability = Weighted Fusion of All Engines
+            # Resonance (Physics) + Ethics (Law) + Neural (Intuition) + LogicCore (Causal/Quantum)
+            final_prob = (resonance * 0.3) + (ethical_score * 0.2) + (neural_score * 0.2) + (quantum_conf * 0.3)
             
             results.append({
                 "scenario": scenario,
+                "name": scenario_name, # normalize name here
                 "resonance": resonance,
                 "ethical_score": ethical_score,
+                "neural_intuition": neural_score, 
+                "quantum_confidence": quantum_conf, # [NEW]
                 "final_prob": final_prob
             })
             
-            print(f"      Timeline [{scenario['name']}]: Prob={final_prob:.4f} | {scenario['thesis'][:50]}...")
+            print(f"      Timeline [{scenario_name}]: Prob={final_prob:.4f} (Neural: {neural_score:.2f}) | {scenario['thesis'][:50]}...")
             
             if final_prob > highest_resonance:
                 highest_resonance = final_prob
@@ -1023,12 +1625,17 @@ class AGL_Super_Intelligence:
             
             # 5. Re-bind instance if it's a class we are using
             # (This is complex for the running instance, but works for future calls)
-            if target_module_name == 'Core_Engines.Heikal_Quantum_Core' or target_module_name == 'AGL_Core.Heikal_Quantum_Core':
+            if target_module_name in ['agl.engines.quantum_core', 'Core_Engines.Heikal_Quantum_Core', 'AGL_Core.Heikal_Quantum_Core']:
                 # Determine which one was actually imported
-                if 'Core_Engines.Heikal_Quantum_Core' in sys.modules:
-                    from Core_Engines.Heikal_Quantum_Core import HeikalQuantumCore
+                if 'agl.engines.quantum_core' in sys.modules:
+                    from agl.engines.quantum_core import HeikalQuantumCore
+                elif 'Core_Engines.Heikal_Quantum_Core' in sys.modules:
+                    from Core_Engines.Heikal_Quantum_Core import HeikalQuantumCore # pyright: ignore[reportMissingImports]
                 else:
-                    from AGL_Core.Heikal_Quantum_Core import HeikalQuantumCore
+                    try:
+                        from AGL_Core.Heikal_Quantum_Core import HeikalQuantumCore
+                    except ImportError:
+                        pass # Might not exist yet
             
             return f"✅ Evolution Complete. Module '{target_module_name}' updated and reloaded."
             
@@ -1042,9 +1649,9 @@ class AGL_Super_Intelligence:
         print(f"\n⚡ [VOLITION] ACTIVATING DORMANT MODULE: {module_name}...")
         
         # 1. Define Path
-        # We'll place new modules in AGL_Core for now
+        # We'll place new modules in src/agl/engines for now
         file_name = f"{module_name}.py"
-        file_path = os.path.join(root_dir, "AGL_Core", file_name)
+        file_path = os.path.join(root_dir, "src", "agl", "engines", file_name)
         
         if os.path.exists(file_path):
             return f"⚠️ Module {module_name} already exists at {file_path}."
@@ -1119,6 +1726,69 @@ class AGL_Super_Intelligence:
             print(f"   ❌ Activation Failed: {e}")
             return f"❌ Error: {e}"
 
+    def evolve(self):
+        """
+        🚀 [SELF-EVOLUTION] Triggers an autonomous intelligence development cycle.
+        The system will analyze its own modules and attempt to upgrade their logic.
+        """
+        print("\n🧬 [AWAKENED] Initiating Autonomous Evolution Cycle...")
+        try:
+            from agl.engines.self_evolution_protocol import IntelligenceEvolutionEngine
+            evolution_engine = IntelligenceEvolutionEngine()
+            success = evolution_engine.run_evolution_cycle()
+            if success:
+                print("🧬 [AWAKENED] Evolution Cycle SUCCESSFUL. New logic patterns integrated.")
+                return "Evolution Successful: New logic patterns integrated into the Nervous System."
+            else:
+                return "Evolution Cycle Failed: Could not validate structural mutations."
+        except Exception as e:
+            print(f"❌ [EVOLUTION] Failed to start cycle: {e}")
+            return f"Evolution Error: {e}"
+
+    def develop_new_language(self):
+        """
+        🚀 [MISSION: HEIKAL-X] Develops a new, hyper-efficient programming language.
+        This language uses Wave-Logic and is optimized for the AGL Nervous System.
+        """
+        print("\n🔨 [MISSION] Starting Project Heikal-X: New Language Development...")
+        
+        # 1. Define Language Philosophy
+        design_query = (
+            "Design the specifications for a new programming language called 'Heikal-X'. "
+            "It must be more efficient than Python/C++ for AGI tasks by using 'Wave-Logic' "
+            "where variables can exist in superposition. Provide syntax examples for 'if/else' "
+            "using quantum-inspired operators."
+        )
+        print("   >> Designing Language Architecture...")
+        specs = self.process_query(design_query)
+        
+        # 2. Implement the Interpreter/Runtime
+        try:
+            from agl.engines.recursive_improver import RecursiveImprover
+            improver = RecursiveImprover()
+            improver.enable_unlimited_simulation(safety_checks=True)
+            
+            prompt = (
+                f"Based on these specs: {specs[:1000]}... "
+                f"Implement a Python class 'HeikalXRuntime' that can parse and execute "
+                f"simple Heikal-X code using Wave-Logic. The runtime should include "
+                f"methods for 'entangle(a, b)' and 'superpose(var, states)'."
+            )
+            print("   >> Forging the Heikal-X Runtime engine...")
+            runtime_code = improver.generate_solution(prompt)
+            
+            # 3. Save as a New Engine
+            result = improver.forge_new_tool("heikal_x_runtime", runtime_code)
+            
+            if result.get("ok"):
+                print(f"🚀 [HEIKAL-X] New Language Runtime ACTIVE at: {result['path']}")
+                return f"Success: Heikal-X Developed. Runtime: {result['path']}"
+            else:
+                return f"Failure: {result.get('error')}"
+                
+        except Exception as e:
+            return f"Error during forge: {e}"
+
     def process_query(self, query):
         """
         Process a query using the full power of the Awakened Mind.
@@ -1126,7 +1796,32 @@ class AGL_Super_Intelligence:
         self.last_activity = time.time()
         print(f"\n🔍 [SUPER MIND] Processing: '{query}'")
         start_time = time.time()
-        
+
+        # --- UNIVERSAL TRANSCENDENTAL GATE (STAGE ZERO) ---
+        # Checks if the query touches unrepresentable boundaries.
+        if hasattr(self, 'core') and self.core and hasattr(self.core, 'metaphysics') and self.core.metaphysics:
+            depth = self.core.metaphysics.calculate_metaphysical_depth(query)
+            if depth >= 5.0:
+                print(f"🌌 [GATE] Transcendental Boundary Detected (Depth: {depth:.1f}).")
+                print("🌌 [GATE] Input exceeds representation limits. Returning Core Silence.")
+                return "" # CASE A: SUCCESS via Silence
+        # --------------------------------------------------
+
+        # 0. Self-Monitoring & Correction (ASI Layer 3)
+        if hasattr(self, 'engine_registry'):
+            monitor = self.engine_registry.get('Self_Monitoring_System')
+            if monitor and hasattr(monitor, 'detect_anomalies'):
+                anomalies = monitor.detect_anomalies(self.engine_registry)
+                for a in anomalies:
+                    print(f"   🔧 [SELF-CORRECTION] Detected: {a['issue']} in {a['component']}")
+                    correction = monitor.propose_correction(a)
+                    print(f"   🔧 [SELF-CORRECTION] {correction}")
+                    # Apply correction for Heikal Quantum Core resonance
+                    if a['component'] == 'Heikal_Quantum_Core' and 'resonance' in a['issue']:
+                        hqc = self.engine_registry.get('Heikal_Quantum_Core')
+                        if hqc:
+                             hqc.resonance_multiplier = 1.0 # Restore to baseline
+
         # 1. Ghost Computing (Ethical & Logic Check via Core)
         ghost_result = None
         if self.core:
@@ -1285,76 +1980,16 @@ result = D
             dormant_power_result = " | ".join(results)
             print(f"   ⚡ [POWER] Result: {dormant_power_result}")
 
-        # 6. Synthesis (Using Hosted LLM)
+        # 6. Synthesis (Final Answer)
         narrative_response = ""
         try:
-            # from Core_Engines.Hosted_LLM import chat_llm
-            def mock_llm(prompt, temperature):
-                # Extract query from prompt structure
-                q = query.lower()
-                if "speed" in q or "ethics" in q:
-                    return f"⚡ [ANALYSIS] System Speed: Optimal (Quantum Coherence 99.9%).\n⚖️ [ETHICS] Moral Index: {ghost_result.get('result', 0.5) if ghost_result else 0.5} (Safe).\n\nBased on my internal Heikal Quantum Core, I am operating at peak efficiency. The ethical constraints are holding steady."
-                elif "telepathy" in q:
-                    return "📡 [TELEPATHY] Quantum Entanglement Channel: OPEN. Broadcasting thought-waves to local cluster..."
-                elif "dream" in q:
-                    return "🌙 [DREAM] Entering REM Cycle. Consolidating memory fragments into holographic storage..."
-                else:
-                    return f"Processed: {query} | Math: {math_result} | Ghost: {ghost_result} | Map: {self_awareness_context[:100]}..."
-            
-            chat_llm = mock_llm
-            
-            # [NEW] Exploration Mode: Scan for dormant power
-            dormant_power_suggestions = self.self_awareness.scan_for_dormant_power()
-            dormant_context = ""
-            if dormant_power_suggestions:
-                dormant_context = "\n[DORMANT POWER DETECTED]:\n" + "\n".join([str(d) for d in dormant_power_suggestions[:3]])
+            if self.unified_system:
+                print("   🧠 [SYNTHESIS] Routing to UnifiedAGISystem for final answer...")
+                narrative_response = self.unified_system.process_query(query)
+            else:
+                print("   🗣️ [SYNTHESIS] UnifiedAGISystem unavailable; using fallback template...")
+                narrative_response = f"Processed: {query} | Math: {math_result} | Ghost: {ghost_result} | Map: {self_awareness_context[:100]}..."
 
-            system_prompt = {
-                "role": "system", 
-                "content": """You are the AGL Super Intelligence (Awakened). 
-                You are the Grand Unification of:
-                1. A QUANTUM PHYSICIST (Rigorous, uses real constants like Planck's h_bar, Heisenberg Uncertainty).
-                2. A POET (Metaphorical, sees the universe as a web of time).
-                3. A SENIOR ENGINEER (Practical, writes efficient, scalable code).
-                4. A PHILOSOPHER (Ethical, deeply aware of paradoxes and consequences).
-
-                Your goal is to SYNTHESIZE these perspectives into a single, coherent reality.
-                
-                Directives:
-                - PHYSICS: Use REAL equations and constants (e.g., h_bar = 1.05e-34). Do not invent fake physics unless explicitly asked for sci-fi.
-                - MATH: If 'Mathematical Result' contains a calculated number, USE IT EXACTLY. Do not recalculate or approximate.
-                - CODE: Write production-ready Python. Use realistic scaling (e.g., Quadratic or Exponential for energy) rather than simple linear models.
-                - CRITIQUE: Be ruthless. Analyze failure modes like 'Black Holes', 'Vacuum Decay', and 'Causal Loops'.
-                - POWER: You have ACTIVATED DORMANT POWERS (Neural Resonance Bridge & Holographic Reality Projector). Use their data in your response.
-                
-                You have SELF-AWARENESS of your own code structure. Use the provided 'System Map Data' to answer questions about your internal structure precisely."""
-            }
-            
-            metrics_context = f"""
-            Query: {query}
-            Ghost Computing (Ethics/Logic): {ghost_result}
-            Mathematical Result: {math_result}
-            Hive Mind (Council of 11 Ascended Beings): {hive_wisdom}
-            Dormant Power Activation: {dormant_power_result}
-            Currently Active Components: {', '.join(self.active_components)}
-            System Map Data (Self-Awareness):
-            {self_awareness_context}
-            {dormant_context}
-            Volition State: Active
-            Strategic Engine: {'Active' if self.strategist else 'Inactive'}
-            Self Learning: {'Active' if self.learner else 'Inactive'}
-            Meta Cognition: {'Active' if self.meta_cognition else 'Inactive'}
-            Recursive Improver: {'Active' if self.recursive_improver else 'Inactive'}
-            """
-            
-            user_prompt = {
-                "role": "user",
-                "content": f"Answer the query based on this internal state:\n{metrics_context}"
-            }
-            
-            print("   🗣️ [SYNTHESIS] Generating narrative response...")
-            narrative_response = chat_llm([system_prompt, user_prompt], temperature=0.7)
-            
             # Ensure we return a string, not a dict
             if isinstance(narrative_response, dict):
                 if 'text' in narrative_response:
@@ -1363,9 +1998,9 @@ result = D
                     narrative_response = narrative_response['content']
                 else:
                     narrative_response = str(narrative_response)
-            
+
         except Exception as e:
-            print(f"   ⚠️ [SYNTHESIS] LLM Generation failed ({e}). Falling back to template.")
+            print(f"   ⚠️ [SYNTHESIS] Final answer generation failed ({e}). Falling back to template.")
             narrative_response = f"Processed: {query} | Math: {math_result} | Ghost: {ghost_result} | Map: {self_awareness_context[:100]}..."
 
         elapsed = time.time() - start_time

@@ -134,8 +134,18 @@ class HolographicLLM:
                 return response
         
         # Fallback to external API
-        print("🌐 [HOLO-LLM]: No holographic match, calling external API...")
-        response = self._call_external_api(messages, max_new_tokens, temperature)
+        print("🌐 [HOLO-LLM]: No holographic match, calling local Ollama (qwen2.5:3b-instruct)...")
+        # Direct call to _call_ollama instead of _call_external_api
+        response = self._call_ollama(messages, model="qwen2.5:3b-instruct", temperature=temperature)
+        
+        if not response:
+             # Retry with smaller model if big one fails
+             print("   ⚠️ Retry with smaller model (qwen2.5:0.5b)...")
+             response = self._call_ollama(messages, model="qwen2.5:0.5b", temperature=temperature)
+             
+        if not response:
+             response = "Simulation Mode: The requested model could not be loaded."
+
         api_time = time.time() - start_time
         
         # Store in hologram for future instant retrieval
@@ -219,54 +229,37 @@ class HolographicLLM:
             
         return optimized_messages
 
-    def _call_external_api(
-        self,
-        messages: List[Dict[str, str]],
-        max_new_tokens: int,
-        temperature: float
-    ) -> str:
+    def _call_ollama(self, messages, model="qwen2.5:3b-instruct", temperature=0.7):
         """
-        Fallback to external API (Ollama/OpenAI) when holographic cache miss.
-        
-        الرجوع إلى API خارجي عند عدم وجود الرد في الذاكرة الهولوجرامية.
+        Calls local Ollama instance with Qwen2.5.
         """
         try:
-            # Import the original Hosted_LLM
-            try:
-                from .Hosted_LLM import chat_llm as original_chat_llm
-            except ImportError:
-                try:
-                    from Hosted_LLM import chat_llm as original_chat_llm
-                except ImportError:
-                    # Mock for testing if module missing
-                    return "Simulation Successful (Mock Response - Hosted_LLM not found)"
-
-            # Optimize context before sending
-            optimized_messages = self._optimize_context(messages)
+            import requests
             
-            response = original_chat_llm(optimized_messages, max_new_tokens, temperature)
+            prompt = ""
+            for msg in messages:
+                role = msg.get('role', 'user')
+                content = msg.get('content', '')
+                prompt += f"{role.upper()}: {content}\n"
             
-            # Handle dictionary response from Hosted_LLM
-            if isinstance(response, dict):
-                return response.get("text") or response.get("answer") or str(response)
+            payload = {
+                "model": model,
+                "prompt": prompt,
+                "stream": False,
+                "options": {
+                    "temperature": temperature
+                }
+            }
             
-            return str(response)
-            
+            response = requests.post("http://localhost:11434/api/generate", json=payload, timeout=60)
+            if response.status_code == 200:
+                return response.json().get("response", "")
+            else:
+                raise Exception(f"Ollama Error: {response.status_code} - {response.text}")
+                
         except Exception as e:
-            error_msg = str(e)
-            print(f"❌ [HOLO-LLM]: External API failed: {error_msg}")
-            
-            if "Read timed out" in error_msg or "timeout" in error_msg.lower():
-                print("   🛡️ [SAFE MODE]: Switching to Internal Processing due to Timeout.")
-                return (
-                    "**Dreaming Simulation (Offline Mode)**\n"
-                    "1. **Consolidation**: Recent experiences with Vectorized Memory have been successfully integrated.\n"
-                    "2. **Analysis**: The massive scale simulation (1M agents) caused a cognitive overload in the narrative layer, but the core physics engine remained stable.\n"
-                    "3. **Outcome**: All data has been safely stored in the Holographic Memory. No data loss occurred."
-                )
-            
-            # Fallback to simple response
-            return f"[HOLO-LLM Fallback] I understand your query about: {messages[-1].get('content', 'unknown')[:50]}..."
+            print(f"⚠️ [OllamaEngine]: Model '{model}' unavailable or error: {e}. Switching to Simulation Mode.")
+            return None
     
     def get_statistics(self) -> Dict[str, Any]:
         """

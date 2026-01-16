@@ -12,7 +12,7 @@ class AdvancedExponentialAlgebra:
 import torch # type: ignore
 import numpy as np # type: ignore
 from scipy import linalg # type: ignore
-from Core_Engines.tensor_utils import to_numpy_safe, to_torch_complex64, matmul_safe, safe_matmul, safe_sub, safe_zeros_like_dtype
+from agl.engines.tensor_utils import to_numpy_safe, to_torch_complex64, matmul_safe, safe_matmul, safe_sub, safe_zeros_like_dtype
 
 class AdvancedExponentialAlgebra:
     def __init__(self):

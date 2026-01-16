@@ -157,7 +157,7 @@ def parse_json_or_retry(raw_text: str, system_prompt: str = '', user_prompt: str
         attempts += 1
         try:
             # lazy import to avoid cycles; chat_llm returns dict with 'text'
-            from Core_Engines.Hosted_LLM import chat_llm
+            from agl.lib.llm.gateway import chat_llm
             critique_sys = system_prompt or AR_SYSTEM
             critique_user = (
                 "Your previous response was not valid JSON. Please produce a valid JSON object that matches the schema exactly. "

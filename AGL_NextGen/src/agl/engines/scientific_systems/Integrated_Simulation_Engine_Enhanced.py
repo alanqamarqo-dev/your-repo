@@ -4,10 +4,14 @@ from agl.engines.scientific_systems.Scientific_Research_Assistant import Mathema
 from agl.engines.scientific_systems.PhysicsSolver_Extended import ExtendedPhysicsSolver # Import Physics Solver
 
 try:
-    from Core_Engines.Advanced_Exponential_Algebra import AdvancedExponentialAlgebra
+    from agl.engines.advanced_exponential_algebra import AdvancedExponentialAlgebra
     HAS_EXP_ALG = True
 except ImportError:
-    HAS_EXP_ALG = False
+    try:
+        from Core_Engines.Advanced_Exponential_Algebra import AdvancedExponentialAlgebra
+        HAS_EXP_ALG = True
+    except ImportError:
+        HAS_EXP_ALG = False
 
 class PhysicsBasedSimulator:
     def __init__(self):
