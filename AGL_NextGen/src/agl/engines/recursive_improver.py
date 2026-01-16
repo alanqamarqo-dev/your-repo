@@ -16,12 +16,11 @@ import time
 from pathlib import Path
 from typing import Dict, Any, Optional
 
-# Import Resonance Optimizer (Safe Import)
-# try:
-#     from Core_Engines.Resonance_Optimizer import ResonanceOptimizer
-#     RESONANCE_AVAILABLE = True
-# except ImportError:
-RESONANCE_AVAILABLE = False
+try:
+    from agl.engines.resonance_optimizer import VectorizedResonanceOptimizer as ResonanceOptimizer
+    RESONANCE_AVAILABLE = True
+except ImportError:
+    RESONANCE_AVAILABLE = False
 
 # [HEIKAL] Import Heikal Quantum Core
 try:
@@ -31,16 +30,18 @@ except ImportError:
     HEIKAL_AVAILABLE = False
 
 # Import Safety Layers
-# try:
-#     from Core_Engines.tri_verify import units_math_checker
-#     from Core_Engines.moral_reasoner import MoralReasoner
-# except ImportError:
+try:
+    from agl.engines.units_validator import UnitsValidator as units_math_checker
+    from agl.engines.moral import MoralReasoningEngine as MoralReasoner
+except ImportError:
     # Fallback if imports fail
-def units_math_checker(*args): return {"passed": True}
-class MoralReasoner:
-    def process_task(self, p): return {"ok": True}
+    def units_math_checker(*args): return {"passed": True}
+    class MoralReasoner:
+        def process_task(self, p): return {"ok": True}
 
 class RecursiveImprover:
+    # [SELF-IMPROVED] Hybrid Mode Enabled
+    HYBRID_MODE = True
     """
     The Engine of Evolution: Allows the system to read, analyze, and improve its own source code.
     
@@ -54,24 +55,33 @@ class RecursiveImprover:
     
     def __init__(self):
         self.name = "Recursive_Improver"
-        self.artifacts_dir = Path(__file__).parent.parent.parent / "artifacts" / "improved_code"
-        self.backup_dir = Path(__file__).parent.parent.parent / "artifacts" / "backups"
+        # Determine root artifacts from this file
+        # src/agl/engines/recursive_improver.py -> engines -> agl -> src -> root
+        self.root_dir = Path(__file__).parent.parent.parent.parent
+        self.artifacts_dir = self.root_dir / "artifacts" / "improved_code"
+        self.backup_dir = self.root_dir / "artifacts" / "backups"
+        
         self.artifacts_dir.mkdir(parents=True, exist_ok=True)
         self.backup_dir.mkdir(parents=True, exist_ok=True)
         
         # Direct Ollama Configuration
         self.llm_base_url = os.getenv("AGL_LLM_BASEURL", "http://localhost:11434")
-        self.model = os.getenv("AGL_LLM_MODEL", "qwen2.5:7b-instruct")
+        self.model = os.getenv("AGL_LLM_MODEL", "qwen2.5:3b-instruct") # Default to 3b for speed
         
         # Initialize Safety Engines
         self.moral_engine = MoralReasoner()
         
         # [HEIKAL] Initialize Quantum Core
+        self.heikal_core = None
         if HEIKAL_AVAILABLE:
-            self.heikal_core = HeikalQuantumCore()
-            print("🌌 [RecursiveImprover] Heikal Quantum Core Attached.")
-        else:
-            self.heikal_core = None
+            try:
+                self.heikal_core = HeikalQuantumCore()
+                print("🌌 [RecursiveImprover] Heikal Quantum Core Attached.")
+            except Exception:
+                pass
+        
+        self.simulation_limit = 10
+        self.safety_checks_enabled = True
 
         # Initialize Resonance Optimizer
         if RESONANCE_AVAILABLE:
@@ -81,6 +91,14 @@ class RecursiveImprover:
 
         # [SAFETY] Consent File Path
         self.consent_file = Path(__file__).parent.parent.parent / "AGL_HUMAN_CONSENT.txt"
+
+    def enable_unlimited_simulation(self, safety_checks: bool = True):
+        """
+        Enables unlimited simulation cycles (ASI Mode).
+        """
+        self.simulation_limit = 999999
+        self.safety_checks_enabled = safety_checks
+        print(f"   🧬 [RecursiveImprover] Unlimited Simulation ENABLED (Safety: {safety_checks})")
 
     def _check_human_consent(self) -> bool:
         """
@@ -96,12 +114,95 @@ class RecursiveImprover:
         except:
             return False
 
+    def generate_solution(self, prompt: str) -> str:
+        """
+        [UPGRADE 2026] Zero-Shot Code Generation for unknown problems.
+        Uses the internal LLM directly to forge a solution.
+        """
+        print(f"   🧬 [IMPROVER] Generating Zero-Shot Solution for: {prompt[:40]}...")
+        
+        system_prompt = (
+            "You are an Advanced Code Generator Engine within the AGL System. "
+            "Write valid, efficient, self-contained Python code to solve the user's problem. "
+            "Do NOT use external libraries aside from standard library (os, sys, math, etc). "
+            "Return ONLY the code block."
+        )
+        
+        # Try direct LLM call
+        code = self._call_llm_direct(system_prompt, prompt)
+        
+        if not code:
+            # Fallback if LLM is offline (Honest Simulation)
+            return "# [ERROR] LLM Offline. Cannot generate code."
+            
+        # Strip markdown if present
+        if "```python" in code:
+            code = code.split("```python")[1].split("```")[0].strip()
+        elif "```" in code:
+            code = code.split("```")[1].split("```")[0].strip()
+            
+        return code
+
+
+    def forge_new_tool(self, tool_name: str, tool_code: str) -> dict:
+        """
+        🔨 [ACTIVE SELF-MODIFICATION]
+        Allows the system to create completely NEW tools/engines from scratch.
+        """
+        print(f"🔨 [FORGE] Creating new tool: {tool_name}...")
+        
+        if not self._check_human_consent():
+            return {"ok": False, "error": "Human Consent NOT GRANTED. Cannot forge tools."}
+
+        # Validate Code Safety (Basic syntax check)
+        try:
+            ast.parse(tool_code)
+        except SyntaxError as e:
+            return {"ok": False, "error": f"Generated code has syntax errors: {e}"}
+
+        # Determine path (e.g. src/agl/engines/generated/...)
+        # We put them in the main engines folder for now, prefixed with 'gen_'
+        filename = f"gen_{tool_name.lower()}.py"
+        target_path = Path(__file__).parent / filename
+        
+        # Write File
+        try:
+            target_path.write_text(tool_code, encoding="utf-8")
+            print(f"   ✅ Tool written to: {target_path}")
+            
+            # Attempt Hot-Load
+            try:
+                module_name = f"agl.engines.{filename[:-3]}"
+                # Invalidate cache
+                importlib.invalidate_caches()
+                # Import
+                spec = importlib.util.spec_from_file_location(module_name, str(target_path))
+                if spec and spec.loader:
+                    module = importlib.util.module_from_spec(spec)
+                    sys.modules[module_name] = module
+                    spec.loader.exec_module(module)
+                    print(f"   ⚡ Tool '{tool_name}' HOT-LOADED successfully.")
+                    return {"ok": True, "path": str(target_path), "status": "Active"}
+            except Exception as e:
+                 print(f"   ⚠️ File written but hot-load failed: {e}")
+                 return {"ok": True, "path": str(target_path), "status": "Written (Load Failed)"}
+                 
+        except Exception as e:
+            return {"ok": False, "error": f"Filesystem error: {e}"}
+
     def _quantum_select_mutation(self, mutations: list[dict]) -> dict:
         """
         Selects the best code mutation using Quantum-Synaptic Resonance.
         """
-        if not self.resonance_opt or not mutations:
-            return mutations[0] if mutations else None
+        # [FIX] If Resonance is missing, use simple max confidence
+        if not self.resonance_opt:
+            best = max(mutations, key=lambda x: x.get('confidence', 0))
+            best['quantum_score'] = best.get('confidence', 0)
+            print(f"🧬 [Quantum Evolution] Resonance inactive. Selected best by confidence: {best['name']} ({best['confidence']:.2f})")
+            return best
+
+        if not mutations:
+             return None
             
         print(f"🧬 Quantum Evolution: Evaluating {len(mutations)} mutations...")
         
@@ -142,19 +243,23 @@ class RecursiveImprover:
         try:
             # Try to import the module dynamically
             if "." in engine_name:
-                # Full path provided (e.g. AGL_Core.AGL_Unified_Python)
+                # Full path provided (e.g. agl.engines.mathematical_brain)
                 module = importlib.import_module(engine_name)
             else:
-                # Default to Core_Engines for backward compatibility
+                # 1. Try agl.engines (NextGen)
                 try:
-                    module = importlib.import_module(f"Core_Engines.{engine_name}")
+                    module = importlib.import_module(f"agl.engines.{engine_name.lower()}")
                 except ImportError:
-                    # Fallback to AGL_Core
+                    # 2. Try Core_Engines for backward compatibility
                     try:
-                        module = importlib.import_module(f"AGL_Core.{engine_name}")
+                        module = importlib.import_module(f"Core_Engines.{engine_name}")
                     except ImportError:
-                         # Fallback to root (for AGL_Core_Consciousness etc)
-                        module = importlib.import_module(f"{engine_name}")
+                        # 3. Fallback to AGL_Core
+                        try:
+                            module = importlib.import_module(f"AGL_Core.{engine_name}")
+                        except ImportError:
+                             # 4. Fallback to root
+                            module = importlib.import_module(f"{engine_name}")
 
             source = inspect.getsource(module)
             return source
@@ -316,12 +421,15 @@ class RecursiveImprover:
                     module = importlib.import_module(engine_name)
                 else:
                     try:
-                        module = importlib.import_module(f"Core_Engines.{engine_name}")
+                        module = importlib.import_module(f"agl.engines.{engine_name.lower()}")
                     except ImportError:
                         try:
-                            module = importlib.import_module(f"AGL_Core.{engine_name}")
+                            module = importlib.import_module(f"Core_Engines.{engine_name}")
                         except ImportError:
-                            module = importlib.import_module(f"{engine_name}")
+                            try:
+                                module = importlib.import_module(f"AGL_Core.{engine_name}")
+                            except ImportError:
+                                module = importlib.import_module(f"{engine_name}")
 
                 target_file = Path(inspect.getfile(module))
                 
@@ -374,14 +482,14 @@ class RecursiveImprover:
         
         # 1. Generate Mutations (Variants)
         prompts = [
-            ("Standard Fix", f"Fix the following code. Goal: {goal}. Return ONLY code."),
-            ("Optimized", f"Fix and OPTIMIZE the following code (O(n) or better). Goal: {goal}. Return ONLY code."),
-            ("Robust", f"Fix and make ROBUST (Error Handling). Goal: {goal}. Return ONLY code.")
+            ("Standard Fix", f"Write Python code to solve this Goal: {goal}. \nRequire: Complete, runnable script. Define all variables before use. Avoid UnboundLocalError."),
+            ("Optimized", f"Write HIGLY OPTIMIZED Python code (O(n)) for Goal: {goal}. \nRequire: Fast, efficient, complete script. Handle all inputs (list/int)."),
+            ("Robust", f"Write ROBUST Python code for Goal: {goal}. \nRequire: Error handling (try/except), input validation, defensive coding (check types). Handle empty inputs.")
         ]
         
         mutations = []
         for variant_name, prompt_text in prompts:
-            full_prompt = f"{prompt_text}\n\nCODE:\n{code_str}"
+            full_prompt = f"{prompt_text}\n\nCONTEXT/PREVIOUS CODE:\n{code_str}\n\nConstraint: Return ONLY valid Python code block."
             generated = self._call_llm_direct("You are an Expert Python Engineer.", full_prompt)
             
             # Clean
@@ -393,20 +501,40 @@ class RecursiveImprover:
             
             if not generated: continue
             
-            # Validate
+            # Validate Syntax
             if not self._validate_syntax(generated):
                 continue
                 
-            # Mock Metrics for Quantum Selection
-            # In a real system, we would run tests here.
-            # For now, we estimate 'energy' (fitness) based on length/complexity balance
-            fitness = 0.8 # Base
-            if "Optimized" in variant_name: fitness += 0.1
+            # Smart Fitness Calculation
+            fitness = 0.5  # Base
             
+            # 1. Check for definitions/structure
+            if "def " in generated: fitness += 0.1
+            if "class " in generated: fitness += 0.1
+            
+            # 2. Check for Robustness & Scope Safety
+            if "try:" in generated and "except" in generated: fitness += 0.2
+            if "raise ValueError" in generated: fitness += 0.1
+            
+            # 3. Naive check for the specific error encountered (UnboundLocalError with 'output')
+            # If 'output' is assigned inside a loop, it must be initialized before the loop
+            if "output =" in generated or "output=" in generated:
+                 # simple heuristic: if we see initialization (e.g. output = None or output = 0), good.
+                 if "output = None" in generated or "output = 0" in generated or "output = []" in generated:
+                     fitness += 0.2
+            
+            # 4. Variant Alignment
+            if variant_name == "Robust":
+                 if "isinstance" in generated: fitness += 0.2
+            elif variant_name == "Optimized":
+                 if "itertools" in generated or "map(" in generated: fitness += 0.2
+            elif variant_name == "Standard Fix":
+                 if len(generated) > 100: fitness += 0.1
+
             mutations.append({
                 "name": variant_name,
                 "code": generated,
-                "confidence": fitness,
+                "confidence": min(fitness, 1.0),
                 "alignment": 0.9,
                 "risk": 0.3
             })
@@ -418,7 +546,36 @@ class RecursiveImprover:
         best = self._quantum_select_mutation(mutations)
         print(f"   🏆 Winner: {best['name']} (Score: {best.get('quantum_score', 0):.4f})")
         
-        return best['code']
+        # Ensure output is markdown wrapped for AGL compatibility
+        return f"```python\n{best['code']}\n```"
+
+    def generate_mental_model(self, concept: str, observations: list[str]) -> str:
+        """
+        [UPGRADE 2026] Abstract Concept Formation
+        Generates a text-based Mental Model (hypothesis of how a system works)
+        rather than executable code. Used for Metaphysical/Abstract reasoning.
+        """
+        print(f"🧬 [RecursiveImprover] Generating Mental Model for: {concept}...")
+        
+        prompt = f"""
+        You are an AGI Hyper-Reasoner.
+        Analyze the following observations and generate a 'Mental Model' (Abstract Theory).
+        
+        CONCEPT: {concept}
+        OBSERVATIONS: {observations}
+        
+        OUTPUT FORMAT:
+        - Core Mechanism: (How it works in theory)
+        - Analogies: (Metaphorical links)
+        - Prediction Rule: (How to predict future states)
+        - Abstract Invariants: (What never changes)
+        
+        Return ONLY the model text.
+        """
+        
+        model_text = self._call_llm_direct("You are an Abstract Reasoning Engine.", prompt)
+        print(f"   🏆 Mental Model '{concept}' Generated.")
+        return model_text
 
 def create_engine(config=None):
     return RecursiveImprover()

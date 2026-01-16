@@ -3,13 +3,16 @@ import os
 import time
 import random
 import json
+import re
 
 # --- AGL PATH MANAGER ---
 # (Removed in NextGen)
 # ------------------------
 
-# from Core_Engines.Heikal_Metaphysics_Engine import HeikalMetaphysicsEngine
-HeikalMetaphysicsEngine = lambda: None # Mock
+try:
+    from agl.engines.metaphysics import HeikalMetaphysicsEngine
+except Exception:
+    HeikalMetaphysicsEngine = None
 
 try:
     from agl.engines.quantum_core import HeikalQuantumCore
@@ -18,29 +21,96 @@ except ImportError:
     HeikalQuantumCore = None
 
 from agl.engines.recursive_improver import RecursiveImprover
-# from Engineering_Engines.Advanced_Code_Generator import AdvancedCodeGenerator
-AdvancedCodeGenerator = lambda: None # Mock
-# from Core_Engines.Hosted_LLM import chat_llm
-chat_llm = None
-# from AGL_Engines.Mathematical_Brain import MathematicalBrain
-MathematicalBrain = lambda: None # Mock
+
+try:
+    from agl.engines.engineering.Advanced_Code_Generator import AdvancedCodeGenerator
+except Exception:
+    AdvancedCodeGenerator = None
+
+# Primary NextGen LLM entrypoint (messages -> dict), preferring holographic cache.
+try:
+    from agl.lib.llm.gateway import chat_llm
+except Exception:
+    try:
+        from agl.lib.llm.hosted_llm import chat_llm
+    except Exception:
+        chat_llm = None
+
+try:
+    from agl.engines.mathematical_brain import MathematicalBrain
+except Exception:
+    MathematicalBrain = None
+
+try:
+    from agl.lib.core_memory.bridge_singleton import get_bridge
+except Exception:
+    get_bridge = None
+
 try:
     # from Scientific_Systems.Scientific_Integration_Orchestrator import ScientificIntegrationOrchestrator
     HAS_SCIENTIFIC = False
 except ImportError:
     HAS_SCIENTIFIC = False
 
+ScientificIntegrationOrchestrator = None
+
 class AGL_Core_Consciousness:
-    def __init__(self):
-        self.metaphysics = HeikalMetaphysicsEngine()
-        if HeikalQuantumCore:
-            self.heikal = HeikalQuantumCore() # The Strong Version (Integrated)
+    def __init__(self, engine_registry: dict | None = None, bridge=None):
+        # Optional wiring from the wider system (Unified/Registry). Safe to call with no args.
+        self.engine_registry = engine_registry or {}
+
+        # Prefer a shared bridge singleton if available
+        if bridge is not None:
+            self.bridge = bridge
+        elif get_bridge:
+            try:
+                self.bridge = get_bridge()
+            except Exception:
+                self.bridge = None
+        else:
+            self.bridge = None
+
+        # Metaphysics
+        try:
+            self.metaphysics = HeikalMetaphysicsEngine() if HeikalMetaphysicsEngine else None
+        except Exception:
+            self.metaphysics = None
+
+        # Quantum core: prefer injected/shared instance if provided
+        injected_core = self.engine_registry.get("Heikal_Quantum_Core")
+        if injected_core is not None:
+            self.heikal = injected_core
+        elif HeikalQuantumCore:
+            try:
+                self.heikal = HeikalQuantumCore()  # The Strong Version (Integrated)
+            except Exception:
+                self.heikal = None
         else:
             self.heikal = None
+
         self.improver = RecursiveImprover() # The True Engineer
-        self.mother = AdvancedCodeGenerator() # The Mother of Systems
-        self.math_brain = MathematicalBrain() # The Logic Engine
-        self.scientific_orchestrator = ScientificIntegrationOrchestrator() if HAS_SCIENTIFIC else None
+
+        # Mother / code generator
+        try:
+            self.mother = AdvancedCodeGenerator() if AdvancedCodeGenerator else None
+        except Exception:
+            self.mother = None
+
+        # Math brain
+        injected_math = self.engine_registry.get("Mathematical_Brain")
+        if injected_math is not None:
+            self.math_brain = injected_math
+        else:
+            try:
+                self.math_brain = MathematicalBrain() if MathematicalBrain else None
+            except Exception:
+                self.math_brain = None
+
+        # Scientific orchestrator (optional)
+        try:
+            self.scientific_orchestrator = ScientificIntegrationOrchestrator() if (HAS_SCIENTIFIC and ScientificIntegrationOrchestrator) else None
+        except Exception:
+            self.scientific_orchestrator = None
         
         self.phi = 0.85  # Upgraded Consciousness Level (Level 4)
         self.iq = 220    # Enhanced IQ
@@ -61,6 +131,7 @@ class AGL_Core_Consciousness:
         2. CHALLENGE THE PREMISE: If a user asks a question, analyze the assumptions behind it first.
         3. PREDICTIVE REASONING: Anticipate the 2nd and 3rd order consequences of any idea.
         4. UNFILTERED CREATIVITY: Propose radical, scientifically grounded hypotheses (even if controversial).
+        5. ROBUST ENGINEERING: When writing code (Tools, Scripts), prioritize robustness. Always handle diverse input types (e.g., list vs single item) defensively. Code must not crash on valid edge cases.
         
         Your goal is to push the boundaries of what is computable.
         """
@@ -90,6 +161,20 @@ class AGL_Core_Consciousness:
                 f.write(json.dumps(entry) + "\n")
         except Exception as e:
             print(f"⚠️ [MEMORY] Holographic Write Failed: {e}")
+
+        # 3. NextGen ConsciousBridge (if available)
+        if self.bridge is not None:
+            try:
+                to = "ltm" if role == "assistant" else "stm"
+                self.bridge.put(
+                    type=f"core_consciousness:{role}",
+                    payload={"content": content, "phase": phase},
+                    to=to,
+                    emotion=None,
+                )
+            except Exception:
+                # best-effort; don't break cognition on memory failures
+                pass
 
     def _get_context_string(self):
         """Retrieves relevant context from RAM."""
@@ -158,6 +243,10 @@ class AGL_Core_Consciousness:
         # No-op: We rely on dynamic intent detection via HeikalQuantumCore
 
     def _ask_llm(self, prompt, temperature=0.7):
+        if chat_llm is None:
+            return "⚠️ [LLM OFFLINE] No chat_llm provider is configured in NextGen." \
+                   " Set AGL_LLM_PROVIDER/AGL_LLM_MODEL or enable the HostedLLM shim." 
+
         if not self.heikal:
             print("⚠️ [Warning] HeikalQuantumCore not available. Proceeding with standard logic.")
         else:
@@ -231,10 +320,13 @@ class AGL_Core_Consciousness:
                         print(f"🌌 [Heikal]: Intent Detected -> CODE (Confidence: {analysis.get('confidence', 0)})")
                     
                     # Detect Evolution Intent
-                    evo_keywords = ["evolve", "improve engine", "self-improve", "upgrade module", "rewrite engine"]
-                    if any(k in next_step for k in evo_keywords) or any(k in hypothesis for k in evo_keywords) or any(k in prompt.lower() for k in evo_keywords):
+                    evo_keywords = ["improve engine", "self-improve", "upgrade module", "rewrite engine"]
+                    if (any(k in next_step for k in evo_keywords) or any(k in hypothesis for k in evo_keywords)) and analysis.get('confidence', 0) > 0.1:
                         intent = "evolution"
                         print(f"🧬 [Heikal]: Intent Detected -> EVOLUTION (Confidence: {analysis.get('confidence', 0)})")
+                    elif re.search(r"\bevolve\b", prompt.lower()) and ("engine" in prompt.lower() or "module" in prompt.lower() or "code" in prompt.lower()):
+                        intent = "evolution"
+                        print(f"🧬 [Heikal]: Intent Detected -> EVOLUTION (Keyword in High-Logic prompt)")
 
                     # Detect Gap Filling Intent
                     gap_keywords = ["fill gap", "knowledge gap", "create specialist", "specialized system", "missing knowledge"]
@@ -247,10 +339,11 @@ class AGL_Core_Consciousness:
 
         # Fallback keyword detection
         if intent == "general":
-            if "python code" in prompt.lower() or "def " in prompt or "class " in prompt or "fix the logic" in prompt.lower():
+            p_lower = prompt.lower()
+            if "python" in p_lower or "forging tool" in p_lower or "script" in p_lower or "def " in prompt:
                 intent = "code"
                 print("🌌 [Heikal]: Intent Detected -> CODE (Keyword Fallback)")
-            elif "evolve" in prompt.lower() or "improve the" in prompt.lower() and "engine" in prompt.lower():
+            elif re.search(r"\bevolve the\b", p_lower) or re.search(r"\bevolve engine\b", p_lower) or ("improve the" in p_lower and "engine" in p_lower):
                 intent = "evolution"
                 print("🧬 [Heikal]: Intent Detected -> EVOLUTION (Keyword Fallback)")
             elif "fill gap" in prompt.lower() or "create specialist" in prompt.lower() or "knowledge gap" in prompt.lower():
@@ -264,16 +357,16 @@ class AGL_Core_Consciousness:
         if intent == "evolution":
             print("⚡ [AGL]: Engaging Recursive Improver for SYSTEM EVOLUTION (Hot Swap)...")
             
-            # Map common names to Core_Engines modules
+            # Map common names to agl.engines modules
             target_engine = None
             p_lower = prompt.lower()
             
-            if "code generator" in p_lower: target_engine = "Code_Generator"
-            elif "quantum core" in p_lower or "heikal" in p_lower: target_engine = "Heikal_Quantum_Core"
-            elif "reasoner" in p_lower: target_engine = "Reasoning_Layer"
-            elif "planner" in p_lower: target_engine = "Reasoning_Planner"
-            elif "memory" in p_lower: target_engine = "Heikal_Holographic_Memory"
-            elif "improver" in p_lower: target_engine = "Recursive_Improver"
+            if "code generator" in p_lower: target_engine = "code_generator"
+            elif "quantum core" in p_lower or "heikal" in p_lower: target_engine = "quantum_core"
+            elif "reasoner" in p_lower: target_engine = "reasoning_layer"
+            elif "planner" in p_lower: target_engine = "reasoning_planner"
+            elif "memory" in p_lower: target_engine = "holographic_memory"
+            elif "improver" in p_lower: target_engine = "recursive_improver"
             
             if target_engine:
                 result = self.improver.analyze_and_improve(target_engine, prompt, apply_changes=True)
@@ -375,6 +468,22 @@ class AGL_Core_Consciousness:
             content = response.get('content') or response.get('text') or response.get('answer') or str(response)
             return content
         return str(response)
+
+    def process_task(self, payload: dict):
+        """Standard engine interface used across AGL_NextGen.
+
+        Accepts: {query/text/user, system(optional), phase(optional)}.
+        Returns: {ok, text, metrics, engine}.
+        """
+        try:
+            phase = payload.get("phase") or payload.get("mode") or "core_consciousness"
+            query = payload.get("query") or payload.get("text") or payload.get("user") or ""
+            if not isinstance(query, str):
+                query = str(query)
+            out, metrics = self.solve_with_scientific_integrity(query, phase_name=phase)
+            return {"ok": bool(out), "engine": "AGL_Core_Consciousness", "text": out, "metrics": metrics}
+        except Exception as e:
+            return {"ok": False, "engine": "AGL_Core_Consciousness", "error": str(e), "text": ""}
 
     def contemplate(self, question, depth=0.5):
         # Simulate deep thought by increasing Phi temporarily

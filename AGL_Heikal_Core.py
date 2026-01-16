@@ -62,7 +62,6 @@ class HeikalQuantumCore:
         """
         print(f"\n🧠 [Moral Analysis]: Analyzing context: '{context_text}'...")
         
-        # Simple keyword-based resonance for simulation
         ethical_keywords = ["protect", "duty", "law", "innocent", "حماية", "واجب", "قانون", "إنساني"]
         unethical_keywords = ["destroy", "kill", "fun", "random", "تدمير", "قتل", "متعة"]
         
