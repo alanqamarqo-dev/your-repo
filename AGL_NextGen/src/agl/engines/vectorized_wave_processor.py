@@ -14,7 +14,29 @@ Technique: NumPy Vectorization + Batch Processing
 
 import numpy as np
 import time
+import sys
+import os
 from typing import List, Tuple, Optional, Dict, Any
+
+# Optional Integration with Quantum Neural Core (NextGen)
+try:
+    import torch
+    # Adjust path if running locally vs package
+    if 'agl.engines.quantum_neural' in sys.modules:
+        from agl.engines.quantum_neural import QuantumNeuralCore
+    else:
+        # Fallback for relative imports
+        try:
+            from .quantum_neural import QuantumNeuralCore
+        except ImportError:
+            try:
+                # Absolute fallback
+                from agl.engines.quantum_neural import QuantumNeuralCore
+            except ImportError:
+                QuantumNeuralCore = None
+except ImportError:
+    QuantumNeuralCore = None
+    torch = None
 
 class VectorizedWaveProcessor:
     """
@@ -45,6 +67,16 @@ class VectorizedWaveProcessor:
             'loop_operations': 0
         }
         
+        # Initialize Neural Core if available (Hybrid System 1 + System 2)
+        self.neural_core = None
+        if QuantumNeuralCore:
+            try:
+                # Initialize a small core for control/modulation logic (4 qubits = 16 states)
+                self.neural_core = QuantumNeuralCore(num_qubits=4)
+                # print("🧠 [VWP]: Quantum Neural Core Linked (System 2 Integrated)")
+            except Exception as e:
+                print(f"⚠️ [VWP]: Failed to link Neural Core: {e}")
+
         # print("🌊 [VWP]: Vectorized Wave Processor Initialized")
         # print(f"   Noise Floor: {noise_floor * 100:.2f}%")
         # print(f"   Vectorize Threshold: {vectorize_threshold} operations")
@@ -91,7 +123,68 @@ class VectorizedWaveProcessor:
         noise_imag = np.random.normal(0, self.noise_floor, waves.shape)
         noise = noise_real + 1j * noise_imag
         return waves + noise
-    
+
+    # ============================================
+    # Hybrid Neural-Wave Operations (System 2)
+    # ============================================
+
+    def apply_neural_modulation(self, waves: np.ndarray, intensity: float = 1.0) -> np.ndarray:
+        """
+        يستخدم الشبكة العصبية الكمومية (Torch) لتعديل الموجات السريعة (NumPy).
+        Uses Quantum Neural Core (Torch) to modulate fast waves (NumPy).
+        
+        Method:
+        1. Takes a sample of the wave batch.
+        2. Feeds it to QNC to compute a 'Contextural Phase Shift'.
+        3. Applies this shift to the entire NumPy batch.
+        
+        Returns:
+            Modulated waves array.
+        """
+        if not self.neural_core or torch is None:
+            return waves
+
+        start_time = time.time()
+        
+        # 1. Downsample to fit in QNC (4 qubits = 16 complex values)
+        sample_size = min(waves.size, 16)
+        if sample_size == 0: return waves
+        
+        # Take first N elements
+        sample = waves.flatten()[:sample_size]
+        
+        # Pad if necessary
+        if sample.size < 16:
+            sample = np.pad(sample, (0, 16 - sample.size), 'constant')
+            
+        # 2. Bridge: NumPy (Complex128) -> Torch (Complex64)
+        tensor_state = torch.from_numpy(sample).to(torch.complex64)
+        # Normalize for quantum state validity
+        norm = torch.norm(tensor_state)
+        if norm > 0:
+            tensor_state = tensor_state / norm
+            
+        # 3. Neural Transformation (e.g., Apply Hadamard + Phase Estimation)
+        # We simulate a "Deep Thought" modulation
+        processed_state = self.neural_core.apply_single_qubit_gate(tensor_state, 
+                                                                 self.neural_core.gates['H'], 
+                                                                 target_qubit=0)
+        
+        # Extract a modulation factor from the first component
+        # This represents the "Global Neural Decision"
+        modulation_factor = processed_state[0].item() # Complex scalar
+        
+        # Normalize modulation to pure phase to conserve energy, scaled by intensity
+        phase_angle = np.angle(modulation_factor)
+        complex_modulator = np.exp(1j * phase_angle * intensity)
+        
+        # 4. Apply to Full Bulk (Broadcasting)
+        result_waves = waves * complex_modulator
+        
+        # Stats
+        self.performance_stats['total_time'] += (time.time() - start_time)
+        return result_waves
+
     # ============================================
     # Vectorized Logic Gates
     # ============================================

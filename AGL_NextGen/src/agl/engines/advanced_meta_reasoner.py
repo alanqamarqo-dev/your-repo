@@ -1,7 +1,22 @@
 from typing import Any, Dict, Optional, List
 import os
+import sys
 import requests
 import json
+import torch
+import numpy as np
+
+# AGL NextGen Integration
+try:
+    if 'agl.engines.quantum_neural' in sys.modules:
+        from agl.engines.quantum_neural import QuantumNeuralCore
+    else:
+        try:
+            from .quantum_neural import QuantumNeuralCore
+        except ImportError:
+            from agl.engines.quantum_neural import QuantumNeuralCore
+except ImportError:
+    QuantumNeuralCore = None
 
 # limits for sample examples and graph edge samples used by analyzer
 try:
@@ -23,6 +38,15 @@ class AdvancedMetaReasonerEngine:
         self.config = config or {}
         self.llm_base_url = os.environ.get("AGL_LLM_URL", "http://localhost:11434")
         self.model = os.environ.get("AGL_LLM_MODEL", "qwen2.5:14b")
+        
+        # Initialize Heikal's Quantum Neural Core for Deep Thinking
+        self.q_brain = None
+        if QuantumNeuralCore:
+            try:
+                self.q_brain = QuantumNeuralCore(num_qubits=6) # 6 Qubits for higher dimensionality
+                # print("🧠 [MetaReasoner] Quantum Brain Attached.")
+            except Exception as e:
+                print(f"⚠️ [MetaReasoner] Failed to attach Quantum Brain: {e}")
 
     def _call_llm_direct(self, system_prompt: str, user_prompt: str) -> str:
         """Direct call to Ollama."""
@@ -53,11 +77,26 @@ class AdvancedMetaReasonerEngine:
           - plan: next steps (route suggestions)
           - calibrations: light tweaks for confidence/thresholds
         """
+        # [Quantum Upgrade] Check if we need Deep Thinking for complex meta-meta abstraction
         if "meta_meta_abstraction" in payload:
             return self.recursive_meta_abstraction(payload["meta_meta_abstraction"])
 
         ranked: List[Dict[str, Any]] = payload.get("ranked_hypotheses") or []
         top = ranked[:_META_TOP]
+
+        # [Quantum Upgrade] If hypotheses are weak, consult the Quantum Brain for a "Black Swan" idea
+        qc_suggestion = None
+        if self.q_brain and ranked and max([float(x.get('score', 0)) for x in ranked]) < 0.6:
+             print("💡 [MetaReasoner] Standard confidence low. Activating Quantum Deep Thought...")
+             query = f"Given these weak hypotheses: {[x.get('hypothesis') for x in top]}, generate a radically different perspective."
+             qc_results = self.q_brain.sample_hypotheses(query, num_samples=1)
+             if qc_results:
+                 qc_suggestion = qc_results[0]
+                 # Inject into suggestions
+                 top.append({
+                     "hypothesis": f"[QUANTUM LEAP] {qc_suggestion.get('hypothesis')}", 
+                     "score": 0.85 # Artificial boost to force consideration
+                 })
 
         suggestions = []
         for item in top:
@@ -75,6 +114,11 @@ class AdvancedMetaReasonerEngine:
             "next_steps": suggestions,
             "route": ["Causal_Graph", "Hypothesis_Generator", "Meta_Learning", "AdvancedMetaReasoner"]
         }
+        
+        # Add quantum insight to plan metadata if available
+        if qc_suggestion:
+            plan['quantum_insight'] = qc_suggestion
+
         calibrations = {
             "confidence_threshold": 0.65,
             "fallback_if_no_llm": True,

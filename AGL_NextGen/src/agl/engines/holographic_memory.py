@@ -40,6 +40,9 @@ import json
 import os
 import pickle
 import sys
+import time
+import json
+import numpy as np
 
 class HeikalHolographicMemory:
     """
@@ -177,57 +180,110 @@ class HeikalHolographicMemory:
 
     def save_memory(self, state_dict):
         """
-        Encodes and saves the state dictionary as an interference pattern.
-        
-        يقوم بتشفير وحفظ قاموس الحالة كنمط تداخل.
+        Encodes and saves the state dictionary.
+        Now supports ASSOCIATIVE ACCUMULATION (Appending).
         """
         try:
-            print("⏳ [HOLO]: Encoding data into interference pattern...")
-            # Convert dict to JSON string
-            json_str = json.dumps(state_dict)
+            # 1. Load existing memory to append to it
+            current_data = []
+            try:
+                loaded = self.load_memory()
+                if isinstance(loaded, list):
+                    current_data = loaded
+                elif isinstance(loaded, dict):
+                    current_data = [loaded]
+            except Exception:
+                current_data = []
+
+            # 2. Append new state
+            # Add timestamp for chronological ordering
+            state_dict['_timestamp'] = time.time()
+            current_data.append(state_dict)
+            
+            # Limit memory size to prevent explosion during training (Last 1000 items)
+            if len(current_data) > 1000:
+                current_data = current_data[-1000:]
+
+            print(f"⏳ [HOLO]: Encoding data (Items: {len(current_data)})...")
+            
+            # Convert list to JSON string
+            json_str = json.dumps(current_data)
             
             # Transform to Hologram
             hologram_data = self._text_to_matrix(json_str)
             
-            # Save as binary numpy file (unreadable to humans)
-            # الحفظ كملف ثنائي (غير مقروء للبشر)
+            # Save as binary numpy file
             np.save(self.memory_file, hologram_data)
             
-            file_size = os.path.getsize(self.memory_file)
-            print(f"✅ [HOLO]: Memory saved to '{self.memory_file}' ({file_size} bytes).")
-            print("   [SEC]: Content is now pure mathematical noise.")
+            # file_size = os.path.getsize(self.memory_file)
+            # print(f"✅ [HOLO]: Memory saved ({file_size} bytes).")
             return True
         except Exception as e:
-            print(f"❌ [HOLO Error]: Save failed. {e}")
+            print(f"❌ [HOLO ERROR]: {e}")
             return False
+
+    def retrieve(self, query, top_k=1):
+        """
+        Retrieves memories relevant to the query.
+        Since we don't have an embedding engine here effectively, we use keyword matching
+        on the 'thought', 'context', and 'instruction' fields.
+        """
+        try:
+            data = self.load_memory()
+            if not isinstance(data, list):
+                # Fallback for single state
+                return [{"content": str(data), "similarity": 1.0}] if query in str(data) else []
+
+            results = []
+            query_terms = query.lower().split()
+            
+            for entry in data:
+                # Calculate relevance score based on keyword overlap
+                content_str = str(entry.get('thought', '')) + " " + str(entry.get('context', '')) + " " + str(entry.get('instruction', ''))
+                content_lower = content_str.lower()
+                
+                score = 0
+                for term in query_terms:
+                    if term in content_lower:
+                        score += 1
+                
+                if score > 0:
+                    results.append({
+                        "content": content_str,
+                        "similarity": score / len(query_terms), # Normalize roughly
+                        "raw": entry
+                    })
+            
+            # Sort by score descending
+            results.sort(key=lambda x: x['similarity'], reverse=True)
+            return results[:top_k]
+            
+        except Exception as e:
+            print(f"❌ [HOLO R-ERROR]: {e}")
+            return []
 
     def load_memory(self):
         """
-        Loads and decodes the memory using the 'Projected Beam' (Key).
+        Decodes the holographic interference pattern back into data.
         
-        يقوم بتحميل وفك تشفير الذاكرة باستخدام 'الشعاع المسلط' (المفتاح).
+        فك تشفير نمط التداخل الهولوغرافي لاستعادة البيانات.
         """
-        if not os.path.exists(self.memory_file):
-            print("⚠️ [HOLO]: No hologram found. Starting fresh.")
-            return None
-            
         try:
-            print("🔦 [HOLO]: Projecting reference beam to decode memory...")
-            # Load the raw complex numbers
+            if not os.path.exists(self.memory_file):
+                return {}
+            
+            # Load Hologram
             hologram_data = np.load(self.memory_file)
             
-            # Decode
+            # Reconstruct Text
             json_str = self._matrix_to_text(hologram_data)
             
-            # Parse JSON
+            # Convert to Dict/List
             return json.loads(json_str)
-        except UnicodeDecodeError:
-            print("❌ [HOLO Security]: DECRYPTION FAILED. Key mismatch or corrupted data.")
-            print("   [INFO]: The retrieved data looked like garbage noise.")
-            raise ValueError("Invalid Key")
         except Exception as e:
-            print(f"❌ [HOLO Error]: Data corruption. {e}")
-            return None
+            # print(f"⚠️ [HOLO]: Memory empty or corrupted ({e})")
+            return {}
+
 
     def prune_and_merge(self):
         """
