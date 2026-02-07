@@ -1,9 +1,10 @@
 """
 AGL Security Audit — النواة الرئيسية
-Unified API wrapping the 3-layer analysis pipeline:
+Unified API wrapping the 4-layer analysis pipeline:
   Layer 1: smart_contract_analyzer (Lexer + CFG + Taint + 8 pattern detectors)
   Layer 2: agl_security suite (Slither/Mythril/Semgrep integration + filter/dedup)
   Layer 3: offensive_security engine (Heuristic + Z3 Formal + EVM Sim + Logic Gates + LLM)
+  Layer 4: AGL Detectors (22 semantic detectors — reentrancy, access, DeFi, common, token)
 """
 
 import os
@@ -50,6 +51,8 @@ class AGLSecurityAudit:
         self._engine = None
         self._suite = None
         self._analyzer = None
+        self._detector_runner = None
+        self._parser = None
         self._init_engines()
 
     def _init_engines(self):
@@ -75,6 +78,15 @@ class AGLSecurityAudit:
         try:
             from agl.engines.offensive_security import OffensiveSecurityEngine
             self._engine = OffensiveSecurityEngine()
+        except Exception:
+            pass
+
+        # Layer 4: AGL Semantic Detectors (22 detectors)
+        try:
+            from agl_security_tool.detectors import DetectorRunner
+            from agl_security_tool.detectors.solidity_parser import SoliditySemanticParser
+            self._detector_runner = DetectorRunner()
+            self._parser = SoliditySemanticParser()
         except Exception:
             pass
 
@@ -197,6 +209,7 @@ class AGLSecurityAudit:
             "layers_used": [],
             "findings": [],
             "suite_findings": [],
+            "detector_findings": [],
             "severity_summary": {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0},
         }
 
@@ -223,6 +236,21 @@ class AGLSecurityAudit:
             except Exception as e:
                 combined.setdefault("warnings", []).append(f"Layer 2 error: {e}")
 
+        # Layer 4: AGL Semantic Detectors (22 detectors)
+        if self._parser and self._detector_runner:
+            try:
+                with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                    code = f.read()
+                contracts = self._parser.parse(code, file_path)
+                det_findings = self._detector_runner.run(contracts)
+                combined["detector_findings"].extend(
+                    df.to_dict() for df in det_findings
+                )
+                combined["layers_used"].append("agl_detectors")
+                combined["parsed_contracts"] = len(contracts)
+            except Exception as e:
+                combined.setdefault("warnings", []).append(f"Layer 4 (detectors) error: {e}")
+
         # Count severities
         for f in combined["findings"]:
             sev = f.get("severity", "low").upper()
@@ -234,7 +262,16 @@ class AGLSecurityAudit:
             if sev in combined["severity_summary"]:
                 combined["severity_summary"][sev] += 1
 
-        combined["total_findings"] = len(combined["findings"]) + len(combined["suite_findings"])
+        for f in combined["detector_findings"]:
+            sev = f.get("severity", "low").upper()
+            if sev in combined["severity_summary"]:
+                combined["severity_summary"][sev] += 1
+
+        combined["total_findings"] = (
+            len(combined["findings"]) +
+            len(combined["suite_findings"]) +
+            len(combined["detector_findings"])
+        )
         combined["time_seconds"] = round(time.time() - t0, 2)
         return combined
 
@@ -285,6 +322,7 @@ class AGLSecurityAudit:
         # Findings
         findings = result.get("findings", [])
         suite = result.get("suite_findings", [])
+        detectors = result.get("detector_findings", [])
 
         if findings:
             lines.append(f"  📋 Pattern Findings ({len(findings)}):")
@@ -301,6 +339,18 @@ class AGLSecurityAudit:
                 title = f.get("title", "Unknown")
                 line = f.get("line", "?")
                 lines.append(f"    [{sev}] L{line}: {title}")
+
+        if detectors:
+            lines.append(f"\n  🔬 Detector Findings ({len(detectors)}):")
+            for f in detectors:
+                sev = f.get("severity", "?").upper()
+                title = f.get("title", f.get("detector_id", "Unknown"))
+                line = f.get("line", "?")
+                lines.append(f"    [{sev}] L{line}: {title}")
+                desc = f.get("description", "")
+                if desc:
+                    # Wrap description to 70 chars
+                    lines.append(f"           {desc[:120]}{'...' if len(desc) > 120 else ''}")
 
         # Summary
         summary = result.get("severity_summary", {})
