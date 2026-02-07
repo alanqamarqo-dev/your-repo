@@ -12,6 +12,9 @@ Usage:
     python manage.py scan <path>      # فحص ملف أو مجلد
     python manage.py deep <path>      # فحص عميق (Z3 + EVM + LLM)
     python manage.py quick <path>     # فحص سريع (أنماط فقط)
+    python manage.py project <path>   # فحص مشروع كامل (Foundry/Hardhat/Truffle)
+    python manage.py info <path>      # إحصائيات المشروع بدون فحص
+    python manage.py graph <path>     # شجرة التبعيات
     python manage.py report <path>    # فحص + تقرير Markdown
     python manage.py benchmark        # اختبار أداء على ملف تجريبي
     python manage.py status           # حالة المحركات
@@ -308,6 +311,144 @@ def cmd_scan(target, format="text", output=None, mode="scan"):
         print(f"\n  ✅ No vulnerabilities found")
 
 
+def cmd_project(target, mode="scan", format="text", output=None, command="project",
+                include_tests=False, include_deps=False, include_mocks=False):
+    """فحص مشروع كامل (Foundry/Hardhat/Truffle)"""
+    sys.path.insert(0, str(ROOT_DIR))
+    sys.path.insert(0, str(ROOT_DIR / "AGL_NextGen" / "src"))
+
+    from agl_security_tool.project_scanner import ProjectScanner
+
+    config = {
+        "exclude_tests": not include_tests,
+        "exclude_mocks": not include_mocks,
+        "scan_dependencies": include_deps,
+    }
+
+    scanner = ProjectScanner(target, config=config)
+
+    # ── info: إحصائيات فقط ──
+    if command == "info":
+        print_header("Project Info — معلومات المشروع")
+        scanner.discover()
+        stats = scanner.get_project_stats()
+
+        print(f"  📁 Root:       {stats['root_dir']}")
+        print(f"  🔧 Type:       {stats['project_type']}")
+        print(f"  📂 Contracts:  {stats['contracts_dir']}")
+        print(f"  📄 .sol files: {stats['total_sol_files']}")
+        print(f"  📋 Contracts:  {stats['total_contracts']}")
+        print(f"  🔌 Interfaces: {stats['total_interfaces']}")
+        print(f"  📚 Libraries:  {stats['total_libraries']}")
+        print(f"  📝 LOC:        {stats['total_loc']:,}")
+        print(f"  ⚙️  Functions:  {stats['total_functions']}")
+        print(f"  🔗 Ext Calls:  {stats['total_external_calls']}")
+        print(f"  📊 State Vars: {stats['total_state_variables']}")
+
+        if stats.get("compiler_versions"):
+            print(f"\n  🔨 Compiler Versions:")
+            for v, count in stats["compiler_versions"].items():
+                print(f"     {v}: {count} files")
+
+        if stats.get("remappings"):
+            print(f"\n  🔄 Remappings ({len(stats['remappings'])}):")
+            for k, v in list(stats["remappings"].items())[:10]:
+                print(f"     {k} → {v}")
+
+        if stats.get("largest_files"):
+            print(f"\n  📐 Largest Files (by LOC):")
+            for f in stats["largest_files"][:5]:
+                print(f"     {f['loc']:>5} LOC  {f['file']}  ({', '.join(f['contracts'])})")
+
+        if stats.get("highest_attack_surface"):
+            print(f"\n  ⚠️  Highest Attack Surface:")
+            for f in stats["highest_attack_surface"][:5]:
+                print(f"     {f['external_calls']:>3} ext calls  {f['file']}")
+
+        return
+
+    # ── graph: شجرة التبعيات ──
+    if command == "graph":
+        print_header("Dependency Graph — شجرة التبعيات")
+        scanner.discover()
+        graph = scanner.get_dependency_graph()
+
+        print(f"  📊 Nodes: {len(graph['nodes'])}")
+        print(f"  🔗 Edges: {len(graph['edges'])}")
+        print(f"  🌳 Root contracts: {', '.join(graph['roots'][:10])}")
+        print(f"  🍃 Leaf contracts: {', '.join(graph['leaves'][:10])}")
+
+        out = json.dumps(graph, indent=2, ensure_ascii=False)
+        if output:
+            Path(output).parent.mkdir(parents=True, exist_ok=True)
+            with open(output, "w", encoding="utf-8") as f:
+                f.write(out)
+            print_ok(f"Graph saved to: {output}")
+        else:
+            print(f"\n{out}")
+        return
+
+    # ── project: فحص كامل ──
+    mode_label = {"quick": "⚡ Quick", "scan": "🛡️ Standard", "deep": "🔬 Deep"}
+    print_header(f"{mode_label.get(mode, '🛡️')} Project Scan")
+    print(f"  📁 Target: {target}")
+    print(f"  🔧 Mode: {mode}")
+    print()
+
+    scanner.discover()
+    info = scanner.project_info
+
+    print(f"  🔍 Detected: {info.project_type} project")
+    print(f"  📄 Files: {info.total_sol_files}")
+    print(f"  📋 Contracts: {info.total_contracts}")
+    if info.remappings:
+        print(f"  🔄 Remappings: {len(info.remappings)}")
+    print(f"\n  ⏳ Scanning...")
+
+    if mode == "deep":
+        result = scanner.deep_scan(output_format=format)
+    elif mode == "quick":
+        result = scanner.quick_scan(output_format=format)
+    else:
+        result = scanner.full_scan(output_format=format)
+
+    # استخراج التقرير
+    report_text = (
+        result.get("report_text") or
+        result.get("report_markdown") or
+        result.get("report_json") or
+        ""
+    )
+
+    if report_text:
+        if output:
+            Path(output).parent.mkdir(parents=True, exist_ok=True)
+            with open(output, "w", encoding="utf-8") as f:
+                f.write(report_text)
+            print_ok(f"Report saved to: {output}")
+        else:
+            print(report_text)
+    else:
+        out = json.dumps(result, indent=2, ensure_ascii=False, default=str)
+        if output:
+            Path(output).parent.mkdir(parents=True, exist_ok=True)
+            with open(output, "w", encoding="utf-8") as f:
+                f.write(out)
+            print_ok(f"Report saved to: {output}")
+        else:
+            print(out)
+
+    # ملخص نهائي
+    summary = result.get("severity_summary", {})
+    total = sum(summary.values())
+    if total > 0:
+        print(f"\n  🎯 Total: {total} findings across {result.get('files_with_findings', '?')} files")
+        print(f"     CRITICAL: {summary.get('CRITICAL', 0)}, HIGH: {summary.get('HIGH', 0)}, "
+              f"MEDIUM: {summary.get('MEDIUM', 0)}, LOW: {summary.get('LOW', 0)}")
+    else:
+        print(f"\n  ✅ No vulnerabilities found across {result.get('files_scanned', '?')} files")
+
+
 def cmd_benchmark():
     """اختبار أداء"""
     print_header("Benchmark — اختبار الأداء")
@@ -393,11 +534,17 @@ Commands:
     parser.add_argument("command", choices=[
         "install", "check", "status", "test",
         "scan", "quick", "deep", "report",
+        "project", "info", "graph",
         "benchmark", "clean"
     ])
-    parser.add_argument("target", nargs="?", help="مسار ملف .sol أو مجلد")
+    parser.add_argument("target", nargs="?", help="مسار ملف .sol أو مجلد أو مشروع")
     parser.add_argument("-f", "--format", choices=["text", "json", "markdown"], default="text")
     parser.add_argument("-o", "--output", help="حفظ النتيجة في ملف")
+    parser.add_argument("-m", "--mode", choices=["quick", "scan", "deep"], default="scan",
+                        help="وضع الفحص (لأمر project)")
+    parser.add_argument("--include-tests", action="store_true", help="فحص ملفات الاختبار")
+    parser.add_argument("--include-deps", action="store_true", help="فحص المكتبات المثبتة")
+    parser.add_argument("--include-mocks", action="store_true", help="فحص ملفات المحاكاة")
 
     args = parser.parse_args()
 
@@ -424,6 +571,15 @@ Commands:
         cmd_benchmark()
     elif args.command == "clean":
         cmd_clean()
+    elif args.command in ("project", "info", "graph"):
+        if not args.target:
+            print_err(f"Usage: python manage.py {args.command} <path-to-project>")
+            sys.exit(1)
+        cmd_project(args.target, mode=args.mode, format=args.format,
+                    output=args.output, command=args.command,
+                    include_tests=args.include_tests,
+                    include_deps=args.include_deps,
+                    include_mocks=args.include_mocks)
 
 
 if __name__ == "__main__":

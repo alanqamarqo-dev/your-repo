@@ -312,6 +312,37 @@ class AGLSecurityAudit:
         lines.append("=" * 60)
         return "\n".join(lines)
 
+    def scan_project(self, project_path: str, **kwargs) -> Dict[str, Any]:
+        """
+        فحص مشروع كامل — Foundry / Hardhat / Truffle.
+        يحلل البنية والتبعيات والتوارث ويفحص كل العقود.
+
+        Args:
+            project_path: مسار المجلد الجذري للمشروع
+            **kwargs: إعدادات إضافية:
+                mode: "scan" أو "quick" أو "deep" (default: "scan")
+                output_format: "dict" أو "json" أو "markdown" أو "text" (default: "dict")
+                exclude_tests: bool (default: True)
+                exclude_mocks: bool (default: True)
+                scan_dependencies: bool (default: False)
+
+        Returns:
+            تقرير شامل على مستوى المشروع
+        """
+        from agl_security_tool.project_scanner import ProjectScanner
+
+        mode = kwargs.pop("mode", "scan")
+        output_format = kwargs.pop("output_format", "dict")
+
+        scanner = ProjectScanner(project_path, config={**self.config, **kwargs})
+
+        if mode == "deep":
+            return scanner.deep_scan(output_format=output_format)
+        elif mode == "quick":
+            return scanner.quick_scan(output_format=output_format)
+        else:
+            return scanner.full_scan(output_format=output_format)
+
     def _format_markdown(self, result: Dict[str, Any]) -> str:
         """تنسيق النتائج كـ Markdown."""
         lines = []

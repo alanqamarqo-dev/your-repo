@@ -8,9 +8,10 @@ Usage:
     result = audit.scan("path/to/contract.sol")
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __author__ = "AGL Team"
 
 from .core import AGLSecurityAudit
+from .project_scanner import ProjectScanner
 
-__all__ = ["AGLSecurityAudit", "__version__"]
+__all__ = ["AGLSecurityAudit", "ProjectScanner", "__version__"]

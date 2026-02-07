@@ -1,0 +1,32 @@
+# AGL Security Tool — ملف إعدادات المشروع
+# ضع هذا الملف في جذر مشروعك وخصصه حسب حاجتك
+# Project configuration file — place at project root
+
+# تصفية الخطورة — أي مستويات تريد رؤيتها
+severity_filter:
+  - critical
+  - high
+  - medium
+  - low
+
+# حد الثقة — النتائج أقل من هذا الحد لا تظهر
+confidence_threshold: 0.5
+
+# استبعاد ملفات الاختبار والمحاكاة
+exclude_tests: true
+exclude_mocks: true
+
+# فحص المكتبات المثبتة (node_modules, lib/)
+scan_dependencies: false
+
+# حد أقصى لحجم الملف بالكيلوبايت
+max_file_size_kb: 500
+
+# إعادات تعيين المسارات الإضافية (تُضاف إلى remappings.txt)
+# custom_remappings:
+#   "@mylib/": "lib/mylib/src/"
+
+# مسارات ملفات للاستبعاد (glob patterns)
+# exclude_patterns:
+#   - "**/migrations/**"
+#   - "**/scripts/**"
