@@ -242,7 +242,8 @@ class SoliditySemanticParser:
 
             # Functions
             contract.functions = self._extract_functions(
-                contract_body, contract_body_raw, contract_start, contract.state_vars
+                contract_body, contract_body_raw, contract_start, contract.state_vars,
+                contract_modifiers=contract.modifiers
             )
 
             contracts.append(contract)
@@ -310,7 +311,7 @@ class SoliditySemanticParser:
                 name=name,
                 params=[p.strip() for p in params.split(',') if p.strip()],
                 body=mod_body,
-                checks_owner=bool(re.search(r'msg\.sender\s*==|_checkOwner|isOwner', mod_body)),
+                checks_owner=bool(re.search(r'msg\.sender\s*[!=]=|_checkOwner|isOwner', mod_body)),
                 checks_role=bool(re.search(r'hasRole|_checkRole|onlyRole', mod_body)),
                 is_reentrancy_guard=bool(re.search(
                     r'_status\s*!=|_locked|_notEntered|_reentrancyGuardEntered|require\(!locked',
@@ -327,7 +328,8 @@ class SoliditySemanticParser:
     # ═══════════════════════════════════════════════════
 
     def _extract_functions(self, body: str, raw_body: str,
-                           offset: int, state_vars: Dict[str, StateVar]
+                           offset: int, state_vars: Dict[str, StateVar],
+                           contract_modifiers: Dict = None
                            ) -> Dict[str, ParsedFunction]:
         """استخراج الدوال مع تحليل دلالي كامل."""
         functions = {}
@@ -410,6 +412,19 @@ class SoliditySemanticParser:
             )
             self._analyze_function_body(func, func_body, state_var_names)
             functions["fallback"] = func
+
+        # ═══ تحسين has_access_control بناءً على modifiers العقد ═══
+        # إذا الدالة تستخدم modifier مخصص يحتوي على فحص msg_sender
+        if contract_modifiers:
+            for func in functions.values():
+                if func.has_access_control:
+                    continue
+                for mod_name in func.modifiers:
+                    if mod_name in contract_modifiers:
+                        mod_info = contract_modifiers[mod_name]
+                        if mod_info.checks_owner or mod_info.checks_role:
+                            func.has_access_control = True
+                            break
 
         return functions
 
