@@ -59,12 +59,10 @@ jobs:
       # NOTE: We use Linux `timeout` command instead of GitHub Actions
       # `timeout-minutes` because the latter sends a cancellation signal
       # that kills the entire job, bypassing `continue-on-error`.
-
-      - name: "Test: State Extraction Engine"
-        env:
-          PYTHONPATH: ${{ github.workspace }}
-        run: |
-          timeout 600 python tests/_test_state_engine.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+      #
+      # State Extraction Engine is excluded here — it's very heavy (~8-12min,
+      # high memory) and crashes the runner. It runs via ci_run_all.py in the
+      # Complete Test Suite job where subprocess isolation protects other tests.
 
       - name: "Test: Temporal Model"
         env:
