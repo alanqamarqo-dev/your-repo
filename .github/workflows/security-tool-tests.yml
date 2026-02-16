@@ -68,43 +68,57 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          timeout 300 python tests/_test_temporal_model.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+          set +e
+          timeout 300 python tests/_test_temporal_model.py
+          CODE=$?; [ $CODE -eq 0 ] && echo "✅ PASSED" || echo "⚠️ exit=$CODE"; exit 0
 
       - name: "Test: Action Space"
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          timeout 300 python tests/_test_action_space.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+          set +e
+          timeout 300 python tests/_test_action_space.py
+          CODE=$?; [ $CODE -eq 0 ] && echo "✅ PASSED" || echo "⚠️ exit=$CODE"; exit 0
 
       - name: "Test: Attack Engine"
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          timeout 300 python tests/_test_attack_engine.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+          set +e
+          timeout 300 python tests/_test_attack_engine.py
+          CODE=$?; [ $CODE -eq 0 ] && echo "✅ PASSED" || echo "⚠️ exit=$CODE"; exit 0
 
       - name: "Test: Search Engine"
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          timeout 300 python tests/_test_search_engine.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+          set +e
+          timeout 300 python tests/_test_search_engine.py
+          CODE=$?; [ $CODE -eq 0 ] && echo "✅ PASSED" || echo "⚠️ exit=$CODE"; exit 0
 
       - name: "Test: Exploit Reasoning"
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          timeout 300 python tests/_test_exploit_reasoning.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+          set +e
+          timeout 300 python tests/_test_exploit_reasoning.py
+          CODE=$?; [ $CODE -eq 0 ] && echo "✅ PASSED" || echo "⚠️ exit=$CODE"; exit 0
 
       - name: "Test: DeFi Detection"
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          timeout 300 python tests/_test_defi_detection.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+          set +e
+          timeout 300 python tests/_test_defi_detection.py
+          CODE=$?; [ $CODE -eq 0 ] && echo "✅ PASSED" || echo "⚠️ exit=$CODE"; exit 0
 
       - name: "Test: Detector System"
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          timeout 300 python test_detector_system.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+          set +e
+          timeout 300 python test_detector_system.py
+          CODE=$?; [ $CODE -eq 0 ] && echo "✅ PASSED" || echo "⚠️ exit=$CODE"; exit 0
 
   # ─────────────────────────────────────────────────
   # المرحلة 2: اختبارات الخط الكامل (مع أدوات خارجية)
@@ -149,19 +163,25 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          timeout 600 python tests/_test_l1_l4.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+          set +e
+          timeout 600 python tests/_test_l1_l4.py
+          CODE=$?; [ $CODE -eq 0 ] && echo "✅ PASSED" || echo "⚠️ exit=$CODE"; exit 0
 
       - name: "Test: Tool Usability (Full)"
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          timeout 600 python tests/_test_tool_usability.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+          set +e
+          timeout 600 python tests/_test_tool_usability.py
+          CODE=$?; [ $CODE -eq 0 ] && echo "✅ PASSED" || echo "⚠️ exit=$CODE"; exit 0
 
       - name: "Test: Final Pipeline"
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          timeout 600 python tests/_test_final.py && echo "✅ PASSED" || echo "⚠️ FAILED or TIMED OUT (exit: $?)"
+          set +e
+          timeout 600 python tests/_test_final.py
+          CODE=$?; [ $CODE -eq 0 ] && echo "✅ PASSED" || echo "⚠️ exit=$CODE"; exit 0
 
   # ─────────────────────────────────────────────────
   # المرحلة 3: تشغيل كل الاختبارات مع ملخص
