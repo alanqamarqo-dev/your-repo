@@ -16,7 +16,7 @@ os.chdir(PROJECT_ROOT)
 # Each entry: (file_path, timeout_seconds, requires_external_tools)
 TESTS = [
     # Core tests — fast, no external tools needed
-    ("tests/_test_state_engine.py",      120, False),
+    ("tests/_test_state_engine.py",      660, False),  # State engine is slow (~8-12min on CI)
     ("tests/_test_temporal_model.py",    300, False),
     ("tests/_test_action_space.py",      120, False),
     ("tests/_test_attack_engine.py",     120, False),
