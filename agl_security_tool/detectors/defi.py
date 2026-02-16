@@ -45,13 +45,16 @@ class FirstDepositorAttack(BaseDetector):
     }
 
     _SHARE_PATTERNS = [
-        # shares = amount * totalSupply / totalAssets
-        re.compile(r'totalSupply.*?/.*?total(?:Assets|Balance)', re.IGNORECASE),
-        re.compile(r'total(?:Assets|Balance).*?/.*?totalSupply', re.IGNORECASE),
+        # shares = amount * totalSupply / totalAssets  (ERC4626 + custom vaults)
+        re.compile(r'total(?:Supply|Shares?|Stake|Token).*?/.*?total(?:Assets?|Balance|Deposit)', re.IGNORECASE),
+        re.compile(r'total(?:Assets?|Balance|Deposit).*?/.*?total(?:Supply|Shares?|Stake|Token)', re.IGNORECASE),
         # mulDiv / mulDown / mulUp patterns
-        re.compile(r'mul(?:Div|Down|Up)\s*\(.*?totalSupply', re.IGNORECASE),
-        # Direct totalSupply == 0 check (vault pattern)
-        re.compile(r'totalSupply\s*\(\s*\)\s*==\s*0', re.IGNORECASE),
+        re.compile(r'mul(?:Div|Down|Up)\s*\(.*?total(?:Supply|Shares?)', re.IGNORECASE),
+        # Direct totalSupply/totalShares == 0 check (vault pattern)
+        re.compile(r'total(?:Supply|Shares?|Stake)\s*(?:\(\s*\))?\s*==\s*0', re.IGNORECASE),
+        # Generic share calculation: amount * shares / assets
+        re.compile(r'\w+\s*\*\s*total(?:Supply|Shares?)\s*/\s*total(?:Assets?|Balance)', re.IGNORECASE),
+        re.compile(r'\w+\s*\*\s*total(?:Assets?|Balance)\s*/\s*total(?:Supply|Shares?)', re.IGNORECASE),
     ]
 
     _PROTECTION_PATTERNS = [
@@ -139,6 +142,12 @@ class OracleManipulation(BaseDetector):
         re.compile(r'balanceOf\s*\([^)]*\)\s*/\s*(?:balanceOf|totalSupply)'),
         # token0.balanceOf(pool) / token1.balanceOf(pool)
         re.compile(r'balance(?:Of)?\s*\(.*?(?:pair|pool|reserve)', re.IGNORECASE),
+        # Generic oracle price calls (IOracle.getPrice, fetchPrice, latestPrice)
+        re.compile(r'\.getPrice\s*\(', re.IGNORECASE),
+        re.compile(r'\.(?:fetch|latest|current|get)Price\s*\(', re.IGNORECASE),
+        re.compile(r'\.getUnderlyingPrice\s*\(', re.IGNORECASE),
+        re.compile(r'oracle.*?\.(?:get|price|read|peek)\s*\(', re.IGNORECASE),
+        re.compile(r'\.peek\s*\('),  # MakerDAO-style oracles
     ]
 
     _TWAP_PROTECTION = [
@@ -292,8 +301,8 @@ class DivideBeforeMultiply(BaseDetector):
     _SAFE_PATTERNS = [
         # mulDiv is intentional
         re.compile(r'mulDiv|FullMath|PRBMath', re.IGNORECASE),
-        # Constant denominators that are powers of 2 or known precision
-        re.compile(r'/\s*(?:1e\d+|10\*\*\d+|WAD|RAY|PRECISION|SCALE|BPS|1000+)'),
+        # Constant denominators that are precision constants (NOT followed by * )
+        re.compile(r'/\s*(?:1e\d+|10\*\*\d+|WAD|RAY|PRECISION|SCALE|BPS)\s*[;,)]'),
     ]
 
     def detect(self, contract: ParsedContract, all_contracts: List[ParsedContract]) -> List[Finding]:

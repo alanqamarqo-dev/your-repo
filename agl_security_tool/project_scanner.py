@@ -31,44 +31,48 @@ from collections import defaultdict
 #  نماذج البيانات — Data Models
 # ═══════════════════════════════════════════════════════════════
 
+
 @dataclass
 class SolidityFile:
     """نموذج بيانات لملف Solidity واحد."""
-    path: str                                # المسار الكامل
-    relative_path: str                       # المسار النسبي من جذر المشروع
-    size: int = 0                            # حجم الملف
-    pragma: str = ""                         # إصدار المترجم
-    license: str = ""                        # نوع الرخصة
-    imports: List[str] = field(default_factory=list)     # الاستيرادات الخام
+
+    path: str  # المسار الكامل
+    relative_path: str  # المسار النسبي من جذر المشروع
+    size: int = 0  # حجم الملف
+    pragma: str = ""  # إصدار المترجم
+    license: str = ""  # نوع الرخصة
+    imports: List[str] = field(default_factory=list)  # الاستيرادات الخام
     resolved_imports: List[str] = field(default_factory=list)  # الاستيرادات بعد الحل
-    contracts: List[str] = field(default_factory=list)   # أسماء العقود المعرّفة
+    contracts: List[str] = field(default_factory=list)  # أسماء العقود المعرّفة
     interfaces: List[str] = field(default_factory=list)  # أسماء الواجهات
-    libraries: List[str] = field(default_factory=list)   # أسماء المكتبات
-    inherits: List[str] = field(default_factory=list)    # العقود المورّثة
-    functions_count: int = 0                 # عدد الدوال
-    external_calls: int = 0                  # عدد النداءات الخارجية
-    state_vars: int = 0                      # عدد المتغيرات الحالة
-    loc: int = 0                             # عدد الأسطر البرمجية (بدون تعليقات وفراغات)
+    libraries: List[str] = field(default_factory=list)  # أسماء المكتبات
+    inherits: List[str] = field(default_factory=list)  # العقود المورّثة
+    functions_count: int = 0  # عدد الدوال
+    external_calls: int = 0  # عدد النداءات الخارجية
+    state_vars: int = 0  # عدد المتغيرات الحالة
+    loc: int = 0  # عدد الأسطر البرمجية (بدون تعليقات وفراغات)
 
 
 @dataclass
 class ProjectInfo:
     """معلومات المشروع المكتشفة."""
-    project_type: str = "unknown"            # foundry / hardhat / truffle / bare
-    root_dir: str = ""                       # المجلد الجذري
-    contracts_dir: str = ""                  # مجلد العقود الرئيسي
-    test_dir: str = ""                       # مجلد الاختبارات
-    lib_dirs: List[str] = field(default_factory=list)    # مجلدات المكتبات
+
+    project_type: str = "unknown"  # foundry / hardhat / truffle / bare
+    root_dir: str = ""  # المجلد الجذري
+    contracts_dir: str = ""  # مجلد العقود الرئيسي
+    test_dir: str = ""  # مجلد الاختبارات
+    lib_dirs: List[str] = field(default_factory=list)  # مجلدات المكتبات
     remappings: Dict[str, str] = field(default_factory=dict)  # إعادة تعيين المسارات
-    compiler_version: str = ""               # إصدار المترجم
-    node_modules: str = ""                   # مسار node_modules
-    total_sol_files: int = 0                 # إجمالي ملفات .sol
-    total_contracts: int = 0                 # إجمالي العقود
+    compiler_version: str = ""  # إصدار المترجم
+    node_modules: str = ""  # مسار node_modules
+    total_sol_files: int = 0  # إجمالي ملفات .sol
+    total_contracts: int = 0  # إجمالي العقود
 
 
 # ═══════════════════════════════════════════════════════════════
 #  الماسح الرئيسي — ProjectScanner
 # ═══════════════════════════════════════════════════════════════
+
 
 class ProjectScanner:
     """
@@ -88,38 +92,47 @@ class ProjectScanner:
     """
 
     # أنماط regex ثابتة
-    _RE_PRAGMA = re.compile(r'pragma\s+solidity\s+([^;]+);')
-    _RE_LICENSE = re.compile(r'//\s*SPDX-License-Identifier:\s*(.+)')
+    _RE_PRAGMA = re.compile(r"pragma\s+solidity\s+([^;]+);")
+    _RE_LICENSE = re.compile(r"//\s*SPDX-License-Identifier:\s*(.+)")
     _RE_IMPORT = re.compile(
-        r'import\s+'
-        r'(?:'
-        r'(?:{\s*[\w\s,]+\s*}\s+from\s+)?'   # {Symbol, Symbol2} from
-        r'|'
-        r'(?:[\w]+\s+from\s+)?'               # Alias from
-        r')?'
-        r'["\']([^"\']+)["\']'                 # المسار بين علامات التنصيص
-        r'\s*;'
+        r"import\s+"
+        r"(?:"
+        r"(?:{\s*[\w\s,]+\s*}\s+from\s+)?"  # {Symbol, Symbol2} from
+        r"|"
+        r"(?:[\w]+\s+from\s+)?"  # Alias from
+        r")?"
+        r'["\']([^"\']+)["\']'  # المسار بين علامات التنصيص
+        r"\s*;"
     )
     _RE_CONTRACT = re.compile(
-        r'(?:abstract\s+)?contract\s+(\w+)'
-        r'(?:\s+is\s+([\w\s,]+))?'
+        r"(?:abstract\s+)?contract\s+(\w+)" r"(?:\s+is\s+([\w\s,]+))?"
     )
-    _RE_INTERFACE = re.compile(r'interface\s+(\w+)')
-    _RE_LIBRARY = re.compile(r'library\s+(\w+)')
-    _RE_FUNCTION = re.compile(r'function\s+\w+\s*\(')
-    _RE_EXTERNAL_CALL = re.compile(r'\.\w+\s*\(|\.call\s*[({]|\.delegatecall\s*[({]|\.staticcall\s*[({]')
+    _RE_INTERFACE = re.compile(r"interface\s+(\w+)")
+    _RE_LIBRARY = re.compile(r"library\s+(\w+)")
+    _RE_FUNCTION = re.compile(r"function\s+\w+\s*\(")
+    _RE_EXTERNAL_CALL = re.compile(
+        r"\.\w+\s*\(|\.call\s*[({]|\.delegatecall\s*[({]|\.staticcall\s*[({]"
+    )
     _RE_STATE_VAR = re.compile(
-        r'^\s*(?:mapping|address|uint\d*|int\d*|bytes\d*|string|bool|struct)\s+',
-        re.MULTILINE
+        r"^\s*(?:mapping|address|uint\d*|int\d*|bytes\d*|string|bool|struct)\s+",
+        re.MULTILINE,
     )
-    _RE_COMMENT_SINGLE = re.compile(r'//.*$', re.MULTILINE)
-    _RE_COMMENT_MULTI = re.compile(r'/\*.*?\*/', re.DOTALL)
+    _RE_COMMENT_SINGLE = re.compile(r"//.*$", re.MULTILINE)
+    _RE_COMMENT_MULTI = re.compile(r"/\*.*?\*/", re.DOTALL)
 
     # مسارات استثناء (لا يتم فحصها)
     EXCLUDE_PATTERNS = {
-        'node_modules', '.git', 'cache', 'out', 'build',
-        'artifacts', 'typechain', 'typechain-types',
-        'coverage', '.deps', 'crytic-export',
+        "node_modules",
+        ".git",
+        "cache",
+        "out",
+        "build",
+        "artifacts",
+        "typechain",
+        "typechain-types",
+        "coverage",
+        ".deps",
+        "crytic-export",
     }
 
     def __init__(self, project_path: str, config: Optional[Dict[str, Any]] = None):
@@ -141,11 +154,11 @@ class ProjectScanner:
         self.project_path = str(Path(project_path).resolve())
         self.config = config or {}
         self.project_info = ProjectInfo(root_dir=self.project_path)
-        self.files: Dict[str, SolidityFile] = {}           # relative_path -> SolidityFile
-        self.dependency_graph: Dict[str, Set[str]] = {}     # contract -> {parents}
-        self.reverse_deps: Dict[str, Set[str]] = {}         # contract -> {children}
-        self._audit = None                                  # مرجع لمحرك الفحص
-        self._scan_results: Dict[str, Dict] = {}            # file -> scan result
+        self.files: Dict[str, SolidityFile] = {}  # relative_path -> SolidityFile
+        self.dependency_graph: Dict[str, Set[str]] = {}  # contract -> {parents}
+        self.reverse_deps: Dict[str, Set[str]] = {}  # contract -> {children}
+        self._audit = None  # مرجع لمحرك الفحص
+        self._scan_results: Dict[str, Dict] = {}  # file -> scan result
 
     # ═══════════════════════════════════════════════════
     #  الواجهة العامة — Public API
@@ -213,13 +226,15 @@ class ProjectScanner:
         for rel_path, sf in self.files.items():
             for c in sf.contracts:
                 all_contracts.add(c)
-                nodes.append({
-                    "name": c,
-                    "file": rel_path,
-                    "type": "contract",
-                    "functions": sf.functions_count,
-                    "external_calls": sf.external_calls,
-                })
+                nodes.append(
+                    {
+                        "name": c,
+                        "file": rel_path,
+                        "type": "contract",
+                        "functions": sf.functions_count,
+                        "external_calls": sf.external_calls,
+                    }
+                )
                 for parent in sf.inherits:
                     edges.append({"from": c, "to": parent, "type": "inherits"})
                     has_parent.add(c)
@@ -287,7 +302,9 @@ class ProjectScanner:
         largest = sorted(self.files.values(), key=lambda x: x.loc, reverse=True)[:10]
 
         # الملفات الأكثر استدعاءات خارجية (أعلى سطح هجوم)
-        most_calls = sorted(self.files.values(), key=lambda x: x.external_calls, reverse=True)[:10]
+        most_calls = sorted(
+            self.files.values(), key=lambda x: x.external_calls, reverse=True
+        )[:10]
 
         return {
             "project_type": self.project_info.project_type,
@@ -308,9 +325,13 @@ class ProjectScanner:
                 for f in largest
             ],
             "highest_attack_surface": [
-                {"file": f.relative_path, "external_calls": f.external_calls,
-                 "contracts": f.contracts}
-                for f in most_calls if f.external_calls > 0
+                {
+                    "file": f.relative_path,
+                    "external_calls": f.external_calls,
+                    "contracts": f.contracts,
+                }
+                for f in most_calls
+                if f.external_calls > 0
             ],
             "remappings": self.project_info.remappings,
             "lib_dirs": self.project_info.lib_dirs,
@@ -336,7 +357,9 @@ class ProjectScanner:
             return
 
         # ── Hardhat ──
-        if (root / "hardhat.config.js").exists() or (root / "hardhat.config.ts").exists():
+        if (root / "hardhat.config.js").exists() or (
+            root / "hardhat.config.ts"
+        ).exists():
             self.project_info.project_type = "hardhat"
             self.project_info.contracts_dir = str(root / "contracts")
             self.project_info.test_dir = str(root / "test")
@@ -387,7 +410,9 @@ class ProjectScanner:
             # استخراج src
             m = re.search(r'src\s*=\s*["\']([^"\']+)["\']', content)
             if m:
-                self.project_info.contracts_dir = str(Path(self.project_path) / m.group(1))
+                self.project_info.contracts_dir = str(
+                    Path(self.project_path) / m.group(1)
+                )
 
             # استخراج test
             m = re.search(r'test\s*=\s*["\']([^"\']+)["\']', content)
@@ -395,7 +420,7 @@ class ProjectScanner:
                 self.project_info.test_dir = str(Path(self.project_path) / m.group(1))
 
             # استخراج libs
-            libs_match = re.search(r'libs\s*=\s*\[([^\]]+)\]', content)
+            libs_match = re.search(r"libs\s*=\s*\[([^\]]+)\]", content)
             if libs_match:
                 libs_raw = libs_match.group(1)
                 libs = re.findall(r'["\']([^"\']+)["\']', libs_raw)
@@ -409,13 +434,13 @@ class ProjectScanner:
                 self.project_info.compiler_version = m.group(1)
 
             # استخراج remappings من foundry.toml
-            remap_match = re.search(r'remappings\s*=\s*\[([^\]]+)\]', content)
+            remap_match = re.search(r"remappings\s*=\s*\[([^\]]+)\]", content)
             if remap_match:
                 raw = remap_match.group(1)
                 pairs = re.findall(r'["\']([^"\']+)["\']', raw)
                 for pair in pairs:
-                    if '=' in pair:
-                        key, val = pair.split('=', 1)
+                    if "=" in pair:
+                        key, val = pair.split("=", 1)
                         self.project_info.remappings[key.strip()] = val.strip()
         except Exception:
             pass
@@ -430,8 +455,8 @@ class ProjectScanner:
             try:
                 for line in remap_file.read_text(encoding="utf-8").splitlines():
                     line = line.strip()
-                    if line and '=' in line and not line.startswith('#'):
-                        key, val = line.split('=', 1)
+                    if line and "=" in line and not line.startswith("#"):
+                        key, val = line.split("=", 1)
                         self.project_info.remappings[key.strip()] = val.strip()
             except Exception:
                 pass
@@ -460,7 +485,9 @@ class ProjectScanner:
                                 self.project_info.remappings[key] = f"{contracts_path}/"
 
         # إضافة remappings لمكتبات node_modules الشائعة
-        if self.project_info.node_modules and os.path.isdir(self.project_info.node_modules):
+        if self.project_info.node_modules and os.path.isdir(
+            self.project_info.node_modules
+        ):
             nm = self.project_info.node_modules
             common_libs = [
                 ("@openzeppelin/", os.path.join(nm, "@openzeppelin")),
@@ -496,18 +523,18 @@ class ProjectScanner:
 
             # استبعاد المكتبات المثبتة (إلا إذا طلب المستخدم فحصها)
             if not scan_deps:
-                if 'node_modules' in parts or 'lib' in parts:
+                if "node_modules" in parts or "lib" in parts:
                     dirnames.clear()
                     continue
 
             # استبعاد مجلدات الاختبار
             if exclude_tests:
-                is_test_dir = any(p in parts for p in {'test', 'tests', 'test-foundry'})
+                is_test_dir = any(p in parts for p in {"test", "tests", "test-foundry"})
                 if is_test_dir:
                     continue
 
             for filename in filenames:
-                if not filename.endswith('.sol'):
+                if not filename.endswith(".sol"):
                     continue
 
                 filepath = os.path.join(dirpath, filename)
@@ -542,20 +569,20 @@ class ProjectScanner:
     def _is_test_file(self, filename: str, rel_path: str) -> bool:
         """تحديد ما إذا كان الملف ملف اختبار."""
         name_lower = filename.lower()
-        if name_lower.endswith('.t.sol'):
+        if name_lower.endswith(".t.sol"):
             return True
-        if name_lower.startswith('test') or name_lower.startswith('mock'):
+        if name_lower.startswith("test") or name_lower.startswith("mock"):
             return True
-        if 'test' in rel_path.lower().split(os.sep):
+        if "test" in rel_path.lower().split(os.sep):
             return True
         return False
 
     def _is_mock_file(self, filename: str, rel_path: str) -> bool:
         """تحديد ما إذا كان الملف ملف محاكاة."""
         name_lower = filename.lower()
-        if 'mock' in name_lower or 'stub' in name_lower or 'fake' in name_lower:
+        if "mock" in name_lower or "stub" in name_lower or "fake" in name_lower:
             return True
-        if 'mock' in rel_path.lower().split(os.sep):
+        if "mock" in rel_path.lower().split(os.sep):
             return True
         return False
 
@@ -585,14 +612,16 @@ class ProjectScanner:
 
                 # استخراج imports
                 sf.imports = self._RE_IMPORT.findall(content)
-                sf.resolved_imports = [self._resolve_import(imp, sf.path) for imp in sf.imports]
+                sf.resolved_imports = [
+                    self._resolve_import(imp, sf.path) for imp in sf.imports
+                ]
 
                 # استخراج contracts + inheritance
                 for match in self._RE_CONTRACT.finditer(content):
                     name = match.group(1)
                     sf.contracts.append(name)
                     if match.group(2):
-                        parents = [p.strip() for p in match.group(2).split(',')]
+                        parents = [p.strip() for p in match.group(2).split(",")]
                         sf.inherits.extend(parents)
 
                 # استخراج interfaces
@@ -603,8 +632,8 @@ class ProjectScanner:
 
                 # إحصائيات
                 # حذف التعليقات لحساب LOC
-                stripped = self._RE_COMMENT_MULTI.sub('', content)
-                stripped = self._RE_COMMENT_SINGLE.sub('', stripped)
+                stripped = self._RE_COMMENT_MULTI.sub("", content)
+                stripped = self._RE_COMMENT_SINGLE.sub("", stripped)
                 sf.loc = sum(1 for line in stripped.splitlines() if line.strip())
 
                 sf.functions_count = len(self._RE_FUNCTION.findall(content))
@@ -614,14 +643,15 @@ class ProjectScanner:
                 total_contracts += len(sf.contracts)
 
             except Exception:
-                pass
+                # تسجيل عدد الملفات الفاشلة بدل التجاهل الصامت
+                self._parse_failures = getattr(self, "_parse_failures", 0) + 1
 
         self.project_info.total_contracts = total_contracts
 
     def _read_file(self, path: str) -> Optional[str]:
         """قراءة ملف بأمان."""
         try:
-            with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+            with open(path, "r", encoding="utf-8", errors="ignore") as f:
                 return f.read()
         except Exception:
             return None
@@ -637,7 +667,7 @@ class ProjectScanner:
           - lib/: "forge-std/src/Test.sol"
         """
         # 1. المسارات النسبية
-        if import_path.startswith('.'):
+        if import_path.startswith("."):
             source_dir = os.path.dirname(source_file)
             resolved = os.path.normpath(os.path.join(source_dir, import_path))
             if os.path.isfile(resolved):
@@ -648,13 +678,13 @@ class ProjectScanner:
         for prefix, replacement in sorted(
             self.project_info.remappings.items(),
             key=lambda x: len(x[0]),
-            reverse=True  # أطول prefix أولاً
+            reverse=True,  # أطول prefix أولاً
         ):
             if import_path.startswith(prefix):
-                rest = import_path[len(prefix):]
-                resolved = os.path.normpath(os.path.join(
-                    self.project_path, replacement, rest
-                ))
+                rest = import_path[len(prefix) :]
+                resolved = os.path.normpath(
+                    os.path.join(self.project_path, replacement, rest)
+                )
                 if os.path.isfile(resolved):
                     return resolved
                 # حاول بدون المجلد الجذري (قد يكون مسار مطلق)
@@ -674,7 +704,7 @@ class ProjectScanner:
             if os.path.isfile(candidate):
                 return candidate
             # محاولة مع src/
-            parts = import_path.split('/', 1)
+            parts = import_path.split("/", 1)
             if len(parts) == 2:
                 candidate2 = os.path.join(lib_dir, parts[0], "src", parts[1])
                 if os.path.isfile(candidate2):
@@ -713,7 +743,9 @@ class ProjectScanner:
     #  تنفيذ الفحص — Scan Execution
     # ═══════════════════════════════════════════════════
 
-    def _run_scan(self, mode: str = "scan", output_format: str = "dict") -> Dict[str, Any]:
+    def _run_scan(
+        self, mode: str = "scan", output_format: str = "dict"
+    ) -> Dict[str, Any]:
         """تنفيذ الفحص الفعلي على كل الملفات المكتشفة."""
         # اكتشاف المشروع إذا لم يتم
         if not self.files:
@@ -723,6 +755,7 @@ class ProjectScanner:
         if self._audit is None:
             try:
                 from agl_security_tool.core import AGLSecurityAudit
+
                 self._audit = AGLSecurityAudit(self.config)
             except ImportError:
                 return {"error": "محرك الفحص غير متوفر", "status": "ERROR"}
@@ -735,11 +768,7 @@ class ProjectScanner:
         skipped = 0
 
         # ترتيب الملفات: الأكبر أولاً (عادةً الأهم)
-        sorted_files = sorted(
-            self.files.values(),
-            key=lambda x: x.loc,
-            reverse=True
-        )
+        sorted_files = sorted(self.files.values(), key=lambda x: x.loc, reverse=True)
 
         total = len(sorted_files)
         for idx, sf in enumerate(sorted_files, 1):
@@ -818,14 +847,22 @@ class ProjectScanner:
             "project_stats": {
                 "total_contracts": self.project_info.total_contracts,
                 "total_loc": sum(sf.loc for sf in self.files.values()),
-                "total_functions": sum(sf.functions_count for sf in self.files.values()),
-                "total_external_calls": sum(sf.external_calls for sf in self.files.values()),
+                "total_functions": sum(
+                    sf.functions_count for sf in self.files.values()
+                ),
+                "total_external_calls": sum(
+                    sf.external_calls for sf in self.files.values()
+                ),
             },
         }
 
         # تنسيق الإخراج
         if output_format == "json":
-            return {"report_json": json.dumps(report, indent=2, ensure_ascii=False, default=str)}
+            return {
+                "report_json": json.dumps(
+                    report, indent=2, ensure_ascii=False, default=str
+                )
+            }
         elif output_format == "markdown":
             return {"report_markdown": self._format_project_markdown(report), **report}
         elif output_format == "text":
@@ -844,23 +881,29 @@ class ProjectScanner:
             # تجميع حسب نوع الثغرة
             title = f.get("title", f.get("text", ""))
             vuln_type = self._categorize_finding(title)
-            patterns[vuln_type].append({
-                "file": f.get("file", "?"),
-                "line": f.get("line", "?"),
-                "severity": f.get("severity", "?"),
-            })
+            patterns[vuln_type].append(
+                {
+                    "file": f.get("file", "?"),
+                    "line": f.get("line", "?"),
+                    "severity": f.get("severity", "?"),
+                }
+            )
 
         cross_patterns = []
         for vuln_type, occurrences in patterns.items():
             if len(occurrences) > 1:
                 files_affected = list(set(o["file"] for o in occurrences))
-                cross_patterns.append({
-                    "vulnerability_type": vuln_type,
-                    "occurrences": len(occurrences),
-                    "files_affected": files_affected,
-                    "systemic": len(files_affected) > 1,
-                    "recommendation": self._get_systemic_recommendation(vuln_type, len(files_affected)),
-                })
+                cross_patterns.append(
+                    {
+                        "vulnerability_type": vuln_type,
+                        "occurrences": len(occurrences),
+                        "files_affected": files_affected,
+                        "systemic": len(files_affected) > 1,
+                        "recommendation": self._get_systemic_recommendation(
+                            vuln_type, len(files_affected)
+                        ),
+                    }
+                )
 
         # ترتيب حسب عدد التكرارات
         cross_patterns.sort(key=lambda x: x["occurrences"], reverse=True)
@@ -871,7 +914,13 @@ class ProjectScanner:
         title_lower = title.lower()
         categories = {
             "Reentrancy": ["reentrancy", "reentrant", "re-entrancy"],
-            "Access Control": ["access", "onlyowner", "unauthorized", "permission", "tx.origin"],
+            "Access Control": [
+                "access",
+                "onlyowner",
+                "unauthorized",
+                "permission",
+                "tx.origin",
+            ],
             "Integer Overflow": ["overflow", "underflow", "integer"],
             "Unchecked Call": ["unchecked", "low-level call", "return value"],
             "Timestamp Dependence": ["timestamp", "block.timestamp", "block.number"],
@@ -897,7 +946,9 @@ class ProjectScanner:
             "Timestamp Dependence": f"اعتماد على الوقت في {file_count} ملف. يُنصح باستخدام Chainlink Keepers أو بدائل آمنة.",
             "Integer Overflow": f"مخاطر تجاوز رقمي في {file_count} ملف. تأكد من استخدام Solidity 0.8+ مع الفحص التلقائي.",
         }
-        return recs.get(vuln_type, f"تم اكتشاف {vuln_type} في {file_count} ملف. يُنصح بمراجعة شاملة.")
+        return recs.get(
+            vuln_type, f"تم اكتشاف {vuln_type} في {file_count} ملف. يُنصح بمراجعة شاملة."
+        )
 
     # ═══════════════════════════════════════════════════
     #  تنسيق التقارير — Report Formatting
@@ -914,8 +965,10 @@ class ProjectScanner:
         lines.append(f"  🔧 Type:       {report.get('project_type', 'N/A')}")
         lines.append(f"  ⚡ Mode:       {report.get('scan_mode', 'N/A')}")
         lines.append(f"  ⏱️  Time:       {report.get('time_seconds', 0)}s")
-        lines.append(f"  📄 Files:      {report.get('files_scanned', 0)} scanned, "
-                      f"{report.get('files_with_findings', 0)} with findings")
+        lines.append(
+            f"  📄 Files:      {report.get('files_scanned', 0)} scanned, "
+            f"{report.get('files_with_findings', 0)} with findings"
+        )
         lines.append("")
 
         # إحصائيات المشروع
@@ -967,7 +1020,9 @@ class ProjectScanner:
             for p in cross:
                 systemic_tag = " [SYSTEMIC]" if p.get("systemic") else ""
                 lines.append(f"\n  🔄 {p['vulnerability_type']}{systemic_tag}")
-                lines.append(f"     Occurrences: {p['occurrences']} across {len(p['files_affected'])} files")
+                lines.append(
+                    f"     Occurrences: {p['occurrences']} across {len(p['files_affected'])} files"
+                )
                 lines.append(f"     Files: {', '.join(p['files_affected'][:5])}")
                 if p.get("recommendation"):
                     lines.append(f"     💡 {p['recommendation']}")
@@ -990,7 +1045,9 @@ class ProjectScanner:
         lines.append(f"| Scan Mode | {report.get('scan_mode', 'N/A')} |")
         lines.append(f"| Scan Time | {report.get('time_seconds', 0)}s |")
         lines.append(f"| Files Scanned | {report.get('files_scanned', 0)} |")
-        lines.append(f"| Files with Findings | {report.get('files_with_findings', 0)} |")
+        lines.append(
+            f"| Files with Findings | {report.get('files_with_findings', 0)} |"
+        )
         lines.append("")
 
         # إحصائيات
@@ -1033,7 +1090,12 @@ class ProjectScanner:
                     sev = f.get("severity", "?").upper()
                     title = f.get("title", f.get("text", "Unknown"))
                     line_num = f.get("line", "?")
-                    icon = {"CRITICAL": "🔴", "HIGH": "🟠", "MEDIUM": "🟡", "LOW": "🔵"}.get(sev, "⚪")
+                    icon = {
+                        "CRITICAL": "🔴",
+                        "HIGH": "🟠",
+                        "MEDIUM": "🟡",
+                        "LOW": "🔵",
+                    }.get(sev, "⚪")
                     lines.append(f"| {i} | {icon} {sev} | {line_num} | {title} |")
                 lines.append("")
 
@@ -1041,7 +1103,9 @@ class ProjectScanner:
         cross = report.get("cross_contract_patterns", [])
         if cross:
             lines.append("## ⚠️ Cross-Contract Patterns\n")
-            lines.append("These patterns appear across multiple files, indicating systemic issues:\n")
+            lines.append(
+                "These patterns appear across multiple files, indicating systemic issues:\n"
+            )
             for p in cross:
                 systemic = " **[SYSTEMIC]**" if p.get("systemic") else ""
                 lines.append(f"### {p['vulnerability_type']}{systemic}\n")
@@ -1058,13 +1122,19 @@ class ProjectScanner:
             lines.append("## File-by-File Summary\n")
             lines.append(f"| File | Findings | LOC | Contracts |")
             lines.append(f"|------|----------|-----|-----------|")
-            for fname, fr in sorted(file_results.items(),
-                                    key=lambda x: x[1].get("findings_count", 0),
-                                    reverse=True):
+            for fname, fr in sorted(
+                file_results.items(),
+                key=lambda x: x[1].get("findings_count", 0),
+                reverse=True,
+            ):
                 count = fr.get("findings_count", 0)
                 loc = fr.get("loc", 0)
                 contracts = ", ".join(fr.get("contracts", []))
-                icon = "🔴" if count > 5 else "🟠" if count > 2 else "🟡" if count > 0 else "✅"
+                icon = (
+                    "🔴"
+                    if count > 5
+                    else "🟠" if count > 2 else "🟡" if count > 0 else "✅"
+                )
                 lines.append(f"| {icon} `{fname}` | {count} | {loc} | {contracts} |")
 
         lines.append("\n---\n*Generated by AGL Security Tool v1.0.0*")

@@ -1,0 +1,200 @@
+name: AGL Security Tool Tests
+
+on:
+  push:
+    branches: [main, master, agl_security]
+    paths:
+      - 'agl_security_tool/**'
+      - 'tests/_test_*.py'
+      - 'vulnerable.sol'
+      - 'test_project/**'
+      - '.github/workflows/security-tool-tests.yml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'agl_security_tool/**'
+      - 'tests/_test_*.py'
+      - '.github/workflows/security-tool-tests.yml'
+  workflow_dispatch:  # تشغيل يدوي
+
+jobs:
+  # ─────────────────────────────────────────────────
+  # المرحلة 1: اختبارات سريعة (بدون أدوات خارجية)
+  # Stage 1: Fast tests (no external tools)
+  # ─────────────────────────────────────────────────
+  fast-tests:
+    name: "Core Tests (no external tools)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install z3-solver requests pytest
+
+      - name: Verify imports
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -c "
+          import sys
+          sys.path.insert(0, '.')
+          from agl_security_tool import AGLSecurityAudit, __version__
+          print(f'✅ agl_security_tool v{__version__} imported successfully')
+          audit = AGLSecurityAudit()
+          print(f'✅ AGLSecurityAudit instantiated')
+          from agl_security_tool.detectors import DetectorRunner
+          dr = DetectorRunner()
+          print(f'✅ {len(dr.detectors)} detectors loaded')
+          "
+
+      - name: "Test: State Extraction Engine"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/_test_state_engine.py
+
+      - name: "Test: Temporal Model"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/_test_temporal_model.py
+
+      - name: "Test: Action Space"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/_test_action_space.py
+
+      - name: "Test: Attack Engine"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/_test_attack_engine.py
+
+      - name: "Test: Search Engine"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/_test_search_engine.py
+
+      - name: "Test: Exploit Reasoning"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/_test_exploit_reasoning.py
+
+      - name: "Test: DeFi Detection"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/_test_defi_detection.py
+
+      - name: "Test: Detector System"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python test_detector_system.py
+
+  # ─────────────────────────────────────────────────
+  # المرحلة 2: اختبارات الخط الكامل (مع أدوات خارجية)
+  # Stage 2: Full pipeline (with external tools)
+  # ─────────────────────────────────────────────────
+  full-pipeline:
+    name: "Full Pipeline (Slither + Semgrep)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Solidity compiler (solc)
+        run: |
+          pip install solc-select
+          solc-select install 0.8.19
+          solc-select use 0.8.19
+          echo "$HOME/.solc-select/artifacts" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install z3-solver requests pytest
+          pip install slither-analyzer semgrep
+
+      - name: Verify external tools
+        run: |
+          echo "--- Solc ---"
+          solc --version || echo "⚠ solc not found"
+          echo "--- Slither ---"
+          slither --version || echo "⚠ slither not found"
+          echo "--- Semgrep ---"
+          semgrep --version || echo "⚠ semgrep not found"
+
+      - name: "Test: L1-L4 Full Integration"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        timeout-minutes: 10
+        run: python tests/_test_l1_l4.py
+
+      - name: "Test: Tool Usability (Full)"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        timeout-minutes: 10
+        run: python tests/_test_tool_usability.py
+
+      - name: "Test: Final Pipeline"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        timeout-minutes: 10
+        run: python tests/_test_final.py
+
+  # ─────────────────────────────────────────────────
+  # المرحلة 3: تشغيل كل الاختبارات مع ملخص
+  # Stage 3: Full suite with summary
+  # ─────────────────────────────────────────────────
+  full-suite:
+    name: "Complete Test Suite"
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    needs: [fast-tests]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Solidity compiler (solc)
+        run: |
+          pip install solc-select
+          solc-select install 0.8.19
+          solc-select use 0.8.19
+          echo "$HOME/.solc-select/artifacts" >> $GITHUB_PATH
+
+      - name: Install all dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install z3-solver requests pytest
+          pip install slither-analyzer semgrep
+          # mythril is heavy — install only if needed
+          # pip install mythril
+
+      - name: "Run complete test suite"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python tests/ci_run_all.py
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: tests/ci_results.json
+          retention-days: 30

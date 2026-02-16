@@ -19,6 +19,7 @@ from abc import ABC, abstractmethod
 #  نماذج البيانات — Data Models
 # ═══════════════════════════════════════════════════════════
 
+
 class Severity(Enum):
     CRITICAL = "critical"
     HIGH = "high"
@@ -34,10 +35,12 @@ class Confidence(Enum):
 
 
 class OpType(Enum):
-    """أنواع العمليات داخل دالة — ترتيبها مهم للتحليل"""
+    """Operation types within a function — order matters for analysis.
+    أنواع العمليات داخل دالة — ترتيبها مهم للتحليل"""
+
     STATE_READ = "state_read"
     STATE_WRITE = "state_write"
-    EXTERNAL_CALL = "external_call"        # .call, .transfer, .send
+    EXTERNAL_CALL = "external_call"  # .call, .transfer, .send
     EXTERNAL_CALL_ETH = "external_call_eth"  # .call{value:...}
     DELEGATECALL = "delegatecall"
     STATICCALL = "staticcall"
@@ -60,20 +63,23 @@ class OpType(Enum):
 
 @dataclass
 class Operation:
-    """عملية واحدة داخل دالة — مرتبة حسب ترتيب التنفيذ"""
+    """A single operation within a function — ordered by execution sequence.
+    عملية واحدة داخل دالة — مرتبة حسب ترتيب التنفيذ"""
+
     op_type: OpType
     line: int
-    target: str = ""          # اسم المتغير أو الهدف
-    details: str = ""         # تفاصيل إضافية
-    sends_eth: bool = False   # هل يُرسل ETH
-    in_loop: bool = False     # هل داخل حلقة
+    target: str = ""  # اسم المتغير أو الهدف
+    details: str = ""  # تفاصيل إضافية
+    sends_eth: bool = False  # هل يُرسل ETH
+    in_loop: bool = False  # هل داخل حلقة
     in_condition: bool = False  # هل داخل شرط
-    raw_text: str = ""        # النص الخام
+    raw_text: str = ""  # النص الخام
 
 
 @dataclass
 class StateVar:
-    """متغير حالة"""
+    """State variable. / متغير حالة"""
+
     name: str
     var_type: str
     visibility: str = "internal"
@@ -86,12 +92,14 @@ class StateVar:
 
 @dataclass
 class ParsedFunction:
-    """دالة محللة — تحتوي على كل المعلومات الدلالية"""
+    """Parsed function — contains all semantic information.
+    دالة محللة — تحتوي على كل المعلومات الدلالية"""
+
     name: str
-    visibility: str = "internal"     # public, external, internal, private
-    mutability: str = ""             # view, pure, payable, ""
+    visibility: str = "internal"  # public, external, internal, private
+    mutability: str = ""  # view, pure, payable, ""
     modifiers: List[str] = field(default_factory=list)
-    parameters: List[Dict] = field(default_factory=list)   # [{name, type}]
+    parameters: List[Dict] = field(default_factory=list)  # [{name, type}]
     returns: List[Dict] = field(default_factory=list)
     line_start: int = 0
     line_end: int = 0
@@ -99,8 +107,12 @@ class ParsedFunction:
 
     # ═══ التحليل الدلالي ═══
     operations: List[Operation] = field(default_factory=list)
-    state_reads: List[str] = field(default_factory=list)     # أسماء متغيرات الحالة المقروءة
-    state_writes: List[str] = field(default_factory=list)    # أسماء متغيرات الحالة المكتوبة
+    state_reads: List[str] = field(
+        default_factory=list
+    )  # أسماء متغيرات الحالة المقروءة
+    state_writes: List[str] = field(
+        default_factory=list
+    )  # أسماء متغيرات الحالة المكتوبة
     external_calls: List[Operation] = field(default_factory=list)
     require_checks: List[str] = field(default_factory=list)  # شروط require
     internal_calls: List[str] = field(default_factory=list)  # دوال داخلية مُستدعاة
@@ -121,7 +133,8 @@ class ParsedFunction:
 
 @dataclass
 class ModifierInfo:
-    """معلومات modifier"""
+    """Modifier information. / معلومات modifier"""
+
     name: str
     params: List[str] = field(default_factory=list)
     body: str = ""
@@ -134,15 +147,17 @@ class ModifierInfo:
 
 @dataclass
 class ParsedContract:
-    """عقد محلل — الوحدة الأساسية للتحليل"""
+    """Parsed contract — the fundamental unit of analysis.
+    عقد محلل — الوحدة الأساسية للتحليل"""
+
     name: str
-    contract_type: str = "contract"      # contract, interface, library, abstract
+    contract_type: str = "contract"  # contract, interface, library, abstract
     inherits: List[str] = field(default_factory=list)
     state_vars: Dict[str, StateVar] = field(default_factory=dict)
     functions: Dict[str, ParsedFunction] = field(default_factory=dict)
     modifiers: Dict[str, ModifierInfo] = field(default_factory=dict)
     events: List[str] = field(default_factory=list)
-    using_for: List[Dict] = field(default_factory=list)    # [{library, type}]
+    using_for: List[Dict] = field(default_factory=list)  # [{library, type}]
     pragma: str = ""
     license: str = ""
     line_start: int = 0
@@ -157,18 +172,19 @@ class ParsedContract:
 
 @dataclass
 class Finding:
-    """نتيجة كاشف واحد"""
-    detector_id: str            # e.g. "REENTRANCY-ETH-001"
-    title: str                  # عنوان قصير
-    description: str            # شرح تفصيلي
+    """Single detector result. / نتيجة كاشف واحد"""
+
+    detector_id: str  # e.g. "REENTRANCY-ETH-001"
+    title: str  # عنوان قصير
+    description: str  # شرح تفصيلي
     severity: Severity
     confidence: Confidence
-    contract: str               # اسم العقد
-    function: str = ""          # اسم الدالة
+    contract: str  # اسم العقد
+    function: str = ""  # اسم الدالة
     line: int = 0
     end_line: int = 0
-    snippet: str = ""           # مقطع الكود المعني
-    recommendation: str = ""    # التوصية
+    snippet: str = ""  # مقطع الكود المعني
+    recommendation: str = ""  # التوصية
     references: List[str] = field(default_factory=list)  # روابط مرجعية
     related_locations: List[Dict] = field(default_factory=list)  # مواقع مرتبطة
     extra: Optional[Dict] = field(default_factory=dict)  # بيانات إضافية خاصة بالكاشف
@@ -198,10 +214,11 @@ class Finding:
 #  الكاشف الأساسي — Base Detector
 # ═══════════════════════════════════════════════════════════
 
+
 class BaseDetector(ABC):
     """
-    الكلاس الأساسي لكل كاشف.
-    كل كاشف يبحث عن نمط واحد محدد.
+    Base class for all detectors. Each detector looks for one specific pattern.
+    الكلاس الأساسي لكل كاشف. كل كاشف يبحث عن نمط واحد محدد.
     """
 
     @property
@@ -239,7 +256,9 @@ class BaseDetector(ABC):
         return []
 
     @abstractmethod
-    def detect(self, contract: ParsedContract, all_contracts: List[ParsedContract]) -> List[Finding]:
+    def detect(
+        self, contract: ParsedContract, all_contracts: List[ParsedContract]
+    ) -> List[Finding]:
         """
         تنفيذ الكشف على عقد واحد.
 
@@ -252,26 +271,34 @@ class BaseDetector(ABC):
         """
         pass
 
-    def _make_finding(self, contract, function="", description: str = "",
-                      line: int = 0, snippet: str = "",
-                      severity=None, confidence=None,
-                      extra: Optional[Dict] = None, **kwargs) -> Finding:
+    def _make_finding(
+        self,
+        contract,
+        function="",
+        description: str = "",
+        line: int = 0,
+        snippet: str = "",
+        severity=None,
+        confidence=None,
+        extra: Optional[Dict] = None,
+        **kwargs,
+    ) -> Finding:
         """
         إنشاء نتيجة مع القيم الافتراضية للكاشف.
         يقبل contract/function كنص أو ككائنات ParsedContract/ParsedFunction.
         """
         # Handle object or string for contract
-        if hasattr(contract, 'name'):
+        if hasattr(contract, "name"):
             contract_name = contract.name
         else:
             contract_name = str(contract)
 
         # Handle object or string for function
-        if hasattr(function, 'name'):
+        if hasattr(function, "name"):
             func_name = function.name
             if line == 0:
                 line = function.line_start
-            if not snippet and hasattr(function, 'raw_body') and function.raw_body:
+            if not snippet and hasattr(function, "raw_body") and function.raw_body:
                 snippet = function.raw_body[:200]
         else:
             func_name = str(function) if function else ""
@@ -298,15 +325,17 @@ class BaseDetector(ABC):
 #  محرك التشغيل — Detector Runner
 # ═══════════════════════════════════════════════════════════
 
+
 class DetectorRunner:
-    """يشغل كل الكاشفات على مجموعة عقود."""
+    """Runs all detectors on a set of contracts.
+    يشغل كل الكاشفات على مجموعة عقود."""
 
     def __init__(self):
         self.detectors: List[BaseDetector] = []
         self._register_all_detectors()
 
     def _register_all_detectors(self):
-        """تسجيل كل الكاشفات المتاحة"""
+        """Register all available detectors. / تسجيل كل الكاشفات المتاحة"""
         # Reentrancy family
         from .reentrancy import (
             ReentrancyETH,
@@ -314,6 +343,7 @@ class DetectorRunner:
             ReentrancyReadOnly,
             ReentrancyCrossFunction,
         )
+
         # Access Control
         from .access_control import (
             UnprotectedWithdraw,
@@ -321,6 +351,7 @@ class DetectorRunner:
             TxOriginAuth,
             DangerousDelegatecall,
         )
+
         # DeFi Business Logic
         from .defi import (
             FirstDepositorAttack,
@@ -329,6 +360,7 @@ class DetectorRunner:
             DivideBeforeMultiply,
             FlashLoanCallbackValidation,
         )
+
         # Common patterns
         from .common import (
             UncheckedLowLevelCall,
@@ -338,6 +370,7 @@ class DetectorRunner:
             EncodePacked,
             MissingEventEmission,
         )
+
         # Token
         from .token import (
             UncheckedERC20Transfer,
@@ -378,6 +411,7 @@ class DetectorRunner:
     def run(self, contracts: List[ParsedContract]) -> List[Finding]:
         """تشغيل كل الكاشفات على كل العقود"""
         all_findings = []
+        self.failed_detectors: List[str] = []
 
         for detector in self.detectors:
             for contract in contracts:
@@ -387,16 +421,37 @@ class DetectorRunner:
                 try:
                     findings = detector.detect(contract, contracts)
                     all_findings.extend(findings)
-                except Exception:
-                    pass  # detector فشل — لا نوقف الباقي
+                except Exception as e:
+                    # تسجيل الكاشف الفاشل بدل الصمت
+                    det_id = getattr(
+                        detector, "DETECTOR_ID", detector.__class__.__name__
+                    )
+                    fail_msg = f"{det_id} فشل على {contract.name}: {str(e)[:120]}"
+                    self.failed_detectors.append(fail_msg)
+                    all_findings.append(
+                        Finding(
+                            detector_id=det_id,
+                            title=f"⚠ الكاشف {det_id} فشل",
+                            severity=Severity.INFO,
+                            confidence=Confidence.LOW,
+                            description=f"فشل الكاشف أثناء تحليل {contract.name}: {str(e)[:200]}",
+                            contract=contract.name,
+                            function="",
+                            line=0,
+                        )
+                    )
 
         # ترتيب حسب الخطورة ثم السطر
         severity_order = {"critical": 0, "high": 1, "medium": 2, "low": 3, "info": 4}
-        all_findings.sort(key=lambda f: (severity_order.get(f.severity.value, 5), f.line))
+        all_findings.sort(
+            key=lambda f: (severity_order.get(f.severity.value, 5), f.line)
+        )
 
         return all_findings
 
-    def run_single(self, detector_id: str, contracts: List[ParsedContract]) -> List[Finding]:
+    def run_single(
+        self, detector_id: str, contracts: List[ParsedContract]
+    ) -> List[Finding]:
         """تشغيل كاشف واحد فقط"""
         for d in self.detectors:
             if d.DETECTOR_ID == detector_id:

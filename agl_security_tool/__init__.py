@@ -6,6 +6,11 @@ Usage:
     from agl_security_tool import AGLSecurityAudit
     audit = AGLSecurityAudit()
     result = audit.scan("path/to/contract.sol")
+
+    # State Extraction Engine — Layer 1
+    from agl_security_tool.state_extraction import StateExtractionEngine
+    engine = StateExtractionEngine()
+    graph = engine.extract("path/to/contract.sol")
 """
 
 __version__ = "1.1.0"
