@@ -11,8 +11,11 @@ import os
 import sys
 import json
 import time
+import logging
 from typing import Dict, Any, List, Optional
 from pathlib import Path
+
+_logger = logging.getLogger("AGL.security_tool")
 
 # ═══════════════════════════════════════════════════════
 # تهيئة مسارات الاستيراد — Setup import paths
@@ -61,31 +64,36 @@ class AGLSecurityAudit:
         self._init_engines()
 
     def _init_engines(self):
-        """Load available engines — any unavailable engine is silently skipped.
-        تحميل المحركات المتاحة — أي محرك غير متوفر يتم تجاوزه بدون خطأ."""
+        """Load available engines — unavailable engines are logged and skipped.
+        تحميل المحركات المتاحة — المحركات غير المتوفرة يتم تسجيلها وتجاوزها."""
+        self._load_warnings: List[str] = []
+
         # Layer 0: Solidity Flattener + Inheritance Resolver
         try:
             from agl_security_tool.solidity_flattener import SolidityFlattener
 
             self._flattener = SolidityFlattener()
-        except Exception:
-            pass
+        except Exception as e:
+            self._load_warnings.append(f"Layer 0 (Flattener): {e}")
+            _logger.warning("Engine load failed — Layer 0 (Flattener): %s", e)
 
         # Layer 0.5: Z3 Symbolic Execution Engine (internal Mythril)
         try:
             from agl_security_tool.z3_symbolic_engine import Z3SymbolicEngine
 
             self._symbolic_engine = Z3SymbolicEngine()
-        except Exception:
-            pass
+        except Exception as e:
+            self._load_warnings.append(f"Layer 0.5 (Z3): {e}")
+            _logger.warning("Engine load failed — Layer 0.5 (Z3): %s", e)
 
         # Layer 1: SmartContractAnalyzer (pattern scan + Lexer + CFG)
         try:
             from agl.engines.smart_contract_analyzer import SmartContractAnalyzer
 
             self._analyzer = SmartContractAnalyzer()
-        except Exception:
-            pass
+        except Exception as e:
+            self._load_warnings.append(f"Layer 1 (Analyzer): {e}")
+            _logger.warning("Engine load failed — Layer 1 (Analyzer): %s", e)
 
         # Layer 2: AGLSecuritySuite (Slither/Mythril wrapper — fallback)
         try:
@@ -100,11 +108,13 @@ class AGLSecurityAudit:
                     },
                 )
             )
-        except Exception:
-            pass
+        except Exception as e:
+            self._load_warnings.append(f"Layer 2 (Suite): {e}")
+            _logger.warning("Engine load failed — Layer 2 (Suite): %s", e)
 
         # Layer 2+: Security Orchestrator (parallel Slither + Mythril + Semgrep + Z3)
         self._orchestrator = None
+        self._tool_backends = None
         try:
             from agl.engines.security_orchestrator import (
                 AGLSecurityOrchestrator,
@@ -121,16 +131,32 @@ class AGLSecurityAudit:
                 generate_poc=self.config.get("generate_poc", True),
             )
             self._orchestrator = AGLSecurityOrchestrator(_orch_cfg)
-        except Exception:
-            pass
+        except Exception as e:
+            self._load_warnings.append(f"Layer 2+ (Orchestrator): {e}")
+            _logger.warning("Engine load failed — Layer 2+ (Orchestrator): %s", e)
+
+        # Layer 2+ fallback: Native Tool Backends (self-contained Slither/Mythril/Semgrep)
+        if self._orchestrator is None:
+            try:
+                from agl_security_tool.tool_backends import ToolBackendRunner
+
+                self._tool_backends = ToolBackendRunner()
+                _logger.info(
+                    "Tool Backends loaded as orchestrator fallback — status: %s",
+                    self._tool_backends.status(),
+                )
+            except Exception as e:
+                self._load_warnings.append(f"Tool Backends: {e}")
+                _logger.warning("Tool Backends load failed: %s", e)
 
         # Layer 3: OffensiveSecurityEngine (full pipeline)
         try:
             from agl.engines.offensive_security import OffensiveSecurityEngine
 
             self._engine = OffensiveSecurityEngine()
-        except Exception:
-            pass
+        except Exception as e:
+            self._load_warnings.append(f"Layer 3 (Offensive): {e}")
+            _logger.warning("Engine load failed — Layer 3 (Offensive): %s", e)
 
         # Layer 4: AGL Semantic Detectors (22 detectors)
         try:
@@ -141,8 +167,9 @@ class AGLSecurityAudit:
 
             self._detector_runner = DetectorRunner()
             self._parser = SoliditySemanticParser()
-        except Exception:
-            pass
+        except Exception as e:
+            self._load_warnings.append(f"Layer 4 (Detectors): {e}")
+            _logger.warning("Engine load failed — Layer 4 (Detectors): %s", e)
 
         # Layer 1 (State Extraction): Financial State Graph Engine
         try:
@@ -151,8 +178,17 @@ class AGLSecurityAudit:
             self._state_engine = StateExtractionEngine(
                 self.config.get("state_extraction", {})
             )
-        except Exception:
-            pass
+        except Exception as e:
+            self._load_warnings.append(f"State Extraction: {e}")
+            _logger.warning("Engine load failed — State Extraction: %s", e)
+
+        if self._load_warnings:
+            _logger.info(
+                "Engine init complete — %d/%d engines loaded, %d skipped",
+                8 - len(self._load_warnings),
+                8,
+                len(self._load_warnings),
+            )
 
     # ═══════════════════════════════════════════════════
     # الواجهة العامة — Public API
@@ -306,6 +342,34 @@ class AGLSecurityAudit:
                 combined.setdefault("warnings", []).append(
                     f"OffensiveSecurityEngine: {e}"
                 )
+
+        # ═══ Re-apply RiskCore scoring after offensive engine's dedup ═══
+        # The offensive engine's _deduplicate_and_cross_validate() rebuilds
+        # all_findings_unified from raw sub-lists, stripping any risk_breakdown
+        # that _scan_file() added. Re-score to ensure risk_breakdown is present.
+        try:
+            from agl_security_tool.risk_core import RiskCore as _RC
+
+            _risk_core_deep = _RC()
+            _unified_deep = combined.get("all_findings_unified", [])
+            if _unified_deep:
+                combined["all_findings_unified"] = _risk_core_deep.score_findings(
+                    _unified_deep
+                )
+                combined["severity_summary"] = {
+                    "CRITICAL": 0,
+                    "HIGH": 0,
+                    "MEDIUM": 0,
+                    "LOW": 0,
+                }
+                for _f in combined["all_findings_unified"]:
+                    _sev = _f.get("severity", "low").upper()
+                    if _sev in combined["severity_summary"]:
+                        combined["severity_summary"][_sev] += 1
+                if "risk_core_scoring" not in combined.get("layers_used", []):
+                    combined.setdefault("layers_used", []).append("risk_core_scoring")
+        except Exception as _e:
+            combined.setdefault("warnings", []).append(f"RiskCore deep re-score: {_e}")
 
         combined["scan_mode"] = "deep"
         combined["time_seconds"] = round(time.time() - t0, 2)
@@ -550,8 +614,20 @@ class AGLSecurityAudit:
                 suite_f = r.get("findings", [])
                 combined["suite_findings"].extend(suite_f)
                 combined["layers_used"].append("agl_security_suite")
+                _orch_used = True
             except Exception as e:
                 combined.setdefault("warnings", []).append(f"Layer 2 error: {e}")
+
+        # Layer 2 fallback 2: Native Tool Backends (self-contained, no AGL_NextGen)
+        if not _orch_used and self._tool_backends:
+            try:
+                tb_result = self._tool_backends.analyze(file_path)
+                for tf in tb_result.get("findings", []):
+                    combined["suite_findings"].append(tf)
+                combined["layers_used"].append("native_tool_backends")
+                combined["tool_backend_status"] = tb_result.get("tool_status", {})
+            except Exception as e:
+                combined.setdefault("warnings", []).append(f"Tool Backends error: {e}")
 
         # Layer 4: AGL Semantic Detectors (22 detectors)
         if self._parser and self._detector_runner:
@@ -797,6 +873,29 @@ class AGLSecurityAudit:
         # ═══ Cross-layer deduplication + confidence boosting ═══
         combined = self._deduplicate_and_cross_validate(combined)
 
+        # ═══ Unified Probabilistic Risk Scoring (RiskCore) ═══
+        try:
+            from agl_security_tool.risk_core import RiskCore
+
+            _risk_core = RiskCore()
+            unified = combined.get("all_findings_unified", [])
+            if unified:
+                combined["all_findings_unified"] = _risk_core.score_findings(unified)
+                # Recount severities from probability-based severity
+                combined["severity_summary"] = {
+                    "CRITICAL": 0,
+                    "HIGH": 0,
+                    "MEDIUM": 0,
+                    "LOW": 0,
+                }
+                for f in combined["all_findings_unified"]:
+                    sev = f.get("severity", "low").upper()
+                    if sev in combined["severity_summary"]:
+                        combined["severity_summary"][sev] += 1
+                combined["layers_used"].append("risk_core_scoring")
+        except Exception as e:
+            combined.setdefault("warnings", []).append(f"RiskCore scoring: {e}")
+
         # ═══ Layer 5: LLM Deep Analysis on CRITICAL/HIGH findings ═══
         if not self.config.get("skip_llm", False):
             try:
@@ -1019,7 +1118,10 @@ class AGLSecurityAudit:
         try:
             with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
                 source_code = f.read()
-        except Exception:
+        except Exception as e:
+            combined.setdefault("warnings", []).append(
+                f"Exploit reasoning skipped — could not read file: {e}"
+            )
             return combined
 
         engine = ExploitReasoningEngine()
@@ -1034,6 +1136,9 @@ class AGLSecurityAudit:
             all_findings.append(f)
 
         if not all_findings:
+            combined.setdefault("warnings", []).append(
+                "Exploit reasoning: no findings to analyze (0 from L1/L2/L4)"
+            )
             return combined
 
         result = engine.analyze(all_findings, source_code, file_path)
@@ -1049,9 +1154,8 @@ class AGLSecurityAudit:
         for flist_key in ("findings", "suite_findings", "detector_findings"):
             for f in combined.get(flist_key, []):
                 fn = f.get("function", "").lower()
-                title = f.get("title", "").lower()
                 for pf_name, proof_data in proofs_by_func.items():
-                    if pf_name in fn or pf_name in title or fn in pf_name:
+                    if pf_name and pf_name == fn:
                         f["exploit_proof"] = proof_data
                         if proof_data.get("exploitable"):
                             # Boost severity and confidence for proven exploits
@@ -1069,6 +1173,31 @@ class AGLSecurityAudit:
     # ═══════════════════════════════════════════════════
     # LLM enrichment
     # ═══════════════════════════════════════════════════
+
+    @staticmethod
+    def _sanitize_for_llm(text: str, max_len: int = 500) -> str:
+        """Sanitize text before embedding in LLM prompts to prevent injection.
+        تنقية النص قبل إدراجه في طلبات LLM لمنع حقن التعليمات."""
+        if not text:
+            return ""
+        # Strip control characters
+        cleaned = "".join(
+            c if c.isprintable() or c in (" ", "\n") else "" for c in str(text)
+        )
+        # Remove common prompt-injection patterns
+        import re as _re_san
+
+        # Block "ignore previous", "system:", "INST", role-play injections
+        cleaned = _re_san.sub(
+            r"(?i)(\bignore\s+(all\s+)?previous\b|"
+            r"\bsystem\s*:|"
+            r"\[/?INST\]|"
+            r"<\|(?:im_start|im_end|system|user|assistant)\|>|"
+            r"###\s*(?:system|instruction|user)\b)",
+            "[FILTERED]",
+            cleaned,
+        )
+        return cleaned[:max_len]
 
     def _llm_enrich_findings(
         self, combined: Dict[str, Any], file_path: str
@@ -1106,13 +1235,17 @@ class AGLSecurityAudit:
             ctx_start = max(0, line - 5)
             ctx_end = min(len(source_lines), line + 10)
             code_ctx = "\n".join(source_lines[ctx_start:ctx_end])
+            # Sanitize all user-controlled content before embedding in prompt
+            safe_title = self._sanitize_for_llm(f.get("title", "?"), 200)
+            safe_detail = self._sanitize_for_llm(f.get("description", ""), 200)
+            safe_code = self._sanitize_for_llm(code_ctx, 1000)
             findings_desc.append(
                 f"### Code Issue {i}\n"
                 f"- Priority: {f.get('severity','?').upper()}\n"
                 f"- Line: {line}\n"
-                f"- Title: {f.get('title','?')}\n"
-                f"- Detail: {f.get('description','')[:200]}\n"
-                f"```solidity\n{code_ctx}\n```"
+                f"- Title: {safe_title}\n"
+                f"- Detail: {safe_detail}\n"
+                f"```solidity\n{safe_code}\n```"
             )
 
         system_msg = (
@@ -1162,7 +1295,7 @@ class AGLSecurityAudit:
                     # Reject template-only responses (model echoed placeholders)
                     if raw and len(raw) > 100 and '"..."' not in raw:
                         combined["layers_used"].append("llm_analysis")
-                        combined["llm_raw_response"] = raw[:3000]
+                        combined["llm_raw_response"] = self._sanitize_for_llm(raw, 3000)
                         combined["llm_source"] = "ollama_direct"
                         self._apply_llm_response(raw, to_enrich)
                         return combined
@@ -1187,7 +1320,7 @@ class AGLSecurityAudit:
                 )
                 if raw and len(raw) > 100 and '"..."' not in raw:
                     combined["layers_used"].append("llm_analysis")
-                    combined["llm_raw_response"] = raw[:3000]
+                    combined["llm_raw_response"] = self._sanitize_for_llm(raw, 3000)
                     combined["llm_source"] = "holographic_llm"
                     self._apply_llm_response(raw, to_enrich)
                     return combined
@@ -1215,7 +1348,9 @@ class AGLSecurityAudit:
                         raw2 = resp2.json().get("response", "")
                         if raw2 and len(raw2) > 100:
                             combined["layers_used"].append("llm_analysis")
-                            combined["llm_raw_response"] = raw2[:3000]
+                            combined["llm_raw_response"] = self._sanitize_for_llm(
+                                raw2, 3000
+                            )
                             combined["llm_source"] = "ollama_generate_fallback"
                             self._apply_llm_response(raw2, to_enrich)
                             return combined
