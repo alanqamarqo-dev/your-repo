@@ -1,8 +1,8 @@
 # 🛡️ AGL Full Pipeline Security Audit Report
 
-**Date:** 2026-03-26T16:01:48.569553+00:00
+**Date:** 2026-03-26T16:13:05.120509+00:00
 **Pipeline Version:** 1.1.0
-**Duration:** 0.5s
+**Duration:** 0.3s
 **Engines:** deep_scan, 22_detectors, z3_symbolic, exploit_reasoning
 
 ## 📊 Summary
@@ -21,7 +21,7 @@
 
 ## 📄 vulnerable.sol
 
-**Total findings:** 13 | **Duration:** 0.1s
+**Total findings:** 13 | **Duration:** 0.0s
 
 ### Layer 1 — Deep Scan
 - Findings: 6

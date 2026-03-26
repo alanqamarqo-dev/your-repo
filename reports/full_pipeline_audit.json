@@ -1,6 +1,6 @@
 {
   "audit_metadata": {
-    "timestamp": "2026-03-26T16:01:48.569553+00:00",
+    "timestamp": "2026-03-26T16:13:05.120509+00:00",
     "pipeline_version": "1.1.0",
     "engines": [
       "deep_scan",
@@ -8,7 +8,7 @@
       "z3_symbolic",
       "exploit_reasoning"
     ],
-    "total_duration_s": 0.5
+    "total_duration_s": 0.3
   },
   "summary": {
     "contracts_scanned": 6,
@@ -144,7 +144,7 @@
       ],
       "exploit_reasoning": [],
       "total": 13,
-      "duration_s": 0.1
+      "duration_s": 0.0
     },
     "test_project/src/Vault.sol": {
       "file": "test_project/src/Vault.sol",

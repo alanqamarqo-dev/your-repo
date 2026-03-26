@@ -2,15 +2,24 @@
 """
 🛡️ AGL Full Pipeline Audit — فحص شامل لكل العقود
 Runs the complete AGL security pipeline on all project contracts.
+Works in CI, WSL, and native Linux environments.
 
 Usage:
-    python scripts/run_full_audit.py
+    python scripts/run_full_audit.py                          # Scan default contracts
+    python scripts/run_full_audit.py --target contract.sol    # Scan specific file
+    python scripts/run_full_audit.py --target contracts/      # Scan directory
+
+WSL Usage:
+    bash scripts/run_audit_wsl.sh                             # Auto-setup + scan
+    bash scripts/run_audit_wsl.sh /path/to/contracts/         # Scan custom path
 """
 
 import sys
 import os
 import json
 import time
+import argparse
+import platform
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -28,9 +37,9 @@ from agl_security_tool.exploit_reasoning import ExploitReasoningEngine
 SKIP_LLM = True  # No Ollama in CI — skip LLM layers
 
 # ═══════════════════════════════════════════════════════════
-#  All contracts to audit
+#  Default contracts to audit
 # ═══════════════════════════════════════════════════════════
-CONTRACTS = [
+DEFAULT_CONTRACTS = [
     REPO_ROOT / "vulnerable.sol",
     REPO_ROOT / "test_project" / "src" / "Vault.sol",
     REPO_ROOT / "test_project" / "src" / "VaultToken.sol",
@@ -38,6 +47,42 @@ CONTRACTS = [
     REPO_ROOT / "test_project" / "src" / "VaultFactory.sol",
     REPO_ROOT / "test_project" / "src" / "interfaces" / "IVault.sol",
 ]
+
+
+def is_wsl() -> bool:
+    """Detect if running inside WSL."""
+    try:
+        with open("/proc/version", "r") as f:
+            return "microsoft" in f.read().lower()
+    except Exception:
+        return False
+
+
+def resolve_contracts(target: str = None) -> list:
+    """Resolve target to list of .sol files.
+
+    Args:
+        target: Path to a .sol file or a directory containing .sol files.
+                If None, returns DEFAULT_CONTRACTS.
+    """
+    if target is None:
+        return [p for p in DEFAULT_CONTRACTS if p.exists()]
+
+    target_path = Path(target).resolve()
+    if target_path.is_file() and target_path.suffix == ".sol":
+        return [target_path]
+    elif target_path.is_dir():
+        sols = sorted(target_path.rglob("*.sol"))
+        # Exclude test files and node_modules
+        sols = [
+            s for s in sols
+            if "node_modules" not in str(s)
+            and ".t.sol" not in s.name
+        ]
+        return sols
+    else:
+        print(f"⚠️  Target not found or not .sol: {target}")
+        return []
 
 
 def read_source(path: Path) -> str:
@@ -122,32 +167,68 @@ def severity_color(sev: str) -> str:
 
 
 def main():
+    # ── CLI Arguments ──
+    parser_cli = argparse.ArgumentParser(
+        description="🛡️ AGL Full Pipeline Audit — فحص خط الأنابيب الكامل"
+    )
+    parser_cli.add_argument(
+        "--target", "-t",
+        help="Path to a .sol file or directory to scan (default: project contracts)",
+        default=None,
+    )
+    parser_cli.add_argument(
+        "--skip-llm",
+        action="store_true",
+        default=True,
+        help="Skip LLM/Ollama layers (default: True)",
+    )
+    args = parser_cli.parse_args()
+
+    # ── Environment Detection ──
+    env_label = "WSL" if is_wsl() else platform.system()
+
     print("=" * 70)
     print("🛡️  AGL FULL PIPELINE AUDIT — فحص خط الأنابيب الكامل")
     print(f"📅  {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}")
+    print(f"🖥️  Environment: {env_label} | Python {platform.python_version()}")
     print("=" * 70)
+
+    # ── Resolve contracts ──
+    contracts = resolve_contracts(args.target)
+    if not contracts:
+        print("❌ No .sol contracts found to scan!")
+        sys.exit(1)
 
     # Initialize engines
     print("\n⚙️  Initializing engines...")
     t0 = time.time()
 
-    audit = AGLSecurityAudit(config={"skip_llm": SKIP_LLM})
-    parser = SoliditySemanticParser()
+    audit = AGLSecurityAudit(config={"skip_llm": args.skip_llm or SKIP_LLM})
+    sol_parser = SoliditySemanticParser()
     detector_runner = DetectorRunner()
-    z3_engine = Z3SymbolicEngine()
+
+    # Z3 is optional — handle gracefully if not installed
+    z3_engine = None
+    try:
+        z3_engine = Z3SymbolicEngine()
+    except Exception as e:
+        print(f"   ⚠️  Z3 engine unavailable: {e} — Layer 3 will be skipped")
 
     print(f"   ✅ All engines loaded in {time.time() - t0:.1f}s")
     print(f"   📋 Detectors registered: {len(detector_runner.detectors)}")
-    print(f"   📂 Contracts to scan: {len(CONTRACTS)}")
+    print(f"   📂 Contracts to scan: {len(contracts)}")
 
     # Track aggregates
     all_results = {}
     total_findings = 0
     severity_counts = {"critical": 0, "high": 0, "medium": 0, "low": 0, "info": 0}
 
-    for contract_path in CONTRACTS:
+    for contract_path in contracts:
         filename = contract_path.name
-        rel_path = contract_path.relative_to(REPO_ROOT)
+        try:
+            rel_path = contract_path.relative_to(REPO_ROOT)
+        except ValueError:
+            rel_path = contract_path  # External path — use absolute
 
         if not contract_path.exists():
             print(f"\n⚠️  Skipping {rel_path} — file not found")
@@ -186,7 +267,7 @@ def main():
         # ── Layer 2: 22 Detectors ──
         print("   🔍 Layer 2: 22 Semantic Detectors...")
         t2 = time.time()
-        det_findings = run_layer2_detectors(parser, detector_runner, source, filename)
+        det_findings = run_layer2_detectors(sol_parser, detector_runner, source, filename)
         det_clean = [f for f in det_findings if "error" not in f]
         contract_result["detectors"] = det_clean
         print(f"      → {len(det_clean)} findings ({time.time() - t2:.1f}s)")
@@ -194,12 +275,17 @@ def main():
         # ── Layer 3: Z3 Symbolic ──
         print("   ⚡ Layer 3: Z3 Symbolic Execution...")
         t3 = time.time()
-        z3_engine.findings = []  # Reset
-        z3_findings = run_layer3_z3(z3_engine, source, filename)
-        z3_clean = [f for f in z3_findings if "error" not in f]
+        z3_clean = []
+        proven = 0
+        if z3_engine is not None:
+            z3_engine.findings = []  # Reset
+            z3_findings = run_layer3_z3(z3_engine, source, filename)
+            z3_clean = [f for f in z3_findings if "error" not in f]
+            proven = sum(1 for f in z3_clean if f.get("is_proven"))
+            print(f"      → {len(z3_clean)} findings ({proven} proven) ({time.time() - t3:.1f}s)")
+        else:
+            print(f"      → skipped (Z3 not available)")
         contract_result["z3_symbolic"] = z3_clean
-        proven = sum(1 for f in z3_clean if f.get("is_proven"))
-        print(f"      → {len(z3_clean)} findings ({proven} proven) ({time.time() - t3:.1f}s)")
 
         # ── Layer 4: Exploit Reasoning ──
         print("   💀 Layer 4: Exploit Reasoning Engine...")
