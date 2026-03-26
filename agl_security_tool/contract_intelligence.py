@@ -58,7 +58,13 @@ _logger = logging.getLogger("AGL.contract_intelligence")
 DEFAULT_CONTRACT_THRESHOLD = 0.5
 
 # Path for saved meta-classifier weights
-META_WEIGHTS_PATH = os.path.join("artifacts", "meta_classifier_weights.json")
+# Use absolute path relative to this module so it works regardless of cwd
+META_WEIGHTS_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    os.pardir,
+    "artifacts",
+    "meta_classifier_weights.json",
+)
 
 # Feature names for the Meta Logistic Layer
 META_FEATURE_NAMES = [

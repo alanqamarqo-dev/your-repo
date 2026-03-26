@@ -32,6 +32,8 @@ from agl_security_tool.detectors.solidity_parser import SoliditySemanticParser
 from agl_security_tool.detectors import DetectorRunner
 from agl_security_tool.z3_symbolic_engine import Z3SymbolicEngine
 from agl_security_tool.exploit_reasoning import ExploitReasoningEngine
+from agl_security_tool.risk_core import RiskCore
+from agl_security_tool.contract_intelligence import MetaClassifier
 
 # ═══ Configuration ═══
 SKIP_LLM = True  # No Ollama in CI — skip LLM layers
@@ -214,6 +216,18 @@ def main():
     except Exception as e:
         print(f"   ⚠️  Z3 engine unavailable: {e} — Layer 3 will be skipped")
 
+    # RiskCore — probabilistic scoring with trained weights
+    risk_core = RiskCore()
+    print(f"   📊 RiskCore loaded (bias={risk_core.bias:.2f})")
+
+    # MetaClassifier — contract-level intelligence with trained weights
+    meta_classifier = MetaClassifier()
+    meta_loaded = meta_classifier.load()
+    if meta_loaded:
+        print(f"   🧠 MetaClassifier loaded (trained weights active)")
+    else:
+        print(f"   ⚠️  MetaClassifier: no trained weights found — using Noisy-OR fallback")
+
     print(f"   ✅ All engines loaded in {time.time() - t0:.1f}s")
     print(f"   📋 Detectors registered: {len(detector_runner.detectors)}")
     print(f"   📂 Contracts to scan: {len(contracts)}")
@@ -320,22 +334,43 @@ def main():
         contract_result["exploit_reasoning"] = exploit_clean
         print(f"      → {len(exploit_clean)} analyzed, {len(exploitable)} exploitable ({time.time() - t4:.1f}s)")
 
+        # ── Layer 5: RiskCore Scoring (trained weights) ──
+        print("   📊 Layer 5: RiskCore Probabilistic Scoring...")
+        t5 = time.time()
+        # Score all findings with trained RiskCore weights
+        all_scored_findings = []
+        for f in deep_findings:
+            all_scored_findings.append(risk_core.score_finding(dict(f)))
+        for f in det_clean:
+            all_scored_findings.append(risk_core.score_finding(dict(f)))
+        for f in z3_clean:
+            all_scored_findings.append(risk_core.score_finding(dict(f)))
+        contract_result["risk_scored"] = len(all_scored_findings)
+        print(f"      → {len(all_scored_findings)} findings scored ({time.time() - t5:.1f}s)")
+
+        # ── Layer 6: MetaClassifier Contract Verdict ──
+        print("   🧠 Layer 6: Contract-Level Intelligence...")
+        t6 = time.time()
+        probabilities = [f.get("probability", 0.5) for f in all_scored_findings]
+        severities = [str(f.get("severity", "medium")).lower() for f in all_scored_findings]
+        verdict = meta_classifier.classify(probabilities, severities)
+        contract_result["contract_verdict"] = {
+            "p_contract": round(verdict.p_final, 4),
+            "is_vulnerable": verdict.is_vulnerable,
+            "method": verdict.method,
+            "threshold": verdict.threshold,
+        }
+        verdict_label = "🔴 VULNERABLE" if verdict.is_vulnerable else "🟢 SAFE"
+        print(f"      → {verdict_label} (P={verdict.p_final:.3f}, method={verdict.method}) ({time.time() - t6:.1f}s)")
+
         # ── Summary for this contract ──
         contract_total = len(deep_findings) + len(det_clean) + len(z3_clean)
         total_findings += contract_total
         contract_result["total"] = contract_total
         contract_result["duration_s"] = round(time.time() - contract_start, 1)
 
-        # Count severities
-        for f in deep_findings:
-            sev = str(f.get("severity", "info")).lower()
-            if sev in severity_counts:
-                severity_counts[sev] += 1
-        for f in det_clean:
-            sev = str(f.get("severity", "info")).lower()
-            if sev in severity_counts:
-                severity_counts[sev] += 1
-        for f in z3_clean:
+        # Count severities from RiskCore-scored findings
+        for f in all_scored_findings:
             sev = str(f.get("severity", "info")).lower()
             if sev in severity_counts:
                 severity_counts[sev] += 1
@@ -384,8 +419,8 @@ def main():
     report = {
         "audit_metadata": {
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "pipeline_version": "1.1.0",
-            "engines": ["deep_scan", "22_detectors", "z3_symbolic", "exploit_reasoning"],
+            "pipeline_version": "1.2.0",
+            "engines": ["deep_scan", "22_detectors", "z3_symbolic", "exploit_reasoning", "risk_core", "meta_classifier"],
             "total_duration_s": round(total_time, 1),
         },
         "summary": {

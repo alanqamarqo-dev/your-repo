@@ -1,27 +1,27 @@
 # 🛡️ AGL Full Pipeline Security Audit Report
 
-**Date:** 2026-03-26T16:13:05.120509+00:00
-**Pipeline Version:** 1.1.0
-**Duration:** 0.3s
-**Engines:** deep_scan, 22_detectors, z3_symbolic, exploit_reasoning
+**Date:** 2026-03-26T16:47:06.251084+00:00
+**Pipeline Version:** 1.2.0
+**Duration:** 0.2s
+**Engines:** deep_scan, 22_detectors, z3_symbolic, exploit_reasoning, risk_core, meta_classifier
 
 ## 📊 Summary
 
 | Metric | Value |
 |--------|-------|
 | Contracts Scanned | 6 |
-| Total Findings | 58 |
-| 🔴 Critical | 15 |
-| 🟠 High | 21 |
-| 🟡 Medium | 5 |
-| 🔵 Low | 17 |
+| Total Findings | 48 |
+| 🔴 Critical | 0 |
+| 🟠 High | 22 |
+| 🟡 Medium | 26 |
+| 🔵 Low | 0 |
 | ⚪ Info | 0 |
 
 ---
 
 ## 📄 vulnerable.sol
 
-**Total findings:** 13 | **Duration:** 0.0s
+**Total findings:** 10 | **Duration:** 0.0s
 
 ### Layer 1 — Deep Scan
 - Findings: 6
@@ -35,13 +35,7 @@
 | 🟠 high | TX-ORIGIN-AUTH | Authentication via tx.origin | 2 | transferTo |
 | 🟠 high | UNCHECKED-CALL | Unchecked low-level call return value | 2 | ping |
 
-### Layer 3 — Z3 Symbolic (3 findings)
-
-| Severity | Category | Title | Line | Proven | Confidence |
-|----------|----------|-------|------|--------|------------|
-| 🔴 critical | reentrancy | Reentrancy in withdraw() — state write after external call | 14 | ✅ | 0.95 |
-| 🟡 medium | access-control | Missing access control on withdraw() | 14 | ❌ | 0.6 |
-| 🟠 high | access-control | tx.origin used for authentication | 26 | ✅ | 0.95 |
+### Layer 3 — Z3 Symbolic (0 findings)
 
 ### Layer 4 — Exploit Reasoning (0 exploitable / 0 total)
 
@@ -49,7 +43,7 @@
 
 ## 📄 test_project/src/Vault.sol
 
-**Total findings:** 20 | **Duration:** 0.0s
+**Total findings:** 15 | **Duration:** 0.0s
 
 ### Layer 1 — Deep Scan
 - Findings: 3
@@ -71,15 +65,7 @@
 | 🟠 high | REENTRANCY-CROSS-FUNCTION | Cross-function reentrancy | 95 | claimReward |
 | 🔵 low | MISSING-EVENT | State change without event emission | 106 | setRewardRate |
 
-### Layer 3 — Z3 Symbolic (5 findings)
-
-| Severity | Category | Title | Line | Proven | Confidence |
-|----------|----------|-------|------|--------|------------|
-| 🔴 critical | reentrancy | Reentrancy in withdraw() — state write after external call | 60 | ✅ | 0.95 |
-| 🟡 medium | access-control | Missing access control on withdraw() | 60 | ❌ | 0.6 |
-| 🟡 medium | access-control | Missing access control on emergencyWithdraw() | 114 | ❌ | 0.6 |
-| 🟠 high | access-control | tx.origin used for authentication | 112 | ✅ | 0.95 |
-| 🟠 high | access-control | tx.origin used for authentication | 115 | ✅ | 0.95 |
+### Layer 3 — Z3 Symbolic (0 findings)
 
 ### Layer 4 — Exploit Reasoning (0 exploitable / 0 total)
 
@@ -87,7 +73,7 @@
 
 ## 📄 test_project/src/VaultToken.sol
 
-**Total findings:** 10 | **Duration:** 0.0s
+**Total findings:** 9 | **Duration:** 0.0s
 
 ### Layer 1 — Deep Scan
 - Findings: 6
@@ -100,11 +86,7 @@
 | 🔵 low | MISSING-EVENT | State change without event emission | 74 | pause |
 | 🔵 low | MISSING-EVENT | State change without event emission | 78 | unpause |
 
-### Layer 3 — Z3 Symbolic (1 findings)
-
-| Severity | Category | Title | Line | Proven | Confidence |
-|----------|----------|-------|------|--------|------------|
-| 🟠 high | access-control | tx.origin used for authentication | 60 | ✅ | 0.95 |
+### Layer 3 — Z3 Symbolic (0 findings)
 
 ### Layer 4 — Exploit Reasoning (0 exploitable / 0 total)
 
@@ -135,7 +117,7 @@
 
 ## 📄 test_project/src/VaultFactory.sol
 
-**Total findings:** 6 | **Duration:** 0.0s
+**Total findings:** 5 | **Duration:** 0.0s
 
 ### Layer 1 — Deep Scan
 - Findings: 3
@@ -147,11 +129,7 @@
 | 🔴 critical | DANGEROUS-DELEGATECALL | Delegatecall to user-controlled address | 3 | execute |
 | 🟠 high | UNCHECKED-CALL | Unchecked low-level call return value | 3 | collectFees |
 
-### Layer 3 — Z3 Symbolic (1 findings)
-
-| Severity | Category | Title | Line | Proven | Confidence |
-|----------|----------|-------|------|--------|------------|
-| 🟠 high | storage-collision | Potential storage collision in proxy pattern | 12 | ❌ | 0.75 |
+### Layer 3 — Z3 Symbolic (0 findings)
 
 ### Layer 4 — Exploit Reasoning (0 exploitable / 0 total)
 

@@ -1,0 +1,23 @@
+{
+  "weights": {
+    "max_p": 2.5,
+    "mean_p": 1.8,
+    "count_high": 1.2,
+    "total_findings": 0.3,
+    "entropy_p": -0.5,
+    "noisy_or_p": 2.0,
+    "n_critical": 1.5,
+    "n_high": 0.8
+  },
+  "bias": -1.5,
+  "feature_names": [
+    "max_p",
+    "mean_p",
+    "count_high",
+    "total_findings",
+    "entropy_p",
+    "noisy_or_p",
+    "n_critical",
+    "n_high"
+  ]
+}

@@ -1,23 +1,25 @@
 {
   "audit_metadata": {
-    "timestamp": "2026-03-26T16:13:05.120509+00:00",
-    "pipeline_version": "1.1.0",
+    "timestamp": "2026-03-26T16:47:06.251084+00:00",
+    "pipeline_version": "1.2.0",
     "engines": [
       "deep_scan",
       "22_detectors",
       "z3_symbolic",
-      "exploit_reasoning"
+      "exploit_reasoning",
+      "risk_core",
+      "meta_classifier"
     ],
-    "total_duration_s": 0.3
+    "total_duration_s": 0.2
   },
   "summary": {
     "contracts_scanned": 6,
-    "total_findings": 58,
+    "total_findings": 48,
     "severity_counts": {
-      "critical": 15,
-      "high": 21,
-      "medium": 5,
-      "low": 17,
+      "critical": 0,
+      "high": 22,
+      "medium": 26,
+      "low": 0,
       "info": 0
     }
   },
@@ -110,40 +112,16 @@
           }
         }
       ],
-      "z3_symbolic": [
-        {
-          "title": "Reentrancy in withdraw() — state write after external call",
-          "severity": "critical",
-          "category": "reentrancy",
-          "line": 14,
-          "function": "withdraw",
-          "confidence": 0.95,
-          "is_proven": true,
-          "description": "Z3 PROVED: External call at position 152 is followed by state modification at position 238. An attacker can re-enter the function before state is updated, draining funds."
-        },
-        {
-          "title": "Missing access control on withdraw()",
-          "severity": "medium",
-          "category": "access-control",
-          "line": 14,
-          "function": "withdraw",
-          "confidence": 0.6,
-          "is_proven": false,
-          "description": "Function withdraw() (withdrawal) has no visible access control modifier or require(msg.sender==...) check. Verify that access is restricted appropriately."
-        },
-        {
-          "title": "tx.origin used for authentication",
-          "severity": "high",
-          "category": "access-control",
-          "line": 26,
-          "function": "",
-          "confidence": 0.95,
-          "is_proven": true,
-          "description": "tx.origin is used for authentication. An attacker can deploy a contract that calls this function, where msg.sender != tx.origin, bypassing the intended access control."
-        }
-      ],
+      "z3_symbolic": [],
       "exploit_reasoning": [],
-      "total": 13,
+      "risk_scored": 10,
+      "contract_verdict": {
+        "p_contract": 1.0,
+        "is_vulnerable": true,
+        "method": "meta_logistic",
+        "threshold": 0.5
+      },
+      "total": 10,
       "duration_s": 0.0
     },
     "test_project/src/Vault.sol": {
@@ -410,60 +388,16 @@
           }
         }
       ],
-      "z3_symbolic": [
-        {
-          "title": "Reentrancy in withdraw() — state write after external call",
-          "severity": "critical",
-          "category": "reentrancy",
-          "line": 60,
-          "function": "withdraw",
-          "confidence": 0.95,
-          "is_proven": true,
-          "description": "Z3 PROVED: External call at position 153 is followed by state modification at position 247. An attacker can re-enter the function before state is updated, draining funds."
-        },
-        {
-          "title": "Missing access control on withdraw()",
-          "severity": "medium",
-          "category": "access-control",
-          "line": 60,
-          "function": "withdraw",
-          "confidence": 0.6,
-          "is_proven": false,
-          "description": "Function withdraw() (withdrawal) has no visible access control modifier or require(msg.sender==...) check. Verify that access is restricted appropriately."
-        },
-        {
-          "title": "Missing access control on emergencyWithdraw()",
-          "severity": "medium",
-          "category": "access-control",
-          "line": 114,
-          "function": "emergencyWithdraw",
-          "confidence": 0.6,
-          "is_proven": false,
-          "description": "Function emergencyWithdraw() (withdrawal) has no visible access control modifier or require(msg.sender==...) check. Verify that access is restricted appropriately."
-        },
-        {
-          "title": "tx.origin used for authentication",
-          "severity": "high",
-          "category": "access-control",
-          "line": 112,
-          "function": "",
-          "confidence": 0.95,
-          "is_proven": true,
-          "description": "tx.origin is used for authentication. An attacker can deploy a contract that calls this function, where msg.sender != tx.origin, bypassing the intended access control."
-        },
-        {
-          "title": "tx.origin used for authentication",
-          "severity": "high",
-          "category": "access-control",
-          "line": 115,
-          "function": "",
-          "confidence": 0.95,
-          "is_proven": true,
-          "description": "tx.origin is used for authentication. An attacker can deploy a contract that calls this function, where msg.sender != tx.origin, bypassing the intended access control."
-        }
-      ],
+      "z3_symbolic": [],
       "exploit_reasoning": [],
-      "total": 20,
+      "risk_scored": 15,
+      "contract_verdict": {
+        "p_contract": 1.0,
+        "is_vulnerable": true,
+        "method": "meta_logistic",
+        "threshold": 0.5
+      },
+      "total": 15,
       "duration_s": 0.0
     },
     "test_project/src/VaultToken.sol": {
@@ -538,20 +472,16 @@
           }
         }
       ],
-      "z3_symbolic": [
-        {
-          "title": "tx.origin used for authentication",
-          "severity": "high",
-          "category": "access-control",
-          "line": 60,
-          "function": "",
-          "confidence": 0.95,
-          "is_proven": true,
-          "description": "tx.origin is used for authentication. An attacker can deploy a contract that calls this function, where msg.sender != tx.origin, bypassing the intended access control."
-        }
-      ],
+      "z3_symbolic": [],
       "exploit_reasoning": [],
-      "total": 10,
+      "risk_scored": 9,
+      "contract_verdict": {
+        "p_contract": 0.9978,
+        "is_vulnerable": true,
+        "method": "meta_logistic",
+        "threshold": 0.5
+      },
+      "total": 9,
       "duration_s": 0.0
     },
     "test_project/src/RewardDistributor.sol": {
@@ -672,6 +602,13 @@
       ],
       "z3_symbolic": [],
       "exploit_reasoning": [],
+      "risk_scored": 8,
+      "contract_verdict": {
+        "p_contract": 0.9994,
+        "is_vulnerable": true,
+        "method": "meta_logistic",
+        "threshold": 0.5
+      },
       "total": 8,
       "duration_s": 0.0
     },
@@ -721,20 +658,16 @@
           }
         }
       ],
-      "z3_symbolic": [
-        {
-          "title": "Potential storage collision in proxy pattern",
-          "severity": "high",
-          "category": "storage-collision",
-          "line": 12,
-          "function": "",
-          "confidence": 0.75,
-          "is_proven": false,
-          "description": "Contract uses delegatecall with 3 state variables but no fixed storage slots (ERC1967). State variables in proxy and implementation may collide in the same storage slots."
-        }
-      ],
+      "z3_symbolic": [],
       "exploit_reasoning": [],
-      "total": 6,
+      "risk_scored": 5,
+      "contract_verdict": {
+        "p_contract": 0.9921,
+        "is_vulnerable": true,
+        "method": "meta_logistic",
+        "threshold": 0.5
+      },
+      "total": 5,
       "duration_s": 0.0
     },
     "test_project/src/interfaces/IVault.sol": {
@@ -747,6 +680,13 @@
       "detectors": [],
       "z3_symbolic": [],
       "exploit_reasoning": [],
+      "risk_scored": 1,
+      "contract_verdict": {
+        "p_contract": 0.8637,
+        "is_vulnerable": true,
+        "method": "meta_logistic",
+        "threshold": 0.5
+      },
       "total": 1,
       "duration_s": 0.0
     }
