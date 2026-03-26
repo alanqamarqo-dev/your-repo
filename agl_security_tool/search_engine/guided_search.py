@@ -21,11 +21,14 @@ Guided Search Engine
 
 from __future__ import annotations
 
+import logging
 import math
 import random
 import time
 import uuid
 from typing import Dict, List, Any, Optional, Set, Tuple, Callable
+
+_logger = logging.getLogger(__name__)
 
 from .models import (
     SearchConfig,
@@ -447,8 +450,8 @@ class GuidedSearchEngine:
             )
             if candidate and candidate.simulated:
                 return candidate.actual_profit_usd
-        except Exception:
-            pass
+        except Exception as exc:
+            _logger.debug("MCTS rollout simulation failed: %s", exc)
 
         return 0.0
 
@@ -859,7 +862,10 @@ class GuidedSearchEngine:
             if candidate.actual_profit_usd > self._best_profit:
                 self._best_profit = candidate.actual_profit_usd
 
-        except Exception:
+        except Exception as exc:
+            _logger.debug(
+                "Simulation failed for sequence %s: %s", candidate.sequence_id, exc
+            )
             candidate.simulated = True
             candidate.actual_profit_usd = 0.0
             candidate.simulation_success = False
@@ -914,8 +920,8 @@ class GuidedSearchEngine:
                     else:
                         result.append(str(s))
                 return result
-            except Exception:
-                pass
+            except Exception as exc:
+                _logger.debug("get_successors failed for %s: %s", action_id, exc)
 
         # Fallback: successors adjacency → extract target_action from edges
         successors_map = getattr(action_graph, 'successors', {})
