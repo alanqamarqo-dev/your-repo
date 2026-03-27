@@ -116,8 +116,10 @@ class TestWeightsPersistence:
         """Save weights, create a new RiskCore, and verify they load."""
         path = str(tmp_path / "test_weights.json")
 
+        # Post-construction assignment ensures deterministic values
+        # regardless of whether _load_weights() loaded a file.
         rc1 = RiskCore(w_heuristic=3.0, w_formal=5.0, w_prior=2.0, bias=-2.0)
-        rc1.w_heuristic = 3.0  # ensure explicit
+        rc1.w_heuristic = 3.0
         rc1.w_formal = 5.0
         rc1.w_prior = 2.0
         rc1.bias = -2.0
@@ -148,9 +150,13 @@ class TestComputeExploitProbability:
     """Tests for the core probability computation."""
 
     def _make_rc(self):
-        """Create a RiskCore with known fixed weights (not loaded from file)."""
+        """Create a RiskCore with known fixed weights.
+
+        Post-construction assignment ensures deterministic tests because
+        _load_weights() (called in __init__) can override constructor
+        values if a weights file exists on disk.
+        """
         rc = RiskCore(w_heuristic=2.5, w_formal=4.0, w_prior=1.5, bias=-1.2)
-        # Override in case file loading changed them
         rc.w_heuristic = 2.5
         rc.w_formal = 4.0
         rc.w_prior = 1.5
@@ -360,6 +366,7 @@ class TestScoreFinding:
     """Tests for the complete score_finding pipeline."""
 
     def _make_rc(self):
+        """Create RiskCore with deterministic weights (see _load_weights note)."""
         rc = RiskCore(w_heuristic=2.5, w_formal=4.0, w_prior=1.5, bias=-1.2)
         rc.w_heuristic = 2.5
         rc.w_formal = 4.0
@@ -423,6 +430,7 @@ class TestScoreFindings:
     """Tests for batch scoring."""
 
     def _make_rc(self):
+        """Create RiskCore with deterministic weights (see _load_weights note)."""
         rc = RiskCore(w_heuristic=2.5, w_formal=4.0, w_prior=1.5, bias=-1.2)
         rc.w_heuristic = 2.5
         rc.w_formal = 4.0
