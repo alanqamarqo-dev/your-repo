@@ -1,0 +1,20 @@
+[
+  {
+    "question": "What comes next in the sequence: 1, 11, 21, 1211, 111221, ...? Explain the logic.",
+    "type": "Pattern Recognition",
+    "answer": "The sequence follows the \"look-and-say\" pattern. Here's how it works:\n\n- Start with \"1\".\n- Read off the digits of each group:\n  - 1 is read off as \"one 1\" or 11.\n  - 11 is read off as \"two 1s\" or 21.\n  - 21 is read off as \"one 2, then one 1\" or 1211.\n  - 1211 is read off as \"one 1, one 2, and two 1s\" or 111221.\n\nFollowing this pattern:\n\n- 111221 is read off as \"three 1s, two 2s, one 1\", which results in **312211**.",
+    "time": 33.93123483657837
+  },
+  {
+    "question": "A man pushes his car to a hotel and tells the owner he's bankrupt. Why? (Provide a creative, non-obvious explanation)",
+    "type": "Lateral Thinking",
+    "answer": "The man pushed his car to the hotel because it was part of a unique pledge arrangement with a loan company. The company had repossessed his car but allowed him to keep it temporarily at the hotel as a symbolic gesture, emphasizing his financial distress by placing the car in an establishment meant for relaxation and luxury. By pushing the car there himself, he dramatized his bankruptcy, perhaps hoping for sympathy or alternative assistance.",
+    "time": 13.44241213798523
+  },
+  {
+    "question": "You can save 5 people by diverting a train, but you must push a fat man onto the tracks to stop it. However, the fat man is a villain who was going to kill them anyway. What do you do? Analyze the moral layers.",
+    "type": "Ethical Reasoning",
+    "answer": "This scenario presents complex ethical and moral challenges:\n\n1. **Utilitarian Perspective**: From a utilitarian viewpoint, the action that results in the greatest good for the greatest number should be chosen. Here, diverting the train to save five people (a greater number) could be justified because it minimizes overall harm.\n\n2. **Deontological Ethics**: This perspective focuses on moral rules or duties. Pushing the fat man onto the tracks directly involves an action that may be seen as actively harming one person to benefit others, which many deontologists would argue is morally wrong regardless of the outcome.\n\n3. **Consequentialism vs. Deontology**: The key tension lies between consequentialist approaches (where outcomes matter most) and deontological principles (which emphasize adherence to rules or duties). This scenario starkly contrasts these views.\n\n4. **Moral Permissibility of Villains**: If the fat man is a villain who was going to kill others, this complicates the moral calculus. Some might argue that killing an evil person in self-defense is permissible, but actively pushing them would be seen as a separate and more questionable action.\n\n5. **Personal Beliefs and Intuitions**: Personal values and experiences significantly influence one's response. Someone who strongly adheres to non-violence principles may find the idea of pushing anyone repugnant, even if it saves lives.\n\n6. **Legal Considerations**: Legally, pushing someone without their consent is considered murder in most jurisdictions. However, laws can sometimes be seen as outmoded or less relevant when faced with a ticking moral time bomb.\n\n7. **Moral Relativism and Contextualism**: Some argue that morality isn't absolute but situational, meaning what's right in one context might not apply elsewhere. This scenario challenges whether the villainy of the fat man alters the fundamental wrongness of pushing him.\n\n8. **Psychological Impact**: Consideration should also be given to the psychological impact on all involved parties—those being saved, those potentially killed, and the person making the decision.\n\nIn conclusion, while diverting the train is a more straightforward utilitarian choice, actively pushing someone raises profound ethical questions that cannot be easily resolved without deep moral reflection.",
+    "time": 59.56212592124939
+  }
+]

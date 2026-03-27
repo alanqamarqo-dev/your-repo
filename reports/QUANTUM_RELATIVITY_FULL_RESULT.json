@@ -1,0 +1,14 @@
+{
+  "mission": "\n    OBJECTIVE: Develop and Prove a Unified Theory of Quantum Gravity.\n    \n    PHASE 1: THEORETICAL FRAMEWORK\n    - Propose a novel or synthesized theoretical framework that reconciles the smooth spacetime of General Relativity with the discrete probabilistic nature of Quantum Mechanics.\n    - Define the fundamental axioms of this theory.\n    \n    PHASE 2: MATHEMATICAL PROOF\n    - Derive the core field equations of this unified theory.\n    - Show mathematically how these equations reduce to Einstein's Field Equations at macroscopic scales and Schr\u00f6dinger/Dirac equations at microscopic scales.\n    - Provide a formal proof for a specific prediction (e.g., Hawking Radiation modification, Graviton interaction).\n    \n    PHASE 3: COMPUTATIONAL SIMULATION\n    - Write a complete, executable Python simulation to model a phenomenon predicted by your theory (e.g., Spacetime foam dynamics, Quantum tunneling through an Event Horizon).\n    - The code must be self-contained, use numpy/scipy, and produce numerical data or ASCII visualization.\n    \n    PHASE 4: EXECUTION & ANALYSIS\n    - Execute the generated simulation code.\n    - Analyze the output data to validate the consistency of the theory.\n    ",
+  "cluster": "scientific_cluster",
+  "metadata": {
+    "priority": "critical",
+    "complexity": "extreme",
+    "domain": "theoretical_physics",
+    "requires_simulation": true,
+    "similar_memories": [
+      {
+        "event": {
+          "task": "\n    OBJECTIVE: Develop and Prove a Unified Theory of Quantum Gravity.\n    \n    PHASE 1: THEORETICAL FRAMEWORK\n    - Propose a novel or synthesized theoretical framework that reconciles the smooth spacetime of General Relativity with the discrete probabilistic nature of Quantum Mechanics.\n    - Define the fundamental axioms of this theory.\n    \n    PHASE 2: MATHEMATICAL PROOF\n    - Derive the core field equations of this unified theory.\n    - Show mathematically how these equations reduce to Einstein's Field Equations at macroscopic scales and Schr\u00f6dinger/Dirac equations at microscopic scales.\n    - Provide a formal proof for a specific prediction (e.g., Hawking Radiation modification, Graviton interaction).\n    \n    PHASE 3: COMPUTATIONAL SIMULATION\n    - Write a complete, executable Python simulation to model a phenomenon predicted by your theory (e.g., Spacetime foam dynamics, Quantum tunneling through an Event Horizon).\n    - The code must be self-contained, use numpy/scipy, and produce numerical data or ASCII visualization.\n    \n    PHASE 4: EXECUTION & ANALYSIS\n    - Execute the generated simulation code.\n    - Analyze the output data to validate the consistency of the theory.\n    ",
+          "cluster": "scientific_cluster",
+          "metadata": 

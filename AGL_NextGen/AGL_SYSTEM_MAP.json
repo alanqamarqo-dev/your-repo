@@ -1,0 +1,1683 @@
+{
+  "AGL_ASI_PERPETUAL_PULSE.py": {
+    "classes": [],
+    "functions": [
+      "update_dashboard_state",
+      "signal_handler",
+      "start_perpetual_pulse"
+    ]
+  },
+  "AGL_BENCH_COMPARE.py": {
+    "classes": [],
+    "functions": [
+      "_configure_utf8_console",
+      "main"
+    ]
+  },
+  "AGL_BENCH_RUN.py": {
+    "classes": [],
+    "functions": [
+      "_configure_utf8_console",
+      "main"
+    ]
+  },
+  "AGL_MATH_DEEP_TEST.py": {
+    "classes": [
+      "MathDeepDive"
+    ],
+    "functions": []
+  },
+  "AGL_NextGen_ASI_Launch.py": {
+    "classes": [],
+    "functions": [
+      "main"
+    ]
+  },
+  "AGL_REAL_DATA_GENERATOR.py": {
+    "classes": [
+      "RealDataGenerator"
+    ],
+    "functions": []
+  },
+  "AGL_SCIENTIFIC_DEEP_TEST.py": {
+    "classes": [
+      "ScientificDeepDive"
+    ],
+    "functions": []
+  },
+  "AGL_SELF_IMPROVE.py": {
+    "classes": [],
+    "functions": [
+      "_configure_utf8_console",
+      "main"
+    ]
+  },
+  "AGL_STRICT_TEST_4_FIELDS.py": {
+    "classes": [],
+    "functions": [
+      "print_header",
+      "test_strategic",
+      "test_moral",
+      "test_scientific",
+      "test_creative"
+    ]
+  },
+  "seed_hologram.py": {
+    "classes": [],
+    "functions": [
+      "seed_holographic_memory"
+    ]
+  },
+  "scripts/AGL_FULL_DIAGNOSTIC.py": {
+    "classes": [
+      "FullSystemDiagnostic"
+    ],
+    "functions": []
+  },
+  "scripts/AGL_QUANTUM_TELEPATHY.py": {
+    "classes": [],
+    "functions": [
+      "sender_brain",
+      "receiver_brain",
+      "run_telepathy_experiment"
+    ]
+  },
+  "src/AGL_Entropy_Harvester.py": {
+    "classes": [
+      "SystemEnvironment",
+      "HeikalEntropyHarvester"
+    ],
+    "functions": [
+      "run_demonstration"
+    ]
+  },
+  "src/AGL_GENESIS_ACTIVATE.py": {
+    "classes": [
+      "HeikalWorldSimulator"
+    ],
+    "functions": [
+      "run_activation"
+    ]
+  },
+  "src/AGL_ULTRA_TEST.py": {
+    "classes": [],
+    "functions": [
+      "run_ultra_hyper_test"
+    ]
+  },
+  "src/agl/genesis.py": {
+    "classes": [
+      "AGL_Prime_Entity"
+    ],
+    "functions": []
+  },
+  "src/agl/bench/baselines.py": {
+    "classes": [
+      "_LinearParseError",
+      "BaselineAnswer",
+      "BaselineEngine"
+    ],
+    "functions": [
+      "_insert_implicit_mul",
+      "_linear_from_ast",
+      "_solve_linear_equation",
+      "baseline_ask"
+    ]
+  },
+  "src/agl/bench/central_control_10_domains.py": {
+    "classes": [
+      "DomainTask"
+    ],
+    "functions": [
+      "_tasks",
+      "run_via_central_control",
+      "main"
+    ]
+  },
+  "src/agl/bench/compare.py": {
+    "classes": [
+      "BenchComparator"
+    ],
+    "functions": [
+      "_project_root",
+      "_artifacts_dir",
+      "_jsonl_append"
+    ]
+  },
+  "src/agl/bench/evaluators.py": {
+    "classes": [
+      "EvalResult"
+    ],
+    "functions": [
+      "_norm_text",
+      "_normalize_digits",
+      "exact_match",
+      "contains_keywords",
+      "hypothesis_with_prediction",
+      "plan_with_fallback",
+      "causal_intervention_answer",
+      "numeric_answer",
+      "causal_edges",
+      "json_field_truthy",
+      "json_field_equals",
+      "holo_cache_speedup",
+      "math_solution_with_steps",
+      "plan_steps",
+      "plan_steps_with_keywords",
+      "plan_steps_keywords_in_steps",
+      "plan_with_fallback_keywords_in_steps",
+      "causal_intervention_numeric"
+    ]
+  },
+  "src/agl/bench/gate.py": {
+    "classes": [
+      "GateConfig"
+    ],
+    "functions": [
+      "_parse_regression_suites",
+      "_default_regression_suites",
+      "_parse_suite_list",
+      "_mean",
+      "_project_root_from_here",
+      "_artifacts_dir",
+      "_default_gate_log",
+      "_jsonl_append",
+      "_python_exe",
+      "_extract_last_json",
+      "_run_bench_summary",
+      "_copy_for_sandbox",
+      "_mod_plan_micro_planner_keyword_steps",
+      "run_gate_once"
+    ]
+  },
+  "src/agl/bench/real_world_set_cover_test.py": {
+    "classes": [],
+    "functions": [
+      "_bruteforce_min_set_cover",
+      "_parse_indices",
+      "_covers",
+      "main"
+    ]
+  },
+  "src/agl/bench/runner.py": {
+    "classes": [
+      "BenchRunner"
+    ],
+    "functions": [
+      "_project_root",
+      "_artifacts_dir",
+      "_jsonl_append"
+    ]
+  },
+  "src/agl/bench/self_improve.py": {
+    "classes": [
+      "SelfImproveConfig",
+      "SelfImproveIteration"
+    ],
+    "functions": [
+      "_project_root_from_here",
+      "_default_artifacts_path",
+      "_jsonl_append",
+      "_tasks_for_suite",
+      "_diagnose",
+      "run_self_improve"
+    ]
+  },
+  "src/agl/bench/tasks.py": {
+    "classes": [
+      "BenchTask"
+    ],
+    "functions": [
+      "deterministic_tasks",
+      "deterministic_holdout_tasks",
+      "causal_tasks",
+      "causal_holdout_tasks",
+      "planning_tasks",
+      "planning_holdout_tasks",
+      "planner_tasks",
+      "planner_holdout_tasks",
+      "planner_strict_holdout_tasks",
+      "criteria_1_autonomy_tasks",
+      "criteria_1_autonomy_tasks_strict",
+      "criteria_2_superiority_tasks",
+      "criteria_3_self_learning_tasks",
+      "criteria_4_subgoals_tasks",
+      "criteria_4_subgoals_tasks_strict",
+      "criteria_5_causal_tasks_strict",
+      "criteria_5_causal_tasks",
+      "criteria_suite_names",
+      "criteria_all_hard_tasks",
+      "nextgen_smoke_tasks",
+      "criteria_tasks_for_suite",
+      "default_tasks",
+      "task_index"
+    ]
+  },
+  "src/agl/core/base.py": {
+    "classes": [
+      "_AGL"
+    ],
+    "functions": [
+      "_load_module_from_path"
+    ]
+  },
+  "src/agl/core/consciousness.py": {
+    "classes": [
+      "AGL_Core_Consciousness"
+    ],
+    "functions": []
+  },
+  "src/agl/core/map_builder.py": {
+    "classes": [
+      "AGL_System_Map_Builder"
+    ],
+    "functions": []
+  },
+  "src/agl/core/master_controller.py": {
+    "classes": [],
+    "functions": [
+      "find_project_root",
+      "print_header",
+      "run_intelligence_test",
+      "run_telepathy_test",
+      "run_dreaming_test",
+      "run_iron_loop_test",
+      "run_diagnostic",
+      "chat_mode",
+      "main"
+    ]
+  },
+  "src/agl/core/super_intelligence.py": {
+    "classes": [
+      "SelfAwarenessModule",
+      "SelfRepairSystem",
+      "AGL_Super_Intelligence"
+    ],
+    "functions": [
+      "find_project_root",
+      "import_module_from_path",
+      "_project_root_from_here"
+    ]
+  },
+  "src/agl/core/unified_system.py": {
+    "classes": [
+      "MemoryItem",
+      "UnifiedMemorySystem",
+      "UnifiedReasoningEngine",
+      "ActiveCuriosityEngine",
+      "IntrinsicMotivationSystem",
+      "UnifiedAGISystem"
+    ],
+    "functions": [
+      "_safe_get_answer",
+      "_safe_get",
+      "create_unified_agi_system"
+    ]
+  },
+  "src/agl/engines/adaptive_memory.py": {
+    "classes": [
+      "AdaptiveMemoryItem",
+      "AdaptiveMemory"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/advanced_exponential_algebra.py": {
+    "classes": [
+      "AdvancedExponentialAlgebra",
+      "AdvancedExponentialAlgebra",
+      "LieAlgebraProcessor"
+    ],
+    "functions": [
+      "create_engine"
+    ]
+  },
+  "src/agl/engines/advanced_meta_reasoner.py": {
+    "classes": [
+      "AdvancedMetaReasonerEngine"
+    ],
+    "functions": [
+      "create_engine",
+      "_read_jsonl",
+      "analyze_thinking_quality",
+      "generate_self_improvement_plan"
+    ]
+  },
+  "src/agl/engines/advanced_simulation.py": {
+    "classes": [
+      "AdvancedSimulationEngine"
+    ],
+    "functions": [
+      "factory"
+    ]
+  },
+  "src/agl/engines/agl_optimization_target.py": {
+    "classes": [
+      "AGL_Optimization_Target"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/analogy_mapping.py": {
+    "classes": [
+      "AnalogyMappingEngine"
+    ],
+    "functions": [
+      "factory"
+    ]
+  },
+  "src/agl/engines/bootstrap.py": {
+    "classes": [],
+    "functions": [
+      "_is_already_registered_error",
+      "bootstrap_register_all_engines"
+    ]
+  },
+  "src/agl/engines/causal_graph.py": {
+    "classes": [
+      "CausalGraphEngine",
+      "CausalGraph"
+    ],
+    "functions": [
+      "create_engine"
+    ]
+  },
+  "src/agl/engines/consistency_checker.py": {
+    "classes": [
+      "ConsistencyChecker"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/counterfactual_explorer.py": {
+    "classes": [
+      "CounterfactualExplorer"
+    ],
+    "functions": [
+      "factory"
+    ]
+  },
+  "src/agl/engines/creative_innovation.py": {
+    "classes": [
+      "CreativeInnovation"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/dormant_powers.py": {
+    "classes": [
+      "NeuralResonanceBridge",
+      "HolographicRealityProjector"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/dummy_target.py": {
+    "classes": [
+      "DummyProcessor"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/evolution.py": {
+    "classes": [],
+    "functions": [
+      "_levenshtein",
+      "evolve_thought_process"
+    ]
+  },
+  "src/agl/engines/evolution_test_engine.py": {
+    "classes": [
+      "EvolutionTestEngine",
+      "ImprovedEvolutionTestEngine"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/ExperienceMemory.py": {
+    "classes": [
+      "ExperienceMemory"
+    ],
+    "functions": [
+      "_ensure_dir_for",
+      "append_experience",
+      "read_experiences"
+    ]
+  },
+  "src/agl/engines/gen_general_solver.py": {
+    "classes": [],
+    "functions": [
+      "solve"
+    ]
+  },
+  "src/agl/engines/gen_xylos_solver.py": {
+    "classes": [],
+    "functions": [
+      "find_operating_law"
+    ]
+  },
+  "src/agl/engines/heikal_hybrid_logic.py": {
+    "classes": [
+      "HeikalLogicUnit",
+      "HeikalHybridLogicCore"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/holographic_llm.py": {
+    "classes": [
+      "HolographicLLM"
+    ],
+    "functions": [
+      "create_engine"
+    ]
+  },
+  "src/agl/engines/holographic_memory.py": {
+    "classes": [
+      "HeikalHolographicMemory"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/hypothesis_generator.py": {
+    "classes": [
+      "HypothesisGeneratorEngine",
+      "HypothesisGenerator"
+    ],
+    "functions": [
+      "create_engine"
+    ]
+  },
+  "src/agl/engines/learning.py": {
+    "classes": [
+      "SelfLearning"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/mathematical_brain.py": {
+    "classes": [
+      "MathematicalBrain"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/math_engine.py": {
+    "classes": [
+      "AdvancedExponentialAlgebra",
+      "AdvancedExponentialAlgebra",
+      "LieAlgebraProcessor"
+    ],
+    "functions": [
+      "create_engine"
+    ]
+  },
+  "src/agl/engines/math_prover_lite.py": {
+    "classes": [
+      "MathProverLite"
+    ],
+    "functions": [
+      "factory"
+    ]
+  },
+  "src/agl/engines/metaphysics.py": {
+    "classes": [
+      "HeikalMetaphysicsEngine"
+    ],
+    "functions": [
+      "create_engine"
+    ]
+  },
+  "src/agl/engines/meta_learning.py": {
+    "classes": [
+      "MetaLearningEngine"
+    ],
+    "functions": [
+      "create_engine"
+    ]
+  },
+  "src/agl/engines/micro_planner.py": {
+    "classes": [
+      "MicroPlanner"
+    ],
+    "functions": [
+      "factory"
+    ]
+  },
+  "src/agl/engines/moral.py": {
+    "classes": [
+      "MoralReasoner"
+    ],
+    "functions": [
+      "factory"
+    ]
+  },
+  "src/agl/engines/offensive_security.py": {
+    "classes": [
+      "OffensiveSecurityEngine"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/optical_heart.py": {
+    "classes": [
+      "OpticalHeart"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/optimization_engine.py": {
+    "classes": [
+      "OptimizationEngine"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/parallel_executor.py": {
+    "classes": [
+      "ParallelEngineExecutor"
+    ],
+    "functions": [
+      "_process_engine_task"
+    ]
+  },
+  "src/agl/engines/parallel_wave_processor.py": {
+    "classes": [
+      "ParallelWaveExecutor"
+    ],
+    "functions": [
+      "_worker_task"
+    ]
+  },
+  "src/agl/engines/quantum_neural.py": {
+    "classes": [
+      "QuantumNeuralCore"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/quantum_simulator_wrapper.py": {
+    "classes": [
+      "QuantumSimulatorWrapper"
+    ],
+    "functions": [
+      "_hadamard_matrix",
+      "_pauli_x",
+      "_kron_n",
+      "apply_gate",
+      "measure_state",
+      "factory"
+    ]
+  },
+  "src/agl/engines/reasoning_layer.py": {
+    "classes": [
+      "ReasoningLayer"
+    ],
+    "functions": [
+      "load_prompt",
+      "_ensure_engine_response",
+      "_text_to_facts",
+      "run"
+    ]
+  },
+  "src/agl/engines/reasoning_planner.py": {
+    "classes": [
+      "ReasoningPlanner",
+      "PlannerHFSM"
+    ],
+    "functions": [
+      "_to_int",
+      "_register_planner_factory"
+    ]
+  },
+  "src/agl/engines/recursive_improver.py": {
+    "classes": [
+      "RecursiveImprover"
+    ],
+    "functions": [
+      "create_engine"
+    ]
+  },
+  "src/agl/engines/resonance_optimizer.py": {
+    "classes": [
+      "VectorizedResonanceOptimizer"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/rubric_enforcer.py": {
+    "classes": [],
+    "functions": [
+      "_has_any",
+      "enforce",
+      "process_task"
+    ]
+  },
+  "src/agl/engines/rubric_enforcer_engine.py": {
+    "classes": [
+      "RubricEnforcer"
+    ],
+    "functions": [
+      "factory"
+    ]
+  },
+  "src/agl/engines/self_critique_and_revise.py": {
+    "classes": [
+      "SelfCritiqueAndRevise"
+    ],
+    "functions": [
+      "factory"
+    ]
+  },
+  "src/agl/engines/self_reflective.py": {
+    "classes": [
+      "SelfReflectiveEngine",
+      "CuriosityEngine"
+    ],
+    "functions": [
+      "create_engine",
+      "create_curiosity_engine"
+    ]
+  },
+  "src/agl/engines/strategic.py": {
+    "classes": [
+      "StrategicThinkingEngine"
+    ],
+    "functions": [
+      "healthcheck"
+    ]
+  },
+  "src/agl/engines/target_bad_code.py": {
+    "classes": [],
+    "functions": [
+      "slow_function"
+    ]
+  },
+  "src/agl/engines/tensor_utils.py": {
+    "classes": [],
+    "functions": [
+      "safe_matmul",
+      "safe_sub",
+      "safe_dtype",
+      "safe_zeros_like_dtype",
+      "to_numpy_safe",
+      "to_torch_complex64",
+      "matmul_safe"
+    ]
+  },
+  "src/agl/engines/units_validator.py": {
+    "classes": [
+      "UnitsValidator"
+    ],
+    "functions": [
+      "_parse_dim",
+      "_combine_dim_of_symbols",
+      "check_dimensional_consistency"
+    ]
+  },
+  "src/agl/engines/vectorized_wave_processor.py": {
+    "classes": [
+      "VectorizedWaveProcessor"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/volition_engine.py": {
+    "classes": [
+      "VolitionEngine"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/web_search.py": {
+    "classes": [
+      "WebSearchEngine"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/consciousness/__init__.py": {
+    "classes": [
+      "ConsciousnessService"
+    ],
+    "functions": [
+      "create_engine"
+    ]
+  },
+  "src/agl/engines/engineering/Advanced_Code_Generator.py": {
+    "classes": [
+      "JavaScriptSpecialist",
+      "EngineSpec",
+      "EngineCloner",
+      "KnowledgeBaseLoader",
+      "CppSpecialist",
+      "VerilogSpecialist",
+      "SoftwareArchitect",
+      "CodeOptimizer",
+      "AdvancedCodeGenerator",
+      "PythonCodeSpecialist"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/engineering/IoT_Protocol_Designer.py": {
+    "classes": [
+      "RealWorldBridge",
+      "IoTProtocolDesigner"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/genesis_omega/AGL_OMEGA_DECODER.py": {
+    "classes": [
+      "OmegaDecoder"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/genesis_omega/GENESIS_OMEGA_CORE.py": {
+    "classes": [
+      "OmniAttentionMechanism",
+      "GENESIS_OMEGA_Entity"
+    ],
+    "functions": [
+      "activate_omega_protocol"
+    ]
+  },
+  "src/agl/engines/genesis_omega/GENESIS_OMEGA_TRAINING_PLAN.py": {
+    "classes": [
+      "GenesisOmegaTrainer"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/hermes_omni/AGL_CPP_LAUNCHER.py": {
+    "classes": [],
+    "functions": [
+      "read_output"
+    ]
+  },
+  "src/agl/engines/hermes_omni/AGL_Eyes_Pro.py": {
+    "classes": [
+      "AGL_Eyes_Pro"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/hermes_omni/AGL_HERMES_BRAIN.py": {
+    "classes": [],
+    "functions": [
+      "analyze_pattern"
+    ]
+  },
+  "src/agl/engines/hermes_omni/AGL_HERMES_FULL_SYSTEM.py": {
+    "classes": [],
+    "functions": [
+      "speak_worker",
+      "speak",
+      "analyze_pattern"
+    ]
+  },
+  "src/agl/engines/hermes_omni/AGL_HERMES_GENESIS_BRIDGE.py": {
+    "classes": [
+      "MockMother"
+    ],
+    "functions": [
+      "generate_reality_inputs",
+      "get_color"
+    ]
+  },
+  "src/agl/engines/hermes_omni/AGL_HERMES_HYBRID.py": {
+    "classes": [
+      "HybridBridge",
+      "HERMES_Hybrid_Entity"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/hermes_omni/AGL_TELEKINESIS.py": {
+    "classes": [],
+    "functions": [
+      "move_mouse",
+      "type_code_snippet",
+      "detect_nod"
+    ]
+  },
+  "src/agl/engines/hermes_omni/AGL_TELEPATHY_CONSOLE.py": {
+    "classes": [],
+    "functions": [
+      "print_wave",
+      "telepathy_session"
+    ]
+  },
+  "src/agl/engines/hermes_omni/hermes_engine.py": {
+    "classes": [
+      "HermesOmniEngine"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/hermes_omni/HERMES_OMNI_GENESIS.py": {
+    "classes": [
+      "SemanticBridge",
+      "HERMES_Entity"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/hermes_omni/TEST_AGL_PRO.py": {
+    "classes": [],
+    "functions": [
+      "main"
+    ]
+  },
+  "src/agl/engines/integration/agi_expansion.py": {
+    "classes": [
+      "SmartRouterExtension"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/integration/dkn_types.py": {
+    "classes": [
+      "Signal",
+      "Claim"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/integration/engine_adapter.py": {
+    "classes": [
+      "EngineAdapter"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/integration/inproc_bus.py": {
+    "classes": [
+      "PriorityBus"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/integration/knowledge_graph.py": {
+    "classes": [
+      "KnowledgeGraph"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/integration/meta_orchestrator.py": {
+    "classes": [
+      "MetaOrchestrator"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/learning_system/ExperienceMemory.py": {
+    "classes": [
+      "ExperienceMemory"
+    ],
+    "functions": [
+      "_ensure_dir_for",
+      "append_experience",
+      "read_experiences"
+    ]
+  },
+  "src/agl/engines/learning_system/Feedback_Analyzer.py": {
+    "classes": [
+      "FeedbackAnalyzer"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/learning_system/Fitness_Criteria.py": {
+    "classes": [],
+    "functions": [
+      "score_result"
+    ]
+  },
+  "src/agl/engines/learning_system/GeneralizationMatrix.py": {
+    "classes": [
+      "Pattern"
+    ],
+    "functions": [
+      "_now_iso",
+      "_load_patterns",
+      "_ensure_dir",
+      "infer_ohm_to_power",
+      "infer_rc_tau",
+      "infer_projectile_g",
+      "infer_poly2_gradient",
+      "quantum_discover_relations",
+      "run_generalization"
+    ]
+  },
+  "src/agl/engines/learning_system/generalization_cli.py": {
+    "classes": [],
+    "functions": [
+      "main"
+    ]
+  },
+  "src/agl/engines/learning_system/Generalizer.py": {
+    "classes": [
+      "Generalizer"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/learning_system/generalize_cli.py": {
+    "classes": [],
+    "functions": [
+      "parse_kv_list",
+      "main"
+    ]
+  },
+  "src/agl/engines/learning_system/Improvement_Generator.py": {
+    "classes": [
+      "ImprovementGenerator"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/learning_system/io_utils.py": {
+    "classes": [],
+    "functions": [
+      "read_json",
+      "read_text",
+      "read_json_with_fallback"
+    ]
+  },
+  "src/agl/engines/learning_system/Knowledge_Integrator.py": {
+    "classes": [
+      "KnowledgeIntegrator"
+    ],
+    "functions": [
+      "write_json_atomic"
+    ]
+  },
+  "src/agl/engines/learning_system/Law_Learner.py": {
+    "classes": [
+      "LawLearner"
+    ],
+    "functions": [
+      "fit_single_coeff_linear",
+      "fit_linear_with_intercept",
+      "fit_power_law",
+      "fit_model_auto"
+    ]
+  },
+  "src/agl/engines/learning_system/MetaCognition_Fallback.py": {
+    "classes": [
+      "MetaCognitionFallback"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/learning_system/ModelZoo.py": {
+    "classes": [
+      "FitResult"
+    ],
+    "functions": [
+      "rmse",
+      "_conf_from_rmse",
+      "fit_linear",
+      "fit_linear_bias",
+      "fit_poly2",
+      "fit_exp1",
+      "evaluate_candidates"
+    ]
+  },
+  "src/agl/engines/learning_system/ModelZoo_Fallback.py": {
+    "classes": [
+      "ModelZooFallback"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/learning_system/Reasoner.py": {
+    "classes": [
+      "Answer",
+      "Reasoner"
+    ],
+    "functions": [
+      "_utcnow_iso",
+      "_load_kb",
+      "_pick_latest_fit",
+      "_find_by_base",
+      "_arabic_or_english",
+      "_num_from_question"
+    ]
+  },
+  "src/agl/engines/learning_system/RelationsGraph.py": {
+    "classes": [
+      "Relation",
+      "RelationsGraph"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/learning_system/robust_fit.py": {
+    "classes": [],
+    "functions": [
+      "huber_residuals",
+      "zscore_mask"
+    ]
+  },
+  "src/agl/engines/learning_system/Self_Learning_Module.py": {
+    "classes": [
+      "Hypothesis",
+      "SelfLearningModule"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/learning_system/Self_Optimizer.py": {
+    "classes": [],
+    "functions": [
+      "_read_json",
+      "_write_json",
+      "_ema",
+      "gather_model_signals",
+      "gather_run_signal",
+      "update_learned_patterns",
+      "update_fusion_weights",
+      "quantum_update_fusion_weights",
+      "run_self_optimization"
+    ]
+  },
+  "src/agl/engines/learning_system/TemporalMemory.py": {
+    "classes": [
+      "TMRecord",
+      "TemporalMemory"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/learning_system/Training_Path.py": {
+    "classes": [],
+    "functions": [
+      "train_hooke_from_csv"
+    ]
+  },
+  "src/agl/engines/learning_system/Uncertainty_Estimator.py": {
+    "classes": [],
+    "functions": [
+      "estimate",
+      "_ensure_2d"
+    ]
+  },
+  "src/agl/engines/learning_system/Uncertainty_Propagation.py": {
+    "classes": [],
+    "functions": [
+      "pred_confidence_intervals",
+      "param_confidence_intervals"
+    ]
+  },
+  "src/agl/engines/learning_system/Units_Validator.py": {
+    "classes": [
+      "UnitsValidator"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/learning_system/visualizer.py": {
+    "classes": [],
+    "functions": [
+      "_curve_fn",
+      "_nice_range",
+      "_read_csv_points",
+      "render_model_png"
+    ]
+  },
+  "src/agl/engines/safety/Dialogue_Safety.py": {
+    "classes": [],
+    "functions": [
+      "guard"
+    ]
+  },
+  "src/agl/engines/safety/Safety_Control_Layer.py": {
+    "classes": [
+      "SafetyControlLayer",
+      "ControlLayers"
+    ],
+    "functions": [
+      "_ensure_repo_copy_on_path"
+    ]
+  },
+  "src/agl/engines/scientific/Automated_Theorem_Prover.py": {
+    "classes": [
+      "AutomatedTheoremProver",
+      "LogicalReasoningEngine",
+      "NumericVerifier",
+      "ProofStepGenerator"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/scientific/Hardware_Simulator.py": {
+    "classes": [
+      "HardwareSimulator"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/scientific/Scientific_Research_Assistant.py": {
+    "classes": [
+      "MathematicalContentAnalyzer",
+      "QuantumClaimVerifier",
+      "CitationAnalyzer",
+      "ScientificResearchAssistant",
+      "MathematicalValidator",
+      "EnhancedScientificValidator"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/scientific_systems/Automated_Theorem_Prover.py": {
+    "classes": [
+      "AutomatedTheoremProver",
+      "LogicalReasoningEngine",
+      "NumericVerifier",
+      "ProofStepGenerator"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/scientific_systems/Hardware_Simulator.py": {
+    "classes": [
+      "HardwareSimulator"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/scientific_systems/Integrated_Simulation_Engine.py": {
+    "classes": [
+      "IntegratedSimulationEngine"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/scientific_systems/PhysicsSolver_Extended.py": {
+    "classes": [
+      "ExtendedPhysicsSolver"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/scientific_systems/Scientific_Research_Assistant.py": {
+    "classes": [
+      "MathematicalContentAnalyzer",
+      "QuantumClaimVerifier",
+      "CitationAnalyzer",
+      "ScientificResearchAssistant",
+      "MathematicalValidator",
+      "EnhancedScientificValidator"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/self_improvement/Self_Improvement_Engine.py": {
+    "classes": [
+      "_SimpleAdaptiveWeights",
+      "_EventLogger",
+      "SelfLearningManager"
+    ],
+    "functions": [
+      "_utcstamp",
+      "_next_epoch",
+      "_ensure_dir",
+      "load_events",
+      "_weights_checksum",
+      "train_from_feedback",
+      "save_snapshot",
+      "_update_learning_curve"
+    ]
+  },
+  "src/agl/engines/self_improvement/Self_Monitoring_System.py": {
+    "classes": [
+      "SelfMonitoringSystem"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/algorithm_optimizer.py": {
+    "classes": [
+      "PerformanceAnalyzer",
+      "AlgorithmLibrary",
+      "ParameterTuner",
+      "AlgorithmSelfOptimizer"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/cognitive_mode.py": {
+    "classes": [
+      "CognitiveMode"
+    ],
+    "functions": [
+      "_text_from_problem",
+      "_is_medical_high_risk",
+      "_is_simple_factoid",
+      "_is_planning_or_project",
+      "choose_cognitive_mode"
+    ]
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/continual_learning.py": {
+    "classes": [],
+    "functions": [
+      "_ensure_artifacts_dir",
+      "record_learned_fact",
+      "load_learned_facts",
+      "load_learned_facts_as_context"
+    ]
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/emergency_retrieval.py": {
+    "classes": [
+      "EmergencyRetrieval"
+    ],
+    "functions": [
+      "activate_existing_retrieval",
+      "build_basic_retrieval"
+    ]
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/internal_agents.py": {
+    "classes": [
+      "InternalAgentConfig"
+    ],
+    "functions": [
+      "_problem_text",
+      "_guess_domain",
+      "select_agent_for_problem",
+      "apply_agent_to_prompt"
+    ]
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/memory_restructurer.py": {
+    "classes": [
+      "MemoryAnalyzer",
+      "KnowledgeGraph",
+      "MemorySelfRestructurer"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/meta_logger.py": {
+    "classes": [
+      "MetaLogger"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/ollama_stream.py": {
+    "classes": [],
+    "functions": [
+      "ask_with_deep_thinking"
+    ]
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/projects.py": {
+    "classes": [
+      "ProjectTask",
+      "AGLProject",
+      "ProjectStore"
+    ],
+    "functions": [
+      "_ensure_projects_dir",
+      "create_project",
+      "add_task",
+      "run_next_task"
+    ]
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/rag_index.py": {
+    "classes": [],
+    "functions": [
+      "_ensure_artifacts_dir",
+      "embed_text",
+      "cosine",
+      "add_document",
+      "load_documents",
+      "search",
+      "as_context",
+      "retrieve_context"
+    ]
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/rollback.py": {
+    "classes": [
+      "AutomaticRollbackSystem"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/safe_self_mod.py": {
+    "classes": [
+      "SandboxEnvironment",
+      "ModificationValidator",
+      "RollbackManager",
+      "PerformanceMonitor",
+      "SafeSelfModificationSystem"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/Self_Improvement_Engine.py": {
+    "classes": [
+      "_SimpleAdaptiveWeights",
+      "_EventLogger",
+      "SelfLearningManager"
+    ],
+    "functions": [
+      "_utcstamp",
+      "_next_epoch",
+      "_ensure_dir",
+      "load_events",
+      "_weights_checksum",
+      "train_from_feedback",
+      "save_snapshot",
+      "_update_learning_curve"
+    ]
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/Self_Monitoring_System.py": {
+    "classes": [
+      "SelfMonitoringSystem"
+    ],
+    "functions": []
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/self_profile.py": {
+    "classes": [],
+    "functions": [
+      "_ensure_artifacts_dir",
+      "_load_profile",
+      "_save_profile",
+      "_update_domain_stats",
+      "record_eval_result",
+      "_infer_domain_from_problem",
+      "suggest_strategy"
+    ]
+  },
+  "src/agl/engines/self_improvement/Self_Improvement/strategic_memory.py": {
+    "classes": [
+      "MemoryItem",
+      "StrategicMemory"
+    ],
+    "functions": [
+      "_default_path"
+    ]
+  },
+  "src/agl/lib/AGL_Paths.py": {
+    "classes": [
+      "PathManager"
+    ],
+    "functions": []
+  },
+  "src/agl/lib/unified_lib.py": {
+    "classes": [
+      "AGL_Unified_Python"
+    ],
+    "functions": [
+      "evolved_capability_1767044807"
+    ]
+  },
+  "src/agl/lib/core_memory/bridge_singleton.py": {
+    "classes": [],
+    "functions": [
+      "get_bridge"
+    ]
+  },
+  "src/agl/lib/core_memory/Conscious_Bridge.py": {
+    "classes": [
+      "LRUCache",
+      "ConsciousBridge"
+    ],
+    "functions": []
+  },
+  "src/agl/lib/core_memory/Core_Memory/bridge_singleton.py": {
+    "classes": [],
+    "functions": [
+      "get_bridge"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/agl_consciousness.py": {
+    "classes": [
+      "DigitalIdentity",
+      "AutobiographicalMemory",
+      "SelfEvolution",
+      "ConsciousnessTracker",
+      "TrueConsciousnessSystem"
+    ],
+    "functions": [
+      "load_conscious_state",
+      "save_conscious_state"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/calculator_gui.py": {
+    "classes": [
+      "CalculatorGUI"
+    ],
+    "functions": []
+  },
+  "src/agl/lib/dynamic_modules/complex_math_solver.py": {
+    "classes": [
+      "ComplexMathSolver"
+    ],
+    "functions": []
+  },
+  "src/agl/lib/dynamic_modules/creative_intelligence_layer.py": {
+    "classes": [
+      "CreativeIntelligenceLayer"
+    ],
+    "functions": [
+      "create_creative_intelligence_layer"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/engine_deep_inspector.py": {
+    "classes": [
+      "EngineDeepInspector"
+    ],
+    "functions": [
+      "inspect_module"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/engine_inspector.py": {
+    "classes": [
+      "Inspector"
+    ],
+    "functions": [
+      "inspect_module"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/engine_loader.py": {
+    "classes": [],
+    "functions": [
+      "load_and_run",
+      "_test_loader"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/local_librarian.py": {
+    "classes": [],
+    "functions": [
+      "read_text_file"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/logger_utility.py": {
+    "classes": [],
+    "functions": [
+      "get_task_logger",
+      "run_task"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/mission_control_combined.py": {
+    "classes": [],
+    "functions": [
+      "_noop",
+      "run",
+      "_run_coro_safely",
+      "unified_ui_execute"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/mission_control_enhanced.py": {
+    "classes": [
+      "SmartFocusController",
+      "LLMIntegrationEngine",
+      "EnhancedMissionController",
+      "AdvancedQuantumEngine",
+      "SharedMemory",
+      "CollectiveConsciousness",
+      "NeuralIntegration",
+      "AdvancedIntegrationEngine",
+      "SelfAwarenessEngine"
+    ],
+    "functions": [
+      "_sync_run",
+      "log_to_system",
+      "build_collective_mind",
+      "activate_self_awareness",
+      "develop_autonomous_will",
+      "run_custom_mission",
+      "run_physics_reactor_analysis",
+      "run_monitoring_script_design",
+      "quick_start",
+      "execute_mission",
+      "run"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/native_screen_eye.py": {
+    "classes": [],
+    "functions": [
+      "capture_screenshot"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/native_voice.py": {
+    "classes": [],
+    "functions": [
+      "speak"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/potential_scout.py": {
+    "classes": [],
+    "functions": [
+      "scan_python_files",
+      "parse_imports",
+      "unused_modules",
+      "describe_functionality",
+      "write_report",
+      "main"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/screen_eye.py": {
+    "classes": [],
+    "functions": [
+      "capture_screenshot"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/snake_game.py": {
+    "classes": [
+      "SnakeGame"
+    ],
+    "functions": []
+  },
+  "src/agl/lib/dynamic_modules/system_scanner.py": {
+    "classes": [],
+    "functions": [
+      "scan_structure"
+    ]
+  },
+  "src/agl/lib/dynamic_modules/voice_engine.py": {
+    "classes": [],
+    "functions": [
+      "speak"
+    ]
+  },
+  "src/agl/lib/integration/hybrid_composer.py": {
+    "classes": [],
+    "functions": [
+      "compose",
+      "build_prompt_context",
+      "parse_json_or_retry"
+    ]
+  },
+  "src/agl/lib/integration/rag_wrapper.py": {
+    "classes": [],
+    "functions": [
+      "_mock_answer_for",
+      "_rag_enabled",
+      "_mock_enabled",
+      "_call_real_rag",
+      "_env_flag",
+      "_http_post_json",
+      "_run_cli",
+      "_sanitize_text",
+      "_extract_ollama_text_http",
+      "_call_real_rag_v2",
+      "rag_answer"
+    ]
+  },
+  "src/agl/lib/knowledge_base/Improvement_History.py": {
+    "classes": [
+      "ImprovementHistory"
+    ],
+    "functions": []
+  },
+  "src/agl/lib/learning_system/Law_Learner.py": {
+    "classes": [
+      "LawLearner"
+    ],
+    "functions": [
+      "fit_single_coeff_linear",
+      "fit_linear_with_intercept",
+      "fit_power_law",
+      "fit_model_auto"
+    ]
+  },
+  "src/agl/lib/llm/gateway.py": {
+    "classes": [],
+    "functions": [
+      "_truthy_env",
+      "get_holographic_llm",
+      "chat_llm"
+    ]
+  },
+  "src/agl/lib/llm/hosted_llm.py": {
+    "classes": [
+      "HostedLLM"
+    ],
+    "functions": [
+      "_prompt_hash",
+      "chat_llm"
+    ]
+  },
+  "src/agl/lib/llm/Ollama_KnowledgeEngine.py": {
+    "classes": [
+      "LocalKnowledgeEngine",
+      "LocalKnowledgeEngine"
+    ],
+    "functions": [
+      "_to_int",
+      "create_engine"
+    ]
+  },
+  "src/agl/lib/llm/turn_contract.py": {
+    "classes": [],
+    "functions": [
+      "_now_ms",
+      "make_turn",
+      "normalize_engine_response"
+    ]
+  },
+  "src/agl/lib/solvers/BaseSolver.py": {
+    "classes": [
+      "BaseSolver"
+    ],
+    "functions": []
+  },
+  "src/agl/lib/solvers/ChemistrySolver.py": {
+    "classes": [
+      "ChemistrySolver"
+    ],
+    "functions": []
+  },
+  "src/agl/lib/solvers/PhysicsSolver.py": {
+    "classes": [
+      "PhysicsSolver"
+    ],
+    "functions": []
+  },
+  "src/agl/lib/solvers/QuantumSolver.py": {
+    "classes": [
+      "QuantumSolver"
+    ],
+    "functions": []
+  },
+  "src/agl/lib/utils/llm_tools.py": {
+    "classes": [],
+    "functions": [
+      "build_llm_url"
+    ]
+  },
+  "tests/AGL_CORE_BRAINSTEM_TEST.py": {
+    "classes": [
+      "TestAGLBrainStem"
+    ],
+    "functions": []
+  },
+  "tests/AGL_IRON_LOOP_TEST.py": {
+    "classes": [
+      "IronLoopTester"
+    ],
+    "functions": []
+  },
+  "tests/AGL_Quantum_Reality_Test.py": {
+    "classes": [
+      "QuantumRealityTest"
+    ],
+    "functions": []
+  },
+  "tests/AGL_System_Coherence_Test.py": {
+    "classes": [
+      "SystemCoherenceTest"
+    ],
+    "functions": []
+  },
+  "tests/ASI_ULTIMATE_LEVEL_TEST.py": {
+    "classes": [
+      "ASIUltimateLevelTest"
+    ],
+    "functions": [
+      "find_project_root"
+    ]
+  },
+  "tests/deep_research_synthesis.py": {
+    "classes": [],
+    "functions": [
+      "run_deep_research"
+    ]
+  },
+  "tests/evolution_verify.py": {
+    "classes": [],
+    "functions": [
+      "run_evolution"
+    ]
+  }
+}

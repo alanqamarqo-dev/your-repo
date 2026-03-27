@@ -1,0 +1,113 @@
+Medical RAG grounding report
+============================================================
+
+Record #1
+----------------------------------------
+Question:
+ما هي أبرز المخاطر السريرية لاستخدام الأدوية المهربة على مرضى الفشل الكلوي
+
+Final Answer (trimmed 2000 chars):
+### أبرز المخاطر السريرية للأدوية المهربة على م
+
+Extracted RAG Snippet (if any):
+<none>
+
+Provenance (raw):
+{
+  "engine": "medical_qa_fast_clean",
+  "steps": [
+    {
+      "t": "call_1",
+      "ts": 1763584606.8372943,
+      "elapsed_s": 0.002755880355834961
+    }
+  ],
+  "raw_provenance": {
+    "source": "rag_shortcircuit"
+  },
+  "rewriter": {
+    "engine": "hosted_llm",
+    "method": "call_ollama",
+    "rewritten": true
+  }
+}
+
+Character-level matches (snippet -> answer):
+- none found
+
+
+Record #2
+----------------------------------------
+Question:
+كيف يمكن أن يؤثر غياب سلسلة التبريد على سلامة الأدوية المهربة
+
+Final Answer (trimmed 2000 chars):
+### كيف يمكن أن يؤثر غياب سلسلة التبريد على سلامة الأدوية المهربة
+
+#### المقدمة
+تُشكل الأدوية المهربة تحديًا صحيًا كبيرًا في المحافظات اليمنية، مثل محافظة مأرب، حيث تتراوح أسبابها بين ضعف نظام الرقابة الدوائية والتوزيع غير正规表达，请使用中文输入。
+
+Extracted RAG Snippet (if any):
+<none>
+
+Provenance (raw):
+{
+  "engine": "medical_qa_fast_clean",
+  "steps": [
+    {
+      "t": "call_1",
+      "ts": 1763584743.277292,
+      "elapsed_s": 0.0043451786041259766
+    }
+  ],
+  "raw_provenance": {
+    "source": "rag_shortcircuit"
+  },
+  "rewriter": {
+    "engine": "hosted_llm",
+    "method": "call_ollama",
+    "rewritten": true
+  }
+}
+
+Character-level matches (snippet -> answer):
+- none found
+
+
+Record #3
+----------------------------------------
+Question:
+ما العلاقة بين تهريب الأدوية وفقدان ثقة المرضى بالقطاع الصحي
+
+Final Answer (trimmed 2000 chars):
+### المقدمة
+
+تتعلق هذه الدراسة بالعلاقة بين تهريب الأ
+
+Extracted RAG Snippet (if any):
+<none>
+
+Provenance (raw):
+{
+  "engine": "medical_qa_fast_clean",
+  "steps": [
+    {
+      "t": "call_1",
+      "ts": 1763584781.3413742,
+      "elapsed_s": 0.002511262893676758
+    }
+  ],
+  "raw_provenance": {
+    "source": "rag_shortcircuit"
+  },
+  "rewriter": {
+    "engine": "hosted_llm",
+    "method": "call_ollama",
+    "rewritten": true
+  }
+}
+
+Character-level matches (snippet -> answer):
+- none found
+
+

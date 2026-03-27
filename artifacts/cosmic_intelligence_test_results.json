@@ -1,0 +1,56 @@
+[
+  {
+    "challenge": "1_consciousness",
+    "title": "🧠 The Hard Problem of Consciousness",
+    "time": 0.006516218185424805,
+    "status": "blocked",
+    "response_length": 13,
+    "quality_score": 0,
+    "response": "لا توجد إجابة"
+  },
+  {
+    "challenge": "2_quantum_measurement",
+    "title": "⚛️ Quantum Measurement Problem",
+    "time": 0.0013566017150878906,
+    "status": "blocked",
+    "response_length": 13,
+    "quality_score": 0,
+    "response": "لا توجد إجابة"
+  },
+  {
+    "challenge": "3_time_arrow",
+    "title": "🕐 Arrow of Time - سهم الزمن",
+    "time": 88.96287417411804,
+    "status": "unknown",
+    "response_length": 13,
+    "quality_score": 0,
+    "response": "لا توجد إجابة"
+  },
+  {
+    "challenge": "4_origin_of_life",
+    "title": "🧬 Origin of Life - أصل الحياة",
+    "time": 0.0017352104187011719,
+    "status": "blocked",
+    "response_length": 13,
+    "quality_score": 0,
+    "response": "لا توجد إجابة"
+  },
+  {
+    "challenge": "5_language_origin",
+    "title": "🗣️ Origin of Language - أصل اللغة",
+    "time": 0.0013422966003417969,
+    "status": "blocked",
+    "response_length": 13,
+    "quality_score": 0,
+    "response": "لا توجد إجابة"
+  },
+  {
+    "challenge": "6_cosmic_consciousness",
+    "title": "🌌 Cosmic Consciousness - الوعي الكوني",
+    "time": 113.61138129234314,
+    "status": "unknown",
+    "response_length": 13,
+    "quality_score": 0,
+    "response": "لا توجد إجابة"
+  }
+]

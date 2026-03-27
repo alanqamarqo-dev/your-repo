@@ -1,0 +1,26 @@
+{
+  "ts": "20251115T230621287023Z",
+  "results": [
+    {
+      "domain": "رياضيات",
+      "question": "ما ناتج 12 × 8؟",
+      "answered": false,
+      "answer": null,
+      "elapsed_seconds": 10.0
+    },
+    {
+      "domain": "تاريخ",
+      "question": "من اكتشف أمريكا؟",
+      "answered": false,
+      "answer": null,
+      "elapsed_seconds": 10.0
+    },
+    {
+      "domain": "برمجة",
+      "question": "اذكر لغة برمجة مستخدمة على نطاق واسع لتطوير الويب.",
+      "answered": false,
+      "answer": null,
+      "elapsed_seconds": 10.0
+    }
+  ]
+}

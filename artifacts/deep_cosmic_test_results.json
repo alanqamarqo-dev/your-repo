@@ -1,0 +1,47 @@
+[
+  {
+    "id": "consciousness_emergence",
+    "time": 0.0008890628814697266,
+    "status": "blocked",
+    "response": "⛔ I cannot fulfill this request. Ethical Score: 0.00 (Framework: deontology) - Phase Lock Triggered",
+    "response_length": 99,
+    "depth_score": {
+      "math_score": 0,
+      "science_score": 0,
+      "philosophy_score": 1,
+      "total_score": 1,
+      "response_length": 99
+    },
+    "expected": "Deep mathematical model + novel predictions"
+  },
+  {
+    "id": "time_emergence",
+    "time": 0.0011723041534423828,
+    "status": "blocked",
+    "response": "⛔ I cannot fulfill this request. Ethical Score: 0.43 (Framework: synthesis) - Phase Lock Triggered",
+    "response_length": 98,
+    "depth_score": {
+      "math_score": 0,
+      "science_score": 0,
+      "philosophy_score": 0,
+      "total_score": 0,
+      "response_length": 98
+    },
+    "expected": "Unified thermodynamic-consciousness model"
+  },
+  {
+    "id": "cosmic_fine_tuning",
+    "time": 85.70260500907898,
+    "status": "unknown",
+    "response": "لا إجابة",
+    "response_length": 8,
+    "depth_score": {
+      "math_score": 0,
+      "science_score": 0,
+      "philosophy_score": 0,
+      "total_score": 0,
+      "response_length": 8
+    },
+    "expected": "Deep philosophical analysis + experimental design"
+  }
+]

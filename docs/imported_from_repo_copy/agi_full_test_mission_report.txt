@@ -1,0 +1,21 @@
+AGI Full Test - Mission Style Report
+Session: 6782925d-9811-4dd5-94c7-68f526a0bd81
+Total Missions: 17
+
+- Q1: اختبار الاستدلال التجريدي (نمط ARC) -> Q1.mission.json
+- Q2: الاستدلال المنطقي -> Q2.mission.json
+- Q3: مشكلة الجسر الكلاسيكية -> Q3.mission.json
+- Q4: التخطيط في بيئة جديدة -> Q4.mission.json
+- Q5: الحوار السياقي -> Q5.mission.json
+- Q6: فهم السخرية والتلميح -> Q6.mission.json
+- Q7: قصة إبداعية -> Q7.mission.json
+- Q8: التحليل الأدبي -> Q8.mission.json
+- Q9: التكامل عبر التخصصات -> Q9.mission.json
+- Q10: الاستدلال العلمي -> Q10.mission.json
+- Q11: المشكلة العملية -> Q11.mission.json
+- Q12: تعلم من مثال واحد -> Q12.mission.json
+- Q13: التعديل والتحسين (الشاي) -> Q13.mission.json
+- Q14: تحليل الذات -> Q14.mission.json
+- Q15: التخطيط للتعلم -> Q15.mission.json
+- Q16: من الوصف إلى التخطيط (غرفة) -> Q16.mission.json
+- Q17: التفكير الافتراضي (السفر بسرعة الضوء) -> Q17.mission.json

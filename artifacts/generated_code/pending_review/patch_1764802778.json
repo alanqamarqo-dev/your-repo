@@ -1,0 +1,14 @@
+{
+  "timestamp": 1764802778,
+  "report_summary": {
+    "gaps": [
+      "confidence_gap",
+      "risk_is_high",
+      "components"
+    ]
+  },
+  "proposed_patch": {
+    "code": "def optimize(): pass",
+    "type": "optimization"
+  }
+}

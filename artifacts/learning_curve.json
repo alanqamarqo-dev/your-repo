@@ -1,0 +1,50 @@
+[
+  {
+    "ts": "2025-11-11T21:13:57.872701Z",
+    "epoch": 1,
+    "avg_reward": 0.65,
+    "weights_checksum": "bcc56ad430bd"
+  },
+  {
+    "ts": "2025-12-07T23:13:49.762878Z",
+    "epoch": 2,
+    "avg_reward": 0.0,
+    "weights_checksum": "44136fa355b3"
+  },
+  {
+    "ts": "2025-12-07T23:18:24.812646Z",
+    "epoch": 3,
+    "avg_reward": 0.0,
+    "weights_checksum": "44136fa355b3"
+  },
+  {
+    "ts": "2025-12-07T23:20:26.165492Z",
+    "epoch": 4,
+    "avg_reward": 0.0,
+    "weights_checksum": "44136fa355b3"
+  },
+  {
+    "ts": "2025-12-07T23:20:50.844620Z",
+    "epoch": 5,
+    "avg_reward": 0.0,
+    "weights_checksum": "44136fa355b3"
+  },
+  {
+    "ts": "2025-12-15T23:40:08.326805Z",
+    "epoch": 6,
+    "avg_reward": 0.75,
+    "weights_checksum": "8ed6b3babb3a"
+  },
+  {
+    "ts": "2025-12-15T23:43:39.949557Z",
+    "epoch": 7,
+    "avg_reward": 0.75,
+    "weights_checksum": "3da5dfa7b9ea"
+  },
+  {
+    "ts": "2025-12-15T23:47:43.166802Z",
+    "epoch": 8,
+    "avg_reward": 0.7793032854834294,
+    "weights_checksum": "3b32ce218c32"
+  }
+]

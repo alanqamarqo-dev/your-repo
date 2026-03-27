@@ -1,0 +1,2973 @@
+{
+  "high_risk": [],
+  "medium_risk": [
+    {
+      "file": "Core_Engines\\Advanced_Exponential_Algebra.py",
+      "classes": [
+        {
+          "name": "AdvancedExponentialAlgebra",
+          "inherits": [],
+          "line": 1
+        },
+        {
+          "name": "AdvancedExponentialAlgebra",
+          "inherits": [],
+          "line": 17
+        },
+        {
+          "name": "LieAlgebraProcessor",
+          "inherits": [],
+          "line": 167
+        },
+        {
+          "name": "_Engine",
+          "inherits": [],
+          "line": 266
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "CLASS",
+          "name": "LieAlgebraProcessor",
+          "reason": "الاسم يحتوي على \"processor\" - يحتاج مراجعة",
+          "line": 167
+        }
+      ],
+      "safe_items": [
+        "Class: AdvancedExponentialAlgebra",
+        "Class: AdvancedExponentialAlgebra",
+        "Class: _Engine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Quantum_Neural_Core.cleaned.py",
+      "classes": [
+        {
+          "name": "QuantumNeuralCore",
+          "inherits": [],
+          "line": 19
+        },
+        {
+          "name": "QuantumClassicalEncoder",
+          "inherits": [],
+          "line": 403
+        },
+        {
+          "name": "QuantumContextFocuser",
+          "inherits": [],
+          "line": 426
+        },
+        {
+          "name": "HybridQuantumClassicalClassifier",
+          "inherits": [],
+          "line": 458
+        },
+        {
+          "name": "QuantumClassicalEncoder",
+          "inherits": [],
+          "line": 711
+        },
+        {
+          "name": "QuantumContextFocuser",
+          "inherits": [],
+          "line": 733
+        },
+        {
+          "name": "HybridQuantumClassicalClassifier",
+          "inherits": [],
+          "line": 764
+        },
+        {
+          "name": "_Shim",
+          "inherits": [],
+          "line": 514
+        },
+        {
+          "name": "_Shim",
+          "inherits": [],
+          "line": 820
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "CLASS",
+          "name": "QuantumNeuralCore",
+          "reason": "الاسم يحتوي على \"neural\" - يحتاج مراجعة",
+          "line": 19
+        },
+        {
+          "type": "CLASS",
+          "name": "QuantumClassicalEncoder",
+          "reason": "الاسم يحتوي على \"encoder\" - يحتاج مراجعة",
+          "line": 403
+        },
+        {
+          "type": "CLASS",
+          "name": "QuantumClassicalEncoder",
+          "reason": "الاسم يحتوي على \"encoder\" - يحتاج مراجعة",
+          "line": 711
+        }
+      ],
+      "safe_items": [
+        "Class: QuantumContextFocuser",
+        "Class: HybridQuantumClassicalClassifier",
+        "Class: QuantumContextFocuser",
+        "Class: HybridQuantumClassicalClassifier",
+        "Class: _Shim",
+        "Class: _Shim"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Quantum_Neural_Core.py",
+      "classes": [
+        {
+          "name": "QuantumNeuralCore",
+          "inherits": [],
+          "line": 12
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "CLASS",
+          "name": "QuantumNeuralCore",
+          "reason": "الاسم يحتوي على \"neural\" - يحتاج مراجعة",
+          "line": 12
+        }
+      ],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\Quantum_Processor.py",
+      "classes": [
+        {
+          "name": "QuantumCircuitDesigner",
+          "inherits": [],
+          "line": 5
+        },
+        {
+          "name": "QuantumAlgorithmEngine",
+          "inherits": [],
+          "line": 10
+        },
+        {
+          "name": "QuantumProcessor",
+          "inherits": [],
+          "line": 15
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "CLASS",
+          "name": "QuantumProcessor",
+          "reason": "الاسم يحتوي على \"processor\" - يحتاج مراجعة",
+          "line": 15
+        }
+      ],
+      "safe_items": [
+        "Class: QuantumCircuitDesigner",
+        "Class: QuantumAlgorithmEngine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Reasoning_Layer.py",
+      "classes": [
+        {
+          "name": "ReasoningLayer",
+          "inherits": [],
+          "line": 76
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "CLASS",
+          "name": "ReasoningLayer",
+          "reason": "الاسم يحتوي على \"layer\" - يحتاج مراجعة",
+          "line": 76
+        }
+      ],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\network_orchestrator.py",
+      "classes": [
+        {
+          "name": "NetworkNode",
+          "inherits": [],
+          "line": 24
+        },
+        {
+          "name": "NetworkOrchestrator",
+          "inherits": [],
+          "line": 37
+        },
+        {
+          "name": "DeliberationProtocol",
+          "inherits": [],
+          "line": 177
+        },
+        {
+          "name": "NetworkNode",
+          "inherits": [],
+          "line": 255
+        },
+        {
+          "name": "NetworkOrchestrator",
+          "inherits": [],
+          "line": 268
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "CLASS",
+          "name": "NetworkNode",
+          "reason": "الاسم يحتوي على \"network\" - يحتاج مراجعة",
+          "line": 24
+        },
+        {
+          "type": "CLASS",
+          "name": "NetworkOrchestrator",
+          "reason": "الاسم يحتوي على \"network\" - يحتاج مراجعة",
+          "line": 37
+        },
+        {
+          "type": "CLASS",
+          "name": "NetworkNode",
+          "reason": "الاسم يحتوي على \"network\" - يحتاج مراجعة",
+          "line": 255
+        },
+        {
+          "type": "CLASS",
+          "name": "NetworkOrchestrator",
+          "reason": "الاسم يحتوي على \"network\" - يحتاج مراجعة",
+          "line": 268
+        }
+      ],
+      "safe_items": [
+        "Class: DeliberationProtocol"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\hosted_llm_adapter.py",
+      "classes": [
+        {
+          "name": "HostedLLMAdapter",
+          "inherits": [],
+          "line": 83
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "FUNCTION",
+          "name": "_compute_media_embedding",
+          "reason": "اسم الدالة \"embed\" شائع لكن يحتاج توثيق",
+          "line": 38
+        }
+      ],
+      "safe_items": [
+        "Class: HostedLLMAdapter"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\Knowledge_Graph.py",
+      "classes": [
+        {
+          "name": "SessionState",
+          "inherits": [],
+          "line": 162
+        },
+        {
+          "name": "PerceptionBus",
+          "inherits": [],
+          "line": 397
+        },
+        {
+          "name": "AssociativeGraph",
+          "inherits": [],
+          "line": 418
+        },
+        {
+          "name": "CollectiveMemorySystem",
+          "inherits": [],
+          "line": 453
+        },
+        {
+          "name": "CognitiveIntegrationEngine",
+          "inherits": [],
+          "line": 500
+        },
+        {
+          "name": "KnowledgeNetwork",
+          "inherits": [],
+          "line": 669
+        },
+        {
+          "name": "ConsensusVotingEngine",
+          "inherits": [],
+          "line": 751
+        },
+        {
+          "name": "EngineAdapter",
+          "inherits": [],
+          "line": 962
+        },
+        {
+          "name": "PlannerAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 978
+        },
+        {
+          "name": "DeliberationAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 991
+        },
+        {
+          "name": "RetrieverAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1004
+        },
+        {
+          "name": "RAGAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1017
+        },
+        {
+          "name": "AssociativeAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1039
+        },
+        {
+          "name": "EmotionAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1052
+        },
+        {
+          "name": "SelfLearningAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1064
+        },
+        {
+          "name": "MathAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1078
+        },
+        {
+          "name": "ProofAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1090
+        },
+        {
+          "name": "TranslateAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1102
+        },
+        {
+          "name": "SummarizeAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1114
+        },
+        {
+          "name": "CriticAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1127
+        },
+        {
+          "name": "OptimizerAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1139
+        },
+        {
+          "name": "GenerativeCreativityAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1151
+        },
+        {
+          "name": "VisionAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1170
+        },
+        {
+          "name": "AudioAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1182
+        },
+        {
+          "name": "SensorAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1194
+        },
+        {
+          "name": "MemoryItem",
+          "inherits": [],
+          "line": 1236
+        },
+        {
+          "name": "MemorySystem",
+          "inherits": [],
+          "line": 1244
+        },
+        {
+          "name": "PerceptualIntegrationAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1314
+        },
+        {
+          "name": "GoalAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1331
+        },
+        {
+          "name": "CognitiveIntegrationEngine",
+          "inherits": [
+            "_CIE_BASE"
+          ],
+          "line": 1557
+        },
+        {
+          "name": "MetaController",
+          "inherits": [],
+          "line": 2211
+        },
+        {
+          "name": "TimelineAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 2261
+        },
+        {
+          "name": "ContextualizerAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 2279
+        },
+        {
+          "name": "MotivationAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 2294
+        },
+        {
+          "name": "HostedStoryQAAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 2318
+        },
+        {
+          "name": "EngineMetric",
+          "inherits": [],
+          "line": 2419
+        },
+        {
+          "name": "HealthMonitor",
+          "inherits": [],
+          "line": 2428
+        },
+        {
+          "name": "ResearchTaskAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 2498
+        },
+        {
+          "name": "ExperimentRunner",
+          "inherits": [],
+          "line": 2518
+        },
+        {
+          "name": "CognitiveIntegrationEngine",
+          "inherits": [
+            "_CIE_BASE"
+          ],
+          "line": 2573
+        },
+        {
+          "name": "SubAgentManager",
+          "inherits": [],
+          "line": 2823
+        },
+        {
+          "name": "EvoResult",
+          "inherits": [],
+          "line": 3912
+        },
+        {
+          "name": "SafetyGate",
+          "inherits": [],
+          "line": 3928
+        },
+        {
+          "name": "FitnessBoard",
+          "inherits": [],
+          "line": 3989
+        },
+        {
+          "name": "RewriteSandbox",
+          "inherits": [],
+          "line": 4001
+        },
+        {
+          "name": "MutationLibrary",
+          "inherits": [],
+          "line": 4113
+        },
+        {
+          "name": "EvolutionController",
+          "inherits": [],
+          "line": 4197
+        },
+        {
+          "name": "CognitiveIntegrationEngine",
+          "inherits": [
+            "CognitiveIntegrationEngine"
+          ],
+          "line": 800
+        },
+        {
+          "name": "_DefaultShimAdapter",
+          "inherits": [
+            "EngineAdapter"
+          ],
+          "line": 1474
+        },
+        {
+          "name": "FinalAnswerArbiter",
+          "inherits": [],
+          "line": 1943
+        },
+        {
+          "name": "_CIE_BASE",
+          "inherits": [],
+          "line": 1554
+        },
+        {
+          "name": "_CIE_BASE",
+          "inherits": [],
+          "line": 2570
+        },
+        {
+          "name": "_Shim",
+          "inherits": [],
+          "line": 3109
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "FUNCTION",
+          "name": "infer_task_type",
+          "reason": "اسم الدالة \"infer\" شائع لكن يحتاج توثيق",
+          "line": 71
+        },
+        {
+          "type": "FUNCTION",
+          "name": "_infer_domains_from_name",
+          "reason": "اسم الدالة \"infer\" شائع لكن يحتاج توثيق",
+          "line": 337
+        },
+        {
+          "type": "CLASS",
+          "name": "KnowledgeNetwork",
+          "reason": "الاسم يحتوي على \"network\" - يحتاج مراجعة",
+          "line": 669
+        }
+      ],
+      "safe_items": [
+        "Class: SessionState",
+        "Class: PerceptionBus",
+        "Class: AssociativeGraph",
+        "Class: CollectiveMemorySystem",
+        "Class: CognitiveIntegrationEngine",
+        "Class: ConsensusVotingEngine",
+        "Class: EngineAdapter",
+        "Class: PlannerAdapter",
+        "Class: DeliberationAdapter",
+        "Class: RetrieverAdapter",
+        "Class: RAGAdapter",
+        "Class: AssociativeAdapter",
+        "Class: EmotionAdapter",
+        "Class: SelfLearningAdapter",
+        "Class: MathAdapter",
+        "Class: ProofAdapter",
+        "Class: TranslateAdapter",
+        "Class: SummarizeAdapter",
+        "Class: CriticAdapter",
+        "Class: OptimizerAdapter",
+        "Class: GenerativeCreativityAdapter",
+        "Class: VisionAdapter",
+        "Class: AudioAdapter",
+        "Class: SensorAdapter",
+        "Class: MemoryItem",
+        "Class: MemorySystem",
+        "Class: PerceptualIntegrationAdapter",
+        "Class: GoalAdapter",
+        "Class: CognitiveIntegrationEngine",
+        "Class: MetaController",
+        "Class: TimelineAdapter",
+        "Class: ContextualizerAdapter",
+        "Class: MotivationAdapter",
+        "Class: HostedStoryQAAdapter",
+        "Class: EngineMetric",
+        "Class: HealthMonitor",
+        "Class: ResearchTaskAdapter",
+        "Class: ExperimentRunner",
+        "Class: CognitiveIntegrationEngine",
+        "Class: SubAgentManager",
+        "Class: EvoResult",
+        "Class: SafetyGate",
+        "Class: FitnessBoard",
+        "Class: RewriteSandbox",
+        "Class: MutationLibrary",
+        "Class: EvolutionController",
+        "Class: CognitiveIntegrationEngine",
+        "Class: _DefaultShimAdapter",
+        "Class: FinalAnswerArbiter",
+        "Class: _CIE_BASE",
+        "Class: _CIE_BASE",
+        "Class: _Shim"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\rag_index.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "FUNCTION",
+          "name": "embed_text",
+          "reason": "اسم الدالة \"embed\" شائع لكن يحتاج توثيق",
+          "line": 20
+        }
+      ],
+      "safe_items": []
+    },
+    {
+      "file": "Self_Improvement\\Self_Improvement_Engine.py",
+      "classes": [
+        {
+          "name": "_SimpleAdaptiveWeights",
+          "inherits": [],
+          "line": 91
+        },
+        {
+          "name": "_EventLogger",
+          "inherits": [],
+          "line": 195
+        },
+        {
+          "name": "SelfLearningManager",
+          "inherits": [],
+          "line": 229
+        },
+        {
+          "name": "SelfLearningManager",
+          "inherits": [
+            "SelfLearningManager"
+          ],
+          "line": 255
+        },
+        {
+          "name": "SelfImprovementEngine",
+          "inherits": [],
+          "line": 311
+        },
+        {
+          "name": "StrategicMemoryEngine",
+          "inherits": [],
+          "line": 326
+        },
+        {
+          "name": "ExecTask",
+          "inherits": [],
+          "line": 402
+        },
+        {
+          "name": "ExecutiveAgent",
+          "inherits": [],
+          "line": 412
+        },
+        {
+          "name": "SelfModel",
+          "inherits": [],
+          "line": 483
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "CLASS",
+          "name": "SelfModel",
+          "reason": "الاسم يحتوي على \"model\" - يحتاج مراجعة",
+          "line": 483
+        }
+      ],
+      "safe_items": [
+        "Class: _SimpleAdaptiveWeights",
+        "Class: _EventLogger",
+        "Class: SelfLearningManager",
+        "Class: SelfLearningManager",
+        "Class: SelfImprovementEngine",
+        "Class: StrategicMemoryEngine",
+        "Class: ExecTask",
+        "Class: ExecutiveAgent"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\self_profile.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [
+        {
+          "type": "FUNCTION",
+          "name": "_infer_domain_from_problem",
+          "reason": "اسم الدالة \"infer\" شائع لكن يحتاج توثيق",
+          "line": 126
+        }
+      ],
+      "safe_items": []
+    }
+  ],
+  "low_risk": [],
+  "safe": [
+    {
+      "file": "Core_Engines\\AdvancedMetaReasoner.py",
+      "classes": [
+        {
+          "name": "AdvancedMetaReasonerEngine",
+          "inherits": [],
+          "line": 18
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: AdvancedMetaReasonerEngine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\analogy_mapping.py",
+      "classes": [
+        {
+          "name": "AnalogyMappingEngine",
+          "inherits": [],
+          "line": 7
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: AnalogyMappingEngine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Causal_Graph.py",
+      "classes": [
+        {
+          "name": "CausalGraphEngine",
+          "inherits": [],
+          "line": 32
+        },
+        {
+          "name": "CausalGraph",
+          "inherits": [],
+          "line": 75
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: CausalGraphEngine",
+        "Class: CausalGraph"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Code_Generator.py",
+      "classes": [
+        {
+          "name": "PythonSpecialist",
+          "inherits": [],
+          "line": 10
+        },
+        {
+          "name": "CodeGenerator",
+          "inherits": [],
+          "line": 52
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: PythonSpecialist",
+        "Class: CodeGenerator"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Consistency_Checker.py",
+      "classes": [
+        {
+          "name": "ConsistencyChecker",
+          "inherits": [],
+          "line": 4
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: ConsistencyChecker"
+      ]
+    },
+    {
+      "file": "Core_Engines\\counterfactual_explorer.py",
+      "classes": [
+        {
+          "name": "CounterfactualExplorer",
+          "inherits": [],
+          "line": 6
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: CounterfactualExplorer"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Creative_Innovation.py",
+      "classes": [
+        {
+          "name": "CreativeInnovationEngine",
+          "inherits": [],
+          "line": 14
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: CreativeInnovationEngine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\domain_router.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\engine_base.py",
+      "classes": [
+        {
+          "name": "Engine",
+          "inherits": [
+            "Protocol"
+          ],
+          "line": 4
+        },
+        {
+          "name": "EngineRegistry",
+          "inherits": [],
+          "line": 10
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: Engine",
+        "Class: EngineRegistry"
+      ]
+    },
+    {
+      "file": "Core_Engines\\evolution.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\experience_memory.py",
+      "classes": [
+        {
+          "name": "_ShimError",
+          "inherits": [
+            "RuntimeError"
+          ],
+          "line": 21
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: _ShimError"
+      ]
+    },
+    {
+      "file": "Core_Engines\\External_InfoProvider.py",
+      "classes": [
+        {
+          "name": "ExternalInfoProvider",
+          "inherits": [],
+          "line": 42
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: ExternalInfoProvider"
+      ]
+    },
+    {
+      "file": "Core_Engines\\External_InfoProvider_PowerShellWrapper.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\General_Knowledge.py",
+      "classes": [
+        {
+          "name": "GeneralKnowledge",
+          "inherits": [],
+          "line": 1
+        },
+        {
+          "name": "GeneralKnowledgeEngine",
+          "inherits": [],
+          "line": 38
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: GeneralKnowledge",
+        "Class: GeneralKnowledgeEngine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\GK_graph.py",
+      "classes": [
+        {
+          "name": "GKGraph",
+          "inherits": [],
+          "line": 1
+        },
+        {
+          "name": "GKGraph",
+          "inherits": [],
+          "line": 32
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: GKGraph",
+        "Class: GKGraph"
+      ]
+    },
+    {
+      "file": "Core_Engines\\GK_reasoner.py",
+      "classes": [
+        {
+          "name": "GKReasoner",
+          "inherits": [],
+          "line": 15
+        },
+        {
+          "name": "_SimpleGraph",
+          "inherits": [],
+          "line": 52
+        },
+        {
+          "name": "GKReasoner",
+          "inherits": [],
+          "line": 60
+        },
+        {
+          "name": "_SimpleGraph",
+          "inherits": [],
+          "line": 98
+        },
+        {
+          "name": "_SimpleVerifier",
+          "inherits": [],
+          "line": 105
+        },
+        {
+          "name": "_EngineWrapper",
+          "inherits": [],
+          "line": 111
+        },
+        {
+          "name": "_Q",
+          "inherits": [],
+          "line": 126
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: GKReasoner",
+        "Class: _SimpleGraph",
+        "Class: GKReasoner",
+        "Class: _SimpleGraph",
+        "Class: _SimpleVerifier",
+        "Class: _EngineWrapper",
+        "Class: _Q"
+      ]
+    },
+    {
+      "file": "Core_Engines\\GK_reasoner_engine.py",
+      "classes": [
+        {
+          "name": "GKReasoner",
+          "inherits": [],
+          "line": 26
+        },
+        {
+          "name": "_SimpleGraph",
+          "inherits": [],
+          "line": 45
+        },
+        {
+          "name": "_SimpleVerifier",
+          "inherits": [],
+          "line": 50
+        },
+        {
+          "name": "_EngineWrapper",
+          "inherits": [],
+          "line": 54
+        },
+        {
+          "name": "_Q",
+          "inherits": [],
+          "line": 66
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: GKReasoner",
+        "Class: _SimpleGraph",
+        "Class: _SimpleVerifier",
+        "Class: _EngineWrapper",
+        "Class: _Q"
+      ]
+    },
+    {
+      "file": "Core_Engines\\GK_retriever.py",
+      "classes": [
+        {
+          "name": "GKRetriever",
+          "inherits": [],
+          "line": 27
+        },
+        {
+          "name": "_LocalKB",
+          "inherits": [],
+          "line": 94
+        },
+        {
+          "name": "_GKRetrieverEngine",
+          "inherits": [
+            "GKRetriever"
+          ],
+          "line": 102
+        },
+        {
+          "name": "_Q",
+          "inherits": [],
+          "line": 117
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: GKRetriever",
+        "Class: _LocalKB",
+        "Class: _GKRetrieverEngine",
+        "Class: _Q"
+      ]
+    },
+    {
+      "file": "Core_Engines\\GK_types.py",
+      "classes": [
+        {
+          "name": "GKSource",
+          "inherits": [],
+          "line": 6
+        },
+        {
+          "name": "GKEvidence",
+          "inherits": [],
+          "line": 14
+        },
+        {
+          "name": "GKFact",
+          "inherits": [],
+          "line": 22
+        },
+        {
+          "name": "GKQuery",
+          "inherits": [],
+          "line": 31
+        },
+        {
+          "name": "GKAnswer",
+          "inherits": [],
+          "line": 38
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: GKSource",
+        "Class: GKEvidence",
+        "Class: GKFact",
+        "Class: GKQuery",
+        "Class: GKAnswer"
+      ]
+    },
+    {
+      "file": "Core_Engines\\GK_verifier.py",
+      "classes": [
+        {
+          "name": "GKVerifier",
+          "inherits": [],
+          "line": 14
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: GKVerifier"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Hosted_LLM.py",
+      "classes": [
+        {
+          "name": "HostedLLM",
+          "inherits": [],
+          "line": 15
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: HostedLLM"
+      ]
+    },
+    {
+      "file": "Core_Engines\\humor_stylist.py",
+      "classes": [
+        {
+          "name": "HumorIronyStylist",
+          "inherits": [],
+          "line": 6
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: HumorIronyStylist"
+      ]
+    },
+    {
+      "file": "Core_Engines\\hybrid_reasoner.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\hybrid_reasoner2.py",
+      "classes": [
+        {
+          "name": "HybridReasoner",
+          "inherits": [],
+          "line": 100
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: HybridReasoner"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Hypothesis_Generator.py",
+      "classes": [
+        {
+          "name": "HypothesisGeneratorEngine",
+          "inherits": [],
+          "line": 29
+        },
+        {
+          "name": "HypothesisGenerator",
+          "inherits": [],
+          "line": 96
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: HypothesisGeneratorEngine",
+        "Class: HypothesisGenerator"
+      ]
+    },
+    {
+      "file": "Core_Engines\\KnowledgeOrchestrator.py",
+      "classes": [
+        {
+          "name": "KnowledgeOrchestrator",
+          "inherits": [],
+          "line": 9
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: KnowledgeOrchestrator"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Law_Matcher.py",
+      "classes": [
+        {
+          "name": "LawMatcher",
+          "inherits": [],
+          "line": 5
+        },
+        {
+          "name": "_MockStore",
+          "inherits": [],
+          "line": 56
+        },
+        {
+          "name": "_MockParser",
+          "inherits": [],
+          "line": 60
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: LawMatcher",
+        "Class: _MockStore",
+        "Class: _MockParser"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Law_Parser.py",
+      "classes": [
+        {
+          "name": "LawParser",
+          "inherits": [],
+          "line": 21
+        },
+        {
+          "name": "_Engine",
+          "inherits": [],
+          "line": 48
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: LawParser",
+        "Class: _Engine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Mathematical_Brain.py",
+      "classes": [
+        {
+          "name": "MathematicalBrain",
+          "inherits": [],
+          "line": 44
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MathematicalBrain"
+      ]
+    },
+    {
+      "file": "Core_Engines\\math_prover_lite.py",
+      "classes": [
+        {
+          "name": "MathProverLite",
+          "inherits": [],
+          "line": 6
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MathProverLite"
+      ]
+    },
+    {
+      "file": "Core_Engines\\math_utils.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\Meta_Ensembler.py",
+      "classes": [
+        {
+          "name": "CandidateSignal",
+          "inherits": [],
+          "line": 8
+        },
+        {
+          "name": "MetaEnsembler",
+          "inherits": [],
+          "line": 16
+        },
+        {
+          "name": "_Engine",
+          "inherits": [],
+          "line": 88
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: CandidateSignal",
+        "Class: MetaEnsembler",
+        "Class: _Engine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Meta_Learning.py",
+      "classes": [
+        {
+          "name": "MetaLearningEngine",
+          "inherits": [],
+          "line": 3
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MetaLearningEngine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Meta_Learning_clean.py",
+      "classes": [
+        {
+          "name": "MetaLearningEngine",
+          "inherits": [],
+          "line": 17
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MetaLearningEngine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\micro_planner.py",
+      "classes": [
+        {
+          "name": "MicroPlanner",
+          "inherits": [],
+          "line": 8
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MicroPlanner"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Model_Structure_Searcher.py",
+      "classes": [
+        {
+          "name": "StructureCandidate",
+          "inherits": [],
+          "line": 13
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: StructureCandidate"
+      ]
+    },
+    {
+      "file": "Core_Engines\\moral_reasoner.py",
+      "classes": [
+        {
+          "name": "MoralReasoner",
+          "inherits": [],
+          "line": 6
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MoralReasoner"
+      ]
+    },
+    {
+      "file": "Core_Engines\\NLP_Advanced.py",
+      "classes": [
+        {
+          "name": "NLPUtterance",
+          "inherits": [],
+          "line": 30
+        },
+        {
+          "name": "SentimentResult",
+          "inherits": [],
+          "line": 35
+        },
+        {
+          "name": "IntentResult",
+          "inherits": [],
+          "line": 39
+        },
+        {
+          "name": "ShortTermMemory",
+          "inherits": [],
+          "line": 43
+        },
+        {
+          "name": "NLPAdvancedEngine",
+          "inherits": [
+            "Engine"
+          ],
+          "line": 151
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: NLPUtterance",
+        "Class: SentimentResult",
+        "Class: IntentResult",
+        "Class: ShortTermMemory",
+        "Class: NLPAdvancedEngine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Ollama_Adapter.py",
+      "classes": [
+        {
+          "name": "LocalLLMAdapter",
+          "inherits": [],
+          "line": 15
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: LocalLLMAdapter"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Ollama_KnowledgeEngine.py",
+      "classes": [
+        {
+          "name": "LocalKnowledgeEngine",
+          "inherits": [],
+          "line": 24
+        },
+        {
+          "name": "LocalKnowledgeEngine",
+          "inherits": [],
+          "line": 54
+        },
+        {
+          "name": "_Shim",
+          "inherits": [],
+          "line": 267
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: LocalKnowledgeEngine",
+        "Class: LocalKnowledgeEngine",
+        "Class: _Shim"
+      ]
+    },
+    {
+      "file": "Core_Engines\\OpenAI_Adapter.py",
+      "classes": [
+        {
+          "name": "OpenAIAdapter",
+          "inherits": [],
+          "line": 18
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: OpenAIAdapter"
+      ]
+    },
+    {
+      "file": "Core_Engines\\OpenAI_KnowledgeEngine.py",
+      "classes": [
+        {
+          "name": "OpenAI_KnowledgeEngine",
+          "inherits": [],
+          "line": 24
+        },
+        {
+          "name": "OpenAIKnowledgeEngine",
+          "inherits": [],
+          "line": 56
+        },
+        {
+          "name": "_Shim",
+          "inherits": [],
+          "line": 170
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: OpenAI_KnowledgeEngine",
+        "Class: OpenAIKnowledgeEngine",
+        "Class: _Shim"
+      ]
+    },
+    {
+      "file": "Core_Engines\\optimization_engine.py",
+      "classes": [
+        {
+          "name": "OptimizationEngine",
+          "inherits": [],
+          "line": 13
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: OptimizationEngine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\orchestrator.py",
+      "classes": [
+        {
+          "name": "Orchestrator",
+          "inherits": [],
+          "line": 22
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: Orchestrator"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Perception_Context.py",
+      "classes": [
+        {
+          "name": "PerceptionContext",
+          "inherits": [],
+          "line": 69
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: PerceptionContext"
+      ]
+    },
+    {
+      "file": "Core_Engines\\plan_microplanner.py",
+      "classes": [
+        {
+          "name": "PlanAndExecuteMicroPlanner",
+          "inherits": [],
+          "line": 6
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: PlanAndExecuteMicroPlanner"
+      ]
+    },
+    {
+      "file": "Core_Engines\\process_task_template.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\prompt_composer.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\prompt_composer_v2.py",
+      "classes": [
+        {
+          "name": "PromptComposerV2",
+          "inherits": [],
+          "line": 8
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: PromptComposerV2"
+      ]
+    },
+    {
+      "file": "Core_Engines\\prompt_templates.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\Protocol_Designer.py",
+      "classes": [
+        {
+          "name": "ProtocolDesignerEngine",
+          "inherits": [],
+          "line": 24
+        },
+        {
+          "name": "ProtocolDesigner",
+          "inherits": [],
+          "line": 56
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: ProtocolDesignerEngine",
+        "Class: ProtocolDesigner"
+      ]
+    },
+    {
+      "file": "Core_Engines\\quantum_simulator_wrapper.py",
+      "classes": [
+        {
+          "name": "QuantumSimulatorWrapper",
+          "inherits": [],
+          "line": 64
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: QuantumSimulatorWrapper"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Reasoning_Planner.py",
+      "classes": [
+        {
+          "name": "ReasoningPlanner",
+          "inherits": [],
+          "line": 13
+        },
+        {
+          "name": "PlannerHFSM",
+          "inherits": [],
+          "line": 58
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: ReasoningPlanner",
+        "Class: PlannerHFSM"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Robust_Regression.py",
+      "classes": [
+        {
+          "name": "RobustRegressor",
+          "inherits": [],
+          "line": 20
+        },
+        {
+          "name": "_EngineWrapper",
+          "inherits": [],
+          "line": 126
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: RobustRegressor",
+        "Class: _EngineWrapper"
+      ]
+    },
+    {
+      "file": "Core_Engines\\rubric_enforcer.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\rubric_enforcer_engine.py",
+      "classes": [
+        {
+          "name": "RubricEnforcer",
+          "inherits": [],
+          "line": 5
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: RubricEnforcer"
+      ]
+    },
+    {
+      "file": "Core_Engines\\self_critique.py",
+      "classes": [
+        {
+          "name": "SelfCritiqueAndRevise",
+          "inherits": [],
+          "line": 6
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: SelfCritiqueAndRevise"
+      ]
+    },
+    {
+      "file": "Core_Engines\\self_critique_and_revise.py",
+      "classes": [
+        {
+          "name": "SelfCritiqueAndRevise",
+          "inherits": [],
+          "line": 12
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: SelfCritiqueAndRevise"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Self_Reflective.py",
+      "classes": [
+        {
+          "name": "SelfReflectiveEngine",
+          "inherits": [],
+          "line": 27
+        },
+        {
+          "name": "CuriosityEngine",
+          "inherits": [],
+          "line": 75
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: SelfReflectiveEngine",
+        "Class: CuriosityEngine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\skills_registry.py",
+      "classes": [
+        {
+          "name": "ToolRunner",
+          "inherits": [],
+          "line": 23
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: ToolRunner"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Social_Interaction.py",
+      "classes": [
+        {
+          "name": "SocialInteractionEngine",
+          "inherits": [
+            "Engine"
+          ],
+          "line": 35
+        },
+        {
+          "name": "Engine",
+          "inherits": [],
+          "line": 22
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: SocialInteractionEngine",
+        "Class: Engine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Strategic_Thinking.py",
+      "classes": [
+        {
+          "name": "StrategicThinkingEngine",
+          "inherits": [
+            "EngineBase"
+          ],
+          "line": 19
+        },
+        {
+          "name": "EngineBase",
+          "inherits": [],
+          "line": 11
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: StrategicThinkingEngine",
+        "Class: EngineBase"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Symbolic_Grammar.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\tensor_utils.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\tri_verify.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\turn_contract.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Core_Engines\\Units_Validator.py",
+      "classes": [
+        {
+          "name": "UnitsValidator",
+          "inherits": [],
+          "line": 1
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: UnitsValidator"
+      ]
+    },
+    {
+      "file": "Core_Engines\\Visual_Spatial.py",
+      "classes": [
+        {
+          "name": "VisualSpatialEngine",
+          "inherits": [
+            "Engine"
+          ],
+          "line": 35
+        },
+        {
+          "name": "Visual_Spatial",
+          "inherits": [],
+          "line": 178
+        },
+        {
+          "name": "Engine",
+          "inherits": [],
+          "line": 22
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: VisualSpatialEngine",
+        "Class: Visual_Spatial",
+        "Class: Engine"
+      ]
+    },
+    {
+      "file": "Core_Engines\\__init__.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\Action_Router.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\AGI_Expansion.py",
+      "classes": [
+        {
+          "name": "SmartRouterExtension",
+          "inherits": [],
+          "line": 4
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: SmartRouterExtension"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\agl_state.py",
+      "classes": [
+        {
+          "name": "AGLState",
+          "inherits": [],
+          "line": 17
+        },
+        {
+          "name": "_S",
+          "inherits": [],
+          "line": 366
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: AGLState",
+        "Class: _S"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\call_engine.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\Communication_Bus.py",
+      "classes": [
+        {
+          "name": "CommunicationBus",
+          "inherits": [],
+          "line": 2
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: CommunicationBus"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\Conversation_Manager.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\dkn_types.py",
+      "classes": [
+        {
+          "name": "Signal",
+          "inherits": [],
+          "line": 8
+        },
+        {
+          "name": "Claim",
+          "inherits": [],
+          "line": 19
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: Signal",
+        "Class: Claim"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\dkn_utils.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\Domain_Router.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\engine_adapter.py",
+      "classes": [
+        {
+          "name": "EngineAdapter",
+          "inherits": [],
+          "line": 5
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: EngineAdapter"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\executive_agent.py",
+      "classes": [
+        {
+          "name": "ExecutiveAgent",
+          "inherits": [],
+          "line": 20
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: ExecutiveAgent"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\Hybrid_Composer.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\inproc_bus.py",
+      "classes": [
+        {
+          "name": "PriorityBus",
+          "inherits": [],
+          "line": 12
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: PriorityBus"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\integration_registry.py",
+      "classes": [
+        {
+          "name": "IntegrationRegistry",
+          "inherits": [],
+          "line": 4
+        },
+        {
+          "name": "_RegistryProxy",
+          "inherits": [],
+          "line": 60
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: IntegrationRegistry",
+        "Class: _RegistryProxy"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\Intent_Recognizer.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\knowledge_graph.py",
+      "classes": [
+        {
+          "name": "KnowledgeGraph",
+          "inherits": [],
+          "line": 9
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: KnowledgeGraph"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\meta_cognition_simple.py",
+      "classes": [
+        {
+          "name": "SimpleMetaEvaluator",
+          "inherits": [],
+          "line": 14
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: SimpleMetaEvaluator"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\meta_orchestrator.py",
+      "classes": [
+        {
+          "name": "MetaOrchestrator",
+          "inherits": [],
+          "line": 43
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MetaOrchestrator"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\mocks.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\orchestrator.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\Output_Formatter.py",
+      "classes": [
+        {
+          "name": "OutputFormatter",
+          "inherits": [],
+          "line": 2
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: OutputFormatter"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\Pipeline_Orchestrator.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\planner.py",
+      "classes": [
+        {
+          "name": "ToolRegistry",
+          "inherits": [],
+          "line": 4
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: ToolRegistry"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\Planner_Agent.py",
+      "classes": [
+        {
+          "name": "PlannerAgent",
+          "inherits": [],
+          "line": 26
+        },
+        {
+          "name": "SafeRollback",
+          "inherits": [],
+          "line": 6
+        },
+        {
+          "name": "TemporalMemory",
+          "inherits": [],
+          "line": 14
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: PlannerAgent",
+        "Class: SafeRollback",
+        "Class: TemporalMemory"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\rag.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\rag_adapter_ollama.py",
+      "classes": [
+        {
+          "name": "LocalRAGEngine",
+          "inherits": [],
+          "line": 70
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: LocalRAGEngine"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\rag_fallback.py",
+      "classes": [
+        {
+          "name": "RagFallback",
+          "inherits": [],
+          "line": 7
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: RagFallback"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\rag_wrapper.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Integration_Layer\\retriever.py",
+      "classes": [
+        {
+          "name": "SimpleFactsRetriever",
+          "inherits": [],
+          "line": 8
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: SimpleFactsRetriever"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\Retriever_Fallback.py",
+      "classes": [
+        {
+          "name": "RetrieverFallback",
+          "inherits": [],
+          "line": 7
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: RetrieverFallback"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\Task_Orchestrator.py",
+      "classes": [
+        {
+          "name": "TaskOrchestrator",
+          "inherits": [],
+          "line": 37
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: TaskOrchestrator"
+      ]
+    },
+    {
+      "file": "Integration_Layer\\__init__.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Scientific_Systems\\Automated_Theorem_Prover.py",
+      "classes": [
+        {
+          "name": "AutomatedTheoremProver",
+          "inherits": [],
+          "line": 6
+        },
+        {
+          "name": "LogicalReasoningEngine",
+          "inherits": [],
+          "line": 144
+        },
+        {
+          "name": "NumericVerifier",
+          "inherits": [],
+          "line": 152
+        },
+        {
+          "name": "ProofStepGenerator",
+          "inherits": [],
+          "line": 159
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: AutomatedTheoremProver",
+        "Class: LogicalReasoningEngine",
+        "Class: NumericVerifier",
+        "Class: ProofStepGenerator"
+      ]
+    },
+    {
+      "file": "Scientific_Systems\\Hardware_Simulator.py",
+      "classes": [
+        {
+          "name": "HardwareSimulator",
+          "inherits": [],
+          "line": 6
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: HardwareSimulator"
+      ]
+    },
+    {
+      "file": "Scientific_Systems\\Integrated_Simulation_Engine.py",
+      "classes": [
+        {
+          "name": "IntegratedSimulationEngine",
+          "inherits": [],
+          "line": 1
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: IntegratedSimulationEngine"
+      ]
+    },
+    {
+      "file": "Scientific_Systems\\Scientific_Research_Assistant.py",
+      "classes": [
+        {
+          "name": "MathematicalContentAnalyzer",
+          "inherits": [],
+          "line": 6
+        },
+        {
+          "name": "QuantumClaimVerifier",
+          "inherits": [],
+          "line": 22
+        },
+        {
+          "name": "CitationAnalyzer",
+          "inherits": [],
+          "line": 32
+        },
+        {
+          "name": "ScientificResearchAssistant",
+          "inherits": [],
+          "line": 42
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MathematicalContentAnalyzer",
+        "Class: QuantumClaimVerifier",
+        "Class: CitationAnalyzer",
+        "Class: ScientificResearchAssistant"
+      ]
+    },
+    {
+      "file": "Scientific_Systems\\__init__.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Self_Improvement\\algorithm_optimizer.py",
+      "classes": [
+        {
+          "name": "PerformanceAnalyzer",
+          "inherits": [],
+          "line": 6
+        },
+        {
+          "name": "AlgorithmLibrary",
+          "inherits": [],
+          "line": 12
+        },
+        {
+          "name": "ParameterTuner",
+          "inherits": [],
+          "line": 20
+        },
+        {
+          "name": "AlgorithmSelfOptimizer",
+          "inherits": [],
+          "line": 26
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: PerformanceAnalyzer",
+        "Class: AlgorithmLibrary",
+        "Class: ParameterTuner",
+        "Class: AlgorithmSelfOptimizer"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\cognitive_mode.py",
+      "classes": [
+        {
+          "name": "CognitiveMode",
+          "inherits": [],
+          "line": 9
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: CognitiveMode"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\continual_learning.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Self_Improvement\\emergency_retrieval.py",
+      "classes": [
+        {
+          "name": "EmergencyRetrieval",
+          "inherits": [],
+          "line": 8
+        },
+        {
+          "name": "BasicRetriever",
+          "inherits": [],
+          "line": 190
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: EmergencyRetrieval",
+        "Class: BasicRetriever"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\executive_agent.py",
+      "classes": [
+        {
+          "name": "TaskItem",
+          "inherits": [],
+          "line": 26
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: TaskItem"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\Feedback_Analyzer.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Self_Improvement\\internal_agents.py",
+      "classes": [
+        {
+          "name": "InternalAgentConfig",
+          "inherits": [],
+          "line": 8
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: InternalAgentConfig"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\Knowledge_Integrator.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Self_Improvement\\medical_qa_fast_clean.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Self_Improvement\\memory_restructurer.py",
+      "classes": [
+        {
+          "name": "MemoryAnalyzer",
+          "inherits": [],
+          "line": 5
+        },
+        {
+          "name": "KnowledgeGraph",
+          "inherits": [],
+          "line": 11
+        },
+        {
+          "name": "MemorySelfRestructurer",
+          "inherits": [],
+          "line": 23
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MemoryAnalyzer",
+        "Class: KnowledgeGraph",
+        "Class: MemorySelfRestructurer"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\meta_logger.py",
+      "classes": [
+        {
+          "name": "MetaLogger",
+          "inherits": [],
+          "line": 11
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MetaLogger"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\ollama_stream.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Self_Improvement\\Optimization_Strategies.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    },
+    {
+      "file": "Self_Improvement\\projects.py",
+      "classes": [
+        {
+          "name": "ProjectTask",
+          "inherits": [],
+          "line": 16
+        },
+        {
+          "name": "AGLProject",
+          "inherits": [],
+          "line": 24
+        },
+        {
+          "name": "ProjectStore",
+          "inherits": [],
+          "line": 58
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: ProjectTask",
+        "Class: AGLProject",
+        "Class: ProjectStore"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\rag_adapter.py",
+      "classes": [
+        {
+          "name": "RAGAdapter",
+          "inherits": [],
+          "line": 13
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: RAGAdapter"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\rollback.py",
+      "classes": [
+        {
+          "name": "AutomaticRollbackSystem",
+          "inherits": [],
+          "line": 6
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: AutomaticRollbackSystem"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\safe_self_mod.py",
+      "classes": [
+        {
+          "name": "SandboxEnvironment",
+          "inherits": [],
+          "line": 14
+        },
+        {
+          "name": "ModificationValidator",
+          "inherits": [],
+          "line": 70
+        },
+        {
+          "name": "RollbackManager",
+          "inherits": [],
+          "line": 83
+        },
+        {
+          "name": "PerformanceMonitor",
+          "inherits": [],
+          "line": 105
+        },
+        {
+          "name": "SafeSelfModificationSystem",
+          "inherits": [],
+          "line": 117
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: SandboxEnvironment",
+        "Class: ModificationValidator",
+        "Class: RollbackManager",
+        "Class: PerformanceMonitor",
+        "Class: SafeSelfModificationSystem"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\Self_Monitoring_System.py",
+      "classes": [
+        {
+          "name": "SelfMonitoringSystem",
+          "inherits": [],
+          "line": 6
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: SelfMonitoringSystem"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\strategic_memory.py",
+      "classes": [
+        {
+          "name": "MemoryItem",
+          "inherits": [],
+          "line": 15
+        },
+        {
+          "name": "StrategicMemory",
+          "inherits": [],
+          "line": 26
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: MemoryItem",
+        "Class: StrategicMemory"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\taskmaster.py",
+      "classes": [
+        {
+          "name": "LongTermProjectConfig",
+          "inherits": [],
+          "line": 23
+        }
+      ],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": [
+        "Class: LongTermProjectConfig"
+      ]
+    },
+    {
+      "file": "Self_Improvement\\__init__.py",
+      "classes": [],
+      "functions": [],
+      "high_risk_items": [],
+      "medium_risk_items": [],
+      "safe_items": []
+    }
+  ],
+  "summary": {
+    "total_files": 138,
+    "high_risk_count": 0,
+    "medium_risk_count": 11,
+    "low_risk_count": 0,
+    "safe_count": 127
+  }
+}

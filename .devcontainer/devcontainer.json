@@ -1,0 +1,20 @@
+{
+  "name": "AGL Security Tool - Full Audit",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "postCreateCommand": "pip install -r requirements.txt && pip install z3-solver slither-analyzer semgrep solc-select && solc-select install 0.8.19 && solc-select use 0.8.19",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "JuanBlanco.solidity"
+      ]
+    }
+  },
+  "forwardPorts": [],
+  "remoteEnv": {
+    "PYTHONPATH": "${containerWorkspaceFolder}"
+  }
+}

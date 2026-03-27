@@ -1,0 +1,165 @@
+{
+  "demo_timestamp": "2025-12-08T02:20:50.842476",
+  "total_tasks": 3,
+  "learning_history": [
+    {
+      "task": "solve_linear",
+      "principles_learned": [
+        {
+          "id": "solve_linear:synthetic",
+          "desc": "synthetic no-op",
+          "confidence": 0.2187
+        }
+      ],
+      "history": {
+        "rounds": [
+          {
+            "round": 1,
+            "eval": {
+              "accuracy": 0.0,
+              "correct": 0,
+              "total": 1
+            },
+            "confidences": {
+              "solve_linear:synthetic": 0.27
+            }
+          },
+          {
+            "round": 2,
+            "eval": {
+              "accuracy": 0.0,
+              "correct": 0,
+              "total": 1
+            },
+            "confidences": {
+              "solve_linear:synthetic": 0.24300000000000002
+            }
+          },
+          {
+            "round": 3,
+            "eval": {
+              "accuracy": 0.0,
+              "correct": 0,
+              "total": 1
+            },
+            "confidences": {
+              "solve_linear:synthetic": 0.2187
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task": "arabic_text_analysis",
+      "principles_learned": [
+        {
+          "id": "arabic_text_analysis:synthetic",
+          "desc": "synthetic no-op",
+          "confidence": 0.2187
+        },
+        {
+          "id": "solve_linear:synthetic",
+          "desc": "synthetic no-op",
+          "confidence": 0.2187
+        }
+      ],
+      "history": {
+        "rounds": [
+          {
+            "round": 1,
+            "eval": {
+              "accuracy": 0.0,
+              "correct": 0,
+              "total": 1
+            },
+            "confidences": {
+              "arabic_text_analysis:synthetic": 0.27
+            }
+          },
+          {
+            "round": 2,
+            "eval": {
+              "accuracy": 0.0,
+              "correct": 0,
+              "total": 1
+            },
+            "confidences": {
+              "arabic_text_analysis:synthetic": 0.24300000000000002
+            }
+          },
+          {
+            "round": 3,
+            "eval": {
+              "accuracy": 0.0,
+              "correct": 0,
+              "total": 1
+            },
+            "confidences": {
+              "arabic_text_analysis:synthetic": 0.2187
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task": "design_algo",
+      "principles_learned": [
+        {
+          "id": "arabic_text_analysis:synthetic",
+          "desc": "synthetic no-op",
+          "confidence": 0.2187
+        },
+        {
+          "id": "design_algo:synthetic",
+          "desc": "synthetic no-op",
+          "confidence": 0.2187
+        },
+        {
+          "id": "solve_linear:synthetic",
+          "desc": "synthetic no-op",
+          "confidence": 0.2187
+        }
+      ],
+      "history": {
+        "rounds": [
+          {
+            "round": 1,
+            "eval": {
+              "accuracy": 0.0,
+              "correct": 0,
+              "total": 1
+            },
+            "confidences": {
+              "design_algo:synthetic": 0.27
+            }
+          },
+          {
+            "round": 2,
+            "eval": {
+              "accuracy": 0.0,
+              "correct": 0,
+              "total": 1
+            },
+            "confidences": {
+              "design_algo:synthetic": 0.24300000000000002
+            }
+          },
+          {
+            "round": 3,
+            "eval": {
+              "accuracy": 0.0,
+              "correct": 0,
+              "total": 1
+            },
+            "confidences": {
+              "design_algo:synthetic": 0.2187
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_principles": 6
+  }
+}

@@ -1,0 +1,411 @@
+{
+  "stats": {
+    "total": 303898,
+    "resonant": 285002,
+    "dissonant": 18896
+  },
+  "top_resonant": [
+    {
+      "id": "repo-copy\\AGL_legacy.py::_derive_risk",
+      "type": "FunctionDef",
+      "energy": 0.17,
+      "coherence": 0.99,
+      "lines": 17,
+      "file": "repo-copy\\AGL_legacy.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\AGL_legacy.py::_calculate_confidence",
+      "type": "FunctionDef",
+      "energy": 0.44,
+      "coherence": 0.99,
+      "lines": 44,
+      "file": "repo-copy\\AGL_legacy.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\AGL_legacy.py::full_autonomous_operation",
+      "type": "FunctionDef",
+      "energy": 0.15,
+      "coherence": 0.99,
+      "lines": 15,
+      "file": "repo-copy\\AGL_legacy.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\AGL_legacy.py::research_and_develop",
+      "type": "FunctionDef",
+      "energy": 0.24,
+      "coherence": 0.99,
+      "lines": 24,
+      "file": "repo-copy\\AGL_legacy.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\AGL_Omega.py::analyze_reasoning_patterns",
+      "type": "FunctionDef",
+      "energy": 0.14,
+      "coherence": 0.99,
+      "lines": 14,
+      "file": "repo-copy\\AGL_Omega.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\AGL_Omega.py::generate_self_improvement_plan",
+      "type": "FunctionDef",
+      "energy": 0.19,
+      "coherence": 0.99,
+      "lines": 19,
+      "file": "repo-copy\\AGL_Omega.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\AGL_UI_v3.py::read_text_safely",
+      "type": "FunctionDef",
+      "energy": 0.19,
+      "coherence": 0.99,
+      "lines": 19,
+      "file": "repo-copy\\AGL_UI_v3.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\AGL_UI_v3.py::run_agl",
+      "type": "FunctionDef",
+      "energy": 0.25,
+      "coherence": 0.99,
+      "lines": 25,
+      "file": "repo-copy\\AGL_UI_v3.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\AGL_UI_v3.py::_update_plot",
+      "type": "FunctionDef",
+      "energy": 0.43,
+      "coherence": 0.99,
+      "lines": 43,
+      "file": "repo-copy\\AGL_UI_v3.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\agl_universal.py::build_answer_context",
+      "type": "FunctionDef",
+      "energy": 0.68,
+      "coherence": 0.99,
+      "lines": 68,
+      "file": "repo-copy\\agl_universal.py",
+      "status": "Classical Passage (Masterpiece)",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\agl_universal.py::universal_answer",
+      "type": "FunctionDef",
+      "energy": 0.95,
+      "coherence": 0.99,
+      "lines": 96,
+      "file": "repo-copy\\agl_universal.py",
+      "status": "Classical Passage (Masterpiece)",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\agl_universal.py::solve_universal",
+      "type": "FunctionDef",
+      "energy": 0.51,
+      "coherence": 0.99,
+      "lines": 51,
+      "file": "repo-copy\\agl_universal.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\analyze_python_structure.py::show_deps",
+      "type": "FunctionDef",
+      "energy": 0.23,
+      "coherence": 0.99,
+      "lines": 23,
+      "file": "repo-copy\\analyze_python_structure.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\ConfidenceGate.py::law_confidence_gate",
+      "type": "FunctionDef",
+      "energy": 0.17,
+      "coherence": 0.99,
+      "lines": 17,
+      "file": "repo-copy\\ConfidenceGate.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\inspect_all_files.py::is_text_file",
+      "type": "FunctionDef",
+      "energy": 0.17,
+      "coherence": 0.99,
+      "lines": 17,
+      "file": "repo-copy\\inspect_all_files.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\inspect_all_files.py::scan_project",
+      "type": "FunctionDef",
+      "energy": 0.95,
+      "coherence": 0.99,
+      "lines": 112,
+      "file": "repo-copy\\inspect_all_files.py",
+      "status": "Classical Passage (Masterpiece)",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\inspect_python_structure.py::iter_python_files",
+      "type": "FunctionDef",
+      "energy": 0.21,
+      "coherence": 0.99,
+      "lines": 21,
+      "file": "repo-copy\\inspect_python_structure.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\inspect_python_structure.py::build_module_index",
+      "type": "FunctionDef",
+      "energy": 0.14,
+      "coherence": 0.99,
+      "lines": 14,
+      "file": "repo-copy\\inspect_python_structure.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\inspect_python_structure.py::resolve_import_to_file",
+      "type": "FunctionDef",
+      "energy": 0.17,
+      "coherence": 0.99,
+      "lines": 17,
+      "file": "repo-copy\\inspect_python_structure.py",
+      "status": "Standard",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    },
+    {
+      "id": "repo-copy\\inspect_python_structure.py::analyze_python_file",
+      "type": "FunctionDef",
+      "energy": 0.95,
+      "coherence": 0.99,
+      "lines": 112,
+      "file": "repo-copy\\inspect_python_structure.py",
+      "status": "Classical Passage (Masterpiece)",
+      "resonance_score": 9.803897724623122,
+      "amplification": 9.90292699456881
+    }
+  ],
+  "top_dissonant": [
+    {
+      "id": "repo-copy\\simple_dashboard.py::do_GET",
+      "type": "FunctionDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 109,
+      "file": "repo-copy\\simple_dashboard.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\typing_extensions.py::_ProtocolMeta",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 98,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\typing_extensions.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\typing_extensions.py::_TypedDictMeta",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 166,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\typing_extensions.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\typing_extensions.py::_ConcatenateGenericAlias",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 114,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\typing_extensions.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\rrule.py::rrulebase",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 208,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\rrule.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\rrule.py::_iterinfo",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 192,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\rrule.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\parser\\isoparser.py::isoparser",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 370,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\parser\\isoparser.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\parser\\_parser.py::_timelex",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 158,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\parser\\_parser.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\parser\\_parser.py::_ymd",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 171,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\parser\\_parser.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\parser\\_parser.py::parser",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 696,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\parser\\_parser.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\parser\\_parser.py::_tzparser",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 208,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\dateutil\\parser\\_parser.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\faiss\\class_wrappers.py::handle_Index",
+      "type": "FunctionDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 633,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\faiss\\class_wrappers.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\faiss\\class_wrappers.py::handle_IndexBinary",
+      "type": "FunctionDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 170,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\faiss\\class_wrappers.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\faiss\\contrib\\torch_utils.py::handle_torch_Index",
+      "type": "FunctionDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 424,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\faiss\\contrib\\torch_utils.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\joblib\\externals\\loky\\reusable_executor.py::_ReusablePoolExecutor",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 190,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\joblib\\externals\\loky\\reusable_executor.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\mpmath\\calculus\\inverselaplace.py::deHoog",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 183,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\mpmath\\calculus\\inverselaplace.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\mpmath\\functions\\rszeta.py::Rzeta_simul",
+      "type": "FunctionDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 516,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\mpmath\\functions\\rszeta.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\networkx\\algorithms\\matching.py::expandBlossom",
+      "type": "FunctionDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 111,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\networkx\\algorithms\\matching.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\networkx\\algorithms\\flow\\networksimplex.py::_DataEssentialsAndFunctions",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 311,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\networkx\\algorithms\\flow\\networksimplex.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    },
+    {
+      "id": "repo-copy\\.venv_embed\\Lib\\site-packages\\networkx\\utils\\backends.py::_dispatchable",
+      "type": "ClassDef",
+      "energy": 0.95,
+      "coherence": 0.01,
+      "lines": 1735,
+      "file": "repo-copy\\.venv_embed\\Lib\\site-packages\\networkx\\utils\\backends.py",
+      "status": "BLOCKED (Dissonant/Technical Debt)"
+    }
+  ]
+}

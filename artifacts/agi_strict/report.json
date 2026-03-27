@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "ts": "2025-11-20T21:58:51.078523+00:00",
+    "alpha": "",
+    "embeddings": "",
+    "flags": {
+      "AGL_PLANNER_ENABLE": "",
+      "AGL_DELIBERATION_ENABLE": "",
+      "AGL_EMOTION_CONTEXT_ENABLE": "",
+      "AGL_ASSOC_GRAPH_ENABLE": "",
+      "AGL_SELF_LEARNING_ENABLE": ""
+    }
+  },
+  "results": [
+    {
+      "ts": "2025-11-20T21:58:51.078548+00:00",
+      "track": "math_physics",
+      "ok": true,
+      "score": 1.0,
+      "detail": "disp=64.00, expected=64.00"
+    },
+    {
+      "ts": "2025-11-20T21:58:51.078552+00:00",
+      "track": "causality_analogy",
+      "ok": true,
+      "score": 1.0,
+      "detail": "cause->effect & structure-mapping"
+    },
+    {
+      "ts": "2025-11-20T21:58:51.078555+00:00",
+      "track": "planning_deliberation",
+      "ok": true,
+      "score": 1.0,
+      "detail": "deliberation executed"
+    },
+    {
+      "ts": "2025-11-20T21:58:51.078561+00:00",
+      "track": "semantic_retrieval",
+      "ok": true,
+      "score": 1.0,
+      "detail": "hits=3/3"
+    },
+    {
+      "ts": "2025-11-20T21:58:51.078564+00:00",
+      "track": "theory_of_mind",
+      "ok": true,
+      "score": 1.0,
+      "detail": "alice first search -> الخزانة"
+    },
+    {
+      "ts": "2025-11-20T21:58:51.078566+00:00",
+      "track": "self_learning",
+      "ok": true,
+      "score": 1.0,
+      "detail": "events/jsonl expected if enabled"
+    }
+  ],
+  "summary": {
+    "ts": "2025-11-20T21:58:51.078570+00:00",
+    "mean_score": 1.0,
+    "passed": 6,
+    "total": 6,
+    "tier": "S"
+  }
+}

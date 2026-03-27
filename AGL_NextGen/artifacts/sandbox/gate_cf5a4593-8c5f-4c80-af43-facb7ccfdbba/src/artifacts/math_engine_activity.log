@@ -1,0 +1,174 @@
+[2026-01-07 01:30:04.828118] MathematicalBrain ACTIVATED for query: {'op': 'answer', 'params': {'input': 'اختبار سريع: 1+1 = ؟', 'context': {}, 'timestamp': 1767738604.827165, '_routed': [{'adapter': 'Creative_Innovation', 'w': 1.0, 'score': 0.9}, {'adapter': 'Mathematical_Brain', 'w': 1.0, 'score': 0.9}]}}
+[2026-01-07 01:31:10.147889] MathematicalBrain ACTIVATED for query: {'op': 'answer', 'params': {'input': 'اختبار سريع: 1+1 = ؟', 'context': {}, 'timestamp': 1767738670.1472998, '_routed': [{'adapter': 'Creative_Innovation', 'w': 1.0, 'score': 0.9}, {'adapter': 'Mathematical_Brain', 'w': 1.0, 'score': 0.9}]}}
+[2026-01-07 02:08:35.194612] MathematicalBrain ACTIVATED for query: {'query': 'أعطني ناتج 17 + 25 كرقم فقط.', 'text': 'أعطني ناتج 17 + 25 كرقم فقط.'}
+[2026-01-07 02:08:35.196224] MathematicalBrain ACTIVATED for query: {'query': 'أعطني ناتج 17 + 25 كرقم فقط.', 'text': 'أعطني ناتج 17 + 25 كرقم فقط.'}
+[2026-01-07 02:08:35.197109] MathematicalBrain ACTIVATED for query: {'query': 'أعطني ناتج 17 + 25 كرقم فقط.', 'text': 'أعطني ناتج 17 + 25 كرقم فقط.'}
+[2026-01-07 02:08:35.198189] MathematicalBrain ACTIVATED for query: {'query': 'أعطني ناتج 7 * 8 كرقم فقط.', 'text': 'أعطني ناتج 7 * 8 كرقم فقط.'}
+[2026-01-07 02:08:35.198681] MathematicalBrain ACTIVATED for query: {'query': 'أعطني ناتج 7 * 8 كرقم فقط.', 'text': 'أعطني ناتج 7 * 8 كرقم فقط.'}
+[2026-01-07 02:08:35.199126] MathematicalBrain ACTIVATED for query: {'query': 'أعطني ناتج 7 * 8 كرقم فقط.', 'text': 'أعطني ناتج 7 * 8 كرقم فقط.'}
+[2026-01-07 02:13:26.129606] MathematicalBrain ACTIVATED for query: أعطني ناتج 17 + 25 كرقم فقط.
+[2026-01-07 02:13:26.130215] MathematicalBrain ACTIVATED for query: أعطني ناتج 17 + 25 كرقم فقط.
+[2026-01-07 02:13:26.130630] MathematicalBrain ACTIVATED for query: أعطني ناتج 17 + 25 كرقم فقط.
+[2026-01-07 02:13:26.131224] MathematicalBrain ACTIVATED for query: أعطني ناتج 7 * 8 كرقم فقط.
+[2026-01-07 02:13:26.131737] MathematicalBrain ACTIVATED for query: أعطني ناتج 7 * 8 كرقم فقط.
+[2026-01-07 02:13:26.132126] MathematicalBrain ACTIVATED for query: أعطني ناتج 7 * 8 كرقم فقط.
+[2026-01-07 02:13:26.132944] MathematicalBrain ACTIVATED for query: أجب بكلمة واحدة فقط: هل (ليس (صحيح)) = صحيح أم خطأ؟
+[2026-01-07 02:13:26.138669] MathematicalBrain ACTIVATED for query: أجب بكلمة واحدة فقط: هل (ليس (صحيح)) = صحيح أم خطأ؟
+[2026-01-07 02:13:26.141770] MathematicalBrain ACTIVATED for query: أجب بكلمة واحدة فقط: هل (ليس (صحيح)) = صحيح أم خطأ؟
+[2026-01-07 02:13:26.143548] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:13:26.144211] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:13:26.144745] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:14:52.046587] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:14:52.047689] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:14:52.048185] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:14:52.049475] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:14:52.050288] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:14:52.050767] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:14:52.051265] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:14:52.054887] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:14:52.057356] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:14:52.058502] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:14:52.058932] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:14:52.059316] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:14:52.059710] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:14:52.060044] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:14:52.060399] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:19:29.059686] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:19:29.061123] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:19:29.061770] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:19:29.062298] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:19:29.062684] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:19:29.063026] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:19:29.063408] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:19:29.065628] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:19:29.067130] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:19:29.068532] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:19:29.069095] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:19:29.069765] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:19:29.070591] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:19:29.071160] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:19:29.071734] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:19:50.370214] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:19:50.371170] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:19:50.371658] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:19:50.372306] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:19:50.373066] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:19:50.373808] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:19:50.374303] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:19:50.377410] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:19:50.380496] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:19:50.382070] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:19:50.382862] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:19:50.383705] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:19:50.384620] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:19:50.385566] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:19:50.386897] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:20:12.690703] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:20:12.691663] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:20:12.692736] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:20:12.694076] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:20:12.695279] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:20:12.696367] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:20:12.697711] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:20:12.700715] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:20:12.701879] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:20:12.703100] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:20:12.703820] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:20:12.704426] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:20:12.704895] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:20:12.705282] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:20:12.705820] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:24:02.908520] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:24:02.911256] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:24:02.912576] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:24:02.915350] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:24:02.917919] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:24:02.920072] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:38:57.214835] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:38:57.216068] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:38:57.217016] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:38:57.217799] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:38:57.218247] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:38:57.218621] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:38:57.219086] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:38:57.222942] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:38:57.224841] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:38:57.227819] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:38:57.229376] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:38:57.230733] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:38:57.231899] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:38:57.232835] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:38:57.234030] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:38:57.307568] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:38:57.308797] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:38:57.310564] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:38:57.312853] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:38:57.315166] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:38:57.316312] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:41:37.532678] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:41:37.534030] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:41:37.534982] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:41:37.536690] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:41:37.538007] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:41:37.539590] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:41:37.540760] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:41:37.544970] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:41:37.546988] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:41:37.549185] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:41:37.550155] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:41:37.550930] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:41:37.551934] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:41:37.552516] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:41:37.552932] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:41:37.560892] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:41:37.562899] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:41:37.564453] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:41:37.566436] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:41:37.569101] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:41:37.570195] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:44:00.914847] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:44:00.916104] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:44:00.917442] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 02:44:00.918713] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:44:00.919939] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:44:00.920757] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 02:44:00.921646] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:44:00.927036] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:44:00.928658] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:44:00.931451] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:44:00.932673] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:44:00.933819] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 02:44:00.934756] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:44:00.935681] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:44:00.936516] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 02:44:00.951841] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:44:00.953975] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:44:00.955463] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 02:44:00.956933] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:44:00.960160] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:44:00.961544] MathematicalBrain ACTIVATED for query: 3x-9=0
+[2026-01-07 02:58:35.627862] MathematicalBrain ACTIVATED for query: 19+23
+[2026-01-07 02:58:35.629154] MathematicalBrain ACTIVATED for query: 19+23
+[2026-01-07 02:58:35.629700] MathematicalBrain ACTIVATED for query: 19+23
+[2026-01-07 02:58:35.630047] MathematicalBrain ACTIVATED for query: 9*6
+[2026-01-07 02:58:35.630333] MathematicalBrain ACTIVATED for query: 9*6
+[2026-01-07 02:58:35.630616] MathematicalBrain ACTIVATED for query: 9*6
+[2026-01-07 02:58:35.630935] MathematicalBrain ACTIVATED for query: 4x-8=12
+[2026-01-07 02:58:35.634220] MathematicalBrain ACTIVATED for query: 4x-8=12
+[2026-01-07 02:58:35.635957] MathematicalBrain ACTIVATED for query: 4x-8=12
+[2026-01-07 02:58:35.637542] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'رقم الطلب: 9057'.
+[2026-01-07 02:58:35.638413] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'رقم الطلب: 9057'.
+[2026-01-07 02:58:35.639099] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'رقم الطلب: 9057'.
+[2026-01-07 02:58:35.639801] MathematicalBrain ACTIVATED for query: (18/3)+6
+[2026-01-07 02:58:35.640411] MathematicalBrain ACTIVATED for query: (18/3)+6
+[2026-01-07 02:58:35.641291] MathematicalBrain ACTIVATED for query: (18/3)+6
+[2026-01-07 03:17:48.581503] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 03:17:48.581897] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 03:17:48.582162] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 03:17:48.584105] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 03:17:48.584421] MathematicalBrain ACTIVATED for query: (12/3)+4
+[2026-01-07 04:05:12.536341] MathematicalBrain ACTIVATED for query: 17+25
+[2026-01-07 04:05:12.537882] MathematicalBrain ACTIVATED for query: 7*8
+[2026-01-07 04:05:12.538295] MathematicalBrain ACTIVATED for query: 2x+5=15
+[2026-01-07 04:05:12.540677] MathematicalBrain ACTIVATED for query: استخرج الرقم من النص التالي وأعده فقط: 'الكود هو 9057'.
+[2026-01-07 04:05:12.541294] MathematicalBrain ACTIVATED for query: (12/3)+4
