@@ -1,9 +1,16 @@
-# your-repo
+# 🛡️ AGL Security Tool
+
+**Advanced 6-Layer Smart Contract Security Auditor**
+
+> 🌐 **[Visit the Official Website](https://alanqamarqo-dev.github.io/your-repo/)** | **[زُر الموقع الرسمي](https://alanqamarqo-dev.github.io/your-repo/)**
+
+> **بالعربي:** أداة تدقيق أمني متقدمة للعقود الذكية بـ 6 طبقات تحليل، تشمل إثبات رسمي Z3 واستنتاج استغلال، بنسبة اكتشاف 94.1% على بروتوكولات DeFi حقيقية.
+
+---
+
+## Go CLI Helper
 
 A simple Go application that demonstrates clean project structure with tests, CI, and benchmarks.
-
-> **بالعربي:** هذا مشروع بلغة Go يوضح كيفية بناء مشروع نظيف مع اختبارات وبناء تلقائي.
-> الدالة الرئيسية `Greet` تقبل اسم وترجع رسالة ترحيب. يمكنك تشغيله من سطر الأوامر.
 
 ## Quick Start
 

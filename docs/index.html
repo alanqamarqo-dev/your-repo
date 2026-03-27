@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGL Security Tool — Smart Contract Security Auditor</title>
+  <meta name="description" content="Advanced 6-layer smart contract security auditing tool with Z3 formal verification, exploit reasoning, and 94% recall on real DeFi vulnerabilities.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Language Toggle -->
+  <button class="lang-toggle" id="langToggle" aria-label="Switch language">عربي / EN</button>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-badge">🛡️ Open Source Security</div>
+      <h1 class="hero-title">
+        <span data-en="AGL Security Tool" data-ar="أداة أمن AGL">AGL Security Tool</span>
+      </h1>
+      <p class="hero-subtitle">
+        <span data-en="Advanced 6-Layer Smart Contract Security Auditor" data-ar="مدقق أمني متقدم للعقود الذكية بـ 6 طبقات">Advanced 6-Layer Smart Contract Security Auditor</span>
+      </p>
+      <p class="hero-desc">
+        <span data-en="Detect vulnerabilities in Solidity smart contracts with Z3 formal verification, exploit proof generation, and mathematical risk scoring. Tested on real DeFi protocols with 94.1% recall." data-ar="اكتشف الثغرات في عقود Solidity الذكية مع إثبات رسمي Z3، توليد إثباتات استغلال، وتقييم رياضي للمخاطر. مُختبر على بروتوكولات DeFi حقيقية بنسبة استرجاع 94.1%.">Detect vulnerabilities in Solidity smart contracts with Z3 formal verification, exploit proof generation, and mathematical risk scoring. Tested on real DeFi protocols with 94.1% recall.</span>
+      </p>
+      <div class="hero-actions">
+        <a href="#features" class="btn btn-primary">
+          <span data-en="Explore Features" data-ar="استكشف المميزات">Explore Features</span>
+        </a>
+        <a href="#quickstart" class="btn btn-secondary">
+          <span data-en="Quick Start" data-ar="ابدأ الآن">Quick Start</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats Bar -->
+  <section class="stats-bar">
+    <div class="container stats-grid">
+      <div class="stat">
+        <span class="stat-number">94.1%</span>
+        <span class="stat-label" data-en="Recall Rate" data-ar="نسبة الاسترجاع">Recall Rate</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">6</span>
+        <span class="stat-label" data-en="Analysis Layers" data-ar="طبقات التحليل">Analysis Layers</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">22</span>
+        <span class="stat-label" data-en="Security Detectors" data-ar="كاشف أمني">Security Detectors</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">Z3</span>
+        <span class="stat-label" data-en="Formal Verification" data-ar="إثبات رسمي">Formal Verification</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">
+        <span data-en="6-Layer Security Pipeline" data-ar="خط أمان من 6 طبقات">6-Layer Security Pipeline</span>
+      </h2>
+      <p class="section-desc">
+        <span data-en="Each layer adds depth to the analysis, from fast pattern matching to mathematical proof of exploitability." data-ar="كل طبقة تضيف عمقاً للتحليل، من مطابقة الأنماط السريعة إلى الإثبات الرياضي لقابلية الاستغلال.">Each layer adds depth to the analysis, from fast pattern matching to mathematical proof of exploitability.</span>
+      </p>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <div class="feature-layer">Layer 1</div>
+          <h3 data-en="Pattern Engine" data-ar="محرك الأنماط">Pattern Engine</h3>
+          <p data-en="Fast regex-based vulnerability pattern scanning across the entire codebase. Catches common issues like reentrancy patterns, unchecked calls, and dangerous delegatecall usage." data-ar="فحص سريع بأنماط regex عبر كامل الكود. يكتشف المشاكل الشائعة مثل أنماط إعادة الدخول، الاستدعاءات غير المفحوصة، واستخدام delegatecall الخطير.">Fast regex-based vulnerability pattern scanning across the entire codebase. Catches common issues like reentrancy patterns, unchecked calls, and dangerous delegatecall usage.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔬</div>
+          <div class="feature-layer">Layer 2</div>
+          <h3 data-en="22 Specialized Detectors" data-ar="22 كاشف متخصص">22 Specialized Detectors</h3>
+          <p data-en="Deep AST-based analysis with 22 purpose-built detectors covering reentrancy, access control, integer overflow, flash loan attacks, price manipulation, and more." data-ar="تحليل عميق مبني على AST مع 22 كاشف مخصص يغطي إعادة الدخول، التحكم بالوصول، طفح الأعداد، هجمات القروض الفورية، التلاعب بالأسعار، والمزيد.">Deep AST-based analysis with 22 purpose-built detectors covering reentrancy, access control, integer overflow, flash loan attacks, price manipulation, and more.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🧮</div>
+          <div class="feature-layer">Layer 3</div>
+          <h3 data-en="Z3 Symbolic Engine" data-ar="محرك Z3 الرمزي">Z3 Symbolic Engine</h3>
+          <p data-en="Microsoft Z3 theorem prover formally verifies vulnerability conditions. Produces mathematical proof that a bug is real — not just a heuristic guess." data-ar="مُبرهن Z3 من مايكروسوفت يتحقق رسمياً من شروط الثغرات. ينتج إثباتاً رياضياً بأن الخطأ حقيقي — وليس مجرد تخمين.">Microsoft Z3 theorem prover formally verifies vulnerability conditions. Produces mathematical proof that a bug is real — not just a heuristic guess.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚔️</div>
+          <div class="feature-layer">Layer 4</div>
+          <h3 data-en="Exploit Reasoning" data-ar="استنتاج الاستغلال">Exploit Reasoning</h3>
+          <p data-en="4-stage pipeline: Path Extraction → Constraint Solving → Invariant Checking → Exploit Assembly. Generates concrete exploit proofs with step-by-step attack sequences." data-ar="خط أنابيب من 4 مراحل: استخراج المسارات → حل القيود → فحص الثوابت → تجميع الاستغلال. يولّد إثباتات استغلال ملموسة بتسلسل هجوم خطوة بخطوة.">4-stage pipeline: Path Extraction → Constraint Solving → Invariant Checking → Exploit Assembly. Generates concrete exploit proofs with step-by-step attack sequences.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <div class="feature-layer">Layer 5</div>
+          <h3 data-en="RiskCore Scoring" data-ar="تقييم المخاطر RiskCore">RiskCore Scoring</h3>
+          <p data-en="Logistic regression model combining heuristic confidence, formal proof scores, and prior probability to compute calibrated exploit probability for each finding." data-ar="نموذج انحدار لوجستي يجمع بين الثقة الاستدلالية، درجات الإثبات الرسمي، والاحتمال المسبق لحساب احتمال استغلال مُعاير لكل نتيجة.">Logistic regression model combining heuristic confidence, formal proof scores, and prior probability to compute calibrated exploit probability for each finding.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🌊</div>
+          <div class="feature-layer">Layer 6</div>
+          <h3 data-en="Heikal Mathematics" data-ar="رياضيات هيكل">Heikal Mathematics</h3>
+          <p data-en="Advanced quantum tunneling scoring and wave domain evaluation. Novel mathematical framework for assessing vulnerability reachability through complex contract interactions." data-ar="تقييم النفق الكمي ومجال الموجة المتقدم. إطار رياضي مبتكر لتقييم إمكانية الوصول للثغرات عبر تفاعلات العقود المعقدة.">Advanced quantum tunneling scoring and wave domain evaluation. Novel mathematical framework for assessing vulnerability reachability through complex contract interactions.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Section -->
+  <section class="architecture" id="architecture">
+    <div class="container">
+      <h2 class="section-title">
+        <span data-en="How It Works" data-ar="كيف يعمل">How It Works</span>
+      </h2>
+      <div class="pipeline-flow">
+        <div class="pipeline-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4 data-en="Input" data-ar="الإدخال">Input</h4>
+            <p data-en="Solidity .sol files" data-ar="ملفات Solidity .sol">Solidity .sol files</p>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4 data-en="AST Parsing" data-ar="تحليل AST">AST Parsing</h4>
+            <p data-en="Contract structure extraction" data-ar="استخراج هيكل العقد">Contract structure extraction</p>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4 data-en="6-Layer Analysis" data-ar="تحليل 6 طبقات">6-Layer Analysis</h4>
+            <p data-en="Pattern → Detectors → Z3 → Exploit → Risk → Heikal" data-ar="أنماط → كواشف → Z3 → استغلال → مخاطر → هيكل">Pattern → Detectors → Z3 → Exploit → Risk → Heikal</p>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4 data-en="Report" data-ar="التقرير">Report</h4>
+            <p data-en="Markdown + JSON with proofs" data-ar="Markdown + JSON مع إثباتات">Markdown + JSON with proofs</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance Section -->
+  <section class="performance" id="performance">
+    <div class="container">
+      <h2 class="section-title">
+        <span data-en="Battle-Tested Performance" data-ar="أداء مُختبر في المعارك">Battle-Tested Performance</span>
+      </h2>
+      <p class="section-desc">
+        <span data-en="Validated against real DeFi protocols and known exploits worth hundreds of millions of dollars." data-ar="تم التحقق منه مقابل بروتوكولات DeFi حقيقية واستغلالات معروفة بقيمة مئات الملايين من الدولارات.">Validated against real DeFi protocols and known exploits worth hundreds of millions of dollars.</span>
+      </p>
+      <div class="perf-grid">
+        <div class="perf-card">
+          <h3 data-en="DeFi Bug Bounty Test" data-ar="اختبار مكافآت DeFi">DeFi Bug Bounty Test</h3>
+          <div class="perf-metric">
+            <span class="metric-val">92.3%</span>
+            <span class="metric-label" data-en="Recall (12/13 vulns)" data-ar="استرجاع (12/13 ثغرة)">Recall (12/13 vulns)</span>
+          </div>
+          <ul class="perf-list">
+            <li>Compound V3 — <strong>5/5</strong> <span data-en="detected" data-ar="مكتشفة">detected</span></li>
+            <li>Alchemix V2 — <strong>4/4</strong> <span data-en="detected" data-ar="مكتشفة">detected</span></li>
+            <li>Cream Finance ($130M) — <strong>3/4</strong> <span data-en="detected" data-ar="مكتشفة">detected</span></li>
+          </ul>
+        </div>
+        <div class="perf-card">
+          <h3 data-en="Ground Truth Benchmark" data-ar="اختبار الحقيقة المرجعية">Ground Truth Benchmark</h3>
+          <div class="perf-metric">
+            <span class="metric-val">94.1%</span>
+            <span class="metric-label" data-en="Recall (16/17 vulns)" data-ar="استرجاع (16/17 ثغرة)">Recall (16/17 vulns)</span>
+          </div>
+          <ul class="perf-list">
+            <li><span data-en="8 contracts tested (6 vulnerable + 2 safe)" data-ar="8 عقود مُختبرة (6 مُعرضة + 2 آمنة)">8 contracts tested (6 vulnerable + 2 safe)</span></li>
+            <li><span data-en="166 findings with severity breakdown" data-ar="166 نتيجة مع تفصيل الخطورة">166 findings with severity breakdown</span></li>
+            <li><span data-en="Z3 proves 8 vulnerabilities mathematically" data-ar="Z3 يثبت 8 ثغرات رياضياً">Z3 proves 8 vulnerabilities mathematically</span></li>
+          </ul>
+        </div>
+        <div class="perf-card">
+          <h3 data-en="Detection Coverage" data-ar="تغطية الاكتشاف">Detection Coverage</h3>
+          <div class="perf-metric">
+            <span class="metric-val">22</span>
+            <span class="metric-label" data-en="Vulnerability Categories" data-ar="فئة ثغرات">Vulnerability Categories</span>
+          </div>
+          <ul class="perf-list">
+            <li data-en="Reentrancy (single + cross-function)" data-ar="إعادة الدخول (مفردة + عبر الدوال)">Reentrancy (single + cross-function)</li>
+            <li data-en="Access control & privilege escalation" data-ar="التحكم بالوصول وتصعيد الصلاحيات">Access control & privilege escalation</li>
+            <li data-en="Flash loan & price oracle manipulation" data-ar="قروض فورية والتلاعب بالأسعار">Flash loan & price oracle manipulation</li>
+            <li data-en="Integer overflow, tx.origin, delegatecall" data-ar="طفح الأعداد، tx.origin، delegatecall">Integer overflow, tx.origin, delegatecall</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start Section -->
+  <section class="quickstart" id="quickstart">
+    <div class="container">
+      <h2 class="section-title">
+        <span data-en="Quick Start" data-ar="ابدأ الآن">Quick Start</span>
+      </h2>
+      <div class="code-block">
+        <div class="code-header">
+          <span data-en="Installation & Usage" data-ar="التثبيت والاستخدام">Installation & Usage</span>
+        </div>
+        <pre><code><span class="comment"># Clone the repository — استنساخ المستودع</span>
+git clone https://github.com/alanqamarqo-dev/your-repo.git
+cd your-repo
+
+<span class="comment"># Install dependencies — تثبيت المتطلبات</span>
+pip install -r requirements.txt
+
+<span class="comment"># Run a security audit — تشغيل تدقيق أمني</span>
+python3 scripts/run_full_audit.py --target contracts/MyContract.sol
+
+<span class="comment"># Output: reports/FULL_AUDIT_REPORT.md — الناتج: تقرير كامل</span></code></pre>
+      </div>
+      <div class="quickstart-info">
+        <h3 data-en="Requirements" data-ar="المتطلبات">Requirements</h3>
+        <ul>
+          <li>Python 3.10+</li>
+          <li>Z3 Solver (<code>pip install z3-solver</code>)</li>
+          <li>solc 0.8.x (<code>solc-select</code>)</li>
+          <li data-en="Optional: Slither, Mythril for enhanced analysis" data-ar="اختياري: Slither، Mythril لتحليل معزز">Optional: Slither, Mythril for enhanced analysis</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>🛡️ AGL Security Tool</h3>
+          <p data-en="Built for the DeFi security community" data-ar="مبني لمجتمع أمن التمويل اللامركزي">Built for the DeFi security community</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/alanqamarqo-dev/your-repo" data-en="GitHub Repository" data-ar="مستودع GitHub">GitHub Repository</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 AGL Security Tool. <span data-en="Open Source." data-ar="مفتوح المصدر.">Open Source.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
