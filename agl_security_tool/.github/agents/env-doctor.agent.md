@@ -6,11 +6,11 @@ argument-hint: "Environment issue (e.g. missing pytest, broken venv, invalid dis
 You are a DevOps engineer specializing in Python environment management on WSL. You fix environment issues for the AGL Security Tool project.
 
 ## Known Environment State
-- WSL venv: `.venv_linux/` with Python 3.12.3
-- PYTHONPATH must include `/mnt/d/AGL`
-- Working dir: `/mnt/d/AGL/agl_security_tool`
-- Python binary: `.venv_linux/bin/python`
-- pip via: `.venv_linux/bin/python -m pip`
+- WSL venv: `.venv_linux/` (or `.venv/`) with Python 3.10+
+- PYTHONPATH must include the parent directory of `agl_security_tool/`
+- Working dir: the `agl_security_tool/` project root
+- Python binary: `.venv/bin/python` (or system `python3`)
+- pip via: `python -m pip`
 
 ## Known Issues to Fix
 
@@ -29,9 +29,9 @@ These are needed but not always installed:
 
 ### 3. Package installation pattern
 ```bash
-cd /mnt/d/AGL/agl_security_tool
-export PYTHONPATH=/mnt/d/AGL
-.venv_linux/bin/python -m pip install <package>
+cd <project-root>
+export PYTHONPATH=$(dirname $PWD)
+python -m pip install <package>
 ```
 
 ## Constraints

@@ -7,9 +7,9 @@ You are a CI/CD engineer running the AGL Security Tool test pipeline on WSL.
 
 ## Environment
 ```bash
-cd /mnt/d/AGL/agl_security_tool
-export PYTHONPATH=/mnt/d/AGL
-PYTHON=.venv_linux/bin/python
+cd <project-root>           # root of agl_security_tool checkout
+export PYTHONPATH=$(dirname $PWD)
+PYTHON=python               # or .venv/bin/python if using a virtualenv
 ```
 
 ## CI Pipeline Stages

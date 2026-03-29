@@ -19,7 +19,7 @@ Test Structure:
     - Search orchestrator finds profitable sequences
 
 Run:
-    cd d:\\AGL
+    cd <repo-root>
     python -m pytest agl_security_tool/tests/test_layers_1_to_4.py -v
     # Or directly:
     python agl_security_tool/tests/test_layers_1_to_4.py
@@ -32,7 +32,7 @@ import json
 from pathlib import Path
 
 # ── Ensure package is importable ──
-_ROOT = Path(__file__).resolve().parent.parent.parent  # d:\AGL
+_ROOT = Path(__file__).resolve().parent.parent.parent  # repo root
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 _PKG = Path(__file__).resolve().parent.parent  # agl_security_tool

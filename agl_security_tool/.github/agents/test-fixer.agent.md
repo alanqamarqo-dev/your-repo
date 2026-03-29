@@ -13,10 +13,10 @@ Fix: Add pytest-timeout, mock external tools in unit tests, use `skip_llm=True`.
 
 ### 2. test_fix.py has hardcoded Windows paths
 ```python
-LOG = Path(r"D:\AGL\diag_fix_test.log")  # Won't work on WSL/Linux
-SRC = Path(r"C:\Users\Hossam\AppData\...")  # Hardcoded user path
+LOG = Path(r"<hardcoded-path>")  # Won't work on other systems
+SRC = Path(r"<hardcoded-temp-path>")  # Hardcoded user path
 ```
-Fix: Use relative paths or `os.path.join(__file__, ...)`.
+Fix: Use relative paths or `Path(__file__).parent / ...`.
 
 ### 3. test_negative_evidence.py Part 2 runs full pipeline
 `TestFullPipelineNegativeEvidence` calls `audit.scan()` which triggers all 8 layers including external tools.
@@ -36,9 +36,9 @@ Tests share global state (RiskCore loads weights, DetectorRunner is singleton-li
 
 ## WSL Test Commands
 ```bash
-cd /mnt/d/AGL/agl_security_tool
-export PYTHONPATH=/mnt/d/AGL
-.venv_linux/bin/python -m pytest tests/ -v --tb=short
+cd <project-root>
+export PYTHONPATH=$(dirname $PWD)
+python -m pytest tests/ -v --tb=short
 ```
 
 ## Constraints

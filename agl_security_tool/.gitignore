@@ -30,6 +30,16 @@ _*.md
 _*.sh
 _*.txt
 
+# Diagnostics scripts (dev-only)
+_diagnostics/
+
+# Reports with local paths (generated artifacts)
+reports/audit/
+reports/bounty/deep_scan_log.txt
+
+# Pipeline test results (contain local paths)
+artifacts/pipeline_test_result.json
+
 # Artifacts - model files (large)
 artifacts/Qwen2.5-3B-Instruct/
 artifacts/agl-solidity-expert/

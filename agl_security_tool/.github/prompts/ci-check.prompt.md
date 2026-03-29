@@ -6,9 +6,9 @@ argument-hint: "Scope (e.g. full, imports only, detectors only)"
 Run a quick CI health check via WSL. Execute this script:
 
 ```bash
-cd /mnt/d/AGL/agl_security_tool
-export PYTHONPATH=/mnt/d/AGL
-PYTHON=.venv_linux/bin/python
+cd <project-root>           # root of agl_security_tool checkout
+export PYTHONPATH=$(dirname $PWD)
+PYTHON=python               # or .venv/bin/python
 
 # 1. Import check
 echo "=== IMPORTS ===" 

@@ -1506,7 +1506,7 @@ CentralizationRisk(),
 # ── بعد بناء كل الكواشف ──
 
 # 1. تشغيل اختبارات الوحدة
-cd /mnt/d/AGL/agl_security_tool
+cd <project-root>            # root of agl_security_tool checkout
 python -m pytest tests/test_new_detectors.py -v
 
 # 2. تشغيل البنشمارك مع الكواشف الجديدة

@@ -12,16 +12,16 @@ Known issues to check and fix:
 
 Commands to run via WSL:
 ```bash
-cd /mnt/d/AGL/agl_security_tool
-export PYTHONPATH=/mnt/d/AGL
+cd <project-root>
+export PYTHONPATH=$(dirname $PWD)
 
 # Fix invalid distribution
-find .venv_linux -name '~*' -type d -exec rm -rf {} + 2>/dev/null
+find .venv -name '~*' -type d -exec rm -rf {} + 2>/dev/null
 
 # Install missing packages
-.venv_linux/bin/python -m pip install pytest-timeout
+python -m pip install pytest-timeout
 
 # Verify
-.venv_linux/bin/python -m pip check 2>&1 | head -20
-.venv_linux/bin/python -c "from agl_security_tool.detectors import DetectorRunner; print('OK')"
+python -m pip check 2>&1 | head -20
+python -c "from agl_security_tool.detectors import DetectorRunner; print('OK')"
 ```
