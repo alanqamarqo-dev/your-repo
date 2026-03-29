@@ -100,7 +100,7 @@ class EconomicWeaknessDetector:
         weaknesses.extend(self._detect_oracle_staleness(classified, actions))
 
         # ترتيب بالخطورة
-        severity_order = {"critical": 0, "high": 1, "medium": 2, "low": 3}
+        severity_order = {"CRITICAL": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3}
         weaknesses.sort(key=lambda w: (severity_order.get(w.severity, 4), -w.confidence))
 
         # توليد بذور بحث
@@ -209,7 +209,7 @@ class EconomicWeaknessDetector:
             results.append(EconomicWeakness(
                 weakness_id=self._next_id("reent"),
                 weakness_type=WeaknessType.REENTRANCY_DRAIN,
-                severity="critical",
+                severity="CRITICAL",
                 confidence=0.9,
                 exploit_hint=f"Reentrancy: {action.function_name} has CEI violation + sends ETH without guard",
                 exploit_hint_ar=f"ثغرة إعادة الدخول: {action.function_name} ينتهك CEI ويرسل ETH بدون حماية",
@@ -234,7 +234,7 @@ class EconomicWeaknessDetector:
             results.append(EconomicWeakness(
                 weakness_id=self._next_id("reent"),
                 weakness_type=WeaknessType.REENTRANCY_DRAIN,
-                severity="medium",
+                severity="MEDIUM",
                 confidence=0.4,
                 exploit_hint=f"Potential reentrancy in {action.function_name} (has guard, check cross-function)",
                 exploit_hint_ar=f"احتمال إعادة دخول في {action.function_name} (محمية لكن افحص cross-function)",
@@ -282,7 +282,7 @@ class EconomicWeaknessDetector:
                     results.append(EconomicWeakness(
                         weakness_id=self._next_id("invariant"),
                         weakness_type=WeaknessType.INVARIANT_BREAK,
-                        severity="high",
+                        severity="HIGH",
                         confidence=0.5,
                         exploit_hint=f"Shared balance variables in {contract}: {balance_vars[:3]}",
                         exploit_hint_ar=f"متغيرات أرصدة مشتركة في {contract}: {balance_vars[:3]}",
@@ -310,7 +310,7 @@ class EconomicWeaknessDetector:
                 results.append(EconomicWeakness(
                     weakness_id=self._next_id("access"),
                     weakness_type=WeaknessType.ACCESS_LEAK,
-                    severity="critical",
+                    severity="CRITICAL",
                     confidence=0.85,
                     exploit_hint=f"Admin function {action.function_name} has no access control",
                     exploit_hint_ar=f"دالة إدارية {action.function_name} بدون حماية صلاحيات",
@@ -363,7 +363,7 @@ class EconomicWeaknessDetector:
                         results.append(EconomicWeakness(
                             weakness_id=self._next_id("xfunc"),
                             weakness_type=WeaknessType.CROSS_FUNCTION_STATE,
-                            severity="high",
+                            severity="HIGH",
                             confidence=0.65,
                             exploit_hint=(
                                 f"Cross-function reentrancy: {a1.function_name} writes "
@@ -402,7 +402,7 @@ class EconomicWeaknessDetector:
                 results.append(EconomicWeakness(
                     weakness_id=self._next_id("oracle_manip"),
                     weakness_type=WeaknessType.ORACLE_MANIPULATION,
-                    severity="high",
+                    severity="HIGH",
                     confidence=0.6,
                     exploit_hint=f"Oracle-dependent {action.function_name} + flash loan available",
                     exploit_hint_ar=f"دالة تعتمد على oracle {action.function_name} + قرض فلاش متاح",
@@ -439,7 +439,7 @@ class EconomicWeaknessDetector:
                 results.append(EconomicWeakness(
                     weakness_id=self._next_id("flash"),
                     weakness_type=WeaknessType.FLASH_LOAN_VECTOR,
-                    severity="high",
+                    severity="HIGH",
                     confidence=0.55,
                     exploit_hint=f"Flash loan on {contract} with {len(state_changes)} callable state-changing functions",
                     exploit_hint_ar=f"قرض فلاش على {contract} مع {len(state_changes)} دالة تغيّر الحالة",
@@ -477,7 +477,7 @@ class EconomicWeaknessDetector:
                 results.append(EconomicWeakness(
                     weakness_id=self._next_id("liq"),
                     weakness_type=WeaknessType.LIQUIDITY_ASYMMETRY,
-                    severity="medium",
+                    severity="MEDIUM",
                     confidence=0.4,
                     exploit_hint=f"Contract {contract} accepts deposits but has no public withdraw",
                     exploit_hint_ar=f"العقد {contract} يقبل إيداعات لكن لا يوجد سحب عام",
@@ -497,7 +497,7 @@ class EconomicWeaknessDetector:
                     results.append(EconomicWeakness(
                         weakness_id=self._next_id("liq"),
                         weakness_type=WeaknessType.LIQUIDITY_ASYMMETRY,
-                        severity="high",
+                        severity="HIGH",
                         confidence=0.5,
                         exploit_hint=f"Contract {contract} has public withdraws without deposits",
                         exploit_hint_ar=f"العقد {contract} فيه سحب عام بدون إيداع",
@@ -549,7 +549,7 @@ class EconomicWeaknessDetector:
                 results.append(EconomicWeakness(
                     weakness_id=self._next_id("donation"),
                     weakness_type=WeaknessType.DONATION_ATTACK,
-                    severity="high",
+                    severity="HIGH",
                     confidence=0.5,
                     exploit_hint=f"Contract {contract} uses shares + balance — donation may skew rate",
                     exploit_hint_ar=f"العقد {contract} يستخدم أسهم + رصيد — التبرع قد يشوّه السعر",
@@ -587,7 +587,7 @@ class EconomicWeaknessDetector:
                 results.append(EconomicWeakness(
                     weakness_id=self._next_id("first_dep"),
                     weakness_type=WeaknessType.FIRST_DEPOSITOR,
-                    severity="medium",
+                    severity="MEDIUM",
                     confidence=0.4,
                     exploit_hint=f"First depositor attack on {action.function_name} — supply/share manipulation",
                     exploit_hint_ar=f"هجوم أول مودع على {action.function_name} — تلاعب بالأسهم",
@@ -625,7 +625,7 @@ class EconomicWeaknessDetector:
                     results.append(EconomicWeakness(
                         weakness_id=self._next_id("round"),
                         weakness_type=WeaknessType.ROUNDING_ERROR,
-                        severity="low",
+                        severity="LOW",
                         confidence=0.3,
                         exploit_hint=f"Rounding in {action.function_name} with {ratio_vars[:2]}",
                         exploit_hint_ar=f"خطأ تقريب في {action.function_name} مع {ratio_vars[:2]}",
@@ -659,7 +659,7 @@ class EconomicWeaknessDetector:
                     results.append(EconomicWeakness(
                         weakness_id=self._next_id("reward"),
                         weakness_type=WeaknessType.REWARD_MISPRICING,
-                        severity="medium",
+                        severity="MEDIUM",
                         confidence=0.4,
                         exploit_hint=f"Reward claim {action.function_name} may exceed staking cost",
                         exploit_hint_ar=f"مطالبة المكافأة {action.function_name} قد تتجاوز تكلفة الإيداع",
@@ -692,7 +692,7 @@ class EconomicWeaknessDetector:
                     results.append(EconomicWeakness(
                         weakness_id=self._next_id("price"),
                         weakness_type=WeaknessType.PRICE_IMBALANCE,
-                        severity="high",
+                        severity="HIGH",
                         confidence=0.55,
                         exploit_hint=f"Swap {action.function_name} + oracle on same contract",
                         exploit_hint_ar=f"مبادلة {action.function_name} + أوراكل على نفس العقد",
@@ -718,7 +718,7 @@ class EconomicWeaknessDetector:
                 results.append(EconomicWeakness(
                     weakness_id=self._next_id("collat"),
                     weakness_type=WeaknessType.UNDER_COLLATERALIZATION,
-                    severity="high",
+                    severity="HIGH",
                     confidence=0.45,
                     exploit_hint=f"Borrow {action.function_name} — check collateral requirements",
                     exploit_hint_ar=f"اقتراض {action.function_name} — افحص متطلبات الضمان",
@@ -755,7 +755,7 @@ class EconomicWeaknessDetector:
                     results.append(EconomicWeakness(
                         weakness_id=self._next_id("stale"),
                         weakness_type=WeaknessType.ORACLE_STALENESS,
-                        severity="medium",
+                        severity="MEDIUM",
                         confidence=0.5,
                         exploit_hint=f"{action.function_name} reads oracle without freshness check",
                         exploit_hint_ar=f"{action.function_name} يقرأ الأوراكل بدون فحص الحداثة",

@@ -35,6 +35,18 @@ except ImportError:
     from agl_security_tool.detectors import ParsedContract, ParsedFunction, Operation, OpType
 
 
+def _safe_op_value(op_type) -> str:
+    """استخراج القيمة النصية من OpType بشكل آمن — يتجنب dual-module identity bug"""
+    return op_type.value if hasattr(op_type, 'value') else str(op_type)
+
+
+# String values for safe comparison
+_STATE_READ_VALUES = {OpType.STATE_READ.value, OpType.MAPPING_ACCESS.value}
+_STATE_WRITE_VALUE = OpType.STATE_WRITE.value
+_EXTERNAL_CALL_VALUES = {OpType.EXTERNAL_CALL.value, OpType.EXTERNAL_CALL_ETH.value, OpType.DELEGATECALL.value}
+_EMIT_VALUE = OpType.EMIT.value
+
+
 class FunctionEffectModeler:
     """
     يبني نموذج ΔState = f(inputs) لكل دالة.
@@ -156,13 +168,14 @@ class FunctionEffectModeler:
         state_var_names = set(contract.state_vars.keys())
 
         for op in func.operations:
+            op_val = _safe_op_value(op.op_type)
             # State reads
-            if op.op_type in (OpType.STATE_READ, OpType.MAPPING_ACCESS):
+            if op_val in _STATE_READ_VALUES:
                 if op.target and op.target not in effect.reads:
                     effect.reads.append(op.target)
 
             # State writes
-            elif op.op_type == OpType.STATE_WRITE:
+            elif op_val == _STATE_WRITE_VALUE:
                 if op.target and op.target not in effect.writes:
                     effect.writes.append(op.target)
 
@@ -197,9 +210,9 @@ class FunctionEffectModeler:
         استخراج التأثيرات الخارجية (calls, ETH, events).
         """
         for op in func.operations:
+            op_val = _safe_op_value(op.op_type)
             # External calls
-            if op.op_type in (OpType.EXTERNAL_CALL, OpType.EXTERNAL_CALL_ETH,
-                              OpType.DELEGATECALL):
+            if op_val in _EXTERNAL_CALL_VALUES:
                 call_info = {
                     "target": op.target,
                     "type": op.op_type.value,
@@ -208,7 +221,7 @@ class FunctionEffectModeler:
                 }
 
                 # External reads (e.g., calling oracle.getPrice())
-                if op.op_type == OpType.STATICCALL or (
+                if op_val == OpType.STATICCALL.value or (
                     not op.sends_eth and 'get' in (op.target or '').lower()
                 ):
                     if op.target not in effect.reads_from_external:
@@ -219,7 +232,7 @@ class FunctionEffectModeler:
                     effect.eth_sent = True
 
             # Events
-            elif op.op_type == OpType.EMIT:
+            elif op_val == _EMIT_VALUE:
                 if op.target and op.target not in effect.events_emitted:
                     effect.events_emitted.append(op.target)
 

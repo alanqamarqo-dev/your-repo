@@ -219,6 +219,9 @@ class ActionClassifier:
         """هل تؤثر على δState بطريقة قد تخلق فرص"""
         if not action.state_writes:
             return False
+        # Protected functions are not externally manipulable
+        if action.requires_access:
+            return False
         # تكتب variables حساسة
         sensitive_vars = {"balance", "reserve", "price", "rate", "supply", "debt", "collateral"}
         for var in action.state_writes:
@@ -228,6 +231,9 @@ class ActionClassifier:
 
     def _could_use_flash_loan(self, action: Action) -> bool:
         """هل يمكن استخدام flash loan لتضخيم هذا الـ Action"""
+        # Protected functions cannot be flash-loan attacked by external callers
+        if action.requires_access:
+            return False
         # إذا الدالة تعتمد على مبلغ كبير + ليست payable
         name_lower = action.function_name.lower()
         if any(k in name_lower for k in ("liquidat", "swap", "borrow")):
@@ -298,43 +304,43 @@ class ActionClassifier:
     def _assess_severity(self, action: Action) -> str:
         """تقييم خطورة الـ Action"""
         if not action.attack_types:
-            return "info"
+            return "INFO"
 
         # Critical
         if AttackType.REENTRANCY in action.attack_types and action.sends_eth:
-            return "critical"
+            return "CRITICAL"
         if AttackType.ACCESS_ESCALATION in action.attack_types:
-            return "critical"
+            return "CRITICAL"
         if action.has_delegatecall and not action.requires_access:
-            return "critical"
+            return "CRITICAL"
 
         # High
         if AttackType.REENTRANCY in action.attack_types:
-            return "high"
+            return "HIGH"
         if AttackType.CROSS_FUNCTION in action.attack_types:
-            return "high"
+            return "HIGH"
         if AttackType.DIRECT_PROFIT in action.attack_types and action.sends_eth:
-            return "high"
+            return "HIGH"
         if AttackType.FLASH_LOAN in action.attack_types and AttackType.PRICE_MANIPULATION in action.attack_types:
-            return "high"
+            return "HIGH"
 
         # Medium
         if AttackType.PRICE_MANIPULATION in action.attack_types:
-            return "medium"
+            return "MEDIUM"
         if AttackType.STATE_MANIPULATION in action.attack_types:
-            return "medium"
+            return "MEDIUM"
         if AttackType.FRONT_RUNNING in action.attack_types:
-            return "medium"
+            return "MEDIUM"
         if AttackType.DONATION in action.attack_types:
-            return "medium"
+            return "MEDIUM"
 
         # Low
         if AttackType.GRIEFING in action.attack_types:
-            return "low"
+            return "LOW"
         if AttackType.DIRECT_PROFIT in action.attack_types:
-            return "low"
+            return "LOW"
 
-        return "info"
+        return "INFO"
 
     # ═══════════════════════════════════════════════════════════
     #  4. Profit Assessment

@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" x-data="aglApp()" :dir="lang === 'ar' ? 'rtl' : 'ltr'" :lang="lang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGL Security — Smart Contract Auditor</title>
+    <meta name="description" content="أداة تحليل أمان العقود الذكية — 7-Layer Smart Contract Security Analysis">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        sidebar: '#171717',
+                        'sidebar-hover': '#212121',
+                        'sidebar-active': '#2a2a2a',
+                        main: '#212121',
+                        'main-darker': '#1a1a1a',
+                        surface: '#2a2a2a',
+                        'surface-hover': '#333333',
+                        border: '#333333',
+                        'border-light': '#444444',
+                        accent: '#6366f1',
+                        'accent-hover': '#818cf8',
+                        'accent-dim': 'rgba(99,102,241,0.15)',
+                        'text-primary': '#ececec',
+                        'text-secondary': '#8e8ea0',
+                        'text-muted': '#666666',
+                        'sev-critical': '#ef4444',
+                        'sev-high': '#f97316',
+                        'sev-medium': '#eab308',
+                        'sev-low': '#22c55e',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Tajawal', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                        arabic: ['Tajawal', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="/static/css/chat.css">
+</head>
+
+<body class="bg-main text-text-primary font-sans antialiased">
+
+<!-- ═══════════════════════════════════════════════════════
+     AUTH GATE — Login/Register Screen
+     ═══════════════════════════════════════════════════════ -->
+<template x-if="!authenticated">
+    <div class="min-h-screen flex items-center justify-center bg-main-darker p-4">
+        <div class="w-full max-w-sm">
+            <!-- Logo -->
+            <div class="text-center mb-8">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-accent to-purple-500 flex items-center justify-center mb-4 shadow-lg shadow-accent/20">
+                    <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-semibold text-text-primary">AGL Security</h1>
+                <p class="text-text-secondary text-sm mt-1" x-text="t('subtitle')"></p>
+            </div>
+
+            <!-- Card -->
+            <div class="bg-surface rounded-2xl p-6 border border-border">
+                <!-- Tabs -->
+                <div class="flex rounded-xl bg-main border border-border mb-5 p-0.5">
+                    <button @click="authMode = 'login'"
+                        :class="authMode === 'login' ? 'bg-accent text-white shadow-md' : 'text-text-secondary hover:text-text-primary'"
+                        class="flex-1 py-2 rounded-[10px] text-sm font-medium transition-all duration-200"
+                        x-text="t('login')"></button>
+                    <button @click="authMode = 'register'"
+                        :class="authMode === 'register' ? 'bg-accent text-white shadow-md' : 'text-text-secondary hover:text-text-primary'"
+                        class="flex-1 py-2 rounded-[10px] text-sm font-medium transition-all duration-200"
+                        x-text="t('register')"></button>
+                </div>
+
+                <form @submit.prevent="submitAuth()" class="space-y-3">
+                    <template x-if="authMode === 'register'">
+                        <input type="text" x-model="authUsername" required
+                            class="auth-input" :placeholder="t('username_label')">
+                    </template>
+                    <input type="email" x-model="authEmail" required
+                        class="auth-input" :placeholder="t('email')" dir="ltr">
+                    <input type="password" x-model="authPassword" required minlength="6"
+                        class="auth-input" placeholder="••••••••">
+
+                    <template x-if="authError">
+                        <div class="text-sev-critical text-xs p-2 rounded-lg bg-sev-critical/10" x-text="authError"></div>
+                    </template>
+
+                    <button type="submit" :disabled="authLoading"
+                        class="w-full py-2.5 rounded-xl bg-accent hover:bg-accent-hover text-white font-medium text-sm transition-all disabled:opacity-50">
+                        <span x-show="!authLoading" x-text="authMode === 'login' ? t('login') : t('register')"></span>
+                        <span x-show="authLoading" class="flex items-center justify-center gap-2">
+                            <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     MAIN APP — ChatGPT-Style Layout
+     ═══════════════════════════════════════════════════════ -->
+<template x-if="authenticated">
+    <div class="h-screen flex overflow-hidden">
+
+        <!-- ════ SIDEBAR ════ -->
+        <aside class="sidebar-panel flex flex-col bg-sidebar"
+               :class="sidebarOpen ? 'w-[280px]' : 'w-0 overflow-hidden'"
+               style="transition: width 0.2s ease">
+
+            <!-- Sidebar Header -->
+            <div class="p-3 flex items-center justify-between border-b border-border/50">
+                <button @click="startNewScan()" class="flex-1 flex items-center gap-2 px-3 py-2.5 rounded-xl border border-border hover:bg-sidebar-hover transition-colors text-sm text-text-primary">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                    <span x-text="t('new_scan')"></span>
+                </button>
+                <button @click="sidebarOpen = false" class="ms-2 p-2 rounded-lg hover:bg-sidebar-hover text-text-secondary transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/></svg>
+                </button>
+            </div>
+
+            <!-- Layer Buttons -->
+            <div class="p-3 border-b border-border/50">
+                <div class="text-[11px] uppercase tracking-wider text-text-muted font-semibold mb-2 px-1" x-text="t('scan_layers')"></div>
+                <div class="space-y-0.5">
+                    <template x-for="layer in layerList" :key="layer.key">
+                        <button @click="toggleLayer(layer.key)"
+                            :class="selectedLayers.includes(layer.key)
+                                ? 'bg-accent/15 text-accent border-accent/30'
+                                : 'text-text-secondary hover:bg-sidebar-hover hover:text-text-primary border-transparent'"
+                            class="layer-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all border">
+                            <span class="text-base leading-none" x-text="layer.icon"></span>
+                            <span class="flex-1 text-start" x-text="lang === 'ar' ? layer.name_ar : layer.name"></span>
+                            <span x-show="selectedLayers.includes(layer.key)" class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                        </button>
+                    </template>
+                    <!-- Full Scan shortcut -->
+                    <button @click="selectAllLayers()"
+                        :class="selectedLayers.length === layerList.length
+                            ? 'bg-gradient-to-r from-accent/20 to-purple-500/20 text-accent border-accent/30'
+                            : 'text-text-secondary hover:bg-sidebar-hover hover:text-text-primary border-transparent'"
+                        class="layer-btn w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all border mt-1">
+                        <span class="text-base leading-none">⚡</span>
+                        <span class="flex-1 text-start" x-text="t('full_scan')"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scan History -->
+            <div class="flex-1 overflow-y-auto p-3 sidebar-scroll">
+                <div class="text-[11px] uppercase tracking-wider text-text-muted font-semibold mb-2 px-1" x-text="t('history')"></div>
+
+                <template x-if="scanHistory.length === 0">
+                    <div class="text-text-muted text-xs text-center py-6">
+                        <span x-text="t('no_scans')"></span>
+                    </div>
+                </template>
+
+                <div class="space-y-0.5">
+                    <template x-for="scan in scanHistory" :key="scan.id">
+                        <button @click="viewScan(scan.id)"
+                            :class="currentScanId === scan.id ? 'bg-sidebar-active' : 'hover:bg-sidebar-hover'"
+                            class="w-full group flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs transition-all relative">
+                            <!-- Status indicator -->
+                            <span class="w-2 h-2 rounded-full flex-shrink-0"
+                                :class="{
+                                    'bg-sev-low': scan.status === 'completed',
+                                    'bg-accent animate-pulse': scan.status === 'running',
+                                    'bg-sev-critical': scan.status === 'failed',
+                                    'bg-text-muted': scan.status === 'pending',
+                                }"></span>
+                            <!-- Name -->
+                            <span class="flex-1 truncate text-start text-text-primary font-mono text-[11px]" dir="ltr" x-text="scan.target_name"></span>
+                            <!-- Findings badge -->
+                            <span x-show="scan.total_findings > 0"
+                                class="text-[10px] px-1.5 py-0.5 rounded bg-surface text-text-secondary"
+                                x-text="scan.total_findings"></span>
+                        </button>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Sidebar Footer -->
+            <div class="p-3 border-t border-border/50 space-y-1">
+                <!-- API Explorer Toggle -->
+                <button @click="activePanel = activePanel === 'api' ? 'main' : 'api'"
+                    :class="activePanel === 'api' ? 'bg-accent/15 text-accent' : 'text-text-secondary hover:bg-sidebar-hover'"
+                    class="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
+                    <span x-text="t('api_explorer')"></span>
+                </button>
+                <!-- Language Toggle -->
+                <button @click="toggleLang()"
+                    class="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-text-secondary hover:bg-sidebar-hover transition-all">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802"/></svg>
+                    <span x-text="lang === 'ar' ? 'English' : 'العربية'"></span>
+                </button>
+                <!-- User / Logout -->
+                <button @click="logout()"
+                    class="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-text-secondary hover:bg-sidebar-hover transition-all">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/></svg>
+                    <span x-text="username || t('logout')"></span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ════ MAIN CONTENT AREA ════ -->
+        <main class="flex-1 flex flex-col min-w-0">
+
+            <!-- Top Bar (minimal) -->
+            <header class="h-12 flex items-center px-4 border-b border-border/30">
+                <button x-show="!sidebarOpen" @click="sidebarOpen = true" class="p-2 rounded-lg hover:bg-surface text-text-secondary transition-colors me-2">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/></svg>
+                </button>
+                <h2 class="text-sm font-medium text-text-secondary" x-text="panelTitle"></h2>
+                <div class="flex-1"></div>
+                <!-- Mini status -->
+                <div x-show="currentScan && currentScan.status === 'running'" class="flex items-center gap-2 text-xs text-accent">
+                    <svg class="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                    <span x-text="t('scanning')"></span>
+                    <span x-text="(currentScan.progress || 0) + '%'"></span>
+                </div>
+            </header>
+
+            <!-- ══ MAIN PANEL ══ -->
+            <div x-show="activePanel === 'main'" class="flex-1 flex flex-col overflow-hidden">
+
+                <!-- Scrollable Content Area -->
+                <div class="flex-1 overflow-y-auto main-scroll" x-ref="mainScroll">
+                    <div class="max-w-3xl mx-auto px-4 py-6">
+
+                        <!-- ═══ WELCOME STATE ═══ -->
+                        <template x-if="view === 'welcome'">
+                            <div class="flex flex-col items-center justify-center min-h-[60vh] text-center">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-purple-500 flex items-center justify-center mb-6 shadow-lg shadow-accent/20">
+                                    <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+                                    </svg>
+                                </div>
+                                <h1 class="text-2xl font-semibold mb-2" x-text="t('welcome_title')"></h1>
+                                <p class="text-text-secondary text-sm max-w-md leading-relaxed" x-text="t('welcome_desc')"></p>
+
+                                <!-- Quick feature cards -->
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-8 w-full max-w-lg">
+                                    <div class="feature-card bg-surface rounded-xl p-4 text-center border border-border/50">
+                                        <div class="text-2xl mb-2">🔍</div>
+                                        <div class="text-xs font-medium text-text-primary" x-text="t('feat_detectors')"></div>
+                                        <div class="text-[10px] text-text-muted mt-0.5" x-text="t('feat_detectors_desc')"></div>
+                                    </div>
+                                    <div class="feature-card bg-surface rounded-xl p-4 text-center border border-border/50">
+                                        <div class="text-2xl mb-2">🧮</div>
+                                        <div class="text-xs font-medium text-text-primary" x-text="t('feat_z3')"></div>
+                                        <div class="text-[10px] text-text-muted mt-0.5" x-text="t('feat_z3_desc')"></div>
+                                    </div>
+                                    <div class="feature-card bg-surface rounded-xl p-4 text-center border border-border/50">
+                                        <div class="text-2xl mb-2">🌀</div>
+                                        <div class="text-xs font-medium text-text-primary" x-text="t('feat_heikal')"></div>
+                                        <div class="text-[10px] text-text-muted mt-0.5" x-text="t('feat_heikal_desc')"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- ═══ SCANNING STATE ═══ -->
+                        <template x-if="view === 'scanning'">
+                            <div class="space-y-6 py-8">
+                                <!-- Scan target info -->
+                                <div class="bg-surface rounded-2xl p-5 border border-border/50">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-accent animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium font-mono" dir="ltr" x-text="currentScan?.target_name || 'Scanning...'"></div>
+                                            <div class="text-xs text-text-secondary" x-text="currentScan?.scan_mode || ''"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Progress bar -->
+                                    <div class="relative h-2 rounded-full bg-main-darker overflow-hidden mb-2">
+                                        <div class="absolute inset-y-0 start-0 rounded-full bg-gradient-to-r from-accent to-purple-500 transition-all duration-500 progress-glow"
+                                            :style="`width: ${currentScan?.progress || 0}%`"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-text-muted">
+                                        <span x-text="currentScan?.current_layer || '...'"></span>
+                                        <span x-text="(currentScan?.progress || 0) + '%'"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Layer Pipeline -->
+                                <div class="space-y-2">
+                                    <template x-for="(layer, idx) in scanPipelineLayers" :key="idx">
+                                        <div class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300"
+                                            :class="layer.status === 'done' ? 'bg-sev-low/5' : layer.status === 'active' ? 'bg-accent/5' : 'opacity-40'">
+                                            <!-- Status icon -->
+                                            <div class="w-6 h-6 flex items-center justify-center flex-shrink-0">
+                                                <template x-if="layer.status === 'done'">
+                                                    <svg class="w-5 h-5 text-sev-low" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                                                </template>
+                                                <template x-if="layer.status === 'active'">
+                                                    <svg class="w-5 h-5 text-accent animate-spin" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                                                </template>
+                                                <template x-if="layer.status === 'pending'">
+                                                    <div class="w-2 h-2 rounded-full bg-text-muted"></div>
+                                                </template>
+                                            </div>
+                                            <!-- Layer info -->
+                                            <span class="text-xs font-medium flex-1" x-text="layer.label"></span>
+                                            <span class="text-[10px] text-text-muted" x-text="layer.detail || ''"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <!-- Live Counters -->
+                                <div class="flex gap-3 justify-center">
+                                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-sev-critical"></span>
+                                        <span class="text-text-secondary" x-text="currentScan?.critical_count || 0"></span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-sev-high"></span>
+                                        <span class="text-text-secondary" x-text="currentScan?.high_count || 0"></span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-sev-medium"></span>
+                                        <span class="text-text-secondary" x-text="currentScan?.medium_count || 0"></span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface text-xs">
+                                        <span class="w-2 h-2 rounded-full bg-sev-low"></span>
+                                        <span class="text-text-secondary" x-text="currentScan?.low_count || 0"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- ═══ RESULTS STATE ═══ -->
+                        <template x-if="view === 'results' && currentScan">
+                            <div class="space-y-6 py-6 results-reveal">
+
+                                <!-- Score Header -->
+                                <div class="bg-surface rounded-2xl p-6 border border-border/50">
+                                    <div class="flex items-center gap-4 mb-5">
+                                        <div class="relative w-16 h-16 flex-shrink-0">
+                                            <svg viewBox="0 0 36 36" class="w-16 h-16 -rotate-90">
+                                                <circle cx="18" cy="18" r="15.5" fill="none" stroke="#333" stroke-width="3"/>
+                                                <circle cx="18" cy="18" r="15.5" fill="none"
+                                                    :stroke="scoreColor(currentScan.security_score)"
+                                                    stroke-width="3" stroke-linecap="round"
+                                                    :stroke-dasharray="`${(currentScan.security_score / 100) * 97.4} 97.4`"/>
+                                            </svg>
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <span class="text-lg font-bold" :style="`color: ${scoreColor(currentScan.security_score)}`" x-text="Math.round(currentScan.security_score)"></span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-mono font-medium" dir="ltr" x-text="currentScan.target_name"></div>
+                                            <div class="text-xs text-text-secondary mt-0.5" x-text="currentScan.scan_mode + ' • ' + (currentScan.duration_sec || 0).toFixed(1) + 's'"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Severity bars -->
+                                    <div class="grid grid-cols-4 gap-3">
+                                        <template x-for="sev in ['critical', 'high', 'medium', 'low']" :key="sev">
+                                            <div class="text-center">
+                                                <div class="text-lg font-bold"
+                                                    :class="'text-sev-' + sev"
+                                                    x-text="currentScan[sev + '_count'] || 0"></div>
+                                                <div class="text-[10px] text-text-muted uppercase tracking-wider" x-text="t(sev)"></div>
+                                                <div class="h-1 rounded-full mt-1.5"
+                                                    :class="'bg-sev-' + sev + '/30'"
+                                                    ><div class="h-full rounded-full transition-all duration-700"
+                                                        :class="'bg-sev-' + sev"
+                                                        :style="`width: ${sevPercent(sev)}%`"></div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <!-- Heikal Scores (if available) -->
+                                <template x-if="hasHeikal()">
+                                    <div class="bg-surface rounded-2xl p-5 border border-border/50">
+                                        <h3 class="text-xs font-semibold uppercase tracking-wider text-text-muted mb-4 flex items-center gap-2">
+                                            <span>🌀</span>
+                                            <span x-text="t('heikal_math')"></span>
+                                        </h3>
+                                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                            <template x-for="h in heikalBars" :key="h.key">
+                                                <div class="text-center">
+                                                    <div class="text-sm font-bold text-accent" x-text="(h.value || 0).toFixed(3)"></div>
+                                                    <div class="text-[10px] text-text-muted mt-0.5" x-text="h.label"></div>
+                                                    <div class="h-1 rounded-full bg-accent/20 mt-1.5">
+                                                        <div class="h-full rounded-full bg-accent transition-all duration-700"
+                                                            :style="`width: ${Math.min(100, (h.value || 0) * 100)}%`"></div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <!-- Findings List -->
+                                <div class="space-y-2">
+                                    <h3 class="text-xs font-semibold uppercase tracking-wider text-text-muted mb-2 flex items-center gap-2">
+                                        <span>🔍</span>
+                                        <span x-text="t('findings')"></span>
+                                        <span class="text-text-muted">(<span x-text="findings.length"></span>)</span>
+                                    </h3>
+
+                                    <template x-if="findings.length === 0">
+                                        <div class="text-center py-8 text-text-muted text-sm">
+                                            <span>✅</span>
+                                            <span x-text="t('no_findings')"></span>
+                                        </div>
+                                    </template>
+
+                                    <template x-for="(f, idx) in findings" :key="idx">
+                                        <div class="finding-card bg-surface rounded-xl border border-border/50 overflow-hidden">
+                                            <button @click="f._open = !f._open" class="w-full flex items-center gap-3 p-4 text-start hover:bg-surface-hover transition-colors">
+                                                <!-- Severity dot -->
+                                                <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" :class="sevDotClass(f.severity)"></span>
+                                                <!-- Title -->
+                                                <span class="flex-1 text-sm font-medium" x-text="f.title || f.vulnerability_type || f.name || 'Finding #' + (idx+1)"></span>
+                                                <!-- Badge -->
+                                                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold" :class="sevBadgeClass(f.severity)" x-text="f.severity"></span>
+                                                <!-- Chevron -->
+                                                <svg :class="f._open ? 'rotate-180' : ''" class="w-4 h-4 text-text-muted transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                            </button>
+                                            <div x-show="f._open" x-collapse class="px-4 pb-4 border-t border-border/30">
+                                                <div class="pt-3 space-y-3 text-xs">
+                                                    <!-- Description -->
+                                                    <div x-show="f.description" class="text-text-secondary leading-relaxed" x-text="f.description"></div>
+                                                    <!-- Function -->
+                                                    <div x-show="f.function_name" class="flex items-center gap-2">
+                                                        <span class="text-text-muted">Function:</span>
+                                                        <code class="font-mono text-accent" x-text="f.function_name"></code>
+                                                    </div>
+                                                    <!-- Line -->
+                                                    <div x-show="f.line_number" class="flex items-center gap-2">
+                                                        <span class="text-text-muted">Line:</span>
+                                                        <code class="font-mono text-text-primary" x-text="f.line_number"></code>
+                                                    </div>
+                                                    <!-- Z3 Proof -->
+                                                    <template x-if="f.z3_proof || f.formal_proof">
+                                                        <div class="bg-main-darker rounded-lg p-3 font-mono text-[11px] text-sev-low overflow-x-auto" dir="ltr">
+                                                            <div class="text-text-muted mb-1">Z3 Proof:</div>
+                                                            <pre x-text="f.z3_proof || f.formal_proof"></pre>
+                                                        </div>
+                                                    </template>
+                                                    <!-- Exploit Chain -->
+                                                    <template x-if="f.exploit_chain">
+                                                        <div class="bg-sev-critical/5 rounded-lg p-3 border border-sev-critical/20">
+                                                            <div class="text-sev-critical text-[10px] font-bold mb-1">💀 Exploit Chain</div>
+                                                            <div class="text-text-secondary text-[11px]" x-text="typeof f.exploit_chain === 'string' ? f.exploit_chain : JSON.stringify(f.exploit_chain, null, 2)"></div>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <!-- Attack Simulations -->
+                                <template x-if="attacks.length > 0">
+                                    <div class="space-y-2">
+                                        <h3 class="text-xs font-semibold uppercase tracking-wider text-text-muted mb-2 flex items-center gap-2">
+                                            <span>💀</span>
+                                            <span x-text="t('attacks')"></span>
+                                            <span class="text-text-muted">(<span x-text="attacks.length"></span>)</span>
+                                        </h3>
+                                        <template x-for="(a, idx) in attacks" :key="idx">
+                                            <div class="bg-surface rounded-xl p-4 border border-border/50">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <div class="flex items-center gap-2 text-xs">
+                                                        <span x-text="a.is_profitable ? '💰' : '❌'"></span>
+                                                        <span class="font-medium" x-text="a.attack_type || 'Attack #' + (idx+1)"></span>
+                                                    </div>
+                                                    <span class="text-xs font-bold" dir="ltr"
+                                                        :class="a.is_profitable ? 'text-sev-low' : 'text-text-muted'"
+                                                        x-text="a.is_profitable ? '$' + formatNumber(a.net_profit_usd) : t('not_profitable')"></span>
+                                                </div>
+                                                <div class="h-1.5 rounded-full bg-main-darker overflow-hidden">
+                                                    <div class="h-full rounded-full transition-all duration-700"
+                                                        :class="a.is_profitable ? 'bg-gradient-to-r from-sev-low to-emerald-400' : 'bg-text-muted/20'"
+                                                        :style="`width: ${Math.min(100, (a.net_profit_usd / maxProfit) * 100)}%`"></div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+
+                                <!-- Export Buttons -->
+                                <div class="flex gap-2 justify-center pt-4">
+                                    <button @click="exportJSON()" class="export-btn">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                                        JSON
+                                    </button>
+                                    <button @click="exportMarkdown()" class="export-btn">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                                        Markdown
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- ═══ ERROR STATE ═══ -->
+                        <template x-if="view === 'error'">
+                            <div class="flex flex-col items-center justify-center min-h-[50vh] text-center">
+                                <div class="w-14 h-14 rounded-2xl bg-sev-critical/15 flex items-center justify-center mb-4">
+                                    <svg class="w-7 h-7 text-sev-critical" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                                </div>
+                                <h2 class="text-lg font-semibold text-sev-critical mb-2" x-text="t('scan_failed')"></h2>
+                                <p class="text-text-secondary text-sm" x-text="currentScan?.error_message || 'Unknown error'"></p>
+                                <button @click="startNewScan()" class="mt-4 px-4 py-2 rounded-xl bg-accent text-white text-sm font-medium hover:bg-accent-hover transition-colors" x-text="t('try_again')"></button>
+                            </div>
+                        </template>
+
+                    </div>
+                </div>
+
+                <!-- ═══ INPUT BAR (bottom, ChatGPT-style) ═══ -->
+                <div class="border-t border-border/30 p-4 bg-main">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="relative bg-surface rounded-2xl border border-border focus-within:border-accent/50 transition-colors"
+                             @dragover.prevent="isDragging = true" @dragleave.prevent="isDragging = false"
+                             @drop.prevent="handleDrop($event)"
+                             :class="isDragging ? 'border-accent bg-accent/5' : ''">
+
+                            <!-- Drag overlay -->
+                            <div x-show="isDragging" class="absolute inset-0 rounded-2xl bg-accent/10 flex items-center justify-center z-10 pointer-events-none">
+                                <span class="text-accent text-sm font-medium" x-text="t('drop_file')"></span>
+                            </div>
+
+                            <!-- File preview -->
+                            <div x-show="selectedFile" class="flex items-center gap-2 px-4 pt-3 pb-1">
+                                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent/10 text-accent text-xs">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                                    <span x-text="selectedFile?.name" class="font-mono"></span>
+                                    <button @click="selectedFile = null" class="hover:text-white transition-colors">&times;</button>
+                                </div>
+                            </div>
+
+                            <div class="flex items-end gap-2 p-3">
+                                <!-- File upload button -->
+                                <input type="file" x-ref="fileInput" @change="selectedFile = $event.target.files[0]" accept=".sol,.zip" class="hidden">
+                                <button @click="$refs.fileInput.click()" class="input-action-btn flex-shrink-0" :title="t('upload_file')">
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.122 2.122"/></svg>
+                                </button>
+
+                                <!-- URL input -->
+                                <input type="text" x-model="urlInput"
+                                    class="flex-1 bg-transparent text-sm text-text-primary placeholder-text-muted outline-none resize-none py-1.5"
+                                    :placeholder="t('input_placeholder')"
+                                    dir="ltr"
+                                    @keydown.enter="startScan()">
+
+                                <!-- Send / Scan button -->
+                                <button @click="startScan()" :disabled="!canScan || scanSubmitting"
+                                    class="send-btn flex-shrink-0" :class="canScan && !scanSubmitting ? 'bg-accent text-white' : 'bg-text-muted/20 text-text-muted'">
+                                    <template x-if="!scanSubmitting">
+                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                                    </template>
+                                    <template x-if="scanSubmitting">
+                                        <svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                                    </template>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-[10px] text-text-muted text-center mt-2" x-text="t('input_hint')"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ API EXPLORER PANEL ══ -->
+            <div x-show="activePanel === 'api'" class="flex-1 flex flex-col overflow-hidden">
+                <div class="flex-1 overflow-y-auto main-scroll">
+                    <div class="max-w-4xl mx-auto px-4 py-6">
+                        <h2 class="text-lg font-semibold mb-1" x-text="t('api_explorer')"></h2>
+                        <p class="text-text-secondary text-xs mb-6" x-text="t('api_desc')"></p>
+
+                        <!-- Endpoint Cards -->
+                        <div class="space-y-3">
+                            <template x-for="ep in apiEndpoints" :key="ep.path">
+                                <div class="bg-surface rounded-xl border border-border/50 overflow-hidden">
+                                    <button @click="ep._open = !ep._open" class="w-full flex items-center gap-3 p-4 text-start hover:bg-surface-hover transition-colors">
+                                        <span class="text-[10px] px-2 py-0.5 rounded font-bold font-mono"
+                                            :class="{
+                                                'bg-sev-low/20 text-sev-low': ep.method === 'GET',
+                                                'bg-accent/20 text-accent': ep.method === 'POST',
+                                                'bg-sev-critical/20 text-sev-critical': ep.method === 'DELETE',
+                                            }"
+                                            x-text="ep.method"></span>
+                                        <code class="flex-1 text-xs font-mono text-text-primary" dir="ltr" x-text="ep.path"></code>
+                                        <span class="text-[10px] text-text-muted" x-text="lang === 'ar' ? ep.desc_ar : ep.desc"></span>
+                                        <svg :class="ep._open ? 'rotate-180' : ''" class="w-4 h-4 text-text-muted transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    </button>
+                                    <div x-show="ep._open" x-collapse class="border-t border-border/30">
+                                        <div class="p-4 space-y-3">
+                                            <!-- Description -->
+                                            <p class="text-xs text-text-secondary" x-text="lang === 'ar' ? ep.detail_ar : ep.detail"></p>
+
+                                            <!-- Try It -->
+                                            <div class="flex gap-2">
+                                                <button @click="tryEndpoint(ep)"
+                                                    class="px-3 py-1.5 rounded-lg bg-accent text-white text-xs font-medium hover:bg-accent-hover transition-colors">
+                                                    ▶ Try it
+                                                </button>
+                                                <button @click="copyEndpoint(ep)"
+                                                    class="px-3 py-1.5 rounded-lg bg-surface-hover text-text-secondary text-xs font-medium hover:text-text-primary transition-colors">
+                                                    📋 Copy cURL
+                                                </button>
+                                            </div>
+
+                                            <!-- Response -->
+                                            <div x-show="ep._response" class="bg-main-darker rounded-lg p-3 max-h-64 overflow-auto">
+                                                <pre class="text-[11px] font-mono text-text-secondary whitespace-pre-wrap" dir="ltr" x-text="ep._response"></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</template>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     ALPINE.JS APPLICATION
+     ═══════════════════════════════════════════════════════ -->
+<script>
+document.addEventListener('alpine:init', () => {
+    // x-collapse directive
+    Alpine.directive('collapse', (el, { expression }, { effect, cleanup }) => {
+        let isOpen = false;
+        effect(() => {
+            const val = Alpine.evaluate(el, el.getAttribute('x-show'));
+            if (val && !isOpen) {
+                el.style.height = '0px';
+                el.style.overflow = 'hidden';
+                requestAnimationFrame(() => {
+                    el.style.height = el.scrollHeight + 'px';
+                    setTimeout(() => { el.style.height = 'auto'; el.style.overflow = ''; }, 200);
+                });
+                isOpen = true;
+            } else if (!val && isOpen) {
+                el.style.height = el.scrollHeight + 'px';
+                el.style.overflow = 'hidden';
+                requestAnimationFrame(() => { el.style.height = '0px'; });
+                isOpen = false;
+            }
+        });
+    });
+});
+
+function aglApp() {
+    return {
+        // ── Auth State ──
+        authenticated: false,
+        authMode: 'login',
+        authEmail: '',
+        authPassword: '',
+        authUsername: '',
+        authError: '',
+        authLoading: false,
+        token: '',
+        username: '',
+
+        // ── UI State ──
+        lang: localStorage.getItem('agl_lang') || 'ar',
+        sidebarOpen: true,
+        activePanel: 'main',   // 'main' | 'api'
+        view: 'welcome',       // 'welcome' | 'scanning' | 'results' | 'error'
+        isDragging: false,
+
+        // ── Scan Input ──
+        selectedFile: null,
+        urlInput: '',
+        scanSubmitting: false,
+
+        // ── Current Scan ──
+        currentScanId: null,
+        currentScan: null,
+        findings: [],
+        attacks: [],
+        maxProfit: 1,
+        pollInterval: null,
+
+        // ── Layers ──
+        selectedLayers: ['L0', 'L0.5', 'L1-L4', 'L5', 'L6', 'L7'],
+        layerList: [
+            { key: 'L0',    icon: '🔧', name: 'Flattener',      name_ar: 'مُسطّح الكود' },
+            { key: 'L0.5',  icon: '🧮', name: 'Z3 Symbolic',    name_ar: 'Z3 رمزي' },
+            { key: 'L1-L4', icon: '📊', name: 'State Extract',  name_ar: 'استخراج الحالة' },
+            { key: 'L5',    icon: '🔍', name: 'Detectors',      name_ar: 'الكاشفات' },
+            { key: 'L6',    icon: '💀', name: 'Exploit Engine', name_ar: 'محرك الاستغلال' },
+            { key: 'L7',    icon: '🌀', name: 'Heikal Math',    name_ar: 'رياضيات هيكل' },
+        ],
+
+        // ── History ──
+        scanHistory: [],
+
+        // ── API Explorer ──
+        apiEndpoints: [
+            { method: 'POST', path: '/api/v1/scan', desc: 'Quick/Deep scan', desc_ar: 'فحص سريع/عميق', detail: 'Upload a .sol file with mode=quick|deep|scan', detail_ar: 'رفع ملف .sol مع وضع الفحص', _open: false, _response: '' },
+            { method: 'POST', path: '/api/v1/scan/full', desc: 'Full 7-layer scan', desc_ar: 'فحص كامل 7 طبقات', detail: 'Upload a .sol file — runs all 7 layers (L0→L7)', detail_ar: 'رفع ملف .sol — يشغل جميع الطبقات السبع', _open: false, _response: '' },
+            { method: 'POST', path: '/api/v1/layer/scan', desc: 'Per-layer scan', desc_ar: 'فحص لكل طبقة', detail: 'Upload a .sol file with layers=L0,L5,L7 (comma-separated)', detail_ar: 'رفع ملف .sol مع تحديد الطبقات', _open: false, _response: '' },
+            { method: 'POST', path: '/api/v1/scan/url', desc: 'Scan GitHub URL', desc_ar: 'فحص رابط GitHub', detail: 'POST JSON: {"url": "https://github.com/...", "mode": "full"}', detail_ar: 'إرسال رابط GitHub للفحص الكامل', _open: false, _response: '' },
+            { method: 'POST', path: '/api/v1/scan/project', desc: 'Scan ZIP project', desc_ar: 'فحص مشروع ZIP', detail: 'Upload a .zip file containing Solidity contracts', detail_ar: 'رفع ملف .zip يحتوي على عقود Solidity', _open: false, _response: '' },
+            { method: 'GET', path: '/api/v1/scan/{id}', desc: 'Get scan results', desc_ar: 'عرض نتائج الفحص', detail: 'Get full scan status and results by ID', detail_ar: 'عرض حالة الفحص ونتائجه بالمعرف', _open: false, _response: '' },
+            { method: 'GET', path: '/api/v1/scans', desc: 'List all scans', desc_ar: 'قائمة الفحوصات', detail: 'List all scans for the authenticated user (limit, offset)', detail_ar: 'قائمة جميع الفحوصات للمستخدم', _open: false, _response: '' },
+            { method: 'GET', path: '/api/v1/layer/engines', desc: 'List engines', desc_ar: 'قائمة المحركات', detail: 'List all available scan layers and their status', detail_ar: 'قائمة جميع طبقات الفحص وحالتها', _open: false, _response: '' },
+            { method: 'GET', path: '/api/v1/stats', desc: 'User statistics', desc_ar: 'إحصائيات المستخدم', detail: 'Aggregated stats: total scans, findings, avg score', detail_ar: 'إحصائيات مجمعة: عدد الفحوصات والثغرات', _open: false, _response: '' },
+            { method: 'DELETE', path: '/api/v1/scan/{id}', desc: 'Delete scan', desc_ar: 'حذف فحص', detail: 'Delete a scan by ID', detail_ar: 'حذف فحص بالمعرف', _open: false, _response: '' },
+            { method: 'GET', path: '/api/v1/scan/{id}/report', desc: 'Markdown report', desc_ar: 'تقرير Markdown', detail: 'Get a generated Markdown audit report', detail_ar: 'الحصول على تقرير تدقيق', _open: false, _response: '' },
+        ],
+
+        // ── Translations ──
+        _translations: {
+            ar: {
+                subtitle: 'تحليل أمان العقود الذكية',
+                login: 'تسجيل الدخول',
+                register: 'إنشاء حساب',
+                email: 'البريد الإلكتروني',
+                password: 'كلمة المرور',
+                username_label: 'اسم المستخدم',
+                logout: 'تسجيل خروج',
+                new_scan: 'فحص جديد',
+                scan_layers: 'طبقات الفحص',
+                full_scan: 'فحص كامل (الكل)',
+                history: 'السجل',
+                no_scans: 'لا توجد فحوصات بعد',
+                scanning: 'جارٍ الفحص...',
+                welcome_title: 'مرحباً بك في AGL Security',
+                welcome_desc: 'ارفع ملف Solidity أو أدخل رابط GitHub لبدء تحليل أمني شامل بسبع طبقات متقدمة',
+                feat_detectors: '22 كاشف ثغرات',
+                feat_detectors_desc: 'كشف شامل للثغرات',
+                feat_z3: 'إثبات Z3',
+                feat_z3_desc: 'تحقق رسمي رياضي',
+                feat_heikal: 'رياضيات هيكل',
+                feat_heikal_desc: 'تحليل كمي متقدم',
+                input_placeholder: 'أدخل رابط GitHub أو ارفع ملف .sol ...',
+                input_hint: 'ارفع ملف .sol • أدخل رابط GitHub • أو اسحب الملف هنا',
+                drop_file: 'أفلت الملف هنا',
+                upload_file: 'رفع ملف',
+                start_scan: 'ابدأ الفحص',
+                findings: 'الثغرات',
+                no_findings: 'لم يتم العثور على ثغرات!',
+                attacks: 'محاكاة الهجمات',
+                not_profitable: 'غير مربح',
+                critical: 'حرج',
+                high: 'عالي',
+                medium: 'متوسط',
+                low: 'منخفض',
+                security_score: 'نقاط الأمان',
+                heikal_math: 'رياضيات هيكل',
+                scan_failed: 'فشل الفحص',
+                try_again: 'حاول مرة أخرى',
+                api_explorer: 'مستكشف API',
+                api_desc: 'استكشف واختبر جميع نقاط نهاية API مباشرة',
+                total_scans: 'إجمالي الفحوصات',
+                completed: 'مكتمل',
+                dashboard: 'لوحة التحكم',
+            },
+            en: {
+                subtitle: 'Smart Contract Security Analysis',
+                login: 'Login',
+                register: 'Register',
+                email: 'Email',
+                password: 'Password',
+                username_label: 'Username',
+                logout: 'Logout',
+                new_scan: 'New Scan',
+                scan_layers: 'Scan Layers',
+                full_scan: 'Full Scan (All)',
+                history: 'History',
+                no_scans: 'No scans yet',
+                scanning: 'Scanning...',
+                welcome_title: 'Welcome to AGL Security',
+                welcome_desc: 'Upload a Solidity file or enter a GitHub URL to start a comprehensive 7-layer security analysis',
+                feat_detectors: '22 Detectors',
+                feat_detectors_desc: 'Comprehensive vulnerability detection',
+                feat_z3: 'Z3 Proofs',
+                feat_z3_desc: 'Formal mathematical verification',
+                feat_heikal: 'Heikal Math',
+                feat_heikal_desc: 'Advanced quantum analysis',
+                input_placeholder: 'Enter a GitHub URL or upload a .sol file ...',
+                input_hint: 'Upload .sol file • Enter GitHub URL • Or drag and drop',
+                drop_file: 'Drop file here',
+                upload_file: 'Upload file',
+                start_scan: 'Start Scan',
+                findings: 'Findings',
+                no_findings: 'No vulnerabilities found!',
+                attacks: 'Attack Simulations',
+                not_profitable: 'Not profitable',
+                critical: 'Critical',
+                high: 'High',
+                medium: 'Medium',
+                low: 'Low',
+                security_score: 'Security Score',
+                heikal_math: 'Heikal Mathematics',
+                scan_failed: 'Scan Failed',
+                try_again: 'Try Again',
+                api_explorer: 'API Explorer',
+                api_desc: 'Explore and test all API endpoints directly',
+                total_scans: 'Total Scans',
+                completed: 'Completed',
+                dashboard: 'Dashboard',
+            },
+        },
+
+        // ── Computed ──
+        get panelTitle() {
+            if (this.activePanel === 'api') return this.t('api_explorer');
+            if (this.view === 'scanning') return this.t('scanning');
+            if (this.view === 'results' && this.currentScan) return this.currentScan.target_name;
+            return 'AGL Security v2.0';
+        },
+
+        get canScan() {
+            return this.selectedFile || this.urlInput.trim().length > 0;
+        },
+
+        get scanPipelineLayers() {
+            if (!this.currentScan) return [];
+            const progress = this.currentScan.progress || 0;
+            const layers = this.selectedLayers.length > 0 ? this.selectedLayers : this.layerList.map(l => l.key);
+            const total = layers.length;
+            return layers.map((key, idx) => {
+                const info = this.layerList.find(l => l.key === key) || {};
+                const threshold = ((idx + 1) / total) * 90 + 5;
+                let status = 'pending';
+                if (progress >= threshold) status = 'done';
+                else if (progress >= ((idx) / total) * 90 + 5) status = 'active';
+                return {
+                    label: `${info.icon || ''} ${this.lang === 'ar' ? (info.name_ar || key) : (info.name || key)}`,
+                    status,
+                    detail: status === 'done' ? '✓' : '',
+                };
+            });
+        },
+
+        get heikalBars() {
+            if (!this.currentScan) return [];
+            return [
+                { key: 'wave', label: 'Wave ψ', value: this.currentScan.heikal_wave },
+                { key: 'tunnel', label: 'Tunnel T', value: this.currentScan.heikal_tunnel },
+                { key: 'holo', label: 'Holo H', value: this.currentScan.heikal_holo },
+                { key: 'resonance', label: 'Reson R', value: this.currentScan.heikal_resonance },
+            ];
+        },
+
+        // ── Init ──
+        init() {
+            this.token = localStorage.getItem('agl_token') || '';
+            this.username = localStorage.getItem('agl_username') || '';
+            this.authenticated = !!this.token;
+            if (this.authenticated) {
+                this.loadHistory();
+            }
+        },
+
+        // ── Translation ──
+        t(key) {
+            return this._translations[this.lang]?.[key] || this._translations['en']?.[key] || key;
+        },
+
+        toggleLang() {
+            this.lang = this.lang === 'ar' ? 'en' : 'ar';
+            localStorage.setItem('agl_lang', this.lang);
+            document.documentElement.dir = this.lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = this.lang;
+        },
+
+        // ── Auth ──
+        async submitAuth() {
+            this.authLoading = true;
+            this.authError = '';
+            const url = this.authMode === 'login' ? '/api/v1/auth/login' : '/api/v1/auth/register';
+            const body = this.authMode === 'login'
+                ? { email: this.authEmail, password: this.authPassword }
+                : { email: this.authEmail, password: this.authPassword, username: this.authUsername };
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    this.authError = err.detail || `Error ${res.status}`;
+                    return;
+                }
+                const data = await res.json();
+                this.token = data.access_token;
+                this.username = data.username;
+                localStorage.setItem('agl_token', this.token);
+                localStorage.setItem('agl_username', this.username);
+                this.authenticated = true;
+                this.loadHistory();
+            } catch (e) {
+                this.authError = e.message;
+            } finally {
+                this.authLoading = false;
+            }
+        },
+
+        logout() {
+            localStorage.removeItem('agl_token');
+            localStorage.removeItem('agl_username');
+            this.token = '';
+            this.username = '';
+            this.authenticated = false;
+            this.currentScanId = null;
+            this.currentScan = null;
+            this.view = 'welcome';
+            if (this.pollInterval) clearInterval(this.pollInterval);
+        },
+
+        // ── API Helper ──
+        async api(path, options = {}) {
+            const headers = { 'Authorization': `Bearer ${this.token}`, ...options.headers };
+            const res = await fetch(path, { ...options, headers });
+            if (res.status === 401) {
+                this.logout();
+                throw new Error('Session expired');
+            }
+            return res;
+        },
+
+        // ── Layer Selection ──
+        toggleLayer(key) {
+            const idx = this.selectedLayers.indexOf(key);
+            if (idx >= 0) {
+                this.selectedLayers.splice(idx, 1);
+            } else {
+                this.selectedLayers.push(key);
+            }
+        },
+
+        selectAllLayers() {
+            if (this.selectedLayers.length === this.layerList.length) {
+                this.selectedLayers = [];
+            } else {
+                this.selectedLayers = this.layerList.map(l => l.key);
+            }
+        },
+
+        // ── History ──
+        async loadHistory() {
+            try {
+                const res = await this.api('/api/v1/scans?limit=50');
+                if (res.ok) {
+                    const data = await res.json();
+                    this.scanHistory = data.scans || [];
+                }
+            } catch (e) { console.error('loadHistory error:', e); }
+        },
+
+        // ── Start Scan ──
+        async startScan() {
+            if (!this.canScan || this.scanSubmitting) return;
+            this.scanSubmitting = true;
+
+            try {
+                let res;
+
+                if (this.selectedFile) {
+                    // File upload with per-layer or full scan
+                    const formData = new FormData();
+                    formData.append('file', this.selectedFile);
+
+                    if (this.selectedLayers.length > 0 && this.selectedLayers.length < this.layerList.length) {
+                        // Per-layer scan via /api/v1/layer/scan
+                        formData.append('layers', this.selectedLayers.join(','));
+                        res = await this.api('/api/v1/layer/scan', { method: 'POST', body: formData });
+                    } else {
+                        // Full scan via /api/v1/scan/full
+                        res = await this.api('/api/v1/scan/full', { method: 'POST', body: formData });
+                    }
+                } else if (this.urlInput.trim()) {
+                    // URL scan
+                    res = await this.api('/api/v1/scan/url', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ url: this.urlInput.trim(), mode: 'full' }),
+                    });
+                }
+
+                if (!res || !res.ok) {
+                    const err = await res?.json().catch(() => ({}));
+                    throw new Error(err?.detail || `Error ${res?.status || 'unknown'}`);
+                }
+
+                const data = await res.json();
+                const scanId = data.scan_id || data.id;
+
+                // Clear input
+                this.selectedFile = null;
+                this.urlInput = '';
+
+                // Start monitoring
+                this.currentScanId = scanId;
+                this.view = 'scanning';
+                this.startPolling(scanId);
+                this.loadHistory();
+
+            } catch (e) {
+                console.error('startScan error:', e);
+                alert(e.message);
+            } finally {
+                this.scanSubmitting = false;
+            }
+        },
+
+        // ── Polling ──
+        startPolling(scanId) {
+            if (this.pollInterval) clearInterval(this.pollInterval);
+
+            const poll = async () => {
+                try {
+                    // Try layer scan endpoint first, then regular
+                    let res = await this.api(`/api/v1/layer/scan/${scanId}`);
+                    if (!res.ok) {
+                        res = await this.api(`/api/v1/scan/${scanId}`);
+                    }
+                    if (!res.ok) return;
+
+                    const data = await res.json();
+                    this.currentScan = data;
+
+                    if (data.status === 'completed') {
+                        clearInterval(this.pollInterval);
+                        this.pollInterval = null;
+                        this.findings = (data.result?.findings || data.result_json?.findings || []).map(f => ({...f, _open: false}));
+                        this.attacks = data.result?.attack_simulations || data.result_json?.attack_simulations || [];
+                        this.maxProfit = Math.max(1, ...this.attacks.map(a => a.net_profit_usd || 0));
+                        this.view = 'results';
+                        this.loadHistory();
+                    } else if (data.status === 'failed') {
+                        clearInterval(this.pollInterval);
+                        this.pollInterval = null;
+                        this.view = 'error';
+                        this.loadHistory();
+                    }
+                } catch (e) { console.error('poll error:', e); }
+            };
+
+            poll();
+            this.pollInterval = setInterval(poll, 2000);
+        },
+
+        // ── View Scan ──
+        async viewScan(scanId) {
+            this.currentScanId = scanId;
+            this.activePanel = 'main';
+
+            try {
+                // Try layer scan endpoint first, then regular
+                let res = await this.api(`/api/v1/layer/scan/${scanId}`);
+                if (!res.ok) {
+                    res = await this.api(`/api/v1/scan/${scanId}`);
+                }
+                if (!res.ok) throw new Error('Scan not found');
+
+                const data = await res.json();
+                this.currentScan = data;
+
+                if (data.status === 'running') {
+                    this.view = 'scanning';
+                    this.startPolling(scanId);
+                } else if (data.status === 'completed') {
+                    this.findings = (data.result?.findings || data.result_json?.findings || []).map(f => ({...f, _open: false}));
+                    this.attacks = data.result?.attack_simulations || data.result_json?.attack_simulations || [];
+                    this.maxProfit = Math.max(1, ...this.attacks.map(a => a.net_profit_usd || 0));
+                    this.view = 'results';
+                } else if (data.status === 'failed') {
+                    this.view = 'error';
+                } else {
+                    this.view = 'scanning';
+                    this.startPolling(scanId);
+                }
+            } catch (e) {
+                console.error('viewScan error:', e);
+            }
+        },
+
+        // ── New Scan ──
+        startNewScan() {
+            if (this.pollInterval) clearInterval(this.pollInterval);
+            this.currentScanId = null;
+            this.currentScan = null;
+            this.findings = [];
+            this.attacks = [];
+            this.view = 'welcome';
+            this.activePanel = 'main';
+        },
+
+        // ── Drop Handler ──
+        handleDrop(event) {
+            this.isDragging = false;
+            const files = event.dataTransfer?.files;
+            if (files && files.length > 0) {
+                const file = files[0];
+                if (file.name.endsWith('.sol') || file.name.endsWith('.zip')) {
+                    this.selectedFile = file;
+                }
+            }
+        },
+
+        // ── Export ──
+        exportJSON() {
+            if (!this.currentScan) return;
+            const blob = new Blob([JSON.stringify(this.currentScan, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `agl_audit_${this.currentScan.target_name || 'report'}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        },
+
+        async exportMarkdown() {
+            if (!this.currentScanId) return;
+            try {
+                const res = await this.api(`/api/v1/scan/${this.currentScanId}/report`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const blob = new Blob([data.report || data.markdown || ''], { type: 'text/markdown' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `agl_audit_${this.currentScan?.target_name || 'report'}.md`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }
+            } catch (e) { console.error('export error:', e); }
+        },
+
+        // ── API Explorer ──
+        async tryEndpoint(ep) {
+            ep._response = 'Loading...';
+            try {
+                const method = ep.method;
+                const path = ep.path.replace('{id}', this.currentScanId || 'SCAN_ID');
+                let res;
+                if (method === 'GET' || method === 'DELETE') {
+                    res = await this.api(path, { method });
+                } else {
+                    res = await this.api(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+                }
+                const data = await res.json().catch(() => res.text());
+                ep._response = JSON.stringify(data, null, 2);
+            } catch (e) {
+                ep._response = `Error: ${e.message}`;
+            }
+        },
+
+        copyEndpoint(ep) {
+            const path = ep.path.replace('{id}', 'SCAN_ID');
+            const curl = `curl -X ${ep.method} http://localhost:8002${path} -H "Authorization: Bearer YOUR_TOKEN"`;
+            navigator.clipboard.writeText(curl).catch(() => {});
+        },
+
+        // ── Helpers ──
+        hasHeikal() {
+            return this.currentScan && (
+                this.currentScan.heikal_wave || this.currentScan.heikal_tunnel ||
+                this.currentScan.heikal_holo || this.currentScan.heikal_resonance
+            );
+        },
+
+        scoreColor(score) {
+            if (score >= 80) return '#22c55e';
+            if (score >= 60) return '#eab308';
+            if (score >= 40) return '#f97316';
+            return '#ef4444';
+        },
+
+        sevPercent(level) {
+            if (!this.currentScan || !this.currentScan.total_findings) return 0;
+            return Math.round((this.currentScan[level + '_count'] / this.currentScan.total_findings) * 100);
+        },
+
+        sevDotClass(sev) {
+            const s = (sev || '').toUpperCase();
+            return {
+                'bg-sev-critical': s === 'CRITICAL',
+                'bg-sev-high': s === 'HIGH',
+                'bg-sev-medium': s === 'MEDIUM',
+                'bg-sev-low': s === 'LOW',
+            };
+        },
+
+        sevBadgeClass(sev) {
+            const s = (sev || '').toUpperCase();
+            return {
+                'bg-sev-critical/20 text-sev-critical': s === 'CRITICAL',
+                'bg-sev-high/20 text-sev-high': s === 'HIGH',
+                'bg-sev-medium/20 text-sev-medium': s === 'MEDIUM',
+                'bg-sev-low/20 text-sev-low': s === 'LOW',
+            };
+        },
+
+        formatNumber(n) {
+            if (!n) return '0';
+            if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+            if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+            return Math.round(n).toString();
+        },
+    };
+}
+</script>
+
+</body>
+</html>

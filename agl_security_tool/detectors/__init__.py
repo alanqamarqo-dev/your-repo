@@ -194,7 +194,7 @@ class Finding:
             "detector": self.detector_id,
             "title": self.title,
             "description": self.description,
-            "severity": self.severity.value,
+            "severity": self.severity.value.upper(),
             "confidence": self.confidence.value,
             "contract": self.contract,
             "function": self.function,
@@ -365,10 +365,13 @@ class DetectorRunner:
         from .common import (
             UncheckedLowLevelCall,
             UnboundedLoop,
+            GasDoSFailedCall,
             DuplicateCondition,
             ShadowedStateVariable,
             EncodePacked,
             MissingEventEmission,
+            UncheckedReturnValue,
+            IntegerOverflow,
         )
 
         # Token
@@ -376,6 +379,40 @@ class DetectorRunner:
             UncheckedERC20Transfer,
             ArbitrarySendERC20,
             FeeOnTransferToken,
+        )
+
+        # DeFi Advanced — هجمات DeFi المتقدمة
+        from .defi_advanced import (
+            MissingSlippageProtection,
+            MissingDeadline,
+            SandwichVulnerable,
+        )
+
+        # Proxy Safety — أمان البروكسي
+        from .proxy_safety import (
+            UninitializedProxy,
+            StorageCollision,
+            UnsafeUpgrade,
+        )
+
+        # Input Validation — التحقق من المدخلات
+        from .input_validation import (
+            UnsafeDowncast,
+            ZeroAddressCheck,
+            MissingInputValidation,
+        )
+
+        # Crypto Operations — العمليات التشفيرية
+        from .crypto_ops import (
+            SignatureReplay,
+            EcrecoverZeroAddress,
+            WeakRandomness,
+        )
+
+        # Advanced Attacks — الهجمات المتقدمة
+        from .advanced_attacks import (
+            ReturnBomb,
+            GovernanceFlashLoan,
         )
 
         self.detectors = [
@@ -398,14 +435,36 @@ class DetectorRunner:
             # ═══ Common (Medium/High) ═══
             UncheckedLowLevelCall(),
             UnboundedLoop(),
+            GasDoSFailedCall(),
             DuplicateCondition(),
             ShadowedStateVariable(),
             EncodePacked(),
             MissingEventEmission(),
+            UncheckedReturnValue(),
+            IntegerOverflow(),
             # ═══ Token (High) ═══
             UncheckedERC20Transfer(),
             ArbitrarySendERC20(),
             FeeOnTransferToken(),
+            # ═══ DeFi Advanced (High/Medium) ═══
+            MissingSlippageProtection(),
+            MissingDeadline(),
+            SandwichVulnerable(),
+            # ═══ Proxy Safety (Critical/High) ═══
+            UninitializedProxy(),
+            StorageCollision(),
+            UnsafeUpgrade(),
+            # ═══ Input Validation (High/Medium) ═══
+            UnsafeDowncast(),
+            ZeroAddressCheck(),
+            MissingInputValidation(),
+            # ═══ Crypto Operations (Critical/High) ═══
+            SignatureReplay(),
+            EcrecoverZeroAddress(),
+            WeakRandomness(),
+            # ═══ Advanced Attacks (High/Medium) ═══
+            ReturnBomb(),
+            GovernanceFlashLoan(),
         ]
 
     def run(self, contracts: List[ParsedContract]) -> List[Finding]:
@@ -468,7 +527,7 @@ class DetectorRunner:
             {
                 "id": d.DETECTOR_ID,
                 "title": d.TITLE,
-                "severity": d.SEVERITY.value,
+                "severity": d.SEVERITY.value.upper(),
                 "confidence": d.CONFIDENCE.value,
                 "description": d.DESCRIPTION,
             }

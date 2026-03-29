@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}AGL Security — Login{% endblock %}
+
+{% block content %}
+<div x-data="loginPage()" class="min-h-[80vh] flex items-center justify-center">
+    <div class="w-full max-w-md px-4">
+
+        <!-- Card -->
+        <div class="bg-agl-card border border-agl-border rounded-2xl p-8 shadow-2xl">
+
+            <!-- Logo -->
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-agl-accent to-agl-accent2 flex items-center justify-center mb-4 shadow-xl shadow-agl-accent/20">
+                    <span class="text-3xl">🛡️</span>
+                </div>
+                <h1 class="text-xl font-bold">AGL Security</h1>
+            </div>
+
+            <!-- Tab switcher -->
+            <div class="flex rounded-xl bg-agl-bg border border-agl-border mb-6 p-1">
+                <button @click="mode = 'login'" :class="mode === 'login' ? 'bg-agl-accent text-white shadow' : 'text-agl-muted'" class="flex-1 py-2 rounded-lg text-sm font-medium transition-all" x-text="t('login')"></button>
+                <button @click="mode = 'register'" :class="mode === 'register' ? 'bg-agl-accent text-white shadow' : 'text-agl-muted'" class="flex-1 py-2 rounded-lg text-sm font-medium transition-all" x-text="t('register')"></button>
+            </div>
+
+            <!-- Login Form -->
+            <form @submit.prevent="submit()" class="space-y-4">
+                <!-- Username (register only) -->
+                <template x-if="mode === 'register'">
+                    <div>
+                        <label class="text-sm text-agl-muted mb-1 block" x-text="t('username_label')"></label>
+                        <input type="text" x-model="username" required
+                            class="input-field w-full px-4 py-3 rounded-xl bg-agl-bg border border-agl-border text-agl-text focus:border-agl-accent focus:ring-2 focus:ring-agl-accent/20 outline-none transition-all"
+                            placeholder="Hossam">
+                    </div>
+                </template>
+
+                <!-- Email -->
+                <div>
+                    <label class="text-sm text-agl-muted mb-1 block" x-text="t('email')"></label>
+                    <input type="email" x-model="email" required
+                        class="input-field w-full px-4 py-3 rounded-xl bg-agl-bg border border-agl-border text-agl-text focus:border-agl-accent focus:ring-2 focus:ring-agl-accent/20 outline-none transition-all"
+                        placeholder="admin@agl-security.com" dir="ltr">
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="text-sm text-agl-muted mb-1 block" x-text="t('password')"></label>
+                    <input type="password" x-model="password" required minlength="6"
+                        class="input-field w-full px-4 py-3 rounded-xl bg-agl-bg border border-agl-border text-agl-text focus:border-agl-accent focus:ring-2 focus:ring-agl-accent/20 outline-none transition-all"
+                        placeholder="••••••••">
+                </div>
+
+                <!-- Error -->
+                <template x-if="errorMsg">
+                    <div class="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm" x-text="errorMsg"></div>
+                </template>
+
+                <!-- Submit -->
+                <button type="submit" :disabled="submitting" class="btn-scan w-full py-3 rounded-xl font-bold text-lg transition-all disabled:opacity-50">
+                    <template x-if="!submitting">
+                        <span x-text="mode === 'login' ? t('login') : t('register')"></span>
+                    </template>
+                    <template x-if="submitting">
+                        <svg class="animate-spin h-5 w-5 mx-auto" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                        </svg>
+                    </template>
+                </button>
+            </form>
+
+            <!-- API Key login -->
+            <div class="mt-6 pt-6 border-t border-agl-border">
+                <div class="text-center text-sm text-agl-muted mb-3">
+                    🔑 <span x-text="lang === 'ar' ? 'أو استخدم مفتاح API' : 'Or use API Key'"></span>
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" x-model="apiKey" placeholder="agl_sk_..."
+                        class="flex-1 px-4 py-2.5 rounded-xl bg-agl-bg border border-agl-border text-agl-text text-sm font-mono focus:border-agl-accent outline-none transition-all" dir="ltr">
+                    <button @click="loginWithApiKey()" class="px-4 py-2.5 rounded-xl bg-agl-accent text-white text-sm font-bold hover:bg-agl-accent/80 transition-colors">
+                        →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function loginPage() {
+    return {
+        mode: 'login',
+        email: '',
+        password: '',
+        username: '',
+        apiKey: '',
+        errorMsg: '',
+        submitting: false,
+
+        async submit() {
+            this.submitting = true;
+            this.errorMsg = '';
+
+            const url = this.mode === 'login' ? '/api/v1/auth/login' : '/api/v1/auth/register';
+            const body = this.mode === 'login'
+                ? { email: this.email, password: this.password }
+                : { email: this.email, password: this.password, username: this.username };
+
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    this.errorMsg = err.detail || `Error ${res.status}`;
+                    this.submitting = false;
+                    return;
+                }
+
+                const data = await res.json();
+                localStorage.setItem('agl_token', data.access_token);
+                localStorage.setItem('agl_username', data.username);
+                window.location.href = '/';
+
+            } catch (e) {
+                this.errorMsg = e.message;
+            } finally {
+                this.submitting = false;
+            }
+        },
+
+        async loginWithApiKey() {
+            if (!this.apiKey) return;
+            // Test the API key by calling /me
+            try {
+                const res = await fetch('/api/v1/auth/me', {
+                    headers: { 'X-API-Key': this.apiKey }
+                });
+                if (!res.ok) {
+                    this.errorMsg = 'Invalid API Key';
+                    return;
+                }
+                const user = await res.json();
+                // Store API key as token (handled by auth middleware)
+                localStorage.setItem('agl_token', this.apiKey);
+                localStorage.setItem('agl_username', user.username);
+                window.location.href = '/';
+            } catch (e) {
+                this.errorMsg = e.message;
+            }
+        },
+
+        t(key) {
+            return this.$root.__x?.$data?.t?.(key) || key;
+        }
+    };
+}
+</script>
+{% endblock %}

@@ -156,7 +156,7 @@ class Action:
     # === Classification — تصنيف ===
     category: ActionCategory = ActionCategory.UNKNOWN
     attack_types: List[AttackType] = field(default_factory=list)
-    severity: str = "info"                 # critical / high / medium / low / info
+    severity: str = "INFO"                 # CRITICAL / HIGH / MEDIUM / LOW / INFO
     profit_potential: str = "none"         # high / medium / low / none
     is_profitable: bool = False            # هل يمكن أن تُنتج ربح مباشر
 
@@ -319,8 +319,13 @@ class ActionGraph:
                     result.append(self.actions[source_id])
         return result
 
-    def get_attack_paths(self) -> List[List[str]]:
-        """استخراج كل مسارات الهجوم المحتملة (أضلاع is_attack_path=True)"""
+    def get_attack_paths(self, max_paths: int = 200, max_depth: int = 12) -> List[List[str]]:
+        """استخراج مسارات الهجوم المحتملة (أضلاع is_attack_path=True)
+
+        Args:
+            max_paths: الحد الأقصى لعدد المسارات المُرجعة
+            max_depth: الحد الأقصى لعمق كل مسار (عدد الخطوات)
+        """
         attack_edges = {
             eid: e for eid, e in self.edges.items() if e.is_attack_path
         }
@@ -339,22 +344,38 @@ class ActionGraph:
         if not starts:
             starts = set(adj.keys())
 
-        paths = []
+        paths: List[List[str]] = []
         for start in starts:
-            self._dfs_attack_paths(start, [start], set(), adj, paths)
+            if len(paths) >= max_paths:
+                break
+            self._dfs_attack_paths(start, [start], set(), adj, paths, max_paths, max_depth)
         return paths
 
     def _dfs_attack_paths(
         self, node: str, path: List[str], visited: Set[str],
-        adj: Dict[str, List[str]], all_paths: List[List[str]]
+        adj: Dict[str, List[str]], all_paths: List[List[str]],
+        max_paths: int = 200, max_depth: int = 12,
     ) -> None:
-        """DFS لبناء مسارات الهجوم"""
+        """DFS لبناء مسارات الهجوم مع حماية من التكرار اللانهائي"""
+        # حماية: توقف إذا وصلنا للحد الأقصى من المسارات أو العمق
+        if len(all_paths) >= max_paths:
+            return
+        if len(path) > max_depth:
+            if len(path) > 1:
+                all_paths.append(path)
+            return
+
         visited.add(node)
         has_next = False
         for nxt in adj.get(node, []):
             if nxt not in visited:
                 has_next = True
-                self._dfs_attack_paths(nxt, path + [nxt], visited.copy(), adj, all_paths)
+                self._dfs_attack_paths(
+                    nxt, path + [nxt], visited | {nxt}, adj, all_paths,
+                    max_paths, max_depth,
+                )
+                if len(all_paths) >= max_paths:
+                    return
         if not has_next and len(path) > 1:
             all_paths.append(path)
 

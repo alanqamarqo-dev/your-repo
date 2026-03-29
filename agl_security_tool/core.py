@@ -58,6 +58,7 @@ class AGLSecurityAudit:
         self._analyzer = None
         self._detector_runner = None
         self._parser = None
+        self._last_partial_result = None  # For timeout recovery in audit_pipeline
         self._flattener = None
         self._symbolic_engine = None
         self._state_engine = None
@@ -126,8 +127,8 @@ class AGLSecurityAudit:
                 enable_mythril=True,
                 enable_semgrep=True,
                 enable_z3=True,
-                enable_llm=True,
-                mythril_timeout=self.config.get("mythril_timeout", 300),
+                enable_llm=not self.config.get("skip_llm", False),
+                mythril_timeout=self.config.get("mythril_timeout", 120),
                 generate_poc=self.config.get("generate_poc", True),
             )
             self._orchestrator = AGLSecurityOrchestrator(_orch_cfg)
@@ -140,7 +141,9 @@ class AGLSecurityAudit:
             try:
                 from agl_security_tool.tool_backends import ToolBackendRunner
 
-                self._tool_backends = ToolBackendRunner()
+                self._tool_backends = ToolBackendRunner(
+                    mythril_timeout=self.config.get("mythril_timeout", 120),
+                )
                 _logger.info(
                     "Tool Backends loaded as orchestrator fallback — status: %s",
                     self._tool_backends.status(),
@@ -181,6 +184,19 @@ class AGLSecurityAudit:
         except Exception as e:
             self._load_warnings.append(f"State Extraction: {e}")
             _logger.warning("Engine load failed — State Extraction: %s", e)
+
+        # Layer 6: Deep Protocol Analyzer (fine-tuned LLM)
+        self._deep_analyzer = None
+        if not self.config.get("skip_deep_analyzer", False):
+            try:
+                from agl_security_tool.deep_analyzer import DeepProtocolAnalyzer
+
+                self._deep_analyzer = DeepProtocolAnalyzer(
+                    model=self.config.get("deep_analyzer_model")
+                )
+            except Exception as e:
+                self._load_warnings.append(f"Deep Analyzer: {e}")
+                _logger.warning("Engine load failed — Deep Analyzer: %s", e)
 
         if self._load_warnings:
             _logger.info(
@@ -243,6 +259,13 @@ class AGLSecurityAudit:
             result["time_seconds"] = round(time.time() - t0, 2)
             result["scan_mode"] = "quick"
             result["file"] = target
+            # Build severity_summary from findings (analyzer.analyze() doesn't include it)
+            _ss = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
+            for _f in result.get("findings", []):
+                _sev = str(_f.get("severity", "MEDIUM")).upper()
+                if _sev in _ss:
+                    _ss[_sev] += 1
+            result["severity_summary"] = _ss
             return result
 
         # Fallback to Layer 2
@@ -254,7 +277,7 @@ class AGLSecurityAudit:
 
         return {"error": "لا يوجد محرك تحليل متاح", "status": "ERROR"}
 
-    def deep_scan(self, target: str) -> Dict[str, Any]:
+    def deep_scan(self, target: str, pre_parsed=None) -> Dict[str, Any]:
         """
         Deep scan — all layers combined:
         فحص عميق — كل الطبقات مجتمعة:
@@ -264,6 +287,7 @@ class AGLSecurityAudit:
 
         Args:
             target: مسار ملف .sol أو مجلد
+            pre_parsed: قائمة ParsedContract اختيارية من shared_parse
 
         Returns:
             قاموس شامل بكل النتائج والإثباتات الرياضية من جميع المحركات
@@ -278,19 +302,19 @@ class AGLSecurityAudit:
 
         # ═══ الخطوة 1: تشغيل كل الطبقات الأساسية (Layer 0 → 5) ═══
         if os.path.isfile(target):
-            combined = self._scan_file(target)
+            combined = self._scan_file(target, pre_parsed=pre_parsed)
         else:
             combined = self._scan_directory(target, recursive=True)
 
         # ═══ الخطوة 2: تشغيل محرك الأمان الهجومي (Layer 3) ═══
         # يضيف: EVM Simulation + Quantum Deep Audit + Meta-Reasoner +
         #        Holographic LLM + Strict Logic Gates + Formal Z3 Proofs
-        if self._engine:
+        if self._engine and not self.config.get("skip_llm", False):
             try:
                 offensive = self._engine.process_task(
                     "smart_contract_audit",
                     target,
-                    context={"skip_suite": True},  # Orchestrator already ran tools
+                    context={"skip_suite": True, "skip_llm": self.config.get("skip_llm", False)},  # Orchestrator already ran tools
                 )
 
                 # دمج محاكاة EVM الديناميكية
@@ -308,21 +332,23 @@ class AGLSecurityAudit:
                         # استخراج رقم السطر من النص إن وُجد
                         _lm = _re_deep.search(r"at line (\d+)", issue.get("text", ""))
                         line_num = int(_lm.group(1)) if _lm else 0
+                        is_proven = issue.get("mathematically_proven", False)
+                        # Cap LLM-only severity at MEDIUM; only proven
+                        # findings may keep HIGH/CRITICAL from the engine.
+                        raw_sev = issue.get("severity", "LOW").upper()
+                        if not is_proven and raw_sev in ("CRITICAL", "HIGH"):
+                            raw_sev = "MEDIUM"
                         offensive_findings.append(
                             {
                                 "title": issue.get("text", "")[:200],
-                                "severity": issue.get("severity", "low").lower(),
+                                "severity": raw_sev,
                                 "category": "offensive_heuristic",
                                 "description": issue.get("text", ""),
                                 "line": line_num,
-                                "confidence": (
-                                    0.9 if issue.get("mathematically_proven") else 0.65
-                                ),
+                                "confidence": (0.9 if is_proven else 0.65),
                                 "source": "offensive_security_engine",
                                 "logic_trace": issue.get("logic_trace", []),
-                                "mathematically_proven": issue.get(
-                                    "mathematically_proven", False
-                                ),
+                                "mathematically_proven": is_proven,
                                 "formal_verification": issue.get(
                                     "formal_verification", {}
                                 ),
@@ -442,8 +468,13 @@ class AGLSecurityAudit:
     # الدوال الداخلية — Internal methods
     # ═══════════════════════════════════════════════════
 
-    def _scan_file(self, file_path: str) -> Dict[str, Any]:
-        """فحص ملف واحد عبر كل الطبقات المتاحة."""
+    def _scan_file(self, file_path: str, pre_parsed=None) -> Dict[str, Any]:
+        """فحص ملف واحد عبر كل الطبقات المتاحة.
+        
+        Args:
+            file_path: مسار الملف
+            pre_parsed: قائمة ParsedContract اختيارية من shared_parse لتجنب التحليل المكرر
+        """
         t0 = time.time()
         combined = {
             "status": "COMPLETE",
@@ -456,6 +487,8 @@ class AGLSecurityAudit:
             "symbolic_findings": [],
             "severity_summary": {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0},
         }
+        # Expose partial results for timeout recovery (audit_pipeline reads this)
+        self._last_partial_result = combined
 
         # ═══ Layer 0: Import Flattening + Inheritance Resolution ═══
         source_code = ""
@@ -475,10 +508,10 @@ class AGLSecurityAudit:
                     self._flattener._auto_detect_remappings()
 
                 flat_result = self._flattener.flatten(file_path)
+                combined["layers_used"].append("import_flattener")
                 if flat_result.files_included and len(flat_result.files_included) > 1:
                     # ملف متعدد الاستيرادات — نستخدم المصدر المدمج
                     source_code = flat_result.source
-                    combined["layers_used"].append("import_flattener")
                     combined["flattened"] = {
                         "files_included": len(flat_result.files_included),
                         "contracts_found": flat_result.contracts_found,
@@ -507,6 +540,9 @@ class AGLSecurityAudit:
             except Exception as e:
                 combined.setdefault("warnings", []).append(f"Flattener: {e}")
 
+        # Store source for post-processing filters in dedup
+        combined["_source_code"] = source_code
+
         # ═══ Layer 0.5: Z3 Symbolic Execution ═══
         if self._symbolic_engine and source_code:
             try:
@@ -529,8 +565,7 @@ class AGLSecurityAudit:
                             "detector_id": "z3_symbolic",
                         }
                     )
-                if sym_findings:
-                    combined["layers_used"].append("z3_symbolic_execution")
+                combined["layers_used"].append("z3_symbolic_execution")
             except Exception as e:
                 combined.setdefault("warnings", []).append(f"Symbolic engine: {e}")
 
@@ -576,9 +611,10 @@ class AGLSecurityAudit:
         _orch_used = False
         if self._orchestrator:
             try:
-                orch_findings = self._orchestrator.analyze_file(
-                    file_path, skip_llm=True
-                )
+                from concurrent.futures import ThreadPoolExecutor, TimeoutError as _FT
+                with ThreadPoolExecutor(max_workers=1) as _oex:
+                    _ofut = _oex.submit(self._orchestrator.analyze_file, file_path, skip_llm=True)
+                    orch_findings = _ofut.result(timeout=self.config.get("mythril_timeout", 120) + 60)
                 for of in orch_findings:
                     combined["suite_findings"].append(
                         {
@@ -632,9 +668,12 @@ class AGLSecurityAudit:
         # Layer 4: AGL Semantic Detectors (22 detectors)
         if self._parser and self._detector_runner:
             try:
-                with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                    code = f.read()
-                contracts = self._parser.parse(code, file_path)
+                # Use pre-parsed data from shared_parse if available
+                contracts = pre_parsed
+                if not contracts:
+                    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                        code = f.read()
+                    contracts = self._parser.parse(code, file_path)
                 det_findings = self._detector_runner.run(contracts)
                 combined["detector_findings"].extend(
                     df.to_dict() for df in det_findings
@@ -864,6 +903,31 @@ class AGLSecurityAudit:
                     f"State Extraction pipeline (L1→L4): {e}"
                 )
 
+        # ═══ Negative Evidence — دليل سلبي من L3/L4 ═══
+        # If L3/L4 ran but produced NO findings, that is exculpatory
+        # evidence ("we tested and found nothing") — not the same as
+        # "we didn't test".  Store this so RiskCore can penalize
+        # detector-only findings that L3/L4 could not confirm.
+        _neg = {}
+        _layers_used = combined.get("layers_used", [])
+        if "attack_simulation" in _layers_used:
+            sim_data = combined.get("attack_simulation", {})
+            _neg["l3_ran"] = True
+            _neg["l3_sequences_tested"] = sim_data.get("total_sequences_tested", 0)
+            _neg["l3_profitable"] = sim_data.get("profitable_attacks", 0)
+        else:
+            _neg["l3_ran"] = False
+
+        if "search_engine" in _layers_used:
+            sr_data = combined.get("search_results", {})
+            _neg["l4_ran"] = True
+            _neg["l4_evaluated"] = sr_data.get("total_evaluated", 0)
+            _neg["l4_profitable"] = sr_data.get("profitable_sequences", 0)
+        else:
+            _neg["l4_ran"] = False
+
+        combined["_negative_evidence"] = _neg
+
         # ═══ Layer 5: Exploit Reasoning — إثبات الاستغلال ═══
         try:
             combined = self._run_exploit_reasoning(combined, file_path)
@@ -903,6 +967,18 @@ class AGLSecurityAudit:
             except Exception as e:
                 combined.setdefault("warnings", []).append(f"LLM enrichment: {e}")
 
+        # ═══ Layer 6: Deep Protocol Analyzer (fine-tuned LLM) ═══
+        if self._deep_analyzer and not self.config.get("skip_deep_analyzer", False):
+            try:
+                from agl_security_tool.deep_analyzer import integrate_deep_findings
+                deep_results = self._deep_analyzer.analyze_contract(
+                    source_code, file_path,
+                    existing_findings=combined.get("all_findings_unified", []),
+                )
+                combined = integrate_deep_findings(combined, deep_results)
+            except Exception as e:
+                combined.setdefault("warnings", []).append(f"Deep Analyzer: {e}")
+
         combined["total_findings"] = len(combined.get("all_findings_unified", []))
         combined["total_before_dedup"] = (
             len(combined["findings"])
@@ -910,6 +986,9 @@ class AGLSecurityAudit:
             + len(combined["detector_findings"])
             + len(combined.get("symbolic_findings", []))
         )
+        # Expose unified findings as the primary "findings" key for API consumers
+        combined["raw_findings"] = combined["findings"]
+        combined["findings"] = combined.get("all_findings_unified", [])
         # Deduplicate layers_used list
         seen_layers = []
         for l in combined.get("layers_used", []):
@@ -996,9 +1075,13 @@ class AGLSecurityAudit:
                 cat = _norm_cat(
                     f.get("category", f.get("detector", f.get("detector_id", "")))
                 )
-                # Use line-bucket (within 20 lines = same finding) for cross-layer match
-                line_bucket = line // 20
-                key = (line_bucket, cat)
+                # Prefer function-based dedup; fall back to wider line-bucket
+                func_name = f.get("function", "").lower().strip()
+                if func_name:
+                    key = (func_name, cat)
+                else:
+                    line_bucket = line // 10  # wider window (was //5)
+                    key = (line_bucket, cat)
 
                 if key in seen:
                     existing = seen[key]
@@ -1016,20 +1099,21 @@ class AGLSecurityAudit:
                         existing["description"] = f["description"]
                     # Keep higher severity
                     sev_rank = {
-                        "critical": 0,
-                        "high": 1,
-                        "medium": 2,
-                        "low": 3,
-                        "info": 4,
+                        "CRITICAL": 0,
+                        "HIGH": 1,
+                        "MEDIUM": 2,
+                        "LOW": 3,
+                        "INFO": 4,
                     }
-                    if sev_rank.get(f.get("severity", "info"), 4) < sev_rank.get(
-                        existing.get("severity", "info"), 4
+                    if sev_rank.get(f.get("severity", "INFO"), 4) < sev_rank.get(
+                        existing.get("severity", "INFO"), 4
                     ):
                         existing["severity"] = f["severity"]
                 else:
                     merged = dict(f)
                     merged["confirmed_by"] = [source_label]
                     merged["confidence"] = _conf_float(merged.get("confidence", 0.7))
+                    merged.setdefault("source", source_label)
                     seen[key] = merged
 
         _process(combined.get("findings", []), "pattern_engine")
@@ -1044,11 +1128,240 @@ class AGLSecurityAudit:
         _process(combined.get("validation_findings", []), "state_validator")
 
         # Sort: severity ▶ confidence descending
-        sev_order = {"critical": 0, "high": 1, "medium": 2, "low": 3, "info": 4}
+        sev_order = {"CRITICAL": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3, "INFO": 4}
         unified = sorted(
             seen.values(),
             key=lambda x: (
-                sev_order.get(x.get("severity", "info"), 4),
+                sev_order.get(x.get("severity", "INFO"), 4),
+                -x.get("confidence", 0),
+            ),
+        )
+
+        # ── Post-filter: remove "unchecked external call" FPs ──
+        # If source code contains (bool ok,) = ...call{...}(...); require(ok),
+        # the call IS checked — remove findings that say otherwise.
+        source_code = combined.get("_source_code", "")
+        if source_code:
+            import re as _re_pf
+
+            # Match: (bool <var>,) = <target>.call{...}(...); followed by require(<var>)
+            checked_calls = set()
+            for m in _re_pf.finditer(
+                r"\(bool\s+(\w+)\s*,?\s*\)\s*=\s*\w+[\.\w]*\.call\b", source_code
+            ):
+                var = m.group(1)
+                # Check if require(var) or if(!var) revert follows within 200 chars
+                after = source_code[m.end() : m.end() + 200]
+                if _re_pf.search(rf"require\s*\(\s*{var}\s*\)", after):
+                    checked_calls.add(m.start())
+                elif _re_pf.search(rf"if\s*\(\s*!{var}", after):
+                    checked_calls.add(m.start())
+
+            if checked_calls:
+                unified = [
+                    f
+                    for f in unified
+                    if not (
+                        "unchecked" in f.get("title", "").lower()
+                        and (
+                            "external call" in f.get("title", "").lower()
+                            or "call" in f.get("category", "").lower()
+                        )
+                        and f.get("source") in ("cfg_analysis", "pattern_engine", "")
+                    )
+                ]
+
+        # ── Post-filter: suppress reentrancy FPs when nonReentrant is present ──
+        # If the flagged function has nonReentrant modifier AND follows CEI
+        # (state update before external call), reentrancy is mitigated.
+        if source_code:
+            has_nonreentrant = bool(_re_pf.search(r"\bnonReentrant\b", source_code))
+            if has_nonreentrant:
+                # Check CEI: state write (e.g. balances[..] -= ...) BEFORE .call{
+                func_blocks = _re_pf.findall(
+                    r"function\s+\w+[^{]*nonReentrant[^{]*\{([\s\S]*?)(?=\nfunction\s|\Z)",
+                    source_code,
+                )
+                cei_ok = False
+                for body in func_blocks:
+                    # State write before .call{
+                    write_pos = max(
+                        (body.find("-="), body.find("= 0"), body.find("delete ")),
+                        default=-1,
+                    )
+                    call_pos = body.find(".call{")
+                    if call_pos == -1:
+                        call_pos = body.find(".call(")
+                    if write_pos >= 0 and call_pos > 0 and write_pos < call_pos:
+                        cei_ok = True
+
+                if cei_ok:
+                    unified = [
+                        f
+                        for f in unified
+                        if not (
+                            "reentrancy" in f.get("title", "").lower()
+                            and f.get("source")
+                            in (
+                                "semgrep",
+                                "cfg_analysis",
+                                "z3_symbolic",
+                                "agl_22_detectors",
+                                "",
+                            )
+                        )
+                    ]
+                    # Downgrade action_space attack-target findings for
+                    # protected functions (nonReentrant + CEI) to medium
+                    for f in unified:
+                        if (
+                            f.get("source") == "action_space"
+                            and f.get("severity", "").upper() == "HIGH"
+                        ):
+                            f["severity"] = "MEDIUM"
+                            f["confidence"] = round(f.get("confidence", 0.7) * 0.7, 2)
+
+        # ── Post-filter: suppress action_space FPs for well-protected functions ──
+        # If the function has onlyOwner, SafeERC20, or other strong protections,
+        # action_space and z3_symbolic balance-invariant findings are likely FPs.
+        if source_code:
+            has_only_owner = bool(_re_pf.search(r"\bonlyOwner\b", source_code))
+            has_safe_erc20 = bool(
+                _re_pf.search(
+                    r"\bSafeERC20\b|\bsafeTransfer\b|\bsafeTransferFrom\b", source_code
+                )
+            )
+            has_reentrancy_guard = bool(
+                _re_pf.search(r"\bnonReentrant\b|\bReentrancyGuard\b", source_code)
+            )
+            has_min_shares = bool(
+                _re_pf.search(
+                    r"\bMINIMUM_SHARES\b|\bMIN_SHARES\b|\b_DEAD_SHARES\b|\bMIN_DEPOSIT\b",
+                    source_code,
+                )
+            )
+
+            for f in unified:
+                src = f.get("source", "")
+                title_lower = f.get("title", "").lower()
+                sev = f.get("severity", "").lower()
+
+                # Suppress z3_symbolic balance invariant FPs when contract
+                # has SafeERC20 + nonReentrant + CEI pattern
+                if (
+                    src == "z3_symbolic"
+                    and "balance invariant" in title_lower
+                    and has_safe_erc20
+                    and has_reentrancy_guard
+                ):
+                    f["severity"] = "INFO"
+                    f["confidence"] = round(f.get("confidence", 0.7) * 0.3, 2)
+                    f.setdefault("suppression_reason", []).append(
+                        "balance_invariant_safe_pattern"
+                    )
+
+                # Suppress action_space high-value targets if function is
+                # protected by onlyOwner
+                if (
+                    src == "action_space"
+                    and sev in ("high", "critical")
+                    and has_only_owner
+                ):
+                    # Check if the specific function has onlyOwner
+                    fn = f.get("function", "") or ""
+                    fn_pattern = (
+                        rf"function\s+{_re_pf.escape(fn)}\s*\([^)]*\)[^{{]*\bonlyOwner\b"
+                        if fn
+                        else None
+                    )
+                    if fn_pattern and _re_pf.search(fn_pattern, source_code):
+                        f["severity"] = "LOW"
+                        f["confidence"] = round(f.get("confidence", 0.7) * 0.4, 2)
+                        f.setdefault("suppression_reason", []).append(
+                            "action_space_onlyOwner_protected"
+                        )
+
+                # Suppress first-deposit FPs when contract has minimum shares
+                if (
+                    "first" in title_lower
+                    and "deposit" in title_lower
+                    and has_min_shares
+                ):
+                    f["severity"] = "INFO"
+                    f["confidence"] = round(f.get("confidence", 0.7) * 0.3, 2)
+                    f.setdefault("suppression_reason", []).append(
+                        "first_deposit_mitigated_by_min_shares"
+                    )
+
+        # ── Negative evidence annotation ── دليل سلبي ──
+        # If L3 / L4 ran but produced NO profitable attacks / paths,
+        # that is exculpatory evidence for detector-only findings.
+        _neg = combined.get("_negative_evidence", {})
+        if _neg:
+            l3_ran = _neg.get("l3_ran", False)
+            l3_found_nothing = l3_ran and _neg.get("l3_profitable", 0) == 0
+            l4_ran = _neg.get("l4_ran", False)
+            l4_found_nothing = l4_ran and _neg.get("l4_profitable", 0) == 0
+
+            for f in unified:
+                confirmed = set(f.get("confirmed_by", []))
+                neg_ev = []
+
+                if l3_found_nothing and "attack_simulation" not in confirmed:
+                    neg_ev.append("l3_no_profitable_attack")
+
+                if l4_found_nothing and "search_engine" not in confirmed:
+                    neg_ev.append("l4_no_exploitable_path")
+
+                if neg_ev:
+                    f["negative_evidence"] = neg_ev
+
+        # ── Group findings with identical title+severity ── تجميع النتائج المتكررة ──
+        # Collapse e.g. 23× "Missing Zero Check" into one entry with locations list.
+        _grouped_map = {}
+        for f in unified:
+            gkey = (
+                f.get("title", "").lower().strip(),
+                f.get("severity", "low").lower(),
+            )
+            if gkey in _grouped_map:
+                grp = _grouped_map[gkey]
+                # Add this location
+                loc = {
+                    "line": f.get("line", 0),
+                    "end_line": f.get("end_line", 0),
+                    "function": f.get("function", ""),
+                    "snippet": f.get("code_snippet", f.get("snippet", "")),
+                }
+                grp["locations"].append(loc)
+                grp["count"] += 1
+                # Merge confirmed_by
+                for src in f.get("confirmed_by", []):
+                    if src not in grp["confirmed_by"]:
+                        grp["confirmed_by"].append(src)
+                # Keep highest confidence
+                grp["confidence"] = max(grp["confidence"], f.get("confidence", 0))
+                # Keep negative_evidence if any instance has it
+                if f.get("negative_evidence") and not grp.get("negative_evidence"):
+                    grp["negative_evidence"] = f["negative_evidence"]
+            else:
+                grp = dict(f)
+                grp["locations"] = [
+                    {
+                        "line": f.get("line", 0),
+                        "end_line": f.get("end_line", 0),
+                        "function": f.get("function", ""),
+                        "snippet": f.get("code_snippet", f.get("snippet", "")),
+                    }
+                ]
+                grp["count"] = 1
+                _grouped_map[gkey] = grp
+
+        unified_pre_group = unified
+        unified = sorted(
+            _grouped_map.values(),
+            key=lambda x: (
+                sev_order.get(x.get("severity", "INFO"), 4),
                 -x.get("confidence", 0),
             ),
         )
@@ -1056,11 +1369,13 @@ class AGLSecurityAudit:
         # Recount severities from unified list
         combined["severity_summary"] = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
         for f in unified:
-            sev = f.get("severity", "low").upper()
+            sev = f.get("severity", "LOW").upper()
             if sev in combined["severity_summary"]:
                 combined["severity_summary"][sev] += 1
 
         combined["all_findings_unified"] = unified
+        combined["findings_before_grouping"] = len(unified_pre_group)
+        combined["findings_after_grouping"] = len(unified)
         combined["duplicates_removed"] = (
             len(combined.get("findings", []))
             + len(combined.get("suite_findings", []))
@@ -1071,7 +1386,7 @@ class AGLSecurityAudit:
             + len(combined.get("attack_findings", []))
             + len(combined.get("search_findings", []))
             + len(combined.get("validation_findings", []))
-            - len(unified)
+            - len(unified_pre_group)
         )
         return combined
 
@@ -1159,7 +1474,7 @@ class AGLSecurityAudit:
                         f["exploit_proof"] = proof_data
                         if proof_data.get("exploitable"):
                             # Boost severity and confidence for proven exploits
-                            f["severity"] = "critical"
+                            f["severity"] = "CRITICAL"
                             old_conf = f.get("confidence", 0.7)
                             if isinstance(old_conf, str):
                                 old_conf = {"high": 0.9, "medium": 0.7, "low": 0.5}.get(
@@ -1279,9 +1594,10 @@ class AGLSecurityAudit:
                 import requests as _req
 
                 resp = _req.post(
-                    "http://localhost:11434/api/chat",
+                    os.environ.get("AGL_LLM_BASEURL", "http://localhost:11434")
+                    + "/api/chat",
                     json={
-                        "model": "qwen2.5:3b-instruct",
+                        "model": os.environ.get("AGL_LLM_MODEL", "qwen2.5:7b-instruct"),
                         "messages": [
                             {"role": "system", "content": system_msg},
                             {"role": "user", "content": user_msg},
@@ -1329,9 +1645,12 @@ class AGLSecurityAudit:
                     import requests as _req2
 
                     resp2 = _req2.post(
-                        "http://localhost:11434/api/generate",
+                        os.environ.get("AGL_LLM_BASEURL", "http://localhost:11434")
+                        + "/api/generate",
                         json={
-                            "model": "qwen2.5:3b-instruct",
+                            "model": os.environ.get(
+                                "AGL_LLM_MODEL", "qwen2.5:7b-instruct"
+                            ),
                             "prompt": (
                                 "You are a senior Solidity code reviewer.\n\n"
                                 + user_msg

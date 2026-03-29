@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+
+{% block title %}AGL Security — Smart Contract Security Analyzer{% endblock %}
+
+{% block content %}
+<div x-data="indexPage()" class="relative">
+
+    <!-- ═══ Hero Section ═══ -->
+    <section class="relative overflow-hidden">
+        <!-- Background gradient orbs -->
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-agl-accent/10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-agl-accent2/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+
+        <div class="max-w-5xl mx-auto px-4 py-20 text-center relative z-10">
+            <!-- Shield icon animated -->
+            <div class="mx-auto w-24 h-24 rounded-2xl bg-gradient-to-br from-agl-accent to-agl-accent2 flex items-center justify-center mb-8 shadow-2xl shadow-agl-accent/30 glow-box">
+                <span class="text-5xl">🛡️</span>
+            </div>
+
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+                <span class="bg-gradient-to-r from-white via-agl-glow to-agl-accent2 bg-clip-text text-transparent" x-text="t('hero_title')"></span>
+            </h1>
+
+            <p class="text-agl-muted text-lg md:text-xl max-w-2xl mx-auto mb-12" x-text="t('hero_subtitle')"></p>
+
+            <!-- ═══ Upload / URL Input Area ═══ -->
+            <div class="max-w-2xl mx-auto">
+                <!-- Drop zone -->
+                <div
+                    class="upload-zone relative border-2 border-dashed border-agl-border rounded-2xl p-10 mb-6 hover:border-agl-accent transition-all duration-300 cursor-pointer group"
+                    @dragover.prevent="dragActive = true"
+                    @dragleave="dragActive = false"
+                    @drop.prevent="handleDrop($event)"
+                    @click="$refs.fileInput.click()"
+                    :class="{ 'border-agl-accent bg-agl-accent/5': dragActive }"
+                >
+                    <input type="file" accept=".sol" class="hidden" x-ref="fileInput" @change="handleFileSelect($event)">
+
+                    <template x-if="!selectedFile">
+                        <div>
+                            <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">📁</div>
+                            <p class="text-agl-muted text-lg" x-text="t('upload_file')"></p>
+                        </div>
+                    </template>
+
+                    <template x-if="selectedFile">
+                        <div class="flex items-center justify-center gap-3">
+                            <span class="text-3xl">📄</span>
+                            <span class="text-lg font-medium text-agl-accent" x-text="selectedFile.name"></span>
+                            <span class="text-sm text-agl-muted" x-text="formatSize(selectedFile.size)"></span>
+                            <button @click.stop="selectedFile = null" class="text-red-400 hover:text-red-300 ml-3">✕</button>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- OR divider -->
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="flex-1 h-px bg-agl-border"></div>
+                    <span class="text-agl-muted text-sm" x-text="t('or_url')"></span>
+                    <div class="flex-1 h-px bg-agl-border"></div>
+                </div>
+
+                <!-- GitHub URL -->
+                <div class="mb-8">
+                    <input
+                        type="url"
+                        x-model="githubUrl"
+                        placeholder="https://github.com/user/repo"
+                        class="w-full px-5 py-3.5 bg-agl-card border border-agl-border rounded-xl text-agl-text placeholder-agl-muted/50 focus:border-agl-accent focus:ring-2 focus:ring-agl-accent/20 outline-none transition-all font-mono text-sm"
+                        dir="ltr"
+                    >
+                </div>
+
+                <!-- Scan Mode Selector -->
+                <div class="flex justify-center gap-4 mb-8" dir="ltr">
+                    <button
+                        @click="scanMode = 'quick'"
+                        :class="scanMode === 'quick' ? 'bg-agl-accent text-white shadow-lg shadow-agl-accent/30' : 'bg-agl-card border border-agl-border text-agl-muted hover:border-agl-accent'"
+                        class="px-6 py-3 rounded-xl transition-all duration-200 flex items-center gap-2"
+                    >
+                        <span>⚡</span>
+                        <span x-text="t('quick_scan')"></span>
+                    </button>
+                    <button
+                        @click="scanMode = 'deep'"
+                        :class="scanMode === 'deep' ? 'bg-agl-accent text-white shadow-lg shadow-agl-accent/30' : 'bg-agl-card border border-agl-border text-agl-muted hover:border-agl-accent'"
+                        class="px-6 py-3 rounded-xl transition-all duration-200 flex items-center gap-2"
+                    >
+                        <span>🔍</span>
+                        <span x-text="t('deep_scan')"></span>
+                    </button>
+                    <button
+                        @click="scanMode = 'scan'"
+                        :class="scanMode === 'scan' ? 'bg-agl-accent text-white shadow-lg shadow-agl-accent/30' : 'bg-agl-card border border-agl-border text-agl-muted hover:border-agl-accent'"
+                        class="px-6 py-3 rounded-xl transition-all duration-200 flex items-center gap-2"
+                    >
+                        <span>💀</span>
+                        <span x-text="t('full_scan')"></span>
+                    </button>
+                </div>
+
+                <!-- Start Scan Button -->
+                <button
+                    @click="startScan()"
+                    :disabled="scanning || (!selectedFile && !githubUrl)"
+                    class="btn-scan w-full text-lg py-4 rounded-2xl font-bold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
+                    :class="scanning ? 'bg-agl-card border border-agl-border' : ''"
+                >
+                    <template x-if="!scanning">
+                        <span class="flex items-center justify-center gap-3">
+                            <span>🚀</span>
+                            <span x-text="t('start_scan')"></span>
+                        </span>
+                    </template>
+                    <template x-if="scanning">
+                        <span class="flex items-center justify-center gap-3">
+                            <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                            </svg>
+                            <span x-text="t('scanning')"></span>
+                        </span>
+                    </template>
+                </button>
+
+                <!-- Error message -->
+                <template x-if="errorMsg">
+                    <div class="mt-4 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm" x-text="errorMsg"></div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Features Section ═══ -->
+    <section class="max-w-6xl mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Feature 1 -->
+            <div class="feature-card p-6 rounded-2xl bg-agl-card border border-agl-border hover:border-agl-accent/50 transition-all duration-300">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 flex items-center justify-center mb-4">
+                    <span class="text-2xl">🔬</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">22 <span x-text="t('detectors')"></span></h3>
+                <p class="text-agl-muted text-sm">Reentrancy (5) • Access Control (5) • DeFi (4) • Token (4) • Common (4)</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card p-6 rounded-2xl bg-agl-card border border-agl-border hover:border-agl-accent/50 transition-all duration-300">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 flex items-center justify-center mb-4">
+                    <span class="text-2xl">🧮</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2" x-text="t('z3_proofs')"></h3>
+                <p class="text-agl-muted text-sm">SMT Solver • 8 Symbolic Checks • Mathematical Verification</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card p-6 rounded-2xl bg-agl-card border border-agl-border hover:border-agl-accent/50 transition-all duration-300">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 flex items-center justify-center mb-4">
+                    <span class="text-2xl">🌊</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2" x-text="t('heikal_math')"></h3>
+                <p class="text-agl-muted text-sm">Wave ψ • Tunneling T • Holographic H • Resonance R • ξ = 0.4671</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Pipeline Visualization ═══ -->
+    <section class="max-w-4xl mx-auto px-4 py-16">
+        <h2 class="text-2xl font-bold text-center mb-12 bg-gradient-to-r from-agl-accent to-agl-accent2 bg-clip-text text-transparent">
+            7-Layer Security Pipeline
+        </h2>
+        <div class="space-y-3" dir="ltr">
+            <template x-for="(layer, idx) in layers" :key="idx">
+                <div class="pipeline-layer flex items-center gap-4 p-4 rounded-xl bg-agl-card border border-agl-border hover:border-agl-accent/30 transition-all" :style="`animation-delay: ${idx * 0.1}s`">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-agl-accent/20 to-agl-accent2/20 flex items-center justify-center text-sm font-bold text-agl-accent shrink-0" x-text="layer.id"></div>
+                    <div class="flex-1">
+                        <div class="font-medium text-sm" x-text="layer.name"></div>
+                        <div class="text-xs text-agl-muted" x-text="layer.desc"></div>
+                    </div>
+                    <div class="text-lg" x-text="layer.icon"></div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function indexPage() {
+    return {
+        selectedFile: null,
+        githubUrl: '',
+        scanMode: 'deep',
+        scanning: false,
+        dragActive: false,
+        errorMsg: '',
+
+        layers: [
+            { id: 'L0', name: 'Preprocessing', desc: 'Flattener + Import Resolution', icon: '📋' },
+            { id: 'L0.5', name: 'Z3 Symbolic Engine', desc: '8 SMT Solver Checks', icon: '🧮' },
+            { id: 'L1', name: 'State Extraction', desc: 'Financial Graph + Entity Mapping', icon: '🔍' },
+            { id: 'L2', name: 'Security Orchestrator', desc: 'Slither + Mythril + Semgrep', icon: '🔒' },
+            { id: 'L3', name: 'Offensive Engine', desc: 'Attack Simulation + Profit Calc', icon: '💀' },
+            { id: 'L4', name: 'Search Engine', desc: 'MCTS + Evolutionary + Beam Search', icon: '🎯' },
+            { id: 'L5', name: '22 Semantic Detectors', desc: 'Reentrancy, DeFi, Token, Access', icon: '🔬' },
+            { id: 'L6', name: 'Exploit Reasoning', desc: 'Z3 Proofs + CEX Assembly', icon: '⚡' },
+            { id: 'L7', name: 'Heikal Math', desc: 'ψ Wave • T Tunnel • H Holo • R Resonance', icon: '🌊' },
+        ],
+
+        handleDrop(e) {
+            this.dragActive = false;
+            const files = e.dataTransfer.files;
+            if (files.length && files[0].name.endsWith('.sol')) {
+                this.selectedFile = files[0];
+                this.githubUrl = '';
+            }
+        },
+
+        handleFileSelect(e) {
+            const files = e.target.files;
+            if (files.length) {
+                this.selectedFile = files[0];
+                this.githubUrl = '';
+            }
+        },
+
+        formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        },
+
+        async startScan() {
+            const token = localStorage.getItem('agl_token');
+            if (!token) {
+                window.location.href = '/login';
+                return;
+            }
+
+            this.scanning = true;
+            this.errorMsg = '';
+
+            try {
+                let res;
+                if (this.selectedFile) {
+                    const fd = new FormData();
+                    fd.append('file', this.selectedFile);
+                    fd.append('mode', this.scanMode);
+                    res = await fetch('/api/v1/scan', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        body: fd,
+                    });
+                } else if (this.githubUrl) {
+                    res = await fetch('/api/v1/scan/url', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ url: this.githubUrl, mode: this.scanMode }),
+                    });
+                }
+
+                if (!res || !res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    this.errorMsg = err.detail || `Error ${res.status}`;
+                    this.scanning = false;
+                    return;
+                }
+
+                const data = await res.json();
+                window.location.href = `/scan/${data.id}/progress`;
+
+            } catch (e) {
+                this.errorMsg = e.message;
+                this.scanning = false;
+            }
+        },
+    };
+}
+</script>
+{% endblock %}

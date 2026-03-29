@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}AGL Security — Scanning{% endblock %}
+
+{% block content %}
+<div x-data="scanProgressPage('{{ scan_id }}')" x-init="startPolling()">
+    <div class="max-w-3xl mx-auto px-4 py-16">
+
+        <!-- ═══ Header ═══ -->
+        <div class="text-center mb-10">
+            <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-agl-accent to-agl-accent2 flex items-center justify-center mb-6 shadow-2xl shadow-agl-accent/30 glow-box">
+                <span class="text-4xl" x-text="statusIcon()"></span>
+            </div>
+            <h1 class="text-2xl font-bold mb-2" x-text="statusTitle()"></h1>
+            <p class="text-agl-muted font-mono text-sm" x-text="scan?.target_name || '...'" dir="ltr"></p>
+        </div>
+
+        <!-- ═══ Progress Bar ═══ -->
+        <div class="mb-10">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-agl-muted" x-text="scan?.current_layer || t('scanning')"></span>
+                <span class="text-agl-accent font-bold" x-text="progress + '%'"></span>
+            </div>
+            <div class="h-3 rounded-full bg-agl-card border border-agl-border overflow-hidden">
+                <div class="h-full rounded-full bg-gradient-to-r from-agl-accent to-agl-accent2 transition-all duration-500 progress-bar-glow"
+                     :style="`width: ${progress}%`"></div>
+            </div>
+        </div>
+
+        <!-- ═══ Pipeline Steps ═══ -->
+        <div class="space-y-2 mb-10" dir="ltr">
+            <template x-for="(layer, idx) in layers" :key="idx">
+                <div class="flex items-center gap-4 p-3 rounded-xl transition-all"
+                     :class="layerClass(idx)">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm shrink-0"
+                         :class="layerIconClass(idx)">
+                        <template x-if="isLayerDone(idx)"><span>✓</span></template>
+                        <template x-if="isLayerActive(idx)">
+                            <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                            </svg>
+                        </template>
+                        <template x-if="!isLayerDone(idx) && !isLayerActive(idx)"><span class="text-agl-muted">•</span></template>
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-sm font-medium" :class="isLayerDone(idx) || isLayerActive(idx) ? 'text-agl-text' : 'text-agl-muted'" x-text="layer.name"></div>
+                    </div>
+                    <template x-if="isLayerDone(idx)">
+                        <span class="text-xs text-agl-muted" x-text="layer.time || ''"></span>
+                    </template>
+                </div>
+            </template>
+        </div>
+
+        <!-- ═══ Live Findings Counter ═══ -->
+        <template x-if="scan && (scan.critical_count + scan.high_count + scan.medium_count + scan.low_count) > 0">
+            <div class="bg-agl-card border border-agl-border rounded-2xl p-6 mb-8">
+                <div class="text-sm text-agl-muted mb-3" x-text="lang === 'ar' ? '📊 حتى الآن:' : '📊 So far:'"></div>
+                <div class="flex gap-6 justify-center">
+                    <div class="text-center" x-show="scan.critical_count > 0">
+                        <div class="text-2xl font-bold text-sev-critical" x-text="scan.critical_count"></div>
+                        <div class="text-xs text-agl-muted">CRITICAL</div>
+                    </div>
+                    <div class="text-center" x-show="scan.high_count > 0">
+                        <div class="text-2xl font-bold text-sev-high" x-text="scan.high_count"></div>
+                        <div class="text-xs text-agl-muted">HIGH</div>
+                    </div>
+                    <div class="text-center" x-show="scan.medium_count > 0">
+                        <div class="text-2xl font-bold text-sev-medium" x-text="scan.medium_count"></div>
+                        <div class="text-xs text-agl-muted">MEDIUM</div>
+                    </div>
+                    <div class="text-center" x-show="scan.low_count > 0">
+                        <div class="text-2xl font-bold text-sev-low" x-text="scan.low_count"></div>
+                        <div class="text-xs text-agl-muted">LOW</div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- ═══ Completed / Failed Actions ═══ -->
+        <template x-if="scan?.status === 'completed'">
+            <div class="text-center">
+                <a :href="`/scan/${scanId}/results`" class="btn-scan inline-block text-lg px-10 py-4 rounded-2xl font-bold">
+                    <span class="flex items-center gap-3">
+                        <span>📊</span>
+                        <span x-text="t('results')"></span>
+                    </span>
+                </a>
+            </div>
+        </template>
+
+        <template x-if="scan?.status === 'failed'">
+            <div class="text-center">
+                <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-4 mb-4">
+                    <p class="text-red-400 text-sm" x-text="scan.error_message || 'Unknown error'"></p>
+                </div>
+                <a href="/" class="btn-primary inline-block" x-text="t('new_scan')"></a>
+            </div>
+        </template>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function scanProgressPage(scanId) {
+    return {
+        scanId: scanId,
+        scan: null,
+        progress: 0,
+        pollingInterval: null,
+        currentLayerIdx: -1,
+
+        layers: [
+            { name: 'Layer 0: Preprocessing (Flattener)', time: '' },
+            { name: 'Layer 0.5: Z3 Symbolic Engine', time: '' },
+            { name: 'Layer 1: State Extraction', time: '' },
+            { name: 'Layer 2: Security Orchestrator', time: '' },
+            { name: 'Layer 3: Offensive Engine', time: '' },
+            { name: 'Layer 4: Search Engine', time: '' },
+            { name: 'Layer 5: 22 Semantic Detectors', time: '' },
+            { name: 'Layer 6: Exploit Reasoning', time: '' },
+            { name: 'Layer 7: Heikal Math', time: '' },
+        ],
+
+        statusIcon() {
+            if (!this.scan) return '🔄';
+            if (this.scan.status === 'completed') return '✅';
+            if (this.scan.status === 'failed') return '❌';
+            return '🔍';
+        },
+
+        statusTitle() {
+            if (!this.scan) return this.t('scanning');
+            if (this.scan.status === 'completed') return this.t('completed');
+            if (this.scan.status === 'failed') return this.t('failed');
+            return this.t('scanning');
+        },
+
+        isLayerDone(idx) {
+            return idx < this.currentLayerIdx;
+        },
+
+        isLayerActive(idx) {
+            return idx === this.currentLayerIdx;
+        },
+
+        layerClass(idx) {
+            if (this.isLayerDone(idx)) return 'bg-agl-accent/5 border border-agl-accent/20';
+            if (this.isLayerActive(idx)) return 'bg-agl-card border border-agl-accent/40 shadow-lg shadow-agl-accent/10';
+            return 'bg-transparent border border-transparent';
+        },
+
+        layerIconClass(idx) {
+            if (this.isLayerDone(idx)) return 'bg-sev-low/20 text-sev-low';
+            if (this.isLayerActive(idx)) return 'bg-agl-accent/20 text-agl-accent';
+            return 'bg-agl-border/50';
+        },
+
+        async fetchStatus() {
+            const token = localStorage.getItem('agl_token');
+            if (!token) return;
+
+            try {
+                const res = await fetch(`/api/v1/scan/${this.scanId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!res.ok) return;
+                const data = await res.json();
+                this.scan = data;
+                this.progress = data.progress || 0;
+
+                // Update current layer based on progress
+                this.currentLayerIdx = Math.floor((this.progress / 100) * this.layers.length);
+                if (this.progress >= 100) this.currentLayerIdx = this.layers.length;
+
+                // Stop polling if done
+                if (data.status === 'completed' || data.status === 'failed') {
+                    clearInterval(this.pollingInterval);
+                    if (data.status === 'completed') {
+                        this.progress = 100;
+                        this.currentLayerIdx = this.layers.length;
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        },
+
+        startPolling() {
+            this.fetchStatus();
+            this.pollingInterval = setInterval(() => this.fetchStatus(), 2000);
+        },
+
+        t(key) {
+            // Inherit from parent aglApp
+            return this.$root.__x?.$data?.t?.(key) || key;
+        }
+    };
+}
+</script>
+{% endblock %}

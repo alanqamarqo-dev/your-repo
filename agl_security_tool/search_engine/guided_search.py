@@ -36,6 +36,7 @@ from .models import (
     SearchStats,
     SeedSource,
 )
+from ..heikal_math import HolographicVulnerabilityMemory
 
 
 class GuidedSearchEngine:
@@ -55,6 +56,7 @@ class GuidedSearchEngine:
         self._nodes: Dict[str, SearchNode] = {}
         self._best_profit: float = 0.0
         self._start_time: float = 0.0
+        self.holographic = HolographicVulnerabilityMemory()
 
     # ═══════════════════════════════════════════════════════
     #  Main Entry
@@ -93,7 +95,11 @@ class GuidedSearchEngine:
         self._count_seeds(seeds)
 
         candidates: List[CandidateSequence] = []
-        strategy = self.config.strategy.value if hasattr(self.config.strategy, 'value') else str(self.config.strategy)
+        strategy = (
+            self.config.strategy.value
+            if hasattr(self.config.strategy, "value")
+            else str(self.config.strategy)
+        )
 
         if strategy == "beam_search":
             candidates = self._beam_search(
@@ -156,13 +162,15 @@ class GuidedSearchEngine:
 
         # تحويل البذور لشعاعات أولية
         beams: List[Tuple[List[str], float, str]] = []
-        for seed in seeds[:width * 2]:
+        for seed in seeds[: width * 2]:
             if seed.action_sequence:
-                beams.append((
-                    list(seed.action_sequence),
-                    seed.priority,
-                    seed.source.value,
-                ))
+                beams.append(
+                    (
+                        list(seed.action_sequence),
+                        seed.priority,
+                        seed.source.value,
+                    )
+                )
 
         if not beams:
             return candidates
@@ -275,7 +283,9 @@ class GuidedSearchEngine:
                     parent_id="root",
                     depth=1,
                     sequence_so_far=list(seed.action_sequence),
-                    last_action=seed.action_sequence[-1] if seed.action_sequence else "",
+                    last_action=(
+                        seed.action_sequence[-1] if seed.action_sequence else ""
+                    ),
                     heuristic_score=seed.priority,
                 )
                 self._nodes[child_id] = child
@@ -309,8 +319,7 @@ class GuidedSearchEngine:
         for node_id, node in self._nodes.items():
             if node.visits > 0 and node.sequence_so_far:
                 candidate = self._evaluate_sequence(
-                    node.sequence_so_far, actions, simulate_fn,
-                    initial_state, "mcts"
+                    node.sequence_so_far, actions, simulate_fn, initial_state, "mcts"
                 )
                 if candidate and candidate.simulated:
                     candidates.append(candidate)
@@ -329,7 +338,7 @@ class GuidedSearchEngine:
         current = node
         while current.children and current.state != NodeState.DEAD:
             best_child_id = None
-            best_ucb = -float('inf')
+            best_ucb = -float("inf")
 
             for child_id in current.children:
                 child = self._nodes.get(child_id)
@@ -343,9 +352,8 @@ class GuidedSearchEngine:
                     return child  # unexplored — prioritize
 
                 total_parent = max(current.visits, 1)
-                ucb = (
-                    child.average_reward
-                    + C * math.sqrt(math.log(total_parent) / child.visits)
+                ucb = child.average_reward + C * math.sqrt(
+                    math.log(total_parent) / child.visits
                 )
                 child.ucb_score = ucb
 
@@ -406,7 +414,8 @@ class GuidedSearchEngine:
 
         # Return random unexplored child
         unexplored = [
-            cid for cid in node.children
+            cid
+            for cid in node.children
             if cid in self._nodes and self._nodes[cid].visits == 0
         ]
         if unexplored:
@@ -601,7 +610,7 @@ class GuidedSearchEngine:
                 seen.add(aid)
                 result.append(aid)
 
-        return result[:self.config.max_depth] if result else list(p1)
+        return result[: self.config.max_depth] if result else list(p1)
 
     def _mutate(
         self, seq: List[str], action_graph: Any, actions: Dict[str, Any]
@@ -663,11 +672,13 @@ class GuidedSearchEngine:
         open_list: List[Tuple[float, List[str], str]] = []
         for seed in seeds:
             if seed.action_sequence:
-                open_list.append((
-                    -seed.priority,  # negative for min-heap behavior
-                    list(seed.action_sequence),
-                    seed.source.value,
-                ))
+                open_list.append(
+                    (
+                        -seed.priority,  # negative for min-heap behavior
+                        list(seed.action_sequence),
+                        seed.source.value,
+                    )
+                )
 
         open_list.sort(key=lambda x: x[0])
         visited: Set[str] = set()
@@ -703,7 +714,7 @@ class GuidedSearchEngine:
 
                 open_list.sort(key=lambda x: x[0])
                 # Trim to avoid memory explosion
-                open_list = open_list[:self.config.max_sequences_to_test]
+                open_list = open_list[: self.config.max_sequences_to_test]
 
         self.stats.by_strategy["greedy"] = len(candidates)
         return candidates
@@ -838,7 +849,11 @@ class GuidedSearchEngine:
             candidate_id=candidate_id,
             steps=steps,
             action_ids=list(action_ids),
-            source=SeedSource(source) if source in [s.value for s in SeedSource] else SeedSource.HEURISTIC,
+            source=(
+                SeedSource(source)
+                if source in [s.value for s in SeedSource]
+                else SeedSource.HEURISTIC
+            ),
             estimated_profit_usd=self._heuristic_score(action_ids, actions) * 10000,
         )
 
@@ -851,10 +866,10 @@ class GuidedSearchEngine:
             self.stats.simulation_time_ms += sim_time
 
             candidate.simulated = True
-            candidate.actual_profit_usd = getattr(result, 'net_profit_usd', 0.0)
-            candidate.simulation_success = getattr(result, 'is_profitable', False)
-            candidate.attack_type = getattr(result, 'attack_type', '')
-            candidate.severity = getattr(result, 'severity', '')
+            candidate.actual_profit_usd = getattr(result, "net_profit_usd", 0.0)
+            candidate.simulation_success = getattr(result, "is_profitable", False)
+            candidate.attack_type = getattr(result, "attack_type", "")
+            candidate.severity = getattr(result, "severity", "")
 
             if candidate.actual_profit_usd > self._best_profit:
                 self._best_profit = candidate.actual_profit_usd
@@ -868,32 +883,38 @@ class GuidedSearchEngine:
 
     def _action_to_step(self, action: Any) -> Dict[str, Any]:
         """Convert a Layer 2 Action to a step_info dict for Layer 3"""
-        cat = action.category.value if hasattr(action.category, 'value') else str(action.category)
+        cat = (
+            action.category.value
+            if hasattr(action.category, "value")
+            else str(action.category)
+        )
         attack_types = [
-            at.value if hasattr(at, 'value') else str(at)
-            for at in getattr(action, 'attack_types', [])
+            at.value if hasattr(at, "value") else str(at)
+            for at in getattr(action, "attack_types", [])
         ]
 
         # Build parameters
         params = []
-        for p in getattr(action, 'parameters', []):
-            params.append({
-                "name": p.name,
-                "concrete_values": getattr(p, 'concrete_values', []),
-                "is_amount": getattr(p, 'is_amount', False),
-            })
+        for p in getattr(action, "parameters", []):
+            params.append(
+                {
+                    "name": p.name,
+                    "concrete_values": getattr(p, "concrete_values", []),
+                    "is_amount": getattr(p, "is_amount", False),
+                }
+            )
 
         return {
             "action_id": action.action_id,
             "contract_name": action.contract_name,
             "function_name": action.function_name,
             "category": cat,
-            "net_delta": getattr(action, 'net_delta', 0),
-            "external_calls": getattr(action, 'external_calls', []),
-            "sends_eth": getattr(action, 'sends_eth', False),
-            "has_cei_violation": getattr(action, 'has_cei_violation', False),
-            "reentrancy_guarded": getattr(action, 'reentrancy_guarded', False),
-            "preconditions": getattr(action, 'preconditions', []),
+            "net_delta": getattr(action, "net_delta", 0),
+            "external_calls": getattr(action, "external_calls", []),
+            "sends_eth": getattr(action, "sends_eth", False),
+            "has_cei_violation": getattr(action, "has_cei_violation", False),
+            "reentrancy_guarded": getattr(action, "reentrancy_guarded", False),
+            "preconditions": getattr(action, "preconditions", []),
             "parameters": params,
             "msg_value": "1000000000000000000" if cat == "fund_inflow" else "0",
             "attack_types": attack_types,
@@ -901,7 +922,7 @@ class GuidedSearchEngine:
 
     def _get_successors(self, action_id: str, action_graph: Any) -> List[str]:
         """Get successor action IDs from ActionGraph"""
-        if hasattr(action_graph, 'get_successors'):
+        if hasattr(action_graph, "get_successors"):
             try:
                 succs = action_graph.get_successors(action_id)
                 # get_successors may return Action objects — extract action_id strings
@@ -909,7 +930,7 @@ class GuidedSearchEngine:
                 for s in succs:
                     if isinstance(s, str):
                         result.append(s)
-                    elif hasattr(s, 'action_id'):
+                    elif hasattr(s, "action_id"):
                         result.append(s.action_id)
                     else:
                         result.append(str(s))
@@ -918,14 +939,14 @@ class GuidedSearchEngine:
                 pass
 
         # Fallback: successors adjacency → extract target_action from edges
-        successors_map = getattr(action_graph, 'successors', {})
+        successors_map = getattr(action_graph, "successors", {})
         edge_ids = successors_map.get(action_id, [])
         if edge_ids:
-            edges = getattr(action_graph, 'edges', {})
+            edges = getattr(action_graph, "edges", {})
             result = []
             for eid in edge_ids:
                 edge = edges.get(eid)
-                if edge and hasattr(edge, 'target_action'):
+                if edge and hasattr(edge, "target_action"):
                     result.append(edge.target_action)
             return result
 
@@ -933,38 +954,79 @@ class GuidedSearchEngine:
 
     def _heuristic_score(self, action_ids: List[str], actions: Dict[str, Any]) -> float:
         """
-        Heuristic score for a sequence — higher is better.
+        Heuristic score for a sequence — enhanced with Holographic Pattern Matching.
+
+        يستخدم الذاكرة الهولوغرافية للبحث عن أنماط الثغرات المعروفة:
+        - FFT-based circular convolution لمقارنة الأنماط
+        - phase modulation للتشفير
+        - cross-correlation للتشابه
 
         Factors:
         - CEI violations → high score
         - ETH sends → high score
         - Fund movers → medium score
         - Access required → penalty
+        - Holographic pattern match → bonus
         """
         score = 0.0
+
+        # === Aggregate features across all actions in sequence ===
+        agg_features = {
+            "has_external_call": 0.0,
+            "state_after_call": 0.0,
+            "no_reentrancy_guard": 0.0,
+            "moves_funds": 0.0,
+            "sends_eth": 0.0,
+            "reads_oracle": 0.0,
+            "no_access_control": 0.0,
+            "modifies_balance": 0.0,
+        }
 
         for aid in action_ids:
             action = actions.get(aid)
             if not action:
                 continue
 
-            cat = action.category.value if hasattr(action.category, 'value') else str(action.category)
+            cat = (
+                action.category.value
+                if hasattr(action.category, "value")
+                else str(action.category)
+            )
 
             if cat in ("fund_outflow", "claim"):
                 score += 0.3
+                agg_features["moves_funds"] = 1.0
             elif cat in ("fund_inflow", "stake"):
                 score += 0.1
             elif cat in ("borrow", "flash_loan"):
                 score += 0.25
 
-            if getattr(action, 'has_cei_violation', False):
+            if getattr(action, "has_cei_violation", False):
                 score += 0.4
-            if getattr(action, 'sends_eth', False):
+                agg_features["state_after_call"] = 1.0
+            if getattr(action, "sends_eth", False):
                 score += 0.2
-            if not getattr(action, 'reentrancy_guarded', False):
+                agg_features["sends_eth"] = 1.0
+                agg_features["has_external_call"] = 1.0
+            if not getattr(action, "reentrancy_guarded", False):
                 score += 0.1
-            if getattr(action, 'requires_access', False):
+                agg_features["no_reentrancy_guard"] = 1.0
+            if getattr(action, "requires_access", False):
                 score -= 0.5
+            else:
+                agg_features["no_access_control"] = 1.0
+            if getattr(action, "reads_oracle", False):
+                agg_features["reads_oracle"] = 1.0
+
+        # === Holographic Pattern Matching Bonus ===
+        try:
+            matches = self.holographic.match(agg_features)
+            if matches:
+                best = matches[0]
+                # مكافأة بناءً على قوة التشابه الهولوغرافي
+                score += best.similarity * 0.2
+        except Exception:
+            pass
 
         return max(score, 0.0)
 
@@ -981,14 +1043,16 @@ class GuidedSearchEngine:
 
         for c in candidates:
             if c.simulated and -500 < c.actual_profit_usd <= 0:
-                near_misses.append(SearchSeed(
-                    seed_id=f"near_{c.candidate_id}",
-                    source=SeedSource.LAYER3_NEAR_MISS,
-                    action_sequence=list(c.action_ids),
-                    estimated_profit=abs(c.actual_profit_usd),
-                    priority=0.75,
-                    notes=f"Near-miss: profit=${c.actual_profit_usd:.2f}",
-                ))
+                near_misses.append(
+                    SearchSeed(
+                        seed_id=f"near_{c.candidate_id}",
+                        source=SeedSource.LAYER3_NEAR_MISS,
+                        action_sequence=list(c.action_ids),
+                        estimated_profit=abs(c.actual_profit_usd),
+                        priority=0.75,
+                        notes=f"Near-miss: profit=${c.actual_profit_usd:.2f}",
+                    )
+                )
 
         return near_misses[:10]
 

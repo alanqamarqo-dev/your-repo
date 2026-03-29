@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agl-security-tool"
+version = "2.1.0"
+description = "AGL Security — أداة تحليل أمان العقود الذكية (Smart Contract Security Analyzer)"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "AGL Team" }]
+license = { text = "MIT" }
+
+dependencies = [
+    "requests>=2.28.0",
+    "z3-solver>=4.12.0",
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+api = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.22.0",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.0",
+    "sqlalchemy>=2.0.0",
+    "pydantic>=2.0.0",
+    "slowapi>=0.1.0",
+    "python-multipart>=0.0.5",
+]
+mongo = [
+    "pymongo>=4.0.0",
+]
+dev = [
+    "pytest>=7",
+    "psutil>=5.9.0",
+]
+
+[project.scripts]
+agl-security = "agl_security_tool.__main__:main"
+agl-audit = "agl_security_tool.audit_pipeline:main"
+agl-manage = "agl_security_tool.cli.manage:main"
+agl-train = "agl_security_tool.cli.train:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["agl_security_tool*"]
+
+[tool.setuptools.package-data]
+agl_security_tool = [
+    "requirements.txt",
+    "test_contracts/**/*.sol",
+    "api/templates/*.html",
+    "api/static/**/*",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-m 'not slow'"
+markers = [
+    "slow: marks tests that require full external toolchain (slither/mythril/semgrep)",
+]

@@ -1,0 +1,359 @@
+{% extends "base.html" %}
+
+{% block title %}AGL Security — Results{% endblock %}
+
+{% block content %}
+<div x-data="resultsPage('{{ scan_id }}')" x-init="loadResults()">
+
+    <!-- Loading state -->
+    <template x-if="loading">
+        <div class="max-w-6xl mx-auto px-4 py-20 text-center">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-agl-accent border-t-transparent mb-4"></div>
+            <p class="text-agl-muted" x-text="t('scanning')"></p>
+        </div>
+    </template>
+
+    <!-- Error state -->
+    <template x-if="error">
+        <div class="max-w-2xl mx-auto px-4 py-20 text-center">
+            <div class="text-5xl mb-4">❌</div>
+            <p class="text-red-400 text-lg" x-text="error"></p>
+            <a href="/" class="btn-primary inline-block mt-6" x-text="t('new_scan')"></a>
+        </div>
+    </template>
+
+    <!-- Results loaded -->
+    <template x-if="!loading && !error && scan">
+        <div class="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
+
+            <!-- ═══ Header ═══ -->
+            <div class="flex flex-wrap items-center justify-between mb-8 gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold flex items-center gap-3">
+                        <span>📄</span>
+                        <span x-text="scan.target_name" dir="ltr" class="font-mono"></span>
+                    </h1>
+                    <div class="flex items-center gap-4 mt-2 text-sm text-agl-muted">
+                        <span x-text="scan.scan_mode.toUpperCase()" class="px-2 py-0.5 rounded bg-agl-accent/20 text-agl-accent text-xs font-bold"></span>
+                        <span x-text="scan.duration_sec + 's'"></span>
+                        <span x-text="scan.created_at.substring(0, 16)"></span>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <a :href="'/api/v1/report/' + scan.id + '/json'" class="btn-outline text-sm" x-text="t('export_json')"></a>
+                    <a :href="'/api/v1/report/' + scan.id + '/md'" class="btn-outline text-sm" x-text="t('export_md')"></a>
+                    <a href="/dashboard" class="btn-outline text-sm" x-text="t('back_to_dashboard')"></a>
+                </div>
+            </div>
+
+            <!-- ═══ Severity Cards ═══ -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="severity-card bg-agl-card border border-agl-border rounded-2xl p-5 hover:border-sev-critical/50 transition-all">
+                    <div class="text-sev-critical text-3xl font-extrabold" x-text="scan.critical_count"></div>
+                    <div class="text-agl-muted text-sm mt-1" x-text="t('critical')"></div>
+                    <div class="mt-2 h-1 rounded bg-sev-critical/20">
+                        <div class="h-full rounded bg-sev-critical transition-all" :style="`width: ${sevPercent('critical')}%`"></div>
+                    </div>
+                </div>
+                <div class="severity-card bg-agl-card border border-agl-border rounded-2xl p-5 hover:border-sev-high/50 transition-all">
+                    <div class="text-sev-high text-3xl font-extrabold" x-text="scan.high_count"></div>
+                    <div class="text-agl-muted text-sm mt-1" x-text="t('high')"></div>
+                    <div class="mt-2 h-1 rounded bg-sev-high/20">
+                        <div class="h-full rounded bg-sev-high transition-all" :style="`width: ${sevPercent('high')}%`"></div>
+                    </div>
+                </div>
+                <div class="severity-card bg-agl-card border border-agl-border rounded-2xl p-5 hover:border-sev-medium/50 transition-all">
+                    <div class="text-sev-medium text-3xl font-extrabold" x-text="scan.medium_count"></div>
+                    <div class="text-agl-muted text-sm mt-1" x-text="t('medium')"></div>
+                    <div class="mt-2 h-1 rounded bg-sev-medium/20">
+                        <div class="h-full rounded bg-sev-medium transition-all" :style="`width: ${sevPercent('medium')}%`"></div>
+                    </div>
+                </div>
+                <div class="severity-card bg-agl-card border border-agl-border rounded-2xl p-5 hover:border-sev-low/50 transition-all">
+                    <div class="text-sev-low text-3xl font-extrabold" x-text="scan.low_count"></div>
+                    <div class="text-agl-muted text-sm mt-1" x-text="t('low')"></div>
+                    <div class="mt-2 h-1 rounded bg-sev-low/20">
+                        <div class="h-full rounded bg-sev-low transition-all" :style="`width: ${sevPercent('low')}%`"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ Charts Row ═══ -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Severity Pie Chart -->
+                <div class="bg-agl-card border border-agl-border rounded-2xl p-6">
+                    <h3 class="text-lg font-bold mb-4" x-text="t('findings')">Findings Distribution</h3>
+                    <div class="relative" style="height: 250px;">
+                        <canvas x-ref="sevChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Security Score + Heikal -->
+                <div class="bg-agl-card border border-agl-border rounded-2xl p-6">
+                    <h3 class="text-lg font-bold mb-4" x-text="t('security_score')"></h3>
+
+                    <!-- Score Ring -->
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="relative w-36 h-36">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="15.5" fill="none" stroke="#1e1e3a" stroke-width="3"/>
+                                <circle cx="18" cy="18" r="15.5" fill="none"
+                                    :stroke="scoreColor(scan.security_score)"
+                                    stroke-width="3"
+                                    stroke-linecap="round"
+                                    :stroke-dasharray="`${scan.security_score * 0.975} 100`"
+                                    class="transition-all duration-1000"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-3xl font-extrabold" :style="`color: ${scoreColor(scan.security_score)}`" x-text="Math.round(scan.security_score)"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Heikal Scores -->
+                    <template x-if="scan.heikal_xi">
+                        <div class="space-y-3">
+                            <div class="text-center text-sm font-bold text-agl-accent mb-3">
+                                Heikal ξ = <span x-text="scan.heikal_xi?.toFixed(4)"></span>
+                            </div>
+                            <template x-for="h in heikalBars" :key="h.key">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xs w-20 text-agl-muted" x-text="h.label"></span>
+                                    <div class="flex-1 h-2 rounded-full bg-agl-border overflow-hidden">
+                                        <div class="h-full rounded-full bg-gradient-to-r from-agl-accent to-agl-accent2 transition-all duration-1000" :style="`width: ${(h.value || 0) * 100}%`"></div>
+                                    </div>
+                                    <span class="text-xs text-agl-muted w-10 text-left" dir="ltr" x-text="(h.value || 0).toFixed(2)"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- ═══ Findings List ═══ -->
+            <div class="mb-8">
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <span>🔬</span>
+                    <span x-text="t('findings')"></span>
+                    <span class="text-sm text-agl-muted font-normal">(<span x-text="findings.length"></span>)</span>
+                </h2>
+
+                <div class="space-y-3">
+                    <template x-for="(f, idx) in findings" :key="idx">
+                        <div class="finding-card bg-agl-card border border-agl-border rounded-xl overflow-hidden transition-all hover:border-agl-border/80"
+                             :class="{'border-sev-critical/30': f.severity === 'CRITICAL', 'border-sev-high/30': f.severity === 'HIGH'}">
+                            <!-- Header (clickable) -->
+                            <button @click="f._open = !f._open" class="w-full p-4 flex items-center gap-4 text-start">
+                                <span class="text-lg" x-text="f._open ? '▼' : '▶'"></span>
+                                <span class="w-3 h-3 rounded-full shrink-0" :class="sevDotClass(f.severity)"></span>
+                                <span class="text-xs font-bold px-2 py-0.5 rounded" :class="sevBadgeClass(f.severity)" x-text="f.severity"></span>
+                                <span class="flex-1 font-medium text-sm" x-text="f.category || f.check || 'Finding'"></span>
+                                <span class="text-xs text-agl-muted font-mono" x-text="f.function || ''"></span>
+                            </button>
+
+                            <!-- Body (expandable) -->
+                            <div x-show="f._open" x-collapse class="px-4 pb-4 border-t border-agl-border/50">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    <!-- Left: Details -->
+                                    <div class="space-y-3">
+                                        <div>
+                                            <span class="text-xs text-agl-muted" x-text="t('function_name')"></span>
+                                            <p class="font-mono text-sm mt-1 text-agl-accent" x-text="f.function || 'N/A'" dir="ltr"></p>
+                                        </div>
+                                        <div>
+                                            <span class="text-xs text-agl-muted" x-text="t('description')"></span>
+                                            <p class="text-sm mt-1" x-text="f.description || 'N/A'"></p>
+                                        </div>
+                                        <div x-show="f.recommendation">
+                                            <span class="text-xs text-agl-muted" x-text="t('recommendation')"></span>
+                                            <p class="text-sm mt-1 text-sev-low" x-text="f.recommendation"></p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right: Proof + Exploit -->
+                                    <div class="space-y-3">
+                                        <template x-if="f.proof">
+                                            <div class="bg-agl-bg rounded-lg p-3">
+                                                <div class="text-xs text-agl-muted mb-2">🧮 Z3 Proof</div>
+                                                <div class="text-xs font-mono" dir="ltr">
+                                                    <span class="text-sev-low" x-text="f.proof.status || 'N/A'"></span>
+                                                    <template x-if="f.proof.description">
+                                                        <p class="mt-1 text-agl-muted" x-text="f.proof.description"></p>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template x-if="f.exploit_chain">
+                                            <div class="bg-agl-bg rounded-lg p-3">
+                                                <div class="text-xs text-agl-muted mb-2">💀 Exploit Assembly</div>
+                                                <pre class="text-xs font-mono overflow-x-auto text-agl-text/80" dir="ltr" x-text="typeof f.exploit_chain === 'string' ? f.exploit_chain : JSON.stringify(f.exploit_chain, null, 2)"></pre>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- ═══ Attack Simulations ═══ -->
+            <template x-if="attacks.length > 0">
+                <div class="mb-8">
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <span>💀</span>
+                        <span x-text="t('attacks')"></span>
+                        <span class="text-sm text-agl-muted font-normal">(<span x-text="attacks.length"></span>)</span>
+                    </h2>
+
+                    <div class="space-y-3">
+                        <template x-for="(a, idx) in attacks" :key="idx">
+                            <div class="bg-agl-card border border-agl-border rounded-xl p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-lg" x-text="a.is_profitable ? '💰' : '❌'"></span>
+                                        <span class="font-medium text-sm" x-text="a.attack_type || 'Attack #' + (idx+1)"></span>
+                                    </div>
+                                    <span class="text-sm font-bold" :class="a.is_profitable ? 'text-sev-low' : 'text-agl-muted'" x-text="a.is_profitable ? '$' + formatNumber(a.net_profit_usd) : t('not_profitable')" dir="ltr"></span>
+                                </div>
+                                <!-- Profit bar -->
+                                <div class="h-2 rounded-full bg-agl-border overflow-hidden">
+                                    <div class="h-full rounded-full transition-all duration-700"
+                                        :class="a.is_profitable ? 'bg-gradient-to-r from-sev-low to-emerald-400' : 'bg-agl-muted/30'"
+                                        :style="`width: ${Math.min(100, (a.net_profit_usd / maxProfit) * 100)}%`"></div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </template>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function resultsPage(scanId) {
+    return {
+        scanId: scanId,
+        scan: null,
+        findings: [],
+        attacks: [],
+        loading: true,
+        error: '',
+        maxProfit: 1,
+
+        get heikalBars() {
+            if (!this.scan) return [];
+            return [
+                { key: 'wave', label: 'Wave ψ', value: this.scan.heikal_wave },
+                { key: 'tunnel', label: 'Tunnel T', value: this.scan.heikal_tunnel },
+                { key: 'holo', label: 'Holo H', value: this.scan.heikal_holo },
+                { key: 'resonance', label: 'Reson R', value: this.scan.heikal_resonance },
+            ];
+        },
+
+        async loadResults() {
+            const token = localStorage.getItem('agl_token');
+            if (!token) { window.location.href = '/login'; return; }
+
+            try {
+                const res = await fetch(`/api/v1/scan/${this.scanId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+
+                this.scan = data;
+                this.findings = (data.result?.findings || []).map(f => ({...f, _open: false}));
+                this.attacks = data.result?.attack_simulations || [];
+                this.maxProfit = Math.max(1, ...this.attacks.map(a => a.net_profit_usd || 0));
+
+                this.loading = false;
+
+                // Render chart after DOM update
+                this.$nextTick(() => this.renderCharts());
+
+            } catch (e) {
+                this.error = e.message;
+                this.loading = false;
+            }
+        },
+
+        renderCharts() {
+            const ctx = this.$refs.sevChart;
+            if (!ctx || !this.scan) return;
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Critical', 'High', 'Medium', 'Low'],
+                    datasets: [{
+                        data: [
+                            this.scan.critical_count,
+                            this.scan.high_count,
+                            this.scan.medium_count,
+                            this.scan.low_count,
+                        ],
+                        backgroundColor: ['#ef4444', '#f97316', '#eab308', '#22c55e'],
+                        borderWidth: 0,
+                        hoverOffset: 8,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#94a3b8', padding: 16, font: { size: 12 } }
+                        }
+                    }
+                }
+            });
+        },
+
+        sevPercent(level) {
+            if (!this.scan || !this.scan.total_findings) return 0;
+            const map = { critical: 'critical_count', high: 'high_count', medium: 'medium_count', low: 'low_count' };
+            return Math.round((this.scan[map[level]] / this.scan.total_findings) * 100);
+        },
+
+        scoreColor(score) {
+            if (score >= 80) return '#22c55e';
+            if (score >= 60) return '#eab308';
+            if (score >= 40) return '#f97316';
+            return '#ef4444';
+        },
+
+        sevDotClass(sev) {
+            return {
+                'bg-sev-critical': sev === 'CRITICAL',
+                'bg-sev-high': sev === 'HIGH',
+                'bg-sev-medium': sev === 'MEDIUM',
+                'bg-sev-low': sev === 'LOW',
+            };
+        },
+
+        sevBadgeClass(sev) {
+            return {
+                'bg-sev-critical/20 text-sev-critical': sev === 'CRITICAL',
+                'bg-sev-high/20 text-sev-high': sev === 'HIGH',
+                'bg-sev-medium/20 text-sev-medium': sev === 'MEDIUM',
+                'bg-sev-low/20 text-sev-low': sev === 'LOW',
+            };
+        },
+
+        formatNumber(n) {
+            if (!n) return '0';
+            if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+            if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+            return n.toFixed(0);
+        },
+    };
+}
+</script>
+{% endblock %}

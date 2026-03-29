@@ -160,7 +160,7 @@ class CEIViolation:
     write_line: int = 0
     sends_eth: bool = False            # هل يرسل ETH
     violation_type: str = "classic"    # classic / read_only / cross_function
-    severity: str = "critical"
+    severity: str = "CRITICAL"
 
     def to_dict(self) -> Dict[str, Any]:
         return {

@@ -375,9 +375,9 @@ class ActionGraphBuilder:
             # ضاعف الوزن إذا المصدر أو الهدف critical
             src = graph.actions.get(edge.source_action)
             tgt = graph.actions.get(edge.target_action)
-            if src and src.severity == "critical":
+            if src and src.severity == "CRITICAL":
                 base_weight *= 1.5
-            if tgt and tgt.severity == "critical":
+            if tgt and tgt.severity == "CRITICAL":
                 base_weight *= 1.5
 
             # ضاعف إذا يتضمن ربح مباشر

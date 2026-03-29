@@ -21,6 +21,10 @@ import json
 from pathlib import Path
 
 def main():
+    # Initialize logging + config from .env early
+    from agl_security_tool.logging_config import setup_from_config
+    setup_from_config()
+
     parser = argparse.ArgumentParser(
         prog="agl-security",
         description="🛡️ AGL Smart Contract Security Auditor — أداة تحليل أمان العقود الذكية",

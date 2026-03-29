@@ -1,0 +1,2196 @@
+{
+  "success": true,
+  "summary": {
+    "contracts_parsed": 7,
+    "entities_found": 7,
+    "relationships_found": 18,
+    "fund_flows_found": 19,
+    "validation_issues": 23
+  },
+  "errors": [],
+  "warnings": [
+    "تنبيه: فشل محاكاة الهجوم — "
+  ],
+  "graph": {
+    "metadata": {
+      "engine_version": "5.0.0",
+      "extraction_time_ms": 80737.86,
+      "source_files": [
+        "d:\\AGL\\test_project\\src\\RewardDistributor.sol",
+        "d:\\AGL\\test_project\\src\\Vault.sol",
+        "d:\\AGL\\test_project\\src\\VaultFactory.sol",
+        "d:\\AGL\\test_project\\src\\VaultToken.sol",
+        "d:\\AGL\\test_project\\src\\interfaces\\IVault.sol"
+      ],
+      "timestamp": 1771100937.8135076
+    },
+    "stats": {
+      "total_nodes": 21,
+      "total_edges": 37,
+      "total_entities": 7,
+      "total_relationships": 18,
+      "total_balances": 8,
+      "total_fund_flows": 19,
+      "node_types": {
+        "state_var": 4,
+        "address": 11,
+        "vault": 2,
+        "governance": 3,
+        "token": 1
+      },
+      "edge_types": {
+        "fund_flow": 28,
+        "access_control": 8,
+        "structural": 1
+      },
+      "source_files": [
+        "d:\\AGL\\test_project\\src\\RewardDistributor.sol",
+        "d:\\AGL\\test_project\\src\\Vault.sol",
+        "d:\\AGL\\test_project\\src\\VaultFactory.sol",
+        "d:\\AGL\\test_project\\src\\VaultToken.sol",
+        "d:\\AGL\\test_project\\src\\interfaces\\IVault.sol"
+      ],
+      "extraction_time_ms": 80737.86
+    },
+    "nodes": [
+      {
+        "node_id": "contract:RewardDistributor",
+        "node_type": "state_var",
+        "label": "RewardDistributor",
+        "entity_ref": "contract:RewardDistributor",
+        "attributes": {
+          "entity_type": "reward",
+          "confidence": 0.55
+        },
+        "balances": {
+          "rewards:token:RewardDistributor": "pendingRewards[account]"
+        },
+        "contract_name": "RewardDistributor",
+        "source_file": "d:\\AGL\\test_project\\src\\RewardDistributor.sol",
+        "line": 9
+      },
+      {
+        "node_id": "reward:RewardDistributor.pendingRewards",
+        "node_type": "state_var",
+        "label": "RewardDistributor.pendingRewards",
+        "entity_ref": "reward:RewardDistributor.pendingRewards",
+        "attributes": {
+          "entity_type": "reward",
+          "confidence": 0.65
+        },
+        "balances": {},
+        "contract_name": "RewardDistributor",
+        "source_file": "d:\\AGL\\test_project\\src\\RewardDistributor.sol",
+        "line": 12
+      },
+      {
+        "node_id": "external:msg.sender",
+        "node_type": "address",
+        "label": "msg.sender",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "contract:Vault",
+        "node_type": "vault",
+        "label": "Vault",
+        "entity_ref": "contract:Vault",
+        "attributes": {
+          "entity_type": "vault",
+          "confidence": 0.55,
+          "token_type": "ERC4626",
+          "total_supply_var": "totalDeposits",
+          "interest_rate_var": "rewardRate",
+          "owner": "owner",
+          "access_modifiers": [
+            "onlyOwner"
+          ],
+          "balance_vars": [
+            "deposits",
+            "totalDeposits"
+          ]
+        },
+        "balances": {
+          "collateral:Vault.token": "lastDeposit[depositor]",
+          "aggregate:Vault.token": "totalDeposits"
+        },
+        "contract_name": "Vault",
+        "source_file": "d:\\AGL\\test_project\\src\\Vault.sol",
+        "line": 10
+      },
+      {
+        "node_id": "collateral:Vault.deposits",
+        "node_type": "state_var",
+        "label": "Vault.deposits",
+        "entity_ref": "collateral:Vault.deposits",
+        "attributes": {
+          "entity_type": "collateral",
+          "confidence": 0.7
+        },
+        "balances": {},
+        "contract_name": "Vault",
+        "source_file": "d:\\AGL\\test_project\\src\\Vault.sol",
+        "line": 12
+      },
+      {
+        "node_id": "collateral:Vault.lastDeposit",
+        "node_type": "state_var",
+        "label": "Vault.lastDeposit",
+        "entity_ref": "collateral:Vault.lastDeposit",
+        "attributes": {
+          "entity_type": "collateral",
+          "confidence": 0.7
+        },
+        "balances": {},
+        "contract_name": "Vault",
+        "source_file": "d:\\AGL\\test_project\\src\\Vault.sol",
+        "line": 14
+      },
+      {
+        "node_id": "zero_address",
+        "node_type": "address",
+        "label": "Zero Address (Mint/Burn)",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "external:token",
+        "node_type": "address",
+        "label": "token",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "account:Vault",
+        "node_type": "address",
+        "label": "Vault",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "external:owner",
+        "node_type": "address",
+        "label": "owner",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "role:onlyOwner",
+        "node_type": "governance",
+        "label": "onlyOwner",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "account:msg.sender",
+        "node_type": "address",
+        "label": "msg.sender",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "role:owner",
+        "node_type": "governance",
+        "label": "owner",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "contract:VaultFactory",
+        "node_type": "vault",
+        "label": "VaultFactory",
+        "entity_ref": "contract:VaultFactory",
+        "attributes": {
+          "entity_type": "vault",
+          "confidence": 0.55,
+          "token_type": "ERC4626",
+          "owner": "admin"
+        },
+        "balances": {},
+        "contract_name": "VaultFactory",
+        "source_file": "d:\\AGL\\test_project\\src\\VaultFactory.sol",
+        "line": 10
+      },
+      {
+        "node_id": "role:restricted",
+        "node_type": "governance",
+        "label": "restricted",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "external:target",
+        "node_type": "address",
+        "label": "target",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "external:to",
+        "node_type": "address",
+        "label": "to",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "contract:VaultToken",
+        "node_type": "token",
+        "label": "VaultToken",
+        "entity_ref": "contract:VaultToken",
+        "attributes": {
+          "entity_type": "token",
+          "confidence": 0.7,
+          "total_supply_var": "totalSupply",
+          "owner": "owner",
+          "access_modifiers": [
+            "onlyOwner"
+          ],
+          "is_mintable": true,
+          "balance_vars": [
+            "balanceOf"
+          ]
+        },
+        "balances": {
+          "aggregate:token:VaultToken": "totalSupply",
+          "balance:token:VaultToken": "balanceOf[account]"
+        },
+        "contract_name": "VaultToken",
+        "source_file": "d:\\AGL\\test_project\\src\\VaultToken.sol",
+        "line": 7
+      },
+      {
+        "node_id": "account:from",
+        "node_type": "address",
+        "label": "from",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "account:to",
+        "node_type": "address",
+        "label": "to",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      },
+      {
+        "node_id": "account:owner",
+        "node_type": "address",
+        "label": "owner",
+        "entity_ref": "",
+        "attributes": {
+          "is_placeholder": true
+        },
+        "balances": {},
+        "contract_name": "",
+        "source_file": "",
+        "line": 0
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge_40",
+        "source_node": "contract:RewardDistributor",
+        "target_node": "external:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "transfers_to",
+        "attributes": {
+          "relation_type": "transfers_to"
+        },
+        "token": "ETH",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "claim",
+        "line": 49,
+        "confidence": 0.85
+      },
+      {
+        "edge_id": "edge_41",
+        "source_node": "contract:RewardDistributor",
+        "target_node": "external:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "transfer: ETH",
+        "attributes": {
+          "flow_type": "transfer"
+        },
+        "token": "ETH",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "claim",
+        "line": 49,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_42",
+        "source_node": "role:owner",
+        "target_node": "contract:Vault",
+        "edge_type": "access_control",
+        "label": "owns",
+        "attributes": {
+          "relation_type": "owns"
+        },
+        "token": "",
+        "amount_expr": "",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "",
+        "line": 0,
+        "confidence": 0.95
+      },
+      {
+        "edge_id": "edge_43",
+        "source_node": "role:onlyOwner",
+        "target_node": "contract:Vault",
+        "edge_type": "access_control",
+        "label": "can_call",
+        "attributes": {
+          "relation_type": "can_call"
+        },
+        "token": "",
+        "amount_expr": "",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "onlyOwner",
+        "function_name": "setRewardRate",
+        "line": 0,
+        "confidence": 0.9
+      },
+      {
+        "edge_id": "edge_44",
+        "source_node": "contract:Vault",
+        "target_node": "external:token",
+        "edge_type": "fund_flow",
+        "label": "transfers_to",
+        "attributes": {
+          "relation_type": "transfers_to"
+        },
+        "token": "token",
+        "amount_expr": "",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "deposit",
+        "line": 46,
+        "confidence": 0.9
+      },
+      {
+        "edge_id": "edge_45",
+        "source_node": "contract:Vault",
+        "target_node": "external:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "transfers_to",
+        "attributes": {
+          "relation_type": "transfers_to"
+        },
+        "token": "ETH",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "withdraw",
+        "line": 59,
+        "confidence": 0.85
+      },
+      {
+        "edge_id": "edge_46",
+        "source_node": "contract:Vault",
+        "target_node": "external:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "transfers_to",
+        "attributes": {
+          "relation_type": "transfers_to"
+        },
+        "token": "ETH",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "nonReentrant",
+        "function_name": "safeWithdraw",
+        "line": 74,
+        "confidence": 0.85
+      },
+      {
+        "edge_id": "edge_47",
+        "source_node": "contract:Vault",
+        "target_node": "account:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "mints_to",
+        "attributes": {
+          "relation_type": "mints_to"
+        },
+        "token": "",
+        "amount_expr": "reward",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "claimReward",
+        "line": 95,
+        "confidence": 0.9
+      },
+      {
+        "edge_id": "edge_48",
+        "source_node": "contract:Vault",
+        "target_node": "external:owner",
+        "edge_type": "fund_flow",
+        "label": "transfers_to",
+        "attributes": {
+          "relation_type": "transfers_to"
+        },
+        "token": "ETH",
+        "amount_expr": "balance",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "emergencyWithdraw",
+        "line": 113,
+        "confidence": 0.85
+      },
+      {
+        "edge_id": "edge_49",
+        "source_node": "account:Vault",
+        "target_node": "account:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "transfer: token:token",
+        "attributes": {
+          "flow_type": "transfer"
+        },
+        "token": "token:token",
+        "amount_expr": "address(this",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "deposit",
+        "line": 46,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_50",
+        "source_node": "zero_address",
+        "target_node": "account:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "mint: self:Vault",
+        "attributes": {
+          "flow_type": "mint"
+        },
+        "token": "self:Vault",
+        "amount_expr": "reward",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "claimReward",
+        "line": 95,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_51",
+        "source_node": "contract:Vault",
+        "target_node": "external:token",
+        "edge_type": "fund_flow",
+        "label": "transfer: token",
+        "attributes": {
+          "flow_type": "transfer"
+        },
+        "token": "token",
+        "amount_expr": "variable",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "deposit",
+        "line": 46,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_52",
+        "source_node": "contract:Vault",
+        "target_node": "external:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "transfer: ETH",
+        "attributes": {
+          "flow_type": "transfer"
+        },
+        "token": "ETH",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "withdraw",
+        "line": 59,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_53",
+        "source_node": "contract:Vault",
+        "target_node": "external:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "transfer: ETH",
+        "attributes": {
+          "flow_type": "transfer"
+        },
+        "token": "ETH",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "safeWithdraw",
+        "line": 74,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_54",
+        "source_node": "contract:Vault",
+        "target_node": "account:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "mint: unknown",
+        "attributes": {
+          "flow_type": "mint"
+        },
+        "token": "unknown",
+        "amount_expr": "reward",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "claimReward",
+        "line": 95,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_55",
+        "source_node": "contract:Vault",
+        "target_node": "external:owner",
+        "edge_type": "fund_flow",
+        "label": "transfer: ETH",
+        "attributes": {
+          "flow_type": "transfer"
+        },
+        "token": "ETH",
+        "amount_expr": "balance",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "emergencyWithdraw",
+        "line": 113,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_56",
+        "source_node": "contract:VaultFactory",
+        "target_node": "external:target",
+        "edge_type": "structural",
+        "label": "delegates_to",
+        "attributes": {
+          "relation_type": "delegates_to"
+        },
+        "token": "",
+        "amount_expr": "",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "execute",
+        "line": 72,
+        "confidence": 0.85
+      },
+      {
+        "edge_id": "edge_57",
+        "source_node": "role:restricted",
+        "target_node": "contract:VaultFactory",
+        "edge_type": "access_control",
+        "label": "can_call",
+        "attributes": {
+          "relation_type": "can_call",
+          "condition": "msg.sender check"
+        },
+        "token": "",
+        "amount_expr": "",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "collectFees",
+        "line": 0,
+        "confidence": 0.7
+      },
+      {
+        "edge_id": "edge_58",
+        "source_node": "role:restricted",
+        "target_node": "contract:VaultFactory",
+        "edge_type": "access_control",
+        "label": "can_call",
+        "attributes": {
+          "relation_type": "can_call",
+          "condition": "msg.sender check"
+        },
+        "token": "",
+        "amount_expr": "",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "execute",
+        "line": 0,
+        "confidence": 0.7
+      },
+      {
+        "edge_id": "edge_59",
+        "source_node": "contract:VaultFactory",
+        "target_node": "external:to",
+        "edge_type": "fund_flow",
+        "label": "transfers_to",
+        "attributes": {
+          "relation_type": "transfers_to"
+        },
+        "token": "ETH",
+        "amount_expr": "address(this",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "collectFees",
+        "line": 63,
+        "confidence": 0.85
+      },
+      {
+        "edge_id": "edge_60",
+        "source_node": "contract:VaultFactory",
+        "target_node": "external:to",
+        "edge_type": "fund_flow",
+        "label": "transfer: ETH",
+        "attributes": {
+          "flow_type": "transfer"
+        },
+        "token": "ETH",
+        "amount_expr": "address(this",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "collectFees",
+        "line": 63,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_61",
+        "source_node": "role:owner",
+        "target_node": "contract:VaultToken",
+        "edge_type": "access_control",
+        "label": "owns",
+        "attributes": {
+          "relation_type": "owns"
+        },
+        "token": "",
+        "amount_expr": "",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "",
+        "line": 0,
+        "confidence": 0.95
+      },
+      {
+        "edge_id": "edge_62",
+        "source_node": "role:onlyOwner",
+        "target_node": "contract:VaultToken",
+        "edge_type": "access_control",
+        "label": "can_call",
+        "attributes": {
+          "relation_type": "can_call"
+        },
+        "token": "",
+        "amount_expr": "",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "onlyOwner",
+        "function_name": "mint",
+        "line": 0,
+        "confidence": 0.9
+      },
+      {
+        "edge_id": "edge_63",
+        "source_node": "role:onlyOwner",
+        "target_node": "contract:VaultToken",
+        "edge_type": "access_control",
+        "label": "can_call",
+        "attributes": {
+          "relation_type": "can_call"
+        },
+        "token": "",
+        "amount_expr": "",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "onlyOwner",
+        "function_name": "pause",
+        "line": 0,
+        "confidence": 0.9
+      },
+      {
+        "edge_id": "edge_64",
+        "source_node": "role:onlyOwner",
+        "target_node": "contract:VaultToken",
+        "edge_type": "access_control",
+        "label": "can_call",
+        "attributes": {
+          "relation_type": "can_call"
+        },
+        "token": "",
+        "amount_expr": "",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "onlyOwner",
+        "function_name": "unpause",
+        "line": 0,
+        "confidence": 0.9
+      },
+      {
+        "edge_id": "edge_65",
+        "source_node": "contract:VaultToken",
+        "target_node": "account:to",
+        "edge_type": "fund_flow",
+        "label": "mints_to",
+        "attributes": {
+          "relation_type": "mints_to"
+        },
+        "token": "",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "mint",
+        "line": 64,
+        "confidence": 0.9
+      },
+      {
+        "edge_id": "edge_66",
+        "source_node": "contract:VaultToken",
+        "target_node": "account:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "mints_to",
+        "attributes": {
+          "relation_type": "mints_to"
+        },
+        "token": "",
+        "amount_expr": "_initialSupply",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "constructor",
+        "line": 27,
+        "confidence": 0.9
+      },
+      {
+        "edge_id": "edge_67",
+        "source_node": "contract:VaultToken",
+        "target_node": "account:to",
+        "edge_type": "fund_flow",
+        "label": "credit: var:VaultToken.balanceOf",
+        "attributes": {
+          "flow_type": "credit"
+        },
+        "token": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "transfer",
+        "line": 34,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_68",
+        "source_node": "contract:VaultToken",
+        "target_node": "account:to",
+        "edge_type": "fund_flow",
+        "label": "credit: var:VaultToken.balanceOf",
+        "attributes": {
+          "flow_type": "credit"
+        },
+        "token": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "transferFrom",
+        "line": 48,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_69",
+        "source_node": "account:from",
+        "target_node": "contract:VaultToken",
+        "edge_type": "fund_flow",
+        "label": "debit: var:VaultToken.balanceOf",
+        "attributes": {
+          "flow_type": "debit"
+        },
+        "token": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "transferFrom",
+        "line": 48,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_70",
+        "source_node": "contract:VaultToken",
+        "target_node": "account:to",
+        "edge_type": "fund_flow",
+        "label": "credit: var:VaultToken.balanceOf",
+        "attributes": {
+          "flow_type": "credit"
+        },
+        "token": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "emergencyTransfer",
+        "line": 58,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_71",
+        "source_node": "account:owner",
+        "target_node": "contract:VaultToken",
+        "edge_type": "fund_flow",
+        "label": "debit: var:VaultToken.balanceOf",
+        "attributes": {
+          "flow_type": "debit"
+        },
+        "token": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "emergencyTransfer",
+        "line": 58,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_72",
+        "source_node": "zero_address",
+        "target_node": "account:to",
+        "edge_type": "fund_flow",
+        "label": "mint: self:VaultToken",
+        "attributes": {
+          "flow_type": "mint"
+        },
+        "token": "self:VaultToken",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "mint",
+        "line": 64,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_73",
+        "source_node": "contract:VaultToken",
+        "target_node": "account:to",
+        "edge_type": "fund_flow",
+        "label": "credit: var:VaultToken.balanceOf",
+        "attributes": {
+          "flow_type": "credit"
+        },
+        "token": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "_mint",
+        "line": 68,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_74",
+        "source_node": "zero_address",
+        "target_node": "account:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "mint: self:VaultToken",
+        "attributes": {
+          "flow_type": "mint"
+        },
+        "token": "self:VaultToken",
+        "amount_expr": "_initialSupply",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "constructor",
+        "line": 27,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_75",
+        "source_node": "contract:VaultToken",
+        "target_node": "account:to",
+        "edge_type": "fund_flow",
+        "label": "mint: unknown",
+        "attributes": {
+          "flow_type": "mint"
+        },
+        "token": "unknown",
+        "amount_expr": "amount",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "mint",
+        "line": 64,
+        "confidence": 1.0
+      },
+      {
+        "edge_id": "edge_76",
+        "source_node": "contract:VaultToken",
+        "target_node": "account:msg.sender",
+        "edge_type": "fund_flow",
+        "label": "mint: unknown",
+        "attributes": {
+          "flow_type": "mint"
+        },
+        "token": "unknown",
+        "amount_expr": "_initialSupply",
+        "fee_expr": "",
+        "direction": "unidirectional",
+        "required_role": "",
+        "guarded_by": "",
+        "function_name": "constructor",
+        "line": 27,
+        "confidence": 1.0
+      }
+    ],
+    "entities": [
+      {
+        "entity_id": "contract:RewardDistributor",
+        "entity_type": "reward",
+        "name": "RewardDistributor",
+        "contract_name": "RewardDistributor",
+        "source_file": "d:\\AGL\\test_project\\src\\RewardDistributor.sol",
+        "token_type": "",
+        "token_symbol": "",
+        "decimals": 18,
+        "is_mintable": false,
+        "is_burnable": false,
+        "is_pausable": false,
+        "is_upgradeable": false,
+        "total_supply_var": "",
+        "collateralization_ratio": null,
+        "oracle_link": "",
+        "interest_rate_var": "",
+        "fee_percentage_var": "",
+        "owner_var": "",
+        "admin_roles": [],
+        "access_modifiers": [],
+        "state_vars": {
+          "vault": "Vault",
+          "rewardToken": "address",
+          "pendingRewards": "mapping(address => uint256)",
+          "lastClaim": "mapping(address => uint256)",
+          "totalDistributed": "uint256",
+          "recipients": "address[]"
+        },
+        "balance_vars": [],
+        "line_start": 9,
+        "line_end": 73,
+        "confidence": 0.55
+      },
+      {
+        "entity_id": "reward:RewardDistributor.pendingRewards",
+        "entity_type": "reward",
+        "name": "RewardDistributor.pendingRewards",
+        "contract_name": "RewardDistributor",
+        "source_file": "d:\\AGL\\test_project\\src\\RewardDistributor.sol",
+        "token_type": "",
+        "token_symbol": "",
+        "decimals": 18,
+        "is_mintable": false,
+        "is_burnable": false,
+        "is_pausable": false,
+        "is_upgradeable": false,
+        "total_supply_var": "",
+        "collateralization_ratio": null,
+        "oracle_link": "",
+        "interest_rate_var": "",
+        "fee_percentage_var": "",
+        "owner_var": "",
+        "admin_roles": [],
+        "access_modifiers": [],
+        "state_vars": {},
+        "balance_vars": [],
+        "line_start": 12,
+        "line_end": 0,
+        "confidence": 0.65
+      },
+      {
+        "entity_id": "contract:Vault",
+        "entity_type": "vault",
+        "name": "Vault",
+        "contract_name": "Vault",
+        "source_file": "d:\\AGL\\test_project\\src\\Vault.sol",
+        "token_type": "ERC4626",
+        "token_symbol": "",
+        "decimals": 18,
+        "is_mintable": false,
+        "is_burnable": false,
+        "is_pausable": false,
+        "is_upgradeable": false,
+        "total_supply_var": "totalDeposits",
+        "collateralization_ratio": null,
+        "oracle_link": "",
+        "interest_rate_var": "rewardRate",
+        "fee_percentage_var": "",
+        "owner_var": "owner",
+        "admin_roles": [],
+        "access_modifiers": [
+          "onlyOwner"
+        ],
+        "state_vars": {
+          "token": "VaultToken",
+          "deposits": "mapping(address => uint256)",
+          "lastDeposit": "mapping(address => uint256)",
+          "totalDeposits": "uint256",
+          "rewardRate": "uint256",
+          "owner": "address",
+          "locked": "bool"
+        },
+        "balance_vars": [
+          "deposits",
+          "totalDeposits"
+        ],
+        "line_start": 10,
+        "line_end": 121,
+        "confidence": 0.55
+      },
+      {
+        "entity_id": "collateral:Vault.deposits",
+        "entity_type": "collateral",
+        "name": "Vault.deposits",
+        "contract_name": "Vault",
+        "source_file": "d:\\AGL\\test_project\\src\\Vault.sol",
+        "token_type": "",
+        "token_symbol": "",
+        "decimals": 18,
+        "is_mintable": false,
+        "is_burnable": false,
+        "is_pausable": false,
+        "is_upgradeable": false,
+        "total_supply_var": "",
+        "collateralization_ratio": null,
+        "oracle_link": "",
+        "interest_rate_var": "",
+        "fee_percentage_var": "",
+        "owner_var": "",
+        "admin_roles": [],
+        "access_modifiers": [],
+        "state_vars": {},
+        "balance_vars": [],
+        "line_start": 12,
+        "line_end": 0,
+        "confidence": 0.7
+      },
+      {
+        "entity_id": "collateral:Vault.lastDeposit",
+        "entity_type": "collateral",
+        "name": "Vault.lastDeposit",
+        "contract_name": "Vault",
+        "source_file": "d:\\AGL\\test_project\\src\\Vault.sol",
+        "token_type": "",
+        "token_symbol": "",
+        "decimals": 18,
+        "is_mintable": false,
+        "is_burnable": false,
+        "is_pausable": false,
+        "is_upgradeable": false,
+        "total_supply_var": "",
+        "collateralization_ratio": null,
+        "oracle_link": "",
+        "interest_rate_var": "",
+        "fee_percentage_var": "",
+        "owner_var": "",
+        "admin_roles": [],
+        "access_modifiers": [],
+        "state_vars": {},
+        "balance_vars": [],
+        "line_start": 14,
+        "line_end": 0,
+        "confidence": 0.7
+      },
+      {
+        "entity_id": "contract:VaultFactory",
+        "entity_type": "vault",
+        "name": "VaultFactory",
+        "contract_name": "VaultFactory",
+        "source_file": "d:\\AGL\\test_project\\src\\VaultFactory.sol",
+        "token_type": "ERC4626",
+        "token_symbol": "",
+        "decimals": 18,
+        "is_mintable": false,
+        "is_burnable": false,
+        "is_pausable": false,
+        "is_upgradeable": false,
+        "total_supply_var": "",
+        "collateralization_ratio": null,
+        "oracle_link": "",
+        "interest_rate_var": "",
+        "fee_percentage_var": "",
+        "owner_var": "admin",
+        "admin_roles": [],
+        "access_modifiers": [],
+        "state_vars": {
+          "admin": "address",
+          "vaults": "Vault[]",
+          "userVaults": "mapping(address => address[])"
+        },
+        "balance_vars": [],
+        "line_start": 10,
+        "line_end": 79,
+        "confidence": 0.55
+      },
+      {
+        "entity_id": "contract:VaultToken",
+        "entity_type": "token",
+        "name": "VaultToken",
+        "contract_name": "VaultToken",
+        "source_file": "d:\\AGL\\test_project\\src\\VaultToken.sol",
+        "token_type": "",
+        "token_symbol": "",
+        "decimals": 18,
+        "is_mintable": true,
+        "is_burnable": false,
+        "is_pausable": false,
+        "is_upgradeable": false,
+        "total_supply_var": "totalSupply",
+        "collateralization_ratio": null,
+        "oracle_link": "",
+        "interest_rate_var": "",
+        "fee_percentage_var": "",
+        "owner_var": "owner",
+        "admin_roles": [],
+        "access_modifiers": [
+          "onlyOwner"
+        ],
+        "state_vars": {
+          "name": "string",
+          "symbol": "string",
+          "decimals": "uint8",
+          "totalSupply": "uint256",
+          "balanceOf": "mapping(address => uint256)",
+          "owner": "address",
+          "paused": "bool"
+        },
+        "balance_vars": [
+          "balanceOf"
+        ],
+        "line_start": 7,
+        "line_end": 81,
+        "confidence": 0.7
+      }
+    ],
+    "relationships": [
+      {
+        "source_id": "contract:RewardDistributor",
+        "target_id": "external:msg.sender",
+        "relation_type": "transfers_to",
+        "function_name": "claim",
+        "condition": "",
+        "line": 49,
+        "confidence": 0.85,
+        "token_involved": "ETH",
+        "amount_expression": "amount",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "role:owner",
+        "target_id": "contract:Vault",
+        "relation_type": "owns",
+        "function_name": "",
+        "condition": "",
+        "line": 0,
+        "confidence": 0.95,
+        "token_involved": "",
+        "amount_expression": "",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "role:onlyOwner",
+        "target_id": "contract:Vault",
+        "relation_type": "can_call",
+        "function_name": "setRewardRate",
+        "condition": "",
+        "line": 0,
+        "confidence": 0.9,
+        "token_involved": "",
+        "amount_expression": "",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": "onlyOwner"
+      },
+      {
+        "source_id": "contract:Vault",
+        "target_id": "external:token",
+        "relation_type": "transfers_to",
+        "function_name": "deposit",
+        "condition": "",
+        "line": 46,
+        "confidence": 0.9,
+        "token_involved": "token",
+        "amount_expression": "",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "contract:Vault",
+        "target_id": "external:msg.sender",
+        "relation_type": "transfers_to",
+        "function_name": "withdraw",
+        "condition": "",
+        "line": 59,
+        "confidence": 0.85,
+        "token_involved": "ETH",
+        "amount_expression": "amount",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "contract:Vault",
+        "target_id": "external:msg.sender",
+        "relation_type": "transfers_to",
+        "function_name": "safeWithdraw",
+        "condition": "",
+        "line": 74,
+        "confidence": 0.85,
+        "token_involved": "ETH",
+        "amount_expression": "amount",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": "nonReentrant"
+      },
+      {
+        "source_id": "contract:Vault",
+        "target_id": "account:msg.sender",
+        "relation_type": "mints_to",
+        "function_name": "claimReward",
+        "condition": "",
+        "line": 95,
+        "confidence": 0.9,
+        "token_involved": "",
+        "amount_expression": "reward",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "contract:Vault",
+        "target_id": "external:owner",
+        "relation_type": "transfers_to",
+        "function_name": "emergencyWithdraw",
+        "condition": "",
+        "line": 113,
+        "confidence": 0.85,
+        "token_involved": "ETH",
+        "amount_expression": "balance",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "contract:VaultFactory",
+        "target_id": "external:target",
+        "relation_type": "delegates_to",
+        "function_name": "execute",
+        "condition": "",
+        "line": 72,
+        "confidence": 0.85,
+        "token_involved": "",
+        "amount_expression": "",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "role:restricted",
+        "target_id": "contract:VaultFactory",
+        "relation_type": "can_call",
+        "function_name": "collectFees",
+        "condition": "msg.sender check",
+        "line": 0,
+        "confidence": 0.7,
+        "token_involved": "",
+        "amount_expression": "",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "role:restricted",
+        "target_id": "contract:VaultFactory",
+        "relation_type": "can_call",
+        "function_name": "execute",
+        "condition": "msg.sender check",
+        "line": 0,
+        "confidence": 0.7,
+        "token_involved": "",
+        "amount_expression": "",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "contract:VaultFactory",
+        "target_id": "external:to",
+        "relation_type": "transfers_to",
+        "function_name": "collectFees",
+        "condition": "",
+        "line": 63,
+        "confidence": 0.85,
+        "token_involved": "ETH",
+        "amount_expression": "address(this",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "role:owner",
+        "target_id": "contract:VaultToken",
+        "relation_type": "owns",
+        "function_name": "",
+        "condition": "",
+        "line": 0,
+        "confidence": 0.95,
+        "token_involved": "",
+        "amount_expression": "",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "role:onlyOwner",
+        "target_id": "contract:VaultToken",
+        "relation_type": "can_call",
+        "function_name": "mint",
+        "condition": "",
+        "line": 0,
+        "confidence": 0.9,
+        "token_involved": "",
+        "amount_expression": "",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": "onlyOwner"
+      },
+      {
+        "source_id": "role:onlyOwner",
+        "target_id": "contract:VaultToken",
+        "relation_type": "can_call",
+        "function_name": "pause",
+        "condition": "",
+        "line": 0,
+        "confidence": 0.9,
+        "token_involved": "",
+        "amount_expression": "",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": "onlyOwner"
+      },
+      {
+        "source_id": "role:onlyOwner",
+        "target_id": "contract:VaultToken",
+        "relation_type": "can_call",
+        "function_name": "unpause",
+        "condition": "",
+        "line": 0,
+        "confidence": 0.9,
+        "token_involved": "",
+        "amount_expression": "",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": "onlyOwner"
+      },
+      {
+        "source_id": "contract:VaultToken",
+        "target_id": "account:to",
+        "relation_type": "mints_to",
+        "function_name": "mint",
+        "condition": "",
+        "line": 64,
+        "confidence": 0.9,
+        "token_involved": "",
+        "amount_expression": "amount",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      },
+      {
+        "source_id": "contract:VaultToken",
+        "target_id": "account:msg.sender",
+        "relation_type": "mints_to",
+        "function_name": "constructor",
+        "condition": "",
+        "line": 27,
+        "confidence": 0.9,
+        "token_involved": "",
+        "amount_expression": "_initialSupply",
+        "fee_expression": "",
+        "required_role": "",
+        "modifier_guard": ""
+      }
+    ],
+    "balances": [
+      {
+        "account_id": "contract:RewardDistributor",
+        "token_id": "token:RewardDistributor",
+        "balance_var": "RewardDistributor.pendingRewards",
+        "balance_type": "rewards",
+        "expression": "pendingRewards[account]"
+      },
+      {
+        "account_id": "contract:Vault",
+        "token_id": "Vault.token",
+        "balance_var": "Vault.deposits",
+        "balance_type": "collateral",
+        "expression": "deposits[account]"
+      },
+      {
+        "account_id": "contract:Vault",
+        "token_id": "Vault.token",
+        "balance_var": "Vault.lastDeposit",
+        "balance_type": "collateral",
+        "expression": "lastDeposit[account]"
+      },
+      {
+        "account_id": "contract:Vault",
+        "token_id": "Vault.token",
+        "balance_var": "Vault.totalDeposits",
+        "balance_type": "aggregate",
+        "expression": "totalDeposits"
+      },
+      {
+        "account_id": "contract:Vault",
+        "token_id": "Vault.token",
+        "balance_var": "Vault.deposits",
+        "balance_type": "collateral",
+        "expression": "deposits[depositor]"
+      },
+      {
+        "account_id": "contract:Vault",
+        "token_id": "Vault.token",
+        "balance_var": "Vault.lastDeposit",
+        "balance_type": "collateral",
+        "expression": "lastDeposit[depositor]"
+      },
+      {
+        "account_id": "contract:VaultToken",
+        "token_id": "token:VaultToken",
+        "balance_var": "VaultToken.totalSupply",
+        "balance_type": "aggregate",
+        "expression": "totalSupply"
+      },
+      {
+        "account_id": "contract:VaultToken",
+        "token_id": "token:VaultToken",
+        "balance_var": "VaultToken.balanceOf",
+        "balance_type": "balance",
+        "expression": "balanceOf[account]"
+      }
+    ],
+    "fund_flows": [
+      {
+        "flow_id": "flow_2",
+        "source_account": "contract:RewardDistributor",
+        "target_account": "external:msg.sender",
+        "token_id": "ETH",
+        "amount_expr": "amount",
+        "function_name": "claim",
+        "flow_type": "transfer",
+        "fee_expr": "",
+        "condition": "",
+        "line": 49
+      },
+      {
+        "flow_id": "flow_3",
+        "source_account": "account:Vault",
+        "target_account": "account:msg.sender",
+        "token_id": "token:token",
+        "amount_expr": "address(this",
+        "function_name": "deposit",
+        "flow_type": "transfer",
+        "fee_expr": "",
+        "condition": "",
+        "line": 46
+      },
+      {
+        "flow_id": "flow_4",
+        "source_account": "zero_address",
+        "target_account": "account:msg.sender",
+        "token_id": "self:Vault",
+        "amount_expr": "reward",
+        "function_name": "claimReward",
+        "flow_type": "mint",
+        "fee_expr": "",
+        "condition": "",
+        "line": 95
+      },
+      {
+        "flow_id": "flow_5",
+        "source_account": "contract:Vault",
+        "target_account": "external:token",
+        "token_id": "token",
+        "amount_expr": "variable",
+        "function_name": "deposit",
+        "flow_type": "transfer",
+        "fee_expr": "",
+        "condition": "",
+        "line": 46
+      },
+      {
+        "flow_id": "flow_6",
+        "source_account": "contract:Vault",
+        "target_account": "external:msg.sender",
+        "token_id": "ETH",
+        "amount_expr": "amount",
+        "function_name": "withdraw",
+        "flow_type": "transfer",
+        "fee_expr": "",
+        "condition": "",
+        "line": 59
+      },
+      {
+        "flow_id": "flow_7",
+        "source_account": "contract:Vault",
+        "target_account": "external:msg.sender",
+        "token_id": "ETH",
+        "amount_expr": "amount",
+        "function_name": "safeWithdraw",
+        "flow_type": "transfer",
+        "fee_expr": "",
+        "condition": "",
+        "line": 74
+      },
+      {
+        "flow_id": "flow_8",
+        "source_account": "contract:Vault",
+        "target_account": "account:msg.sender",
+        "token_id": "unknown",
+        "amount_expr": "reward",
+        "function_name": "claimReward",
+        "flow_type": "mint",
+        "fee_expr": "",
+        "condition": "",
+        "line": 95
+      },
+      {
+        "flow_id": "flow_9",
+        "source_account": "contract:Vault",
+        "target_account": "external:owner",
+        "token_id": "ETH",
+        "amount_expr": "balance",
+        "function_name": "emergencyWithdraw",
+        "flow_type": "transfer",
+        "fee_expr": "",
+        "condition": "",
+        "line": 113
+      },
+      {
+        "flow_id": "flow_10",
+        "source_account": "contract:VaultFactory",
+        "target_account": "external:to",
+        "token_id": "ETH",
+        "amount_expr": "address(this",
+        "function_name": "collectFees",
+        "flow_type": "transfer",
+        "fee_expr": "",
+        "condition": "",
+        "line": 63
+      },
+      {
+        "flow_id": "flow_11",
+        "source_account": "contract:VaultToken",
+        "target_account": "account:to",
+        "token_id": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "function_name": "transfer",
+        "flow_type": "credit",
+        "fee_expr": "",
+        "condition": "",
+        "line": 34
+      },
+      {
+        "flow_id": "flow_12",
+        "source_account": "contract:VaultToken",
+        "target_account": "account:to",
+        "token_id": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "function_name": "transferFrom",
+        "flow_type": "credit",
+        "fee_expr": "",
+        "condition": "",
+        "line": 48
+      },
+      {
+        "flow_id": "flow_13",
+        "source_account": "account:from",
+        "target_account": "contract:VaultToken",
+        "token_id": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "function_name": "transferFrom",
+        "flow_type": "debit",
+        "fee_expr": "",
+        "condition": "",
+        "line": 48
+      },
+      {
+        "flow_id": "flow_14",
+        "source_account": "contract:VaultToken",
+        "target_account": "account:to",
+        "token_id": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "function_name": "emergencyTransfer",
+        "flow_type": "credit",
+        "fee_expr": "",
+        "condition": "",
+        "line": 58
+      },
+      {
+        "flow_id": "flow_15",
+        "source_account": "account:owner",
+        "target_account": "contract:VaultToken",
+        "token_id": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "function_name": "emergencyTransfer",
+        "flow_type": "debit",
+        "fee_expr": "",
+        "condition": "",
+        "line": 58
+      },
+      {
+        "flow_id": "flow_16",
+        "source_account": "zero_address",
+        "target_account": "account:to",
+        "token_id": "self:VaultToken",
+        "amount_expr": "amount",
+        "function_name": "mint",
+        "flow_type": "mint",
+        "fee_expr": "",
+        "condition": "",
+        "line": 64
+      },
+      {
+        "flow_id": "flow_17",
+        "source_account": "contract:VaultToken",
+        "target_account": "account:to",
+        "token_id": "var:VaultToken.balanceOf",
+        "amount_expr": "amount",
+        "function_name": "_mint",
+        "flow_type": "credit",
+        "fee_expr": "",
+        "condition": "",
+        "line": 68
+      },
+      {
+        "flow_id": "flow_18",
+        "source_account": "zero_address",
+        "target_account": "account:msg.sender",
+        "token_id": "self:VaultToken",
+        "amount_expr": "_initialSupply",
+        "function_name": "constructor",
+        "flow_type": "mint",
+        "fee_expr": "",
+        "condition": "",
+        "line": 27
+      },
+      {
+        "flow_id": "flow_19",
+        "source_account": "contract:VaultToken",
+        "target_account": "account:to",
+        "token_id": "unknown",
+        "amount_expr": "amount",
+        "function_name": "mint",
+        "flow_type": "mint",
+        "fee_expr": "",
+        "condition": "",
+        "line": 64
+      },
+      {
+        "flow_id": "flow_20",
+        "source_account": "contract:VaultToken",
+        "target_account": "account:msg.sender",
+        "token_id": "unknown",
+        "amount_expr": "_initialSupply",
+        "function_name": "constructor",
+        "flow_type": "mint",
+        "fee_expr": "",
+        "condition": "",
+        "line": 27
+      }
+    ],
+    "validation": {
+      "is_consistent": true,
+      "balance_conservation_ok": true,
+      "no_illogical_cycles": true,
+      "all_nodes_connected": false,
+      "issues_count": 23,
+      "issues": [
+        {
+          "issue_type": "balance_accumulation",
+          "severity": "info",
+          "description": "العقدة 'external:msg.sender' تستقبل تدفقات من توكن 'ETH' (3 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+          "involved_nodes": [
+            "external:msg.sender"
+          ],
+          "involved_edges": [],
+          "details": {
+            "token": "ETH",
+            "inflow_count": 3
+          }
+        },
+        {
+          "issue_type": "balance_drain",
+          "severity": "warning",
+          "description": "العقدة 'contract:Vault' ترسل توكن 'ETH' (3 تدفقات) بدون تدفق داخلي — مصدر الأموال غير واضح",
+          "involved_nodes": [
+            "contract:Vault"
+          ],
+          "involved_edges": [],
+          "details": {
+            "token": "ETH",
+            "outflow_count": 3
+          }
+        },
+        {
+          "issue_type": "balance_accumulation",
+          "severity": "info",
+          "description": "العقدة 'account:to' تستقبل تدفقات من توكن 'var:VaultToken.balanceOf' (4 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+          "involved_nodes": [
+            "account:to"
+          ],
+          "involved_edges": [],
+          "details": {
+            "token": "var:VaultToken.balanceOf",
+            "inflow_count": 4
+          }
+        },
+        {
+          "issue_type": "balance_accumulation",
+          "severity": "info",
+          "description": "العقدة 'account:msg.sender' تستقبل تدفقات من توكن 'unknown' (2 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+          "involved_nodes": [
+            "account:msg.sender"
+          ],
+          "involved_edges": [],
+          "details": {
+            "token": "unknown",
+            "inflow_count": 2
+          }
+        },
+        {
+          "issue_type": "orphan_node",
+          "severity": "info",
+          "description": "العقدة 'RewardDistributor.pendingRewards' (state_var) معزولة — لا أضلاع داخلة أو خارجة",
+          "involved_nodes": [
+            "reward:RewardDistributor.pendingRewards"
+          ],
+          "involved_edges": [],
+          "details": {}
+        },
+        {
+          "issue_type": "orphan_node",
+          "severity": "info",
+          "description": "العقدة 'Vault.deposits' (state_var) معزولة — لا أضلاع داخلة أو خارجة",
+          "involved_nodes": [
+            "collateral:Vault.deposits"
+          ],
+          "involved_edges": [],
+          "details": {}
+        },
+        {
+          "issue_type": "orphan_node",
+          "severity": "info",
+          "description": "العقدة 'Vault.lastDeposit' (state_var) معزولة — لا أضلاع داخلة أو خارجة",
+          "involved_nodes": [
+            "collateral:Vault.lastDeposit"
+          ],
+          "involved_edges": [],
+          "details": {}
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'claim' بين 'contract:RewardDistributor' → 'external:msg.sender' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:RewardDistributor",
+            "external:msg.sender"
+          ],
+          "involved_edges": [
+            "edge_40"
+          ],
+          "details": {
+            "function": "claim",
+            "token": "ETH"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'claim' بين 'contract:RewardDistributor' → 'external:msg.sender' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:RewardDistributor",
+            "external:msg.sender"
+          ],
+          "involved_edges": [
+            "edge_41"
+          ],
+          "details": {
+            "function": "claim",
+            "token": "ETH"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'claimReward' بين 'contract:Vault' → 'account:msg.sender' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:Vault",
+            "account:msg.sender"
+          ],
+          "involved_edges": [
+            "edge_47"
+          ],
+          "details": {
+            "function": "claimReward",
+            "token": ""
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'emergencyWithdraw' بين 'contract:Vault' → 'external:owner' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:Vault",
+            "external:owner"
+          ],
+          "involved_edges": [
+            "edge_48"
+          ],
+          "details": {
+            "function": "emergencyWithdraw",
+            "token": "ETH"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'claimReward' بين 'zero_address' → 'account:msg.sender' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "zero_address",
+            "account:msg.sender"
+          ],
+          "involved_edges": [
+            "edge_50"
+          ],
+          "details": {
+            "function": "claimReward",
+            "token": "self:Vault"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'safeWithdraw' بين 'contract:Vault' → 'external:msg.sender' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:Vault",
+            "external:msg.sender"
+          ],
+          "involved_edges": [
+            "edge_53"
+          ],
+          "details": {
+            "function": "safeWithdraw",
+            "token": "ETH"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'claimReward' بين 'contract:Vault' → 'account:msg.sender' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:Vault",
+            "account:msg.sender"
+          ],
+          "involved_edges": [
+            "edge_54"
+          ],
+          "details": {
+            "function": "claimReward",
+            "token": "unknown"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'emergencyWithdraw' بين 'contract:Vault' → 'external:owner' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:Vault",
+            "external:owner"
+          ],
+          "involved_edges": [
+            "edge_55"
+          ],
+          "details": {
+            "function": "emergencyWithdraw",
+            "token": "ETH"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'collectFees' بين 'contract:VaultFactory' → 'external:to' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:VaultFactory",
+            "external:to"
+          ],
+          "involved_edges": [
+            "edge_59"
+          ],
+          "details": {
+            "function": "collectFees",
+            "token": "ETH"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'collectFees' بين 'contract:VaultFactory' → 'external:to' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:VaultFactory",
+            "external:to"
+          ],
+          "involved_edges": [
+            "edge_60"
+          ],
+          "details": {
+            "function": "collectFees",
+            "token": "ETH"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'constructor' بين 'contract:VaultToken' → 'account:msg.sender' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:VaultToken",
+            "account:msg.sender"
+          ],
+          "involved_edges": [
+            "edge_66"
+          ],
+          "details": {
+            "function": "constructor",
+            "token": ""
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'emergencyTransfer' بين 'contract:VaultToken' → 'account:to' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:VaultToken",
+            "account:to"
+          ],
+          "involved_edges": [
+            "edge_70"
+          ],
+          "details": {
+            "function": "emergencyTransfer",
+            "token": "var:VaultToken.balanceOf"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'emergencyTransfer' بين 'account:owner' → 'contract:VaultToken' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "account:owner",
+            "contract:VaultToken"
+          ],
+          "involved_edges": [
+            "edge_71"
+          ],
+          "details": {
+            "function": "emergencyTransfer",
+            "token": "var:VaultToken.balanceOf"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر '_mint' بين 'contract:VaultToken' → 'account:to' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:VaultToken",
+            "account:to"
+          ],
+          "involved_edges": [
+            "edge_73"
+          ],
+          "details": {
+            "function": "_mint",
+            "token": "var:VaultToken.balanceOf"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'constructor' بين 'zero_address' → 'account:msg.sender' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "zero_address",
+            "account:msg.sender"
+          ],
+          "involved_edges": [
+            "edge_74"
+          ],
+          "details": {
+            "function": "constructor",
+            "token": "self:VaultToken"
+          }
+        },
+        {
+          "issue_type": "unguarded_fund_flow",
+          "severity": "warning",
+          "description": "تدفق مالي عبر 'constructor' بين 'contract:VaultToken' → 'account:msg.sender' بدون حماية وصول (modifier/role)",
+          "involved_nodes": [
+            "contract:VaultToken",
+            "account:msg.sender"
+          ],
+          "involved_edges": [
+            "edge_76"
+          ],
+          "details": {
+            "function": "constructor",
+            "token": "unknown"
+          }
+        }
+      ],
+      "summary": "تحقق: 23 مشكلة — 0 خطأ, 17 تحذير, 6 ملاحظة"
+    },
+    "temporal_analysis": null,
+    "action_space": null,
+    "attack_simulation": null,
+    "search_results": null
+  }
+}

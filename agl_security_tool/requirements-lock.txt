@@ -1,0 +1,24 @@
+# AGL Security Tool — Pinned Dependencies
+# Generated: 2026-03-29
+# Python: 3.12
+# ==========================================
+# Install: pip install -r requirements-lock.txt
+
+# ── Core ──
+requests==2.32.5
+z3-solver==4.12.5.0
+numpy==2.4.3
+pydantic==2.12.5
+psutil==7.2.2
+
+# ── API Server ──
+fastapi==0.135.2
+uvicorn==0.42.0
+python-jose==3.5.0
+passlib==1.7.4
+SQLAlchemy==2.0.48
+slowapi==0.1.9
+python-multipart==0.0.22
+
+# ── Dev / Test ──
+pytest==9.0.2

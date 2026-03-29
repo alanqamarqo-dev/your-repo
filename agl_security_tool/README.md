@@ -2,17 +2,17 @@
 
 > **أداة تحليل أمان العقود الذكية — Smart Contract Security Analysis Tool**
 >
-> Version 1.1.0
+> Version 2.1.0
 
 ---
 
 ## Overview | نظرة عامة
 
 **English:**
-AGL Security Tool is a multi-layer smart contract security analyzer. It extracts financial state from Solidity contracts, builds an attack search space, simulates economic attacks, and runs 22 semantic detectors — all without requiring external tools like Slither or Mythril (though it integrates them when available).
+AGL Security Tool is an **8-layer** smart contract security analyzer. It combines Solidity flattening, Z3 symbolic execution, financial state extraction, action space enumeration, attack simulation, 5-strategy guided search (Beam/MCTS/Evolutionary/Greedy/Hybrid), 22 semantic detectors, exploit reasoning with Z3 proofs, physics-inspired Heikal math scoring, probabilistic risk modeling, dynamic PoC generation, and optional LLM enrichment — plus integration with Slither, Mythril, Semgrep, and an offensive security engine when available.
 
 **العربية:**
-أداة AGL Security هي محلل أمان متعدد الطبقات للعقود الذكية. تستخرج الحالة المالية من عقود Solidity، تبني فضاء بحث للهجمات، تحاكي الهجمات الاقتصادية، وتشغّل 22 كاشفاً دلالياً — كل ذلك بدون الحاجة لأدوات خارجية مثل Slither أو Mythril (لكنها تدمجها عند توفرها).
+أداة AGL Security هي محلل أمان **بـ 8 طبقات** للعقود الذكية. تجمع بين: تسطيح Solidity، تنفيذ رمزي Z3، استخراج الحالة المالية، تعداد فضاء الأفعال، محاكاة الهجمات الاقتصادية، بحث ذكي بـ 5 استراتيجيات (Beam/MCTS/تطوري/جشع/هجين)، 22 كاشفاً دلالياً، إثبات الاستغلال بـ Z3 SAT، خوارزميات هيكل الرياضية (موجة + نفق كمومي + هولوغرام + رنين)، نموذج احتمالي للمخاطر، توليد PoC ديناميكي، وإثراء اختياري بالنموذج اللغوي — مع دعم Slither و Mythril و Semgrep ومحرك الأمن الهجومي عند توفرها.
 
 ---
 
@@ -71,11 +71,32 @@ result = engine.extract("path/to/contract.sol")
 # result.graph contains the full financial state graph
 ```
 
+### Full Project Audit Pipeline — خط الأنابيب الكامل (11 مرحلة)
+
+```python
+from agl_security_tool.audit_pipeline import run_audit
+
+# Audit a local project (Foundry/Hardhat/Truffle/Bare)
+result = run_audit("./my-defi-project", mode="deep", output_format="json")
+
+# Audit a GitHub repo directly
+result = run_audit("https://github.com/Org/repo", mode="deep")
+
+# Audit a single .sol file
+result = run_audit("contract.sol", mode="deep", skip_heikal=True)
+
+# Generate Markdown report
+result = run_audit("./project", output_format="markdown", output_path="report.md")
+
+# With PoC generation + Foundry execution
+result = run_audit("./project", generate_poc=True, run_poc=True)
+```
+
 ---
 
 ## Architecture | البنية المعمارية
 
-The tool operates as a **5-layer pipeline**. Each layer feeds the next:
+The tool operates as an **8-layer pipeline** (Layers 0–7). Each layer feeds the next:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -97,7 +118,7 @@ The tool operates as a **5-layer pipeline**. Each layer feeds the next:
 │  │ Analysis → State Mutations → Function Effects │              │
 │  └────────────────────┬──────────────────────────┘              │
 │                       │                                         │
-│  Layer 2: Action Space│                                         │
+│  Layer 2: Action Space                                          │
 │  ┌────────────────────▼──────────────────────────┐              │
 │  │ ActionSpaceBuilder                            │              │
 │  │ Action Enumeration → Parameter Generation →   │              │
@@ -121,12 +142,27 @@ The tool operates as a **5-layer pipeline**. Each layer feeds the next:
 │  │ Profit Gradient Optimization                  │              │
 │  └────────────────────┬──────────────────────────┘              │
 │                       │                                         │
-│  Layer 5: Detectors   │                                         │
+│  Layer 5: Detectors                                             │
 │  ┌────────────────────▼──────────────────────────┐              │
 │  │ DetectorRunner — 22 Semantic Detectors        │              │
 │  │ reentrancy (5) │ access_control (5) │         │              │
 │  │ defi (4) │ token (4) │ common (4)   │         │              │
-│  └───────────────────────────────────────────────┘              │
+│  └────────────────────┬──────────────────────────┘              │
+│                       │                                         │
+│  Layer 6: Exploit Reasoning                                     │
+│  ┌────────────────────▼──────────────────────────┐              │
+│  │ ExploitReasoningEngine                        │              │
+│  │ PathExtractor → Z3 SAT → InvariantChecker →   │              │
+│  │ ExploitAssembler → RiskCore P(exploit)        │              │
+│  └────────────────────┬──────────────────────────┘              │
+│                       │                                         │
+│  Layer 7: Heikal Math (Optional)                                │
+│  ┌────────────────────▼──────────────────────────┐              │
+│  │ HeikalTunnelingScorer │ WaveDomainEvaluator   │              │
+│  │ HolographicVulnMemory │ ResonanceOptimizer    │              │
+│  └────────────────────┬──────────────────────────┘              │
+│                       │                                         │
+│  Output: Dedup → RiskCore → PoC → LLM → Report                 │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -196,11 +232,33 @@ agl_security_tool/
 │   ├── token.py             # 4 detectors: ERC20 compliance, fee-on-transfer...
 │   └── common.py            # 4 detectors: unchecked calls, integer issues...
 │
+├── heikal_math/             # Layer 7 — Physics-inspired scoring
+│   ├── tunneling_scorer.py  # WKB quantum tunneling probability
+│   ├── wave_evaluator.py    # Quantum wave superposition heuristic
+│   ├── holographic_patterns.py # FFT-based pattern matching (numpy)
+│   └── resonance_optimizer.py  # Breit-Wigner resonance optimization
+│
+├── audit_pipeline.py        # Project-level 11-step pipeline orchestrator
+├── risk_core.py             # P(exploit) = σ(w·x + β) unified scoring
+├── poc_generator.py         # Dynamic Foundry .t.sol PoC generation (9 templates)
+├── contract_intelligence.py # Noisy-OR + meta-classifier aggregation
+├── onchain_context.py       # On-chain data: proxy detection, 9 chains
+├── tool_backends.py         # Slither/Mythril/Semgrep unified wrappers
+├── benchmark_runner.py      # Evaluation vs SWC + DVDEFI ground truth
+├── weight_optimizer.py      # Risk weight training via mini-batch SGD
+│
+├── docs/                    # Detailed documentation
+│   ├── ARCHITECTURE.md      # Complete architecture reference
+│   ├── AUDIT_PIPELINE_TRACE.md # All 28 functions traced
+│   ├── BUGS.md              # 52 bugs: 19 fixed, 33 pending
+│   └── NEGATIVE_EVIDENCE.md # Negative evidence pipeline docs
+│
 ├── ARCHITECTURE.md              # Full architecture documentation (Arabic)
 ├── INTELLIGENT_SEARCH_ENGINE.md # Layer 4 deep-dive
 ├── state_extraction/DYNAMIC_STATE_TRANSITION_MODEL.md  # Layer 1 deep-dive
 ├── action_space/ACTION_SPACE_BUILDER.md                # Layer 2 deep-dive
-└── attack_engine/ECONOMIC_PHYSICS_ENGINE.md            # Layer 3 deep-dive
+├── attack_engine/ECONOMIC_PHYSICS_ENGINE.md            # Layer 3 deep-dive
+└── heikal_math/HEIKAL_MATH_DOCUMENTATION.md            # Layer 7 deep-dive
 ```
 
 ---
@@ -223,7 +281,13 @@ agl_security_tool/
 ### Install — التثبيت
 
 ```bash
-pip install -r requirements_security.txt
+pip install -r requirements.txt
+```
+
+### Optional (enhance results) — اختيارية
+
+```bash
+pip install slither-analyzer mythril semgrep numpy
 ```
 
 ---

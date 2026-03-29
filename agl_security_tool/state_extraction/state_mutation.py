@@ -33,6 +33,20 @@ except ImportError:
     from agl_security_tool.detectors import ParsedContract, ParsedFunction, Operation, OpType
 
 
+def _safe_op_value(op_type) -> str:
+    """استخراج القيمة النصية من OpType بشكل آمن — يتجنب dual-module identity bug"""
+    return op_type.value if hasattr(op_type, 'value') else str(op_type)
+
+
+# String values for safe comparison
+_PRECONDITION_VALUES = {OpType.REQUIRE.value, OpType.ASSERT.value}
+_REVERT_VALUE = OpType.REVERT.value
+_STATE_READ_VALUES = {OpType.STATE_READ.value, OpType.MAPPING_ACCESS.value}
+_STATE_WRITE_VALUE = OpType.STATE_WRITE.value
+_EXTERNAL_CALL_VALUES = {OpType.EXTERNAL_CALL.value, OpType.EXTERNAL_CALL_ETH.value, OpType.DELEGATECALL.value}
+_ARRAY_PUSH_VALUE = OpType.ARRAY_PUSH.value
+
+
 # ═══════════════════════════════════════════════════════════
 #  Regex patterns for extracting delta operations
 # ═══════════════════════════════════════════════════════════
@@ -134,20 +148,21 @@ class StateMutationTracker:
         call_index = 0
 
         for op_idx, op in enumerate(func.operations):
+            op_val = _safe_op_value(op.op_type)
             # ─── Preconditions ───
-            if op.op_type in (OpType.REQUIRE, OpType.ASSERT):
+            if op_val in _PRECONDITION_VALUES:
                 cond = op.target or op.raw_text
                 accumulated_preconditions.append(cond)
                 mutation.preconditions.append(cond)
                 continue
 
-            if op.op_type == OpType.REVERT:
+            if op_val == _REVERT_VALUE:
                 # revert يعني شرط فشل — نسجله كـ precondition سلبي
                 mutation.preconditions.append(f"!({op.raw_text})")
                 continue
 
             # ─── State Reads ───
-            if op.op_type in (OpType.STATE_READ, OpType.MAPPING_ACCESS):
+            if op_val in _STATE_READ_VALUES:
                 var_name = op.target
                 if var_name:
                     accumulated_reads.add(var_name)
@@ -156,7 +171,7 @@ class StateMutationTracker:
                 continue
 
             # ─── State Writes → Delta ───
-            if op.op_type == OpType.STATE_WRITE:
+            if op_val == _STATE_WRITE_VALUE:
                 delta = self._build_delta(
                     delta_index, op, op_idx,
                     accumulated_preconditions.copy(),
@@ -171,8 +186,7 @@ class StateMutationTracker:
                 continue
 
             # ─── External Calls → Call Points ───
-            if op.op_type in (OpType.EXTERNAL_CALL, OpType.EXTERNAL_CALL_ETH,
-                              OpType.DELEGATECALL):
+            if op_val in _EXTERNAL_CALL_VALUES:
                 cp = self._build_call_point(
                     call_index, op, op_idx,
                     delta_index,  # deltas_before = current delta count
@@ -183,7 +197,7 @@ class StateMutationTracker:
                 continue
 
             # ─── Array operations → Delta ───
-            if op.op_type in (OpType.ARRAY_PUSH,):
+            if op_val == _ARRAY_PUSH_VALUE:
                 delta = StateDelta(
                     delta_index=delta_index,
                     variable=op.target,

@@ -1,0 +1,211 @@
+﻿======================================================================
+  AGL PIPELINE ACCURACY MEASUREMENT TEST
+======================================================================
+
+  Ground truth: 17 known vulnerabilities in 6 contracts
+  Safe contracts: 2 (should have 0 findings)
+
+  ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  RUNNING FULL PIPELINE ON test_contracts/...
+  ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+
+
+ΓòöΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòù
+Γòæ  AGL SECURITY ΓÇö FULL-POWER DYNAMIC AUDIT API                                    Γòæ
+Γòæ  ┘ê╪º╪¼┘ç╪⌐ ╪¬╪»┘é┘è┘é ╪ú┘à┘å┘è ╪»┘è┘å╪º┘à┘è┘â┘è╪⌐ ΓÇö ╪ú┘è ┘à╪┤╪▒┘ê╪╣ ΓÇö ╪ú┘è ╪▒╪º╪¿╪╖ GitHub                       Γòæ
+ΓòÜΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓò¥
+
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  RESOLVING TARGET
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  Target: D:\AGL\agl_security_tool\test_contracts
+  Resolved: D:\AGL\agl_security_tool\test_contracts
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  LOADING ALL ENGINES
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+python.exe : Engine load failed ΓÇö Layer 0.5 (Z3): Z3 solver not available
+At line:1 char:1
++ & .\.venv\Scripts\python.exe -u tests\test_pipeline_accuracy.py *>&1  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Engine load fai...r not available 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+WARNING:AGL.SecurityOrchestrator:ΓÜá∩╕Å Z3 ╪║┘è╪▒ ┘à╪½╪¿╪¬! ╪¬╪½╪¿┘è╪¬: pip 
+install z3-solver
+
+============================================================
+≡ƒ¢í∩╕Å  AGL Security Orchestrator v1.0
+============================================================
+  Γ£à Slither    - AST + CFG + 80+ Detectors
+  Γ£à Mythril    - Symbolic Execution
+  Γ£à Semgrep    - Pattern Matching
+  Γ¥î Z3         - Formal Verification
+  Γ¥î LLM        - Deep Reasoning
+============================================================
+
+WARNING:AGL.security_tool:Engine load failed ΓÇö Layer 3 (Offensive): No 
+module named 'requests'
+INFO:AGL.security_tool:Engine init complete ΓÇö 6/8 engines loaded, 2 skipped
+  Γ£à Layer 0-5: AGLSecurityAudit (Core Pipeline)
+  ΓÜá∩╕Å  Z3SymbolicEngine: Z3 solver not available
+  Γ£à Layer 1-4: State Extraction + Action Space + Attack Sim + Search
+  Γ£à Layer 6: Exploit Reasoning (Z3 Path Extraction)
+  Γ£à Layer 0: Solidity Flattener
+  Γ£à Layer 5: 22 Semantic Detectors (AST Parser)
+  Γ£à Layer 7: Heikal Math (4 algorithms)
+
+  Loaded 10 engine components
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  DISCOVERING PROJECT STRUCTURE
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  Project type: bare
+  Contracts dir: D:\AGL\agl_security_tool\test_contracts
+  Total files: 39
+    Main contracts: 38
+    Libraries:      0
+    Interfaces:     1
+
+  Files found:
+    PredictDotLoan                                ΓåÆ PredictDotLoan.sol
+    RewardDistributor                             ΓåÆ RewardDistributor.sol
+    Vault                                         ΓåÆ Vault.sol
+    VaultFactory                                  ΓåÆ VaultFactory.sol
+    VaultToken                                    ΓåÆ VaultToken.sol
+    _logic_vuln_test                              ΓåÆ _logic_vuln_test.sol
+    _market_flat                                  ΓåÆ _market_flat.sol
+    _real_exploit_patterns                        ΓåÆ _real_exploit_patterns.sol
+    _test_1_ReadOnlyReentrancy                    ΓåÆ _test_1_ReadOnlyReentrancy.sol
+    _test_2_FirstDepositor                        ΓåÆ _test_2_FirstDepositor.sol
+    _test_3_OracleManipulation                    ΓåÆ _test_3_OracleManipulation.sol
+    _test_4_FlashLoanCallback                     ΓåÆ _test_4_FlashLoanCallback.sol
+    _test_5_StaleChainlink                        ΓåÆ _test_5_StaleChainlink.sol
+    _test_empty                                   ΓåÆ _test_empty.sol
+    _test_first_depositor_share_inflation         ΓåÆ _test_first_depositor_share_inflation.sol
+    _test_flash_loan_callback                     ΓåÆ _test_flash_loan_callback.sol
+    _test_iface                                   ΓåÆ _test_iface.sol
+    _test_oracle_manipulation_(slot0)             ΓåÆ _test_oracle_manipulation_(slot0).sol
+    _test_read-only_reentrancy                    ΓåÆ _test_read-only_reentrancy.sol
+    _test_ro                                      ΓåÆ _test_ro.sol
+    _test_safe                                    ΓåÆ _test_safe.sol
+    _test_stale_chainlink_price                   ΓåÆ _test_stale_chainlink_price.sol
+    _test_vuln                                    ΓåÆ _test_vuln.sol
+    alchemist_v2                                  ΓåÆ alchemist_v2.sol
+    benchmark_audit_test                          ΓåÆ benchmark_audit_test.sol
+    compound_comet                                ΓåÆ compound_comet.sol
+    delegatecall_proxy                            ΓåÆ delegatecall_proxy.sol
+    gas_dos                                       ΓåÆ gas_dos.sol
+    iface/IVault                                  ΓåÆ IVault.sol
+    negative_evidence_test                        ΓåÆ negative_evidence_test.sol
+    ... and 9 more
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  SHARED PARSING ΓÇö ╪º┘ä╪¬╪¡┘ä┘è┘ä ╪º┘ä╪»┘ä╪º┘ä┘è ╪º┘ä┘à╪┤╪¬╪▒┘â
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  Γ£à Pre-parsed 37 files ΓÇö 661 functions extracted
+  ≡ƒôè Safe functions (skip for external attacks): 249
+  ≡ƒôè Indexed contracts: 67 ΓÇö State vars tracked: 274
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  LAYER 0-5: DEEP SCAN (Flattener + Z3 + Patterns + Detectors)
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+
+  ≡ƒöì Deep scanning: RewardDistributor.sol ...
+INFO:AGL.SecurityOrchestrator:≡ƒöì Slither analyzing: 
+D:\AGL\agl_security_tool\test_contracts\project\src\RewardDistributor.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Mythril analyzing (may take time): 
+D:\AGL\agl_security_tool\test_contracts\project\src\RewardDistributor.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Semgrep analyzing: 
+D:\AGL\agl_security_tool\test_contracts\project\src\RewardDistributor.sol
+INFO:AGL.SecurityOrchestrator:Γ£à Slither found 30 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô slither: 30 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Mythril found 0 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô mythril: 0 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Semgrep found 6 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô semgrep: 6 findings
+     Γ£à RewardDistributor: 30 findings in 28.6s
+        Severity: C=3 H=4 M=16 L=7
+        Z3 symbolic: 0 | Detectors: 6 | Layers: ['import_flattener', 'smart_contract_analyzer', 'cfg_analysis', 'security_orchestrator', 'agl_detectors', 'state_extraction', 'temporal_analysis', 'action_space', 'attack_simulation', 'search_engine', 'exploit_reasoning', 'risk_core_scoring']
+
+  ≡ƒöì Deep scanning: negative_evidence_test.sol ...
+INFO:AGL.SecurityOrchestrator:≡ƒöì Slither analyzing: 
+D:\AGL\agl_security_tool\test_contracts\negative_evidence_test.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Mythril analyzing (may take time): 
+D:\AGL\agl_security_tool\test_contracts\negative_evidence_test.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Semgrep analyzing: 
+D:\AGL\agl_security_tool\test_contracts\negative_evidence_test.sol
+INFO:AGL.SecurityOrchestrator:Γ£à Slither found 14 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô slither: 14 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Mythril found 0 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô mythril: 0 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Semgrep found 7 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô semgrep: 7 findings
+     Γ£à negative_evidence_test: 19 findings in 34.6s
+        Severity: C=1 H=6 M=6 L=6
+        Z3 symbolic: 0 | Detectors: 6 | Layers: ['import_flattener', 'smart_contract_analyzer', 'cfg_analysis', 'security_orchestrator', 'agl_detectors', 'state_extraction', 'temporal_analysis', 'action_space', 'attack_simulation', 'search_engine', 'exploit_reasoning', 'risk_core_scoring']
+
+  ≡ƒöì Deep scanning: tx_origin_auth.sol ...
+INFO:AGL.SecurityOrchestrator:≡ƒöì Slither analyzing: 
+D:\AGL\agl_security_tool\test_contracts\vulnerable\tx_origin_auth.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Mythril analyzing (may take time): 
+D:\AGL\agl_security_tool\test_contracts\vulnerable\tx_origin_auth.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Semgrep analyzing: 
+D:\AGL\agl_security_tool\test_contracts\vulnerable\tx_origin_auth.sol
+INFO:AGL.SecurityOrchestrator:Γ£à Slither found 7 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô slither: 7 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Mythril found 0 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô mythril: 0 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Semgrep found 7 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô semgrep: 7 findings
+     Γ£à tx_origin_auth: 10 findings in 29.6s
+        Severity: C=0 H=6 M=1 L=3
+        Z3 symbolic: 0 | Detectors: 3 | Layers: ['import_flattener', 'smart_contract_analyzer', 'cfg_analysis', 'security_orchestrator', 'agl_detectors', 'state_extraction', 'temporal_analysis', 'action_space', 'attack_simulation', 'search_engine', 'exploit_reasoning', 'risk_core_scoring']
+
+  ≡ƒöì Deep scanning: safe_token.sol ...
+INFO:AGL.SecurityOrchestrator:≡ƒöì Slither analyzing: 
+D:\AGL\agl_security_tool\test_contracts\safe\safe_token.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Mythril analyzing (may take time): 
+D:\AGL\agl_security_tool\test_contracts\safe\safe_token.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Semgrep analyzing: 
+D:\AGL\agl_security_tool\test_contracts\safe\safe_token.sol
+INFO:AGL.SecurityOrchestrator:Γ£à Slither found 5 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô slither: 5 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Mythril found 0 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô mythril: 0 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Semgrep found 4 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô semgrep: 4 findings
+     Γ£à safe_token: 5 findings in 26.7s
+        Severity: C=0 H=0 M=3 L=2
+        Z3 symbolic: 0 | Detectors: 0 | Layers: ['import_flattener', 'smart_contract_analyzer', 'cfg_analysis', 'security_orchestrator', 'agl_detectors', 'state_extraction', 'temporal_analysis', 'action_space', 'attack_simulation', 'search_engine', 'exploit_reasoning', 'risk_core_scoring']
+
+  ≡ƒöì Deep scanning: safe_multisig.sol ...
+INFO:AGL.SecurityOrchestrator:≡ƒöì Slither analyzing: 
+D:\AGL\agl_security_tool\test_contracts\safe\safe_multisig.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Mythril analyzing (may take time): 
+D:\AGL\agl_security_tool\test_contracts\safe\safe_multisig.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Semgrep analyzing: 
+D:\AGL\agl_security_tool\test_contracts\safe\safe_multisig.sol
+INFO:AGL.SecurityOrchestrator:Γ£à Slither found 3 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô slither: 3 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Mythril found 0 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô mythril: 0 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Semgrep found 2 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô semgrep: 2 findings
+     Γ£à safe_multisig: 9 findings in 26.4s
+        Severity: C=0 H=1 M=4 L=4
+        Z3 symbolic: 0 | Detectors: 5 | Layers: ['import_flattener', 'smart_contract_analyzer', 'cfg_analysis', 'security_orchestrator', 'agl_detectors', 'state_extraction', 'temporal_analysis', 'action_space', 'attack_simulation', 'search_engine', 'exploit_reasoning', 'risk_core_scoring']
+
+  ≡ƒöì Deep scanning: _test_ro.sol ...
+INFO:AGL.SecurityOrchestrator:≡ƒöì Slither analyzing: 
+D:\AGL\agl_security_tool\test_contracts\edge_cases\_test_ro.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Mythril analyzing (may take time): 
+D:\AGL\agl_security_tool\test_contracts\edge_cases\_test_ro.sol
+INFO:AGL.SecurityOrchestrator:≡ƒöì Semgrep analyzing: 
+D:\AGL\agl_security_tool\test_contracts\edge_cases\_test_ro.sol
+INFO:AGL.SecurityOrchestrator:Γ£à Slither found 3 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô slither: 3 findings
+INFO:AGL.SecurityOrchestrator:Γ£à Mythril found 0 issues
+INFO:AGL.SecurityOrchestrator:  Γ£ô mythril: 0 findings

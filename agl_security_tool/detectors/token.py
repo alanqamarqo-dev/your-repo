@@ -43,6 +43,9 @@ class UncheckedERC20Transfer(BaseDetector):
     def detect(self, contract: ParsedContract, all_contracts: List[ParsedContract]) -> List[Finding]:
         findings = []
 
+        if contract.contract_type in ("interface", "library"):
+            return findings
+
         # هل يستخدم SafeERC20؟
         uses_safe = any(
             'SafeERC20' in u.get('library', '') for u in contract.using_for
@@ -60,6 +63,11 @@ class UncheckedERC20Transfer(BaseDetector):
                     continue
 
                 raw = op.raw_text or ""
+
+                # تخطي approve على router/spender معروف — نمط شائع
+                if method == "approve":
+                    if re.search(r"\.approve\s*\(\s*address\s*\(", raw):
+                        continue
 
                 # هل القيمة المرجعة مفحوصة؟
                 is_checked = (

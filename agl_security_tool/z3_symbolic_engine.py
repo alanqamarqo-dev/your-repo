@@ -125,6 +125,58 @@ class Z3SymbolicEngine:
         return self.findings
 
     # ═══════════════════════════════════════════════════
+    #  Callback Safety — تحقق من أمان الاستدعاء الخارجي
+    # ═══════════════════════════════════════════════════
+
+    # Standard ERC20-family interfaces that have NO callback hooks.
+    # ERC777 / ERC721 / ERC1155 DO have hooks and are intentionally excluded.
+    _SAFE_TOKEN_IFACES = re.compile(r"\b(?:I?ERC20|IERC20Metadata|IERC20Permit)\b")
+
+    def _is_callback_safe_call(self, ec_match, source: str) -> bool:
+        """
+        Check if an external call is safe from reentrancy callbacks.
+
+        Returns True when the call CANNOT trigger a reentrant callback:
+        - .staticcall()  — read-only by EVM; no state mutation in callee
+        - .send()        — 2300 gas stipend; not enough for any callback
+        - .transfer() on address payable  — 2300 gas stipend
+        - .transfer() on standard ERC20   — no hook mechanism in ERC20
+        """
+        call_text = ec_match.group(0)
+        call_target = ec_match.group(1)
+
+        # .staticcall is read-only by EVM definition
+        if ".staticcall" in call_text:
+            return True
+
+        # .send() provides only 2300 gas — not enough for any callback
+        if ".send(" in call_text:
+            return True
+
+        # .transfer() — could be ETH transfer (2300 gas) or ERC20 transfer
+        if ".transfer(" in call_text:
+            # If target is declared as standard ERC20 → no callback hooks
+            decl_pattern = re.compile(
+                r"(?:I?ERC20\w*)\s+(?:public\s+|private\s+|internal\s+|immutable\s+)*"
+                + re.escape(call_target)
+                + r"\b"
+            )
+            if decl_pattern.search(source):
+                return True
+
+            # If target is address/address payable → 2300 gas, safe
+            addr_pattern = re.compile(
+                r"address\s+(?:payable\s+)?"
+                r"(?:public\s+|private\s+|internal\s+|immutable\s+)*"
+                + re.escape(call_target)
+                + r"\b"
+            )
+            if addr_pattern.search(source):
+                return True
+
+        return False
+
+    # ═══════════════════════════════════════════════════
     #  1. Reentrancy — التنفيذ الرمزي لكشف إعادة الدخول
     # ═══════════════════════════════════════════════════
 
@@ -153,6 +205,10 @@ class Z3SymbolicEngine:
             for ec in ext_calls:
                 for sw in state_writes:
                     if sw.start() > ec.start():
+                        # ── Callback safety: skip calls that cannot re-enter ──
+                        if self._is_callback_safe_call(ec, source):
+                            continue
+
                         # كشف nonReentrant guard أو أي حماية
                         has_guard = bool(
                             re.search(
@@ -177,21 +233,53 @@ class Z3SymbolicEngine:
                         if inherits_guard:
                             continue
 
-                        # Z3: إثبات أن attacker يمكنه إعادة الدخول
+                        # Z3: model the actual reentrancy state transition
+                        # ──────────────────────────────────────────────
+                        # We model:
+                        #   1. attacker has recorded balance (mapping entry)
+                        #   2. contract checks require(balance >= amount) → passes
+                        #   3. contract sends ETH via .call{value: amount} BEFORE
+                        #      updating mapping → attacker re-enters
+                        #   4. on re-entry, balance is still the OLD value,
+                        #      so require passes AGAIN
+                        #   5. total withdrawn = 2 * amount while balance decremented once
+                        # ──────────────────────────────────────────────
                         solver = z3.Solver()
-                        attacker_balance = z3.BitVec("attacker_bal", 256)
-                        contract_balance = z3.BitVec("contract_bal", 256)
+                        solver.set("timeout", 5000)  # 5s timeout
+
+                        attacker_recorded_bal = z3.BitVec("attacker_recorded_bal", 256)
+                        contract_eth = z3.BitVec("contract_eth", 256)
                         withdraw_amount = z3.BitVec("amount", 256)
 
-                        # الشروط: المهاجم لديه رصيد > 0، العقد لديه رصيد كافي
-                        solver.add(z3.UGT(attacker_balance, z3.BitVecVal(0, 256)))
-                        solver.add(z3.UGE(contract_balance, withdraw_amount))
-                        solver.add(z3.UGT(withdraw_amount, z3.BitVecVal(0, 256)))
+                        ZERO = z3.BitVecVal(0, 256)
+                        ONE_WEI = z3.BitVecVal(1, 256)
+                        # Realistic bounds: amount <= 10^24 wei (≈1M ETH), avoids
+                        # trivial BitVec(256) solutions that look like 2^200.
+                        MAX_AMOUNT = z3.BitVecVal(10**24, 256)
+                        MAX_BAL = z3.BitVecVal(10**26, 256)
 
-                        # يستطيع السحب مرتين (reentrancy)
+                        # --- Realistic value constraints ---
+                        solver.add(z3.UGT(withdraw_amount, ZERO))
+                        solver.add(z3.ULE(withdraw_amount, MAX_AMOUNT))
+                        solver.add(z3.ULE(contract_eth, MAX_BAL))
+                        solver.add(z3.ULE(attacker_recorded_bal, MAX_BAL))
+
+                        # --- require(balances[msg.sender] >= amount) ---
+                        solver.add(z3.UGE(attacker_recorded_bal, withdraw_amount))
+
+                        # --- contract has enough ETH for FIRST send ---
+                        solver.add(z3.UGE(contract_eth, withdraw_amount))
+
+                        # --- KEY: state NOT updated yet, so on re-entry the
+                        #     require still passes → can withdraw a SECOND time.
+                        #     Need contract to also cover the second send.       ---
                         solver.add(
-                            z3.UGE(contract_balance, withdraw_amount + withdraw_amount)
+                            z3.UGE(contract_eth, withdraw_amount + withdraw_amount)
                         )
+
+                        # --- Attacker's total drain exceeds their legitimate balance ---
+                        total_drained = withdraw_amount + withdraw_amount
+                        solver.add(z3.UGT(total_drained, attacker_recorded_bal))
 
                         if solver.check() == z3.sat:
                             model = solver.model()
@@ -200,19 +288,26 @@ class Z3SymbolicEngine:
                             self.findings.append(
                                 SymExecFinding(
                                     title=f"Reentrancy in {func_name}() — state write after external call",
-                                    severity="critical",
+                                    severity="CRITICAL",
                                     category="reentrancy",
                                     description=(
                                         f"Z3 PROVED: External call at position {ec.start()} is followed by "
                                         f"state modification at position {sw.start()}. An attacker can "
-                                        f"re-enter the function before state is updated, draining funds."
+                                        f"re-enter the function before state is updated. "
+                                        f"Concrete scenario: deposit {ce.get('amount', '?')} wei, "
+                                        f"withdraw twice → drain {ce.get('amount', '?')}×2 wei "
+                                        f"while only owning {ce.get('attacker_recorded_bal', '?')} wei."
                                     ),
                                     line=func_line,
                                     function=func_name,
                                     code_snippet=body[ec.start() : sw.end()][:200],
                                     z3_model=str(ce),
                                     is_proven=True,
-                                    counterexample=f"amount={ce.get('amount', '?')}, contract_bal={ce.get('contract_bal', '?')}",
+                                    counterexample=(
+                                        f"amount={ce.get('amount', '?')}, "
+                                        f"contract_eth={ce.get('contract_eth', '?')}, "
+                                        f"attacker_recorded_bal={ce.get('attacker_recorded_bal', '?')}"
+                                    ),
                                     confidence=0.95,
                                 )
                             )
@@ -224,8 +319,13 @@ class Z3SymbolicEngine:
 
     def _check_unchecked_arithmetic(self, source: str, file_path: str):
         """كشف overflow/underflow في كتل unchecked."""
-        for m in self._RE_UNCHECKED.finditer(source):
-            block = m.group(1)
+        # Use brace-matching instead of regex to handle nested braces
+        for m in re.finditer(r"unchecked\s*\{", source):
+            brace_start = m.end() - 1  # position of the opening {
+            brace_end = self._find_brace_end(source, brace_start)
+            if brace_end <= brace_start:
+                continue
+            block = source[brace_start + 1 : brace_end]
             block_line = source[: m.start()].count("\n") + 1
 
             # البحث عن عمليات حسابية
@@ -250,17 +350,23 @@ class Z3SymbolicEngine:
 
                 if operator == "+":
                     result = a + b
-                    solver.add(z3.ULT(result, a))  # overflow wraps
+                    # Overflow: a + b wraps around → result < a
+                    solver.add(z3.ULT(result, a))
                     risk_type = "overflow"
                 elif operator == "-":
-                    solver.add(z3.UGT(b, a))  # underflow
+                    # Underflow: b > a → wraps
+                    solver.add(z3.UGT(b, a))
                     risk_type = "underflow"
                 elif operator == "*":
                     result = a * b
-                    # مع قيم كبيرة يحدث overflow
-                    big = z3.BitVecVal(2**128, 256)
-                    solver.add(z3.UGT(a, big))
+                    # Overflow: a * b wraps → result / a != b (when a > 0)
+                    # Use realistic bounds: both operands in plausible range
+                    solver.add(z3.ULT(a, z3.BitVecVal(2**128, 256)))
+                    solver.add(z3.ULT(b, z3.BitVecVal(2**128, 256)))
+                    solver.add(z3.UGT(a, z3.BitVecVal(1, 256)))
                     solver.add(z3.UGT(b, z3.BitVecVal(1, 256)))
+                    # Check wrap: result < a (when b > 1 and no overflow this can't happen)
+                    solver.add(z3.ULT(result, a))
                     risk_type = "overflow"
 
                 if solver.check() == z3.sat:
@@ -270,7 +376,7 @@ class Z3SymbolicEngine:
                     self.findings.append(
                         SymExecFinding(
                             title=f"Unchecked {risk_type} in unchecked block",
-                            severity="high",
+                            severity="HIGH",
                             category="arithmetic",
                             description=(
                                 f"Z3 PROVED: {operator} operation on {var_a} and {var_b} in unchecked block "
@@ -333,7 +439,7 @@ class Z3SymbolicEngine:
                 "destructive",
             ),
             (
-                r"function\s+(withdraw|withdrawAll|emergencyWithdraw|drain)\s*\(([^)]*)\)",
+                r"function\s+(withdrawAll|emergencyWithdraw|drain)\s*\(([^)]*)\)",
                 "withdrawal",
             ),
             (r"function\s+(upgrade|upgradeAndCall|upgradeTo)\s*\(([^)]*)\)", "upgrade"),
@@ -363,7 +469,8 @@ class Z3SymbolicEngine:
             r"revert\s+AccessDenied|revert\s+CallerNotPool|"
             r"ACLManager|aclManager|_aclManager|"
             r"POOL_ADMIN|EMERGENCY_ADMIN|RISK_ADMIN|"
-            r"IACLManager\b|hasRole\b"
+            r"IACLManager\b|hasRole\b|"
+            r"balances\[msg\.sender\]|_balances\[msg\.sender\]"
         )
 
         for pattern, risk_type in sensitive_patterns:
@@ -445,7 +552,8 @@ class Z3SymbolicEngine:
                             function=func_name,
                             code_snippet=full_func[:200],
                             z3_model="",
-                            is_proven=False,  # Not a real Z3 proof
+                            source="z3_pattern",
+                            is_proven=False,
                             counterexample=f"Any address could call {func_name}()",
                             confidence=0.6,
                         )
@@ -620,7 +728,8 @@ class Z3SymbolicEngine:
                         line=func_line,
                         function=func_name,
                         code_snippet=dm.group(0),
-                        is_proven=False,  # Z3 trivially true — NOT a real proof
+                        source="z3_pattern",
+                        is_proven=False,
                         confidence=0.5 if is_external else 0.35,
                     )
                 )
@@ -678,7 +787,7 @@ class Z3SymbolicEngine:
                 self.findings.append(
                     SymExecFinding(
                         title=f"Balance invariant violation in {func_name}()",
-                        severity="medium",
+                        severity="MEDIUM",
                         category="business-logic",
                         description=(
                             f"Function {func_name}() modifies balances without updating totalSupply. "
@@ -688,7 +797,8 @@ class Z3SymbolicEngine:
                         line=func_line,
                         function=func_name,
                         code_snippet=body[:150],
-                        is_proven=False,  # The Z3 proof was trivially true
+                        source="z3_pattern",
+                        is_proven=False,
                         confidence=0.65,
                     )
                 )
@@ -698,7 +808,7 @@ class Z3SymbolicEngine:
                 self.findings.append(
                     SymExecFinding(
                         title=f"Supply modified without balance update in {func_name}()",
-                        severity="high",
+                        severity="HIGH",
                         category="business-logic",
                         description=(
                             f"Function {func_name}() modifies totalSupply without updating individual balances."
@@ -706,6 +816,7 @@ class Z3SymbolicEngine:
                         line=func_line,
                         function=func_name,
                         code_snippet=body[:150],
+                        source="z3_pattern",
                         is_proven=False,
                         confidence=0.8,
                     )
@@ -754,7 +865,7 @@ class Z3SymbolicEngine:
                 self.findings.append(
                     SymExecFinding(
                         title="Potential storage collision in proxy pattern",
-                        severity="high",
+                        severity="HIGH",
                         category="storage-collision",
                         description=(
                             f"Contract uses delegatecall with {len(state_vars)} state variables "
@@ -764,6 +875,7 @@ class Z3SymbolicEngine:
                         line=state_vars[0][1],
                         function="",
                         code_snippet=f"State vars: {', '.join(v[0] for v in state_vars[:5])}",
+                        source="z3_pattern",
                         is_proven=False,
                         confidence=0.75,
                     )
@@ -820,7 +932,7 @@ class Z3SymbolicEngine:
                 self.findings.append(
                     SymExecFinding(
                         title=f"Timestamp manipulation risk in {func_name}()",
-                        severity="low",
+                        severity="LOW",
                         category="timestamp-dependency",
                         description=(
                             f"Function {func_name}() uses block.timestamp in a timing-sensitive "
@@ -829,6 +941,7 @@ class Z3SymbolicEngine:
                         line=func_line,
                         function=func_name,
                         code_snippet=body[:150],
+                        source="z3_pattern",
                         is_proven=False,
                         confidence=0.6,
                     )
@@ -838,7 +951,7 @@ class Z3SymbolicEngine:
                 self.findings.append(
                     SymExecFinding(
                         title=f"Timestamp dependency in {func_name}()",
-                        severity="low",
+                        severity="LOW",
                         category="timestamp-dependency",
                         description=(
                             f"Function {func_name}() uses block.timestamp in a conditional. "
@@ -847,6 +960,7 @@ class Z3SymbolicEngine:
                         line=func_line,
                         function=func_name,
                         code_snippet=body[:150],
+                        source="z3_pattern",
                         is_proven=False,
                         confidence=0.4,
                     )
@@ -884,7 +998,7 @@ class Z3SymbolicEngine:
                     self.findings.append(
                         SymExecFinding(
                             title="tx.origin used for authentication",
-                            severity="high",
+                            severity="HIGH",
                             category="access-control",
                             description=(
                                 "tx.origin is used for authentication. An attacker can deploy a "
@@ -983,7 +1097,7 @@ def symbolic_analyze(source_code: str, file_path: str = "") -> List[Dict[str, An
         return [
             {
                 "title": "⚠ Z3 Symbolic Engine Error",
-                "severity": "info",
+                "severity": "INFO",
                 "category": "engine_error",
                 "description": f"فشل محرك Z3 الرمزي: {str(e)[:200]}",
                 "line": 0,

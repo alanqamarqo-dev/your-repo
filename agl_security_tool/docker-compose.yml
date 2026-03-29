@@ -1,0 +1,48 @@
+# AGL Security Tool — Docker Compose
+# ====================================
+# Usage:
+#   docker compose up agl-cli        # CLI mode (one-shot scan)
+#   docker compose up agl-api        # API server on port 8000
+#   docker compose up agl-api -d     # API server (background)
+
+services:
+  # ── CLI Scanner ──
+  agl-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+      args:
+        INSTALL_SLITHER: "true"
+        INSTALL_SEMGREP: "true"
+    volumes:
+      - ./contracts:/contracts:ro
+      - ./reports:/reports
+    entrypoint: ["agl-security"]
+    command: ["scan", "/contracts/", "-f", "json", "-o", "/reports/audit.json"]
+
+  # ── API Server ──
+  agl-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+      args:
+        INSTALL_SLITHER: "true"
+        INSTALL_SEMGREP: "true"
+    ports:
+      - "8000:8000"
+    environment:
+      - AGL_LOG_LEVEL=INFO
+      - AGL_LOG_FILE=/app/logs/agl.log
+      - AGL_MYTHRIL_TIMEOUT=120
+      - AGL_WORKERS=2
+    volumes:
+      - ./logs:/app/logs
+      - ./contracts:/contracts:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

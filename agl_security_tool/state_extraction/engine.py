@@ -75,19 +75,24 @@ except ImportError:
     except ImportError:
         SearchOrchestrator = None
 
-# Import existing parsers
-import sys
-
-_TOOL_DIR = Path(__file__).parent.parent.resolve()
-if str(_TOOL_DIR) not in sys.path:
-    sys.path.insert(0, str(_TOOL_DIR))
-
+# Import existing parsers — use package-qualified imports with fallback;
+# avoid sys.path manipulation which can cause import shadowing.
 try:
-    from detectors.solidity_parser import SoliditySemanticParser
-    from detectors import ParsedContract
-except ImportError:
     from agl_security_tool.detectors.solidity_parser import SoliditySemanticParser
     from agl_security_tool.detectors import ParsedContract
+except ImportError:
+    try:
+        from detectors.solidity_parser import SoliditySemanticParser
+        from detectors import ParsedContract
+    except ImportError:
+        # Last resort: add parent to path (legacy compat)
+        import sys as _sys
+
+        _TOOL_DIR = Path(__file__).parent.parent.resolve()
+        if str(_TOOL_DIR) not in _sys.path:
+            _sys.path.insert(0, str(_TOOL_DIR))
+        from detectors.solidity_parser import SoliditySemanticParser
+        from detectors import ParsedContract
 
 try:
     from solidity_flattener import SolidityFlattener
@@ -172,12 +177,13 @@ class StateExtractionEngine:
     #  Main Extraction APIs
     # ═══════════════════════════════════════════════════════════
 
-    def extract(self, file_path: str) -> ExtractionResult:
+    def extract(self, file_path: str, pre_parsed=None) -> ExtractionResult:
         """
         استخراج الحالة المالية من ملف Solidity واحد.
 
         Args:
             file_path: مسار ملف .sol
+            pre_parsed: قائمة ParsedContract اختيارية من shared_parse
 
         Returns:
             ExtractionResult مع الرسم البياني المالي
@@ -206,7 +212,7 @@ class StateExtractionEngine:
                     result.warnings.append(f"تنبيه: فشل الدمج — {str(e)[:100]}")
 
             # تنفيذ الاستخراج
-            graph = self._extract_from_source(source, file_path, result)
+            graph = self._extract_from_source(source, file_path, result, pre_parsed=pre_parsed)
 
             # تعيين النتائج
             if graph:
@@ -329,6 +335,7 @@ class StateExtractionEngine:
         source: str,
         file_path: str,
         result: ExtractionResult,
+        pre_parsed=None,
     ) -> Optional[FinancialGraph]:
         """
         Pipeline الاستخراج الأساسي:
@@ -338,8 +345,8 @@ class StateExtractionEngine:
 
         v2.0: يشمل الآن Dynamic State Transition Model
         """
-        # ─── Step 1: Parse Solidity ───
-        contracts = self._parser.parse(source, file_path)
+        # ─── Step 1: Parse Solidity (reuse shared_parse if available) ───
+        contracts = pre_parsed if pre_parsed else self._parser.parse(source, file_path)
         if not contracts:
             result.warnings.append(f"لم يُعثر على عقود في: {file_path}")
             return None

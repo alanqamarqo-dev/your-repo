@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}AGL Security — Dashboard{% endblock %}
+
+{% block content %}
+<div x-data="historyPage()" x-init="loadHistory()">
+    <div class="max-w-6xl mx-auto px-4 py-8">
+
+        <!-- ═══ Header ═══ -->
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-2xl font-bold flex items-center gap-3">
+                <span>📊</span>
+                <span x-text="t('dashboard')"></span>
+            </h1>
+            <a href="/" class="btn-primary flex items-center gap-2">
+                <span>+</span>
+                <span x-text="t('new_scan')"></span>
+            </a>
+        </div>
+
+        <!-- ═══ Stats Cards ═══ -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+            <div class="stat-card bg-agl-card border border-agl-border rounded-2xl p-5 text-center">
+                <div class="text-3xl font-extrabold text-agl-accent" x-text="stats.total_scans || 0"></div>
+                <div class="text-agl-muted text-sm mt-1" x-text="t('total_scans')"></div>
+            </div>
+            <div class="stat-card bg-agl-card border border-agl-border rounded-2xl p-5 text-center">
+                <div class="text-3xl font-extrabold text-agl-accent2" x-text="stats.completed_scans || 0"></div>
+                <div class="text-agl-muted text-sm mt-1" x-text="t('completed')"></div>
+            </div>
+            <div class="stat-card bg-agl-card border border-agl-border rounded-2xl p-5 text-center">
+                <div class="text-3xl font-extrabold" :class="stats.average_score >= 70 ? 'text-sev-low' : stats.average_score >= 40 ? 'text-sev-medium' : 'text-sev-critical'" x-text="(stats.average_score || 0) + '%'"></div>
+                <div class="text-agl-muted text-sm mt-1" x-text="t('security_score')"></div>
+            </div>
+            <div class="stat-card bg-agl-card border border-agl-border rounded-2xl p-5 text-center">
+                <div class="text-3xl font-extrabold text-sev-critical" x-text="stats.total_critical || 0"></div>
+                <div class="text-agl-muted text-sm mt-1" x-text="t('critical')"></div>
+            </div>
+        </div>
+
+        <!-- ═══ Scans Table ═══ -->
+        <div class="bg-agl-card border border-agl-border rounded-2xl overflow-hidden">
+            <!-- Table Header -->
+            <div class="grid grid-cols-12 gap-2 px-6 py-3 bg-agl-bg border-b border-agl-border text-xs text-agl-muted font-bold uppercase">
+                <div class="col-span-1">#</div>
+                <div class="col-span-4" x-text="lang === 'ar' ? 'العقد/المشروع' : 'Contract/Project'"></div>
+                <div class="col-span-1" x-text="lang === 'ar' ? 'النوع' : 'Mode'"></div>
+                <div class="col-span-1" x-text="lang === 'ar' ? 'الحالة' : 'Status'"></div>
+                <div class="col-span-3" x-text="t('findings')"></div>
+                <div class="col-span-1" x-text="lang === 'ar' ? 'المدة' : 'Time'"></div>
+                <div class="col-span-1" x-text="lang === 'ar' ? 'التاريخ' : 'Date'"></div>
+            </div>
+
+            <!-- Empty state -->
+            <template x-if="scans.length === 0 && !loading">
+                <div class="p-12 text-center text-agl-muted">
+                    <div class="text-5xl mb-4">📭</div>
+                    <p x-text="t('no_scans')"></p>
+                    <a href="/" class="btn-primary inline-block mt-4" x-text="t('start_scan')"></a>
+                </div>
+            </template>
+
+            <!-- Scan Rows -->
+            <template x-for="(s, idx) in scans" :key="s.id">
+                <a :href="s.status === 'completed' ? `/scan/${s.id}/results` : s.status === 'running' ? `/scan/${s.id}/progress` : '#'"
+                   class="grid grid-cols-12 gap-2 px-6 py-4 border-b border-agl-border/50 hover:bg-agl-accent/5 transition-colors cursor-pointer items-center">
+                    <div class="col-span-1 text-sm text-agl-muted" x-text="total - idx"></div>
+                    <div class="col-span-4 text-sm font-medium truncate font-mono" dir="ltr" x-text="s.target_name"></div>
+                    <div class="col-span-1">
+                        <span class="text-xs px-2 py-0.5 rounded bg-agl-accent/20 text-agl-accent font-bold" x-text="s.scan_mode"></span>
+                    </div>
+                    <div class="col-span-1">
+                        <span class="text-xs px-2 py-0.5 rounded font-bold"
+                              :class="{
+                                  'bg-sev-low/20 text-sev-low': s.status === 'completed',
+                                  'bg-agl-accent/20 text-agl-accent': s.status === 'running',
+                                  'bg-sev-critical/20 text-sev-critical': s.status === 'failed',
+                                  'bg-agl-muted/20 text-agl-muted': s.status === 'pending',
+                              }"
+                              x-text="s.status"></span>
+                    </div>
+                    <div class="col-span-3 flex items-center gap-2">
+                        <span class="text-xs text-sev-critical font-bold" x-show="s.critical_count" x-text="'🔴' + s.critical_count"></span>
+                        <span class="text-xs text-sev-high font-bold" x-show="s.high_count" x-text="'🟠' + s.high_count"></span>
+                        <span class="text-xs text-sev-medium font-bold" x-show="s.medium_count" x-text="'🟡' + s.medium_count"></span>
+                        <span class="text-xs text-sev-low font-bold" x-show="s.low_count" x-text="'🟢' + s.low_count"></span>
+                        <span class="text-xs text-agl-muted" x-show="!s.critical_count && !s.high_count && !s.medium_count && !s.low_count">—</span>
+                    </div>
+                    <div class="col-span-1 text-xs text-agl-muted" x-text="s.duration_sec ? s.duration_sec + 's' : '—'"></div>
+                    <div class="col-span-1 text-xs text-agl-muted" x-text="formatDate(s.created_at)"></div>
+                </a>
+            </template>
+
+            <!-- Loading -->
+            <template x-if="loading">
+                <div class="p-8 text-center">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-2 border-agl-accent border-t-transparent"></div>
+                </div>
+            </template>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function historyPage() {
+    return {
+        scans: [],
+        stats: {},
+        total: 0,
+        loading: true,
+
+        async loadHistory() {
+            const token = localStorage.getItem('agl_token');
+            if (!token) { window.location.href = '/login'; return; }
+
+            try {
+                // Fetch scans and stats in parallel
+                const [scansRes, statsRes] = await Promise.all([
+                    fetch('/api/v1/scans?limit=50', { headers: { 'Authorization': `Bearer ${token}` } }),
+                    fetch('/api/v1/stats', { headers: { 'Authorization': `Bearer ${token}` } }),
+                ]);
+
+                if (scansRes.ok) {
+                    const data = await scansRes.json();
+                    this.scans = data.scans || [];
+                    this.total = data.total || 0;
+                }
+
+                if (statsRes.ok) {
+                    this.stats = await statsRes.json();
+                }
+
+            } catch (e) {
+                console.error(e);
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        formatDate(iso) {
+            if (!iso) return '—';
+            const d = new Date(iso);
+            const now = new Date();
+            const diff = (now - d) / (1000 * 60 * 60);
+            if (diff < 1) return this.lang === 'ar' ? 'الآن' : 'Now';
+            if (diff < 24) return Math.floor(diff) + (this.lang === 'ar' ? ' ساعة' : 'h');
+            if (diff < 48) return this.lang === 'ar' ? 'أمس' : 'Yesterday';
+            return d.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' });
+        },
+
+        t(key) {
+            return this.$root.__x?.$data?.t?.(key) || key;
+        }
+    };
+}
+</script>
+{% endblock %}

@@ -1,0 +1,71 @@
+{
+  "audit_name": "project — AGL Full-Power Dynamic Audit",
+  "timestamp": "2026-03-19T05:13:01.122742",
+  "target": "project",
+  "project_type": "bare",
+  "contracts_scanned": 5,
+  "audit_time_seconds": 0.0,
+  "engines_used": [],
+  "results": {
+    "deep_scan": {},
+    "z3_symbolic": [],
+    "state_extraction": {},
+    "detectors": [],
+    "exploit_reasoning": {},
+    "heikal_math": {},
+    "unified_findings": [],
+    "dedup_stats": {
+      "deep_scan_findings": 0,
+      "z3_standalone_raw": 0,
+      "z3_standalone_kept": 0,
+      "z3_duplicates_removed": 0,
+      "detectors_standalone_raw": 0,
+      "detectors_standalone_kept": 0,
+      "detectors_duplicates_removed": 0,
+      "exploit_reasoning_findings": 0,
+      "exploit_reasoning_duplicates_removed": 0,
+      "heikal_findings": 0,
+      "heikal_duplicates_removed": 0,
+      "state_extraction_findings": 0,
+      "safe_function_suppressed": 0,
+      "total_unified": 0
+    },
+    "severity_unified": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0,
+      "INFO": 0
+    },
+    "poc_generation": {},
+    "foundry_results": null
+  },
+  "total_findings": 0,
+  "severity_total": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "INFO": 0
+  },
+  "dedup_stats": {
+    "deep_scan_findings": 0,
+    "z3_standalone_raw": 0,
+    "z3_standalone_kept": 0,
+    "z3_duplicates_removed": 0,
+    "detectors_standalone_raw": 0,
+    "detectors_standalone_kept": 0,
+    "detectors_duplicates_removed": 0,
+    "exploit_reasoning_findings": 0,
+    "exploit_reasoning_duplicates_removed": 0,
+    "heikal_findings": 0,
+    "heikal_duplicates_removed": 0,
+    "state_extraction_findings": 0,
+    "safe_function_suppressed": 0,
+    "total_unified": 0
+  },
+  "heikal_analyses": 0,
+  "poc_generated": 0,
+  "foundry_passed": 0,
+  "foundry_failed": 0
+}

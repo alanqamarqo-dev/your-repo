@@ -39,29 +39,36 @@ except ImportError:
 #  OpTypes that represent external calls / state writes / reads
 # ═══════════════════════════════════════════════════════════
 
+# NOTE: نستخدم string values بدلاً من enum objects لتجنب
+# مشكلة dual-module identity (detectors.OpType != agl_security_tool.detectors.OpType)
+
+def _safe_op_value(op_type) -> str:
+    """استخراج القيمة النصية من OpType بشكل آمن"""
+    return op_type.value if hasattr(op_type, 'value') else str(op_type)
+
 _EXTERNAL_CALL_OPS = {
-    OpType.EXTERNAL_CALL,
-    OpType.EXTERNAL_CALL_ETH,
-    OpType.DELEGATECALL,
+    OpType.EXTERNAL_CALL.value,
+    OpType.EXTERNAL_CALL_ETH.value,
+    OpType.DELEGATECALL.value,
 }
 
 _ETH_SENDING_OPS = {
-    OpType.EXTERNAL_CALL_ETH,
+    OpType.EXTERNAL_CALL_ETH.value,
 }
 
 _STATE_WRITE_OPS = {
-    OpType.STATE_WRITE,
+    OpType.STATE_WRITE.value,
 }
 
 _STATE_READ_OPS = {
-    OpType.STATE_READ,
-    OpType.MAPPING_ACCESS,
+    OpType.STATE_READ.value,
+    OpType.MAPPING_ACCESS.value,
 }
 
 _CHECK_OPS = {
-    OpType.REQUIRE,
-    OpType.ASSERT,
-    OpType.REVERT,
+    OpType.REQUIRE.value,
+    OpType.ASSERT.value,
+    OpType.REVERT.value,
 }
 
 
@@ -162,9 +169,10 @@ class ExecutionSemanticsExtractor:
         """
         تحويل Operation واحد من الـ parser إلى ExecutionStep.
         """
-        is_ext_call = op.op_type in _EXTERNAL_CALL_OPS
-        is_write = op.op_type in _STATE_WRITE_OPS
-        is_read = op.op_type in _STATE_READ_OPS
+        op_val = _safe_op_value(op.op_type)
+        is_ext_call = op_val in _EXTERNAL_CALL_OPS
+        is_write = op_val in _STATE_WRITE_OPS
+        is_read = op_val in _STATE_READ_OPS
 
         return ExecutionStep(
             step_index=idx,
@@ -264,7 +272,7 @@ class ExecutionSemanticsExtractor:
                         write_line=read.line,
                         sends_eth=False,
                         violation_type="read_only_reentrancy_surface",
-                        severity="medium",
+                        severity="MEDIUM",
                     ))
 
         return violations
@@ -389,7 +397,7 @@ class ExecutionSemanticsExtractor:
                             "call_target": violation.call_target,
                             "call_line": violation.call_line,
                             "write_line": violation.write_line,
-                            "severity": "high",
+                            "severity": "HIGH",
                             "description": (
                                 f"During external call in `{tl.function_name}` "
                                 f"(line {violation.call_line}), attacker can re-enter "

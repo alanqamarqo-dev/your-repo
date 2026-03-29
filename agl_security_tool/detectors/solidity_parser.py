@@ -22,6 +22,11 @@ from . import (
 )
 
 
+# ═══ Reusable sub-pattern: matches a call target including type casts ═══
+# Matches: token, msg.sender, balances[addr], IERC20(asset), address(payable(x))
+_RE_CALL_TARGET = r'(?:\w[\w.\[\]]*(?:\([^()]*(?:\([^()]*\)[^()]*)*\))?)(?:\.(?:\w[\w.\[\]]*(?:\([^()]*(?:\([^()]*\)[^()]*)*\))?))*'
+
+
 class SoliditySemanticParser:
     """
     محلل دلالي لـ Solidity — يستخرج البنية والعمليات المرتبة.
@@ -47,8 +52,8 @@ class SoliditySemanticParser:
 
     # متغيرات الحالة
     _RE_STATE_VAR = re.compile(
-        r'^\s*(mapping\s*\([^)]+\)|address(?:\s+payable)?|u?int\d*|bytes\d*|string|bool'
-        r'|I\w+|IERC\w+|\w+(?:\[\])?)'      # النوع
+        r'^\s*(mapping\s*\([^)]+\)|address(?:\s+payable)?|u?int\d*(?:\[\d*\])?|bytes\d*(?:\[\d*\])?|string|bool'
+        r'|I\w+|IERC\w+|\w+(?:\[\d*\])?)'      # النوع (يشمل مصفوفات ثابتة وديناميكية)
         r'(?:\s+(public|private|internal|external))?'
         r'(?:\s+(constant|immutable))?'
         r'\s+(\w+)',                            # الاسم
@@ -84,26 +89,26 @@ class SoliditySemanticParser:
 
     # ═══ عمليات داخل الدوال ═══
 
-    # External calls
+    # External calls — support Interface(addr).method() casts
     _RE_EXT_CALL_VALUE = re.compile(
-        r'(\w[\w.\[\]]*)\s*\.\s*call\s*\{[^}]*value\s*:',
+        r'(' + _RE_CALL_TARGET + r')\s*\.\s*call\s*\{[^}]*value\s*:',
     )
     _RE_EXT_CALL_PLAIN = re.compile(
-        r'(\w[\w.\[\]]*)\s*\.\s*(call|send)\s*[\({]',
+        r'(' + _RE_CALL_TARGET + r')\s*\.\s*(call|send)\s*[\({]',
     )
     _RE_TRANSFER = re.compile(
-        r'(\w[\w.\[\]]*)\s*\.\s*transfer\s*\(',
+        r'(' + _RE_CALL_TARGET + r')\s*\.\s*transfer\s*\(',
     )
     _RE_DELEGATECALL = re.compile(
-        r'(\w[\w.\[\]]*)\s*\.\s*delegatecall\s*[\({]',
+        r'(' + _RE_CALL_TARGET + r')\s*\.\s*delegatecall\s*[\({]',
     )
     _RE_STATICCALL = re.compile(
-        r'(\w[\w.\[\]]*)\s*\.\s*staticcall\s*[\({]',
+        r'(' + _RE_CALL_TARGET + r')\s*\.\s*staticcall\s*[\({]',
     )
 
-    # ERC20 calls
+    # ERC20 calls — support IERC20(addr).transfer() casts
     _RE_ERC20_TRANSFER = re.compile(
-        r'(\w[\w.\[\]]*)\s*\.\s*(transfer|transferFrom|safeTransfer|safeTransferFrom'
+        r'(' + _RE_CALL_TARGET + r')\s*\.\s*(transfer|transferFrom|safeTransfer|safeTransferFrom'
         r'|approve|safeApprove)\s*\(',
     )
 
@@ -248,7 +253,84 @@ class SoliditySemanticParser:
 
             contracts.append(contract)
 
+        # ═══ Post-processing: resolve inheritance ═══
+        self._resolve_inheritance(contracts)
+
         return contracts
+
+    # ═══════════════════════════════════════════════════
+    #  حل الوراثة — Inheritance Resolution
+    # ═══════════════════════════════════════════════════
+
+    def _resolve_inheritance(self, contracts: List[ParsedContract]):
+        """
+        دمج متغيرات الحالة الموروثة في العقود الأبناء
+        وإعادة تحليل الدوال مع المتغيرات المدمجة.
+
+        مثال: Comet is CometStorage → يجب أن تُدمج state_vars من
+        CometStorage في Comet ليتعرف المحلل على الكتابة فيها.
+        """
+        if not contracts:
+            return
+
+        # Build name → contract lookup
+        by_name: Dict[str, ParsedContract] = {c.name: c for c in contracts}
+
+        # Topological resolution: resolve parents first
+        resolved: Set[str] = set()
+
+        def resolve(name: str, visiting: Set[str]):
+            if name in resolved or name not in by_name:
+                return
+            if name in visiting:
+                return  # circular inheritance — skip
+            visiting.add(name)
+
+            contract = by_name[name]
+            # Resolve parents first
+            for parent_name in contract.inherits:
+                resolve(parent_name, visiting)
+
+            # Merge parent state vars (skip if parent not in same file)
+            inherited_vars: Dict[str, StateVar] = {}
+            for parent_name in contract.inherits:
+                parent = by_name.get(parent_name)
+                if parent:
+                    for var_name, var in parent.state_vars.items():
+                        if var_name not in inherited_vars and var_name not in contract.state_vars:
+                            inherited_vars[var_name] = var
+
+            if inherited_vars:
+                # Merge inherited vars into contract's state_vars
+                merged = {}
+                merged.update(inherited_vars)
+                merged.update(contract.state_vars)  # own vars override
+                contract.state_vars = merged
+
+                # Re-analyze function bodies with the full state var set
+                all_var_names = set(merged.keys())
+                for func in contract.functions.values():
+                    if func.raw_body:
+                        # Reset computed fields
+                        func.operations = []
+                        func.state_reads = []
+                        func.state_writes = []
+                        func.external_calls = []
+                        func.require_checks = []
+                        func.internal_calls = []
+                        func.modifies_state = False
+                        func.sends_eth = False
+                        func.has_selfdestruct = False
+                        func.has_delegatecall = False
+                        func.has_loops = False
+                        # Re-analyze with full state var set
+                        self._analyze_function_body(func, func.raw_body, all_var_names)
+
+            resolved.add(name)
+            visiting.discard(name)
+
+        for name in list(by_name.keys()):
+            resolve(name, set())
 
     # ═══════════════════════════════════════════════════
     #  استخراج متغيرات الحالة
@@ -288,6 +370,55 @@ class SoliditySemanticParser:
                 is_array="[]" in var_type,
                 line=line,
             )
+
+        # Also scan top-level lines AFTER functions for state vars (e.g. __gap)
+        if first_func:
+            depth = 0
+            paren_depth = 0
+            after_section_lines = []
+            in_func = False
+            for line_text in body[first_func:].split('\n'):
+                stripped = line_text.strip()
+                # Track paren depth (for multi-line function params)
+                paren_depth += stripped.count('(') - stripped.count(')')
+                # Track brace depth to skip function/modifier bodies
+                depth += stripped.count('{') - stripped.count('}')
+                if depth == 0 and paren_depth <= 0 and not in_func:
+                    # Skip function/modifier/event/constructor declaration lines
+                    if not re.match(r'\s*(?:function|modifier|event|constructor|receive|fallback|using|import|error)\s', line_text):
+                        # Only include lines that end with ;  (actual declarations)
+                        if stripped.endswith(';'):
+                            after_section_lines.append(line_text)
+                if depth > 0:
+                    in_func = True
+                elif depth <= 0:
+                    in_func = False
+                    depth = 0
+                if paren_depth < 0:
+                    paren_depth = 0
+            after_text = '\n'.join(after_section_lines)
+            for match in self._RE_STATE_VAR.finditer(after_text):
+                var_type = match.group(1).strip()
+                # Skip if the matched "type" is actually a function keyword
+                if var_type in ('function', 'modifier', 'event', 'constructor'):
+                    continue
+                visibility = match.group(2) or "internal"
+                qualifier = match.group(3) or ""
+                var_name = match.group(4)
+                if var_name in ('function', 'event', 'modifier', 'constructor', 'returns'):
+                    continue
+                if var_name in state_vars:
+                    continue
+                state_vars[var_name] = StateVar(
+                    name=var_name,
+                    var_type=var_type,
+                    visibility=visibility,
+                    is_constant="constant" in qualifier,
+                    is_immutable="immutable" in qualifier,
+                    is_mapping=var_type.startswith("mapping"),
+                    is_array="[]" in var_type,
+                    line=0,
+                )
 
         return state_vars
 
@@ -358,7 +489,12 @@ class SoliditySemanticParser:
                 func_name, params_raw, qualifiers, func_body, raw_func_body,
                 line_start, line_end, state_var_names
             )
-            functions[func_name] = func
+            # Handle function overloading: use signature key if name already exists
+            key = func_name
+            if func_name in functions:
+                param_types = ",".join(p.get("type", "") for p in func.parameters)
+                key = f"{func_name}({param_types})"
+            functions[key] = func
 
         # ═══ Constructor ═══
         for match in self._RE_CONSTRUCTOR.finditer(body):
@@ -509,6 +645,7 @@ class SoliditySemanticParser:
 
         operations = []
         in_loop_depth = 0
+        in_condition_depth = 0
 
         # تقسيم الجسم إلى أسطر/عبارات
         statements = self._split_statements(body)
@@ -519,6 +656,7 @@ class SoliditySemanticParser:
                 continue
 
             in_loop = in_loop_depth > 0
+            in_condition = in_condition_depth > 0
 
             # ═══ Loops ═══
             if self._RE_FOR.match(stripped) or self._RE_WHILE.match(stripped):
@@ -532,6 +670,14 @@ class SoliditySemanticParser:
                 if in_loop_depth == 0:
                     operations.append(Operation(OpType.LOOP_END, stmt_line))
                 continue
+
+            # ═══ Conditionals (if/else) ═══
+            if stripped.startswith('if') and '(' in stripped:
+                in_condition_depth += 1
+            elif stripped.startswith('} else') or stripped.startswith('else'):
+                pass  # stay in condition
+            elif in_condition_depth > 0 and stripped == '}':
+                in_condition_depth -= 1
 
             # ═══ Assembly ═══
             if self._RE_ASSEMBLY.match(stripped):
@@ -550,20 +696,20 @@ class SoliditySemanticParser:
                 condition = req_match.group(1).strip()
                 operations.append(Operation(
                     OpType.REQUIRE, stmt_line, target=condition,
-                    raw_text=stripped, in_loop=in_loop
+                    raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                 ))
                 func.require_checks.append(condition)
                 continue
 
             if self._RE_ASSERT.search(stripped):
-                operations.append(Operation(OpType.ASSERT, stmt_line, raw_text=stripped, in_loop=in_loop))
+                operations.append(Operation(OpType.ASSERT, stmt_line, raw_text=stripped, in_loop=in_loop, in_condition=in_condition))
                 continue
 
             if_rev = self._RE_IF_REVERT.search(stripped)
             if if_rev:
                 operations.append(Operation(
                     OpType.REQUIRE, stmt_line, target=if_rev.group(1).strip(),
-                    raw_text=stripped, in_loop=in_loop
+                    raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                 ))
                 continue
 
@@ -576,7 +722,7 @@ class SoliditySemanticParser:
             if emit_match:
                 operations.append(Operation(
                     OpType.EMIT, stmt_line, target=emit_match.group(1),
-                    raw_text=stripped, in_loop=in_loop
+                    raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                 ))
                 continue
 
@@ -593,7 +739,7 @@ class SoliditySemanticParser:
                 op = Operation(
                     OpType.EXTERNAL_CALL_ETH, stmt_line,
                     target=ext_val.group(1), sends_eth=True,
-                    raw_text=stripped, in_loop=in_loop
+                    raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                 )
                 operations.append(op)
                 func.external_calls.append(op)
@@ -602,7 +748,7 @@ class SoliditySemanticParser:
                 if '(bool' not in stripped and 'success' not in stripped.split('=')[0] if '=' in stripped else True:
                     pass  # will be caught by unchecked call detector
                 # Check assignment (return value capture)
-                self._check_state_assignment(stripped, stmt_line, state_var_names, operations, in_loop)
+                self._check_state_assignment(stripped, stmt_line, state_var_names, operations, in_loop, in_condition)
                 continue
 
             # .transfer(...)
@@ -611,7 +757,7 @@ class SoliditySemanticParser:
                 op = Operation(
                     OpType.EXTERNAL_CALL_ETH, stmt_line,
                     target=ext_transfer.group(1), sends_eth=True,
-                    raw_text=stripped, in_loop=in_loop
+                    raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                 )
                 operations.append(op)
                 func.external_calls.append(op)
@@ -624,7 +770,7 @@ class SoliditySemanticParser:
                 op = Operation(
                     OpType.DELEGATECALL, stmt_line,
                     target=deleg.group(1),
-                    raw_text=stripped, in_loop=in_loop
+                    raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                 )
                 operations.append(op)
                 func.external_calls.append(op)
@@ -638,17 +784,17 @@ class SoliditySemanticParser:
                     OpType.EXTERNAL_CALL, stmt_line,
                     target=ext_plain.group(1),
                     details=ext_plain.group(2),
-                    raw_text=stripped, in_loop=in_loop
+                    raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                 )
                 operations.append(op)
                 func.external_calls.append(op)
-                self._check_state_assignment(stripped, stmt_line, state_var_names, operations, in_loop)
+                self._check_state_assignment(stripped, stmt_line, state_var_names, operations, in_loop, in_condition)
                 continue
 
             # .staticcall
             if self._RE_STATICCALL.search(stripped):
                 operations.append(Operation(
-                    OpType.STATICCALL, stmt_line, raw_text=stripped, in_loop=in_loop
+                    OpType.STATICCALL, stmt_line, raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                 ))
                 continue
 
@@ -658,11 +804,11 @@ class SoliditySemanticParser:
                 op = Operation(
                     OpType.EXTERNAL_CALL, stmt_line,
                     target=erc.group(1), details=erc.group(2),
-                    raw_text=stripped, in_loop=in_loop
+                    raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                 )
                 operations.append(op)
                 func.external_calls.append(op)
-                self._check_state_assignment(stripped, stmt_line, state_var_names, operations, in_loop)
+                self._check_state_assignment(stripped, stmt_line, state_var_names, operations, in_loop, in_condition)
                 continue
 
             # ═══ Array push (state modification) ═══
@@ -673,7 +819,7 @@ class SoliditySemanticParser:
                     operations.append(Operation(
                         OpType.STATE_WRITE, stmt_line,
                         target=var, details="push",
-                        raw_text=stripped, in_loop=in_loop
+                        raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                     ))
                     if var not in func.state_writes:
                         func.state_writes.append(var)
@@ -683,7 +829,7 @@ class SoliditySemanticParser:
             # ═══ abi.encodePacked ═══
             if self._RE_ENCODE_PACKED.search(stripped):
                 operations.append(Operation(
-                    OpType.ENCODE_PACKED, stmt_line, raw_text=stripped, in_loop=in_loop
+                    OpType.ENCODE_PACKED, stmt_line, raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                 ))
 
             # ═══ State writes and reads — assignment operations ═══
@@ -697,7 +843,7 @@ class SoliditySemanticParser:
                     operations.append(Operation(
                         OpType.STATE_WRITE, stmt_line,
                         target=base_var, details=full_var,
-                        raw_text=stripped, in_loop=in_loop
+                        raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                     ))
                     if base_var not in func.state_writes:
                         func.state_writes.append(base_var)
@@ -705,11 +851,11 @@ class SoliditySemanticParser:
 
                     # Also check the RHS for state reads
                     rhs = stripped.split('=', 1)[1] if '=' in stripped else ""
-                    self._extract_state_reads(rhs, state_var_names, func, operations, stmt_line, in_loop)
+                    self._extract_state_reads(rhs, state_var_names, func, operations, stmt_line, in_loop, in_condition)
                     continue
 
             # ═══ State reads (non-assignment) ═══
-            self._extract_state_reads(stripped, state_var_names, func, operations, stmt_line, in_loop)
+            self._extract_state_reads(stripped, state_var_names, func, operations, stmt_line, in_loop, in_condition)
 
             # ═══ Internal calls ═══
             for ic_match in self._RE_INTERNAL_CALL.finditer(stripped):
@@ -724,7 +870,7 @@ class SoliditySemanticParser:
                         func.internal_calls.append(callee)
                     operations.append(Operation(
                         OpType.INTERNAL_CALL, stmt_line,
-                        target=callee, raw_text=stripped, in_loop=in_loop
+                        target=callee, raw_text=stripped, in_loop=in_loop, in_condition=in_condition
                     ))
 
         # ═══ حفظ العمليات ═══
@@ -750,7 +896,8 @@ class SoliditySemanticParser:
 
     def _check_state_assignment(self, stmt: str, line: int,
                                  state_var_names: Set[str],
-                                 operations: List[Operation], in_loop: bool):
+                                 operations: List[Operation], in_loop: bool,
+                                 in_condition: bool = False):
         """فحص ما إذا كان السطر يتضمن تعيين لمتغير حالة (بجانب العملية الرئيسية)."""
         # e.g. (bool success, ) = target.call{...}(...)
         # The LHS might assign to a state var
@@ -760,12 +907,13 @@ class SoliditySemanticParser:
                 if var in lhs and '(' not in lhs.split(var)[0][-5:]:
                     operations.append(Operation(
                         OpType.STATE_WRITE, line,
-                        target=var, raw_text=stmt, in_loop=in_loop
+                        target=var, raw_text=stmt, in_loop=in_loop, in_condition=in_condition
                     ))
 
     def _extract_state_reads(self, text: str, state_var_names: Set[str],
                               func: ParsedFunction, operations: List[Operation],
-                              line: int, in_loop: bool):
+                              line: int, in_loop: bool,
+                              in_condition: bool = False):
         """استخراج قراءات متغيرات الحالة من نص."""
         for var in state_var_names:
             # تأكد أنه كلمة كاملة (ليس جزء من كلمة أخرى)
@@ -775,7 +923,7 @@ class SoliditySemanticParser:
                     func.state_reads.append(var)
                 operations.append(Operation(
                     OpType.STATE_READ, line,
-                    target=var, raw_text=text, in_loop=in_loop
+                    target=var, raw_text=text, in_loop=in_loop, in_condition=in_condition
                 ))
 
     # ═══════════════════════════════════════════════════

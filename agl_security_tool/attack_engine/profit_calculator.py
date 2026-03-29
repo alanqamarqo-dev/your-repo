@@ -26,20 +26,21 @@ from .models import (
     SimulationConfig,
 )
 from .economic_engine import EconomicEngine
+from ..heikal_math import HeikalTunnelingScorer
 
 
-WEI_PER_ETH = 10 ** 18
+WEI_PER_ETH = 10**18
 
 # حدود التصنيف
 SEVERITY_THRESHOLDS = {
-    "critical": 100_000,    # > $100,000
-    "high": 10_000,         # > $10,000
-    "medium": 1_000,        # > $1,000
-    "low": 0,               # > $0
+    "critical": 100_000,  # > $100,000
+    "high": 10_000,  # > $10,000
+    "medium": 1_000,  # > $1,000
+    "low": 0,  # > $0
 }
 
 CONFIDENCE_MODIFIERS = {
-    "reentrancy": 0.95,          # reentrancy مؤكد تقريباً
+    "reentrancy": 0.95,  # reentrancy مؤكد تقريباً
     "price_manipulation": 0.70,  # يعتمد على السيولة
     "flash_loan": 0.80,
     "liquidation": 0.85,
@@ -64,6 +65,7 @@ class ProfitCalculator:
     def __init__(self, config: Optional[SimulationConfig] = None):
         self.config = config or SimulationConfig()
         self.economic = EconomicEngine(config)
+        self.tunneling = HeikalTunnelingScorer()
 
     # ═══════════════════════════════════════════════════════
     #  Main Calculation
@@ -99,9 +101,7 @@ class ProfitCalculator:
         result.profit_by_token = profit_by_token
 
         # === 2. تحويل إلى USD ===
-        result.profit_usd = self._compute_total_usd(
-            profit_by_token, final_state
-        )
+        result.profit_usd = self._compute_total_usd(profit_by_token, final_state)
 
         # === 3. حساب تكلفة الغاز ===
         total_gas = sum(s.gas_used for s in steps)
@@ -116,10 +116,19 @@ class ProfitCalculator:
 
         # === 5. الربح الصافي ===
         result.net_profit_usd = (
-            result.profit_usd
-            - result.gas_cost_usd
-            - result.flash_loan_fees_usd
+            result.profit_usd - result.gas_cost_usd - result.flash_loan_fees_usd
         )
+
+        # Sanity cap: Z3 symbolic values can produce astronomically large
+        # BitVec(256) numbers that, when converted to USD, become unrealistic
+        # (e.g., 10^64 USD).  Cap at a reasonable DeFi upper bound.
+        _MAX_REALISTIC_PROFIT_USD = 500_000_000.0  # $500M — largest-ever DeFi hack
+        if abs(result.profit_usd) > _MAX_REALISTIC_PROFIT_USD:
+            result.profit_usd = min(result.profit_usd, _MAX_REALISTIC_PROFIT_USD)
+            result.net_profit_usd = min(
+                result.net_profit_usd, _MAX_REALISTIC_PROFIT_USD
+            )
+            result.is_symbolic_estimate = True  # flag for downstream consumers
 
         # === 6. هل مربح؟ ===
         result.is_profitable = result.net_profit_usd > 0
@@ -253,25 +262,35 @@ class ProfitCalculator:
         is_profitable: bool,
         steps: List[StepResult],
     ) -> float:
-        """حساب مستوى الثقة"""
-        base = CONFIDENCE_MODIFIERS.get(
-            attack_type, CONFIDENCE_MODIFIERS["default"]
-        )
+        """
+        حساب مستوى الثقة باستخدام نموذج Heikal Quantum Tunneling.
 
-        # إذا كل الخطوات نجحت → ثقة أعلى
+        بدلاً من القيم الثابتة، نستخدم فيزياء النفق الكمي:
+        - كل حاجز أمني (require, modifier, guard) = حاجز كمي
+        - طاقة الهجوم تحدد احتمال الاختراق
+        - تصحيح Heikal يضيف حساسية للقياس ξ·ℓ_p²/L²
+        """
         all_success = all(s.success for s in steps)
-        if all_success:
-            base = min(base + 0.05, 1.0)
 
-        # إذا مربح → ثقة أعلى
-        if is_profitable:
-            base = min(base + 0.05, 1.0)
-
-        # reentrancy مع خطوات ناجحة → ثقة عالية جداً
-        if attack_type == "reentrancy" and all_success and is_profitable:
-            base = max(base, 0.95)
-
-        return round(base, 3)
+        try:
+            # === Heikal Tunneling Model ===
+            barriers = HeikalTunnelingScorer.extract_barriers_from_steps(steps)
+            confidence = self.tunneling.score_attack_type(
+                attack_type, barriers, len(steps), is_profitable, all_success
+            )
+            return confidence
+        except Exception:
+            # === Fallback: النموذج الكلاسيكي ===
+            base = CONFIDENCE_MODIFIERS.get(
+                attack_type, CONFIDENCE_MODIFIERS["default"]
+            )
+            if all_success:
+                base = min(base + 0.05, 1.0)
+            if is_profitable:
+                base = min(base + 0.05, 1.0)
+            if attack_type == "reentrancy" and all_success and is_profitable:
+                base = max(base, 0.95)
+            return round(base, 3)
 
     # ═══════════════════════════════════════════════════════
     #  Description Generation

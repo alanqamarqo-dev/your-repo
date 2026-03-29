@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" x-data="aglApp()" :dir="lang === 'ar' ? 'rtl' : 'ltr'" :lang="lang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AGL Security{% endblock %}</title>
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'agl-bg': '#0a0a1a',
+                        'agl-card': '#111127',
+                        'agl-border': '#1e1e3a',
+                        'agl-accent': '#6366f1',
+                        'agl-accent2': '#8b5cf6',
+                        'agl-glow': '#818cf8',
+                        'agl-text': '#e2e8f0',
+                        'agl-muted': '#94a3b8',
+                        'sev-critical': '#ef4444',
+                        'sev-high': '#f97316',
+                        'sev-medium': '#eab308',
+                        'sev-low': '#22c55e',
+                    },
+                    fontFamily: {
+                        'ar': ['Tajawal', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'glow-pulse': 'glow-pulse 2s ease-in-out infinite alternate',
+                        'slide-up': 'slide-up 0.5s ease-out',
+                        'fade-in': 'fade-in 0.3s ease-out',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+
+    <!-- Google Fonts (Arabic + Mono) -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+
+    {% block head %}{% endblock %}
+</head>
+
+<body class="bg-agl-bg text-agl-text font-ar min-h-screen antialiased">
+
+    <!-- ═══ Navigation Bar ═══ -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-agl-bg/80 backdrop-blur-xl border-b border-agl-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-agl-accent to-agl-accent2 flex items-center justify-center shadow-lg shadow-agl-accent/20 group-hover:shadow-agl-accent/40 transition-shadow">
+                        <span class="text-white text-lg font-bold">🛡️</span>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-agl-accent to-agl-accent2 bg-clip-text text-transparent">
+                        AGL Security
+                    </span>
+                </a>
+
+                <!-- Nav Links -->
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="/" class="nav-link" x-text="t('home')"></a>
+                    <a href="/dashboard" class="nav-link" x-text="t('dashboard')"></a>
+                    <a href="/api/docs" target="_blank" class="nav-link">API Docs</a>
+                </div>
+
+                <!-- Right side -->
+                <div class="flex items-center gap-3">
+                    <!-- Language Toggle -->
+                    <button @click="toggleLang()" class="px-3 py-1.5 rounded-lg bg-agl-card border border-agl-border text-sm hover:border-agl-accent transition-colors">
+                        <span x-show="lang === 'ar'">EN</span>
+                        <span x-show="lang === 'en'">عربي</span>
+                    </button>
+
+                    <!-- Auth buttons -->
+                    <template x-if="!token">
+                        <a href="/login" class="btn-primary text-sm" x-text="t('login')"></a>
+                    </template>
+                    <template x-if="token">
+                        <div class="flex items-center gap-3">
+                            <span class="text-sm text-agl-muted" x-text="username"></span>
+                            <button @click="logout()" class="text-sm text-red-400 hover:text-red-300">
+                                <span x-text="t('logout')"></span>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══ Main Content ═══ -->
+    <main class="pt-20 min-h-screen">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ═══ Footer ═══ -->
+    <footer class="border-t border-agl-border py-8 mt-20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-agl-muted text-sm">
+                AGL Security Tool v1.1.0 — 
+                <span x-text="t('footer_text')"></span>
+            </p>
+            <div class="flex justify-center gap-6 mt-4">
+                <a href="/api/docs" class="text-agl-muted hover:text-agl-accent text-sm transition-colors">API Documentation</a>
+                <a href="https://github.com" class="text-agl-muted hover:text-agl-accent text-sm transition-colors">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══ Global Alpine.js App ═══ -->
+    <script>
+        function aglApp() {
+            return {
+                lang: localStorage.getItem('agl_lang') || 'ar',
+                token: localStorage.getItem('agl_token') || '',
+                username: localStorage.getItem('agl_username') || '',
+
+                translations: {
+                    ar: {
+                        home: 'الرئيسية',
+                        dashboard: 'لوحة التحكم',
+                        login: 'تسجيل الدخول',
+                        logout: 'خروج',
+                        register: 'تسجيل حساب',
+                        scan: 'فحص',
+                        quick_scan: 'فحص سريع',
+                        deep_scan: 'فحص عميق',
+                        full_scan: 'فحص كامل',
+                        results: 'النتائج',
+                        findings: 'الثغرات',
+                        attacks: 'الهجمات',
+                        start_scan: 'ابدأ الفحص',
+                        upload_file: 'اسحب ملف .sol هنا أو اضغط للرفع',
+                        or_url: 'أو أدخل رابط GitHub',
+                        scan_mode: 'نوع الفحص',
+                        scanning: 'جاري الفحص...',
+                        completed: 'اكتمل',
+                        failed: 'فشل',
+                        pending: 'في الانتظار',
+                        security_score: 'درجة الأمان',
+                        total_findings: 'إجمالي الثغرات',
+                        critical: 'حرجة',
+                        high: 'عالية',
+                        medium: 'متوسطة',
+                        low: 'منخفضة',
+                        export_json: 'تصدير JSON',
+                        export_md: 'تصدير Markdown',
+                        history: 'تاريخ الفحوصات',
+                        no_scans: 'لا توجد فحوصات بعد',
+                        email: 'البريد الإلكتروني',
+                        password: 'كلمة المرور',
+                        username_label: 'اسم المستخدم',
+                        detectors: 'كاشف دلالي',
+                        z3_proofs: 'إثباتات Z3',
+                        heikal_math: 'خوارزميات هيكل',
+                        hero_title: 'محلل أمان العقود الذكية الأذكى',
+                        hero_subtitle: '22 كاشف دلالي • إثباتات Z3 رياضية • محاكاة هجمات اقتصادية • خوارزميات هيكل',
+                        footer_text: 'أداة تحليل أمان العقود الذكية',
+                        profitable: 'مربح',
+                        not_profitable: 'غير مربح',
+                        function_name: 'الدالة',
+                        description: 'الوصف',
+                        recommendation: 'التوصية',
+                        proof: 'الإثبات',
+                        new_scan: 'فحص جديد',
+                        your_stats: 'إحصائياتك',
+                        total_scans: 'إجمالي الفحوصات',
+                        projects: 'مشاريع',
+                        accuracy: 'الدقة',
+                        back_to_dashboard: 'العودة للوحة التحكم',
+                    },
+                    en: {
+                        home: 'Home',
+                        dashboard: 'Dashboard',
+                        login: 'Login',
+                        logout: 'Logout',
+                        register: 'Register',
+                        scan: 'Scan',
+                        quick_scan: 'Quick Scan',
+                        deep_scan: 'Deep Scan',
+                        full_scan: 'Full Scan',
+                        results: 'Results',
+                        findings: 'Findings',
+                        attacks: 'Attacks',
+                        start_scan: 'Start Scan',
+                        upload_file: 'Drag .sol file here or click to upload',
+                        or_url: 'Or enter GitHub URL',
+                        scan_mode: 'Scan Mode',
+                        scanning: 'Scanning...',
+                        completed: 'Completed',
+                        failed: 'Failed',
+                        pending: 'Pending',
+                        security_score: 'Security Score',
+                        total_findings: 'Total Findings',
+                        critical: 'Critical',
+                        high: 'High',
+                        medium: 'Medium',
+                        low: 'Low',
+                        export_json: 'Export JSON',
+                        export_md: 'Export Markdown',
+                        history: 'Scan History',
+                        no_scans: 'No scans yet',
+                        email: 'Email',
+                        password: 'Password',
+                        username_label: 'Username',
+                        detectors: 'Semantic Detectors',
+                        z3_proofs: 'Z3 Proofs',
+                        heikal_math: 'Heikal Math',
+                        hero_title: 'The Smartest Smart Contract Security Analyzer',
+                        hero_subtitle: '22 Semantic Detectors • Z3 Mathematical Proofs • Economic Attack Simulation • Heikal Algorithms',
+                        footer_text: 'Smart Contract Security Analysis Tool',
+                        profitable: 'Profitable',
+                        not_profitable: 'Not Profitable',
+                        function_name: 'Function',
+                        description: 'Description',
+                        recommendation: 'Recommendation',
+                        proof: 'Proof',
+                        new_scan: 'New Scan',
+                        your_stats: 'Your Stats',
+                        total_scans: 'Total Scans',
+                        projects: 'Projects',
+                        accuracy: 'Accuracy',
+                        back_to_dashboard: 'Back to Dashboard',
+                    }
+                },
+
+                t(key) {
+                    return this.translations[this.lang]?.[key] || key;
+                },
+
+                toggleLang() {
+                    this.lang = this.lang === 'ar' ? 'en' : 'ar';
+                    localStorage.setItem('agl_lang', this.lang);
+                },
+
+                logout() {
+                    localStorage.removeItem('agl_token');
+                    localStorage.removeItem('agl_username');
+                    this.token = '';
+                    this.username = '';
+                    window.location.href = '/';
+                },
+
+                async apiCall(method, url, body = null) {
+                    const headers = {'Content-Type': 'application/json'};
+                    if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
+                    const opts = {method, headers};
+                    if (body) opts.body = JSON.stringify(body);
+                    const res = await fetch(url, opts);
+                    if (res.status === 401) {
+                        this.logout();
+                        return null;
+                    }
+                    return res;
+                }
+            };
+        }
+    </script>
+
+    <!-- Page-specific JS -->
+    <script src="/static/js/app.js"></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

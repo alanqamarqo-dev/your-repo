@@ -1,0 +1,29 @@
+{
+  "status": "COMPLETE",
+  "directory": "D:\\AGL\\agl_security_tool",
+  "files_scanned": 0,
+  "file_results": {},
+  "total_findings": 0,
+  "severity_summary": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "offensive_findings": [],
+  "all_findings_unified": [],
+  "duplicates_removed": 0,
+  "layers_used": [
+    "offensive_security_engine"
+  ],
+  "offensive_summary": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "MATHEMATICALLY_PROVEN": 0,
+    "total_files_with_issues": 0,
+    "suite_findings_count": 0
+  },
+  "scan_mode": "deep",
+  "time_seconds": 0.0
+}

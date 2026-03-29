@@ -205,7 +205,7 @@ class EconomicWeakness:
     """
     weakness_id: str
     weakness_type: WeaknessType
-    severity: str = "medium"                    # critical/high/medium/low
+    severity: str = "MEDIUM"                    # CRITICAL/HIGH/MEDIUM/LOW
     confidence: float = 0.5                     # 0.0–1.0
 
     # === الاستغلال ===

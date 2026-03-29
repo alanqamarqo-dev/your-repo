@@ -328,13 +328,9 @@ class ContractAggregator:
             if (f.get("exploit_proof") or {}).get("z3_result") == "SAT"
         )
         proofs = sum(
-            1
-            for f in findings
-            if (f.get("exploit_proof") or {}).get("exploitable")
+            1 for f in findings if (f.get("exploit_proof") or {}).get("exploitable")
         )
-        confidences = [
-            f.get("confidence", f.get("probability", 0.5)) for f in findings
-        ]
+        confidences = [f.get("confidence", f.get("probability", 0.5)) for f in findings]
         max_conf = max(confidences) if confidences else 0.0
 
         # Check if findings carry exploit_proof data at all
@@ -348,11 +344,7 @@ class ContractAggregator:
         proof_ratio = proofs / total
 
         # Z3-aware formula: center z3_ratio at 0.3 (safe < 0.3, vuln > 0.3)
-        logit = (
-            4.0 * (z3_ratio - 0.3)
-            + 2.0 * proof_ratio
-            + 2.0 * (max_conf - 0.9)
-        )
+        logit = 4.0 * (z3_ratio - 0.3) + 2.0 * proof_ratio + 2.0 * (max_conf - 0.9)
         return _sigmoid(logit)
 
     def extract_features(
@@ -395,9 +387,7 @@ class ContractAggregator:
                 if (f.get("exploit_proof") or {}).get("z3_result") == "SAT"
             )
             proofs = sum(
-                1
-                for f in findings
-                if (f.get("exploit_proof") or {}).get("exploitable")
+                1 for f in findings if (f.get("exploit_proof") or {}).get("exploitable")
             )
             result["z3_sat_ratio"] = z3_sat / total
             result["proof_ratio"] = proofs / total

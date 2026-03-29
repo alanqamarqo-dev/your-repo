@@ -162,7 +162,7 @@ class TemporalDependencyGraph:
                             ),
                             is_vuln=is_vuln,
                             vuln_type="reentrancy" if call.sends_eth else "non_eth_reentrancy",
-                            vuln_severity="critical" if call.sends_eth else "high",
+                            vuln_severity="CRITICAL" if call.sends_eth else "HIGH",
                         )
                         edges.append(edge)
 
@@ -243,7 +243,7 @@ class TemporalDependencyGraph:
                                 ),
                                 is_vuln=True,
                                 vuln_type="partial_state_reentrancy",
-                                vuln_severity="high",
+                                vuln_severity="HIGH",
                             )
                             edges.append(edge)
 
@@ -265,7 +265,7 @@ class TemporalDependencyGraph:
                                 ),
                                 is_vuln=True,
                                 vuln_type="classic_cei_violation",
-                                vuln_severity="critical" if cp.sends_eth else "high",
+                                vuln_severity="CRITICAL" if cp.sends_eth else "HIGH",
                             )
                             edges.append(edge)
 
@@ -347,7 +347,7 @@ class TemporalDependencyGraph:
                         ),
                         is_vuln=True,
                         vuln_type="cross_function_reentrancy",
-                        vuln_severity="high",
+                        vuln_severity="HIGH",
                     )
                     edges.append(edge)
 
@@ -413,7 +413,7 @@ class TemporalDependencyGraph:
                         ),
                         is_vuln=both_unguarded,
                         vuln_type="write_conflict" if both_unguarded else "",
-                        vuln_severity="medium" if both_unguarded else "",
+                        vuln_severity="MEDIUM" if both_unguarded else "",
                     )
                     edges.append(edge)
 
@@ -471,9 +471,9 @@ class TemporalDependencyGraph:
             })
 
         # Sort by severity
-        severity_order = {"critical": 0, "high": 1, "medium": 2, "low": 3}
+        severity_order = {"CRITICAL": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3}
         analysis.vulnerability_candidates.sort(
-            key=lambda v: severity_order.get(v.get("severity", "low"), 4)
+            key=lambda v: severity_order.get(v.get("severity", "LOW"), 4)
         )
 
     # ═══════════════════════════════════════════════════════════

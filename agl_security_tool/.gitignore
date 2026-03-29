@@ -1,0 +1,54 @@
+# Python virtual environments
+.venv/
+.venv_linux/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Build & packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Pytest
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Temp test files & results (prefixed with _)
+_*.py
+_*.json
+_*.log
+_*.md
+_*.sh
+_*.txt
+
+# Artifacts - model files (large)
+artifacts/Qwen2.5-3B-Instruct/
+artifacts/agl-solidity-expert/
+artifacts/holographic_llm/
+artifacts/training_master.jsonl
+
+# Foundry build artifacts (large)
+test_contracts/real_world/out/
+test_contracts/real_world/cache/
+test_contracts/vulnerable/out/
+test_contracts/vulnerable/cache/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Environment (secrets)
+.env
+
+# Misc
+dvd_err.txt
+*.log

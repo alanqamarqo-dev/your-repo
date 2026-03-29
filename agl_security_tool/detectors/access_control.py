@@ -67,6 +67,24 @@ class UnprotectedWithdraw(BaseDetector):
             if func.is_constructor:
                 continue
 
+            # User-scoped withdrawal: function checks caller's own balance
+            # e.g. require(balances[msg.sender] >= amount) — not an admin drain
+            import re as _re_ac
+            _user_scope_pat = _re_ac.compile(
+                r"(balances|_balances|balance|userBalance|deposits)"
+                r"\s*\[\s*msg\.sender\s*\]",
+            )
+            body = func.raw_body or ""
+            checks = " ".join(func.require_checks)
+            if _user_scope_pat.search(body) or _user_scope_pat.search(checks):
+                continue
+
+            # تخطي دوال تستخدم التحقق بالتوقيع — هذا تحكم بالوصول
+            # Signature-based auth: ecrecover/ECDSA.recover + require(signer == ...)
+            if _re_ac.search(r"ecrecover|ECDSA\.recover|\.recover\s*\(", body):
+                if _re_ac.search(r"require\s*\([^)]*signer\s*==", body):
+                    continue
+
             confidence = Confidence.HIGH if is_withdraw_name else Confidence.MEDIUM
 
             findings.append(self._make_finding(

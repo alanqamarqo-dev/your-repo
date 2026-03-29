@@ -30,6 +30,7 @@ import time
 from typing import Dict, List, Any, Optional, Callable, Tuple
 
 from .models import CandidateSequence, SearchStats
+from ..heikal_math import ResonanceProfitOptimizer
 
 
 class ProfitGradientEngine:
@@ -52,6 +53,7 @@ class ProfitGradientEngine:
         self.gradient_steps = gradient_steps
         self.amount_step_pct = amount_step_pct
         self.min_improvement_usd = min_improvement_usd
+        self.resonance = ResonanceProfitOptimizer()
 
     # ═══════════════════════════════════════════════════════
     #  Main Entry
@@ -136,8 +138,7 @@ class ProfitGradientEngine:
             for param_idx, param in enumerate(params):
                 if param.get("is_amount", False):
                     improved, profit = self._optimize_param_amount(
-                        best, step_idx, param_idx,
-                        simulate_fn, initial_state
+                        best, step_idx, param_idx, simulate_fn, initial_state
                     )
                     if profit > current_profit + self.min_improvement_usd:
                         best = improved
@@ -189,22 +190,16 @@ class ProfitGradientEngine:
 
         if original_int == 0:
             # Try adding msg_value
-            original_int = 10 ** 18  # 1 ETH
+            original_int = 10**18  # 1 ETH
 
         best_candidate = candidate
         best_profit = candidate.actual_profit_usd
 
-        # Variations to try
-        multipliers = [
-            1 + self.amount_step_pct,
-            1 - self.amount_step_pct,
-            2.0,
-            5.0,
-            10.0,
-            0.5,
-            0.1,
-            0.01,
-        ]
+        # Variations to try — Heikal Resonance Optimizer
+        # بدلاً من المضاعفات الثابتة، نستخدم مسح تردد الرنين:
+        # A(ω) = Σ 1/√((ω_n² - ω²)² + (γω)²)
+        # القمم تحدد المضاعفات المثلى فيزيائياً
+        multipliers = self.resonance.generate_resonance_multipliers(original_int)
 
         for mult in multipliers:
             new_value = max(1, int(original_int * mult))
@@ -212,14 +207,10 @@ class ProfitGradientEngine:
                 continue
 
             # Create modified candidate
-            modified = self._clone_with_msg_value(
-                candidate, step_idx, str(new_value)
-            )
+            modified = self._clone_with_msg_value(candidate, step_idx, str(new_value))
 
             # Simulate
-            profit = self._simulate_candidate(
-                modified, simulate_fn, initial_state
-            )
+            profit = self._simulate_candidate(modified, simulate_fn, initial_state)
 
             if profit > best_profit + self.min_improvement_usd:
                 best_candidate = modified
@@ -273,9 +264,7 @@ class ProfitGradientEngine:
                     candidate, step_idx, param_idx, cv_idx, new_val
                 )
 
-                profit = self._simulate_candidate(
-                    modified, simulate_fn, initial_state
-                )
+                profit = self._simulate_candidate(modified, simulate_fn, initial_state)
 
                 if profit > best_profit + self.min_improvement_usd:
                     best_candidate = modified
@@ -348,16 +337,15 @@ class ProfitGradientEngine:
         """Simulate a candidate and return profit"""
         try:
             result = simulate_fn(
-                candidate.steps, initial_state,
-                f"grad_{candidate.candidate_id}"
+                candidate.steps, initial_state, f"grad_{candidate.candidate_id}"
             )
-            profit = getattr(result, 'net_profit_usd', 0.0)
+            profit = getattr(result, "net_profit_usd", 0.0)
 
             candidate.simulated = True
             candidate.actual_profit_usd = profit
-            candidate.simulation_success = getattr(result, 'is_profitable', False)
-            candidate.attack_type = getattr(result, 'attack_type', '')
-            candidate.severity = getattr(result, 'severity', '')
+            candidate.simulation_success = getattr(result, "is_profitable", False)
+            candidate.attack_type = getattr(result, "attack_type", "")
+            candidate.severity = getattr(result, "severity", "")
 
             return profit
         except Exception:

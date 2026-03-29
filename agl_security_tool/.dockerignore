@@ -1,0 +1,45 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Env
+.env
+.venv/
+venv/
+
+# Artifacts
+artifacts/
+logs/
+reports/
+*.log
+
+# Test artifacts
+_broken_poc/
+_*.py
+_*.json
+_*.sh
+
+# Node
+node_modules/
+
+# Docker build cache
+.docker/
+
+# Git
+.git/
+.github/
+
+# OS
+.DS_Store
+Thumbs.db

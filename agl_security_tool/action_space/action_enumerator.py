@@ -151,9 +151,9 @@ class ActionEnumerator:
         mutation = mutation_map.get(key)
         timeline = timeline_map.get(key)
 
-        state_reads = list(effect.reads) if effect else list(func.state_reads)
-        state_writes = list(effect.writes) if effect else list(func.state_writes)
-        net_delta = dict(effect.net_delta) if effect else {}
+        state_reads = list(effect.reads) if (effect and effect.reads) else list(func.state_reads)
+        state_writes = list(effect.writes) if (effect and effect.writes) else list(func.state_writes)
+        net_delta = dict(effect.net_delta) if (effect and effect.net_delta) else {}
 
         # === External calls ===
         ext_calls = []

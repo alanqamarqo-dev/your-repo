@@ -1,0 +1,98 @@
+{
+  "total_duration": 149.7,
+  "passed": 7,
+  "failed": 3,
+  "skipped": 3,
+  "timeout": 0,
+  "errors": 0,
+  "tests": [
+    {
+      "test": "tests/_test_state_engine.py",
+      "status": "PASS",
+      "returncode": 0,
+      "duration": 4.1,
+      "summary": "Errors: ['لا يمكن قراءة الملف: agl_security_tool/test_contracts/project/src/Vault.sol'] | Warnings: [] | ERROR: No graph generated"
+    },
+    {
+      "test": "tests/_test_temporal_model.py",
+      "status": "PASS",
+      "returncode": 0,
+      "duration": 8.2,
+      "summary": "ALL CRITICAL TESTS PASSED | ====================================================================== | JSON output: _temporal_analysis_test.json (5546915 bytes)"
+    },
+    {
+      "test": "tests/_test_action_space.py",
+      "status": "FAIL",
+      "returncode": 1,
+      "duration": 4.8,
+      "summary": "with open( | ^^^^^ | FileNotFoundError: [Errno 2] No such file or directory: 'agl_security_tool/test_contracts/project/src/Vault.sol'"
+    },
+    {
+      "test": "tests/_test_attack_engine.py",
+      "status": "FAIL",
+      "returncode": 1,
+      "duration": 4.8,
+      "summary": "Total:    77 | ====================================================================== | ⚠ 1 tests failed!"
+    },
+    {
+      "test": "tests/_test_search_engine.py",
+      "status": "PASS",
+      "returncode": 0,
+      "duration": 5.3,
+      "summary": "RESULTS: 93/93 passed, 0 failed | ============================================================ | ✅ ALL TESTS PASSED!"
+    },
+    {
+      "test": "tests/_test_exploit_reasoning.py",
+      "status": "PASS",
+      "returncode": 0,
+      "duration": 28.4,
+      "summary": "Findings with exploit proofs: 0 | Time: Nones | WARNING:AGL.SecurityOrchestrator:⚠️ Semgrep غير مثبت! تثبيت: pip install semgrep"
+    },
+    {
+      "test": "tests/_test_defi_detection.py",
+      "status": "PASS",
+      "returncode": 0,
+      "duration": 30.7,
+      "summary": "INFO:AGL.SecurityOrchestrator:✅ Mythril found 0 issues | INFO:AGL.SecurityOrchestrator:  ✓ mythril: 0 findings | WARNING:agl.deep_analyzer:LLM not available — skipping deep analysis"
+    },
+    {
+      "test": "test_detector_system.py",
+      "status": "SKIP",
+      "reason": "file not found",
+      "duration": 0
+    },
+    {
+      "test": "tests/_test_l1_l4.py",
+      "status": "PASS",
+      "returncode": 0,
+      "duration": 17.3,
+      "summary": "[L3] Attack Simulation: NOT ACTIVATED | [L4] Search Engine: NOT ACTIVATED | === DONE ==="
+    },
+    {
+      "test": "tests/_test_tool_usability.py",
+      "status": "FAIL",
+      "returncode": 0,
+      "duration": 20.3,
+      "summary": "[OK] ExploitReasoningEngine importable | [OK] Reports: text=330 chars, md=161 chars, json=143 chars | === USABILITY TEST COMPLETE ==="
+    },
+    {
+      "test": "tests/_test_final.py",
+      "status": "PASS",
+      "returncode": 0,
+      "duration": 25.8,
+      "summary": "LLM-enriched findings: 0 | Time: ?s | TOTAL test time: 25.4s"
+    },
+    {
+      "test": "tests/_test_fix.py",
+      "status": "SKIP",
+      "reason": "fixture missing: aave-v3-core/contracts/protocol/pool/Pool.sol",
+      "duration": 0
+    },
+    {
+      "test": "tests/_test_speed.py",
+      "status": "SKIP",
+      "reason": "fixture missing: aave-v3-core/contracts/protocol/pool/Pool.sol",
+      "duration": 0
+    }
+  ]
+}

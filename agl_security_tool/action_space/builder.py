@@ -158,7 +158,7 @@ class ActionSpaceBuilder:
         for contract_name, contract_actions in by_contract.items():
             valid = [a for a in contract_actions if a.is_valid]
             profitable = [a for a in valid if a.is_profitable]
-            risky = [a for a in valid if a.severity in ("critical", "high")]
+            risky = [a for a in valid if a.severity in ("CRITICAL", "HIGH")]
 
             # جمع أنماط الهجوم
             all_attack_types = set()
@@ -180,15 +180,15 @@ class ActionSpaceBuilder:
                 ),
                 "sends_eth": any(a.sends_eth for a in valid),
                 "has_delegatecall": any(a.has_delegatecall for a in valid),
-                "exposed_functions": [
-                    {
+                "exposed_functions": list({
+                    a.function_name: {
                         "function": a.function_name,
                         "severity": a.severity,
                         "attacks": [at.value for at in a.attack_types],
                         "profit": a.profit_potential,
                     }
                     for a in risky
-                ],
+                }.values()),
             }
             surfaces.append(surface)
 
@@ -205,7 +205,7 @@ class ActionSpaceBuilder:
         for a in actions:
             if not a.is_valid:
                 continue
-            if a.severity not in ("critical", "high"):
+            if a.severity not in ("CRITICAL", "HIGH"):
                 continue
 
             target = {
@@ -226,7 +226,7 @@ class ActionSpaceBuilder:
             targets.append(target)
 
         # ترتيب: critical أولاً، ثم high, ثم بالربحية
-        severity_order = {"critical": 0, "high": 1, "medium": 2, "low": 3}
+        severity_order = {"CRITICAL": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3}
         profit_order = {"high": 0, "medium": 1, "low": 2, "none": 3}
         targets.sort(key=lambda t: (
             severity_order.get(t["severity"], 4),
@@ -274,7 +274,7 @@ class ActionSpaceBuilder:
 
             steps = []
             total_weight = 0.0
-            severity = "low"
+            severity = "LOW"
             attack_types = set()
 
             for i, action_id in enumerate(path):
@@ -292,7 +292,7 @@ class ActionSpaceBuilder:
                     attack_types.add(at.value)
 
                 # أعلى severity
-                sev_order = {"critical": 4, "high": 3, "medium": 2, "low": 1, "info": 0}
+                sev_order = {"CRITICAL": 4, "HIGH": 3, "MEDIUM": 2, "LOW": 1, "INFO": 0}
                 if sev_order.get(action.severity, 0) > sev_order.get(severity, 0):
                     severity = action.severity
 
