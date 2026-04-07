@@ -1,160 +1,97 @@
 """
-AGL Security Tool — Centralized Configuration
-نظام الإعدادات المركزي — يقرأ من .env ومتغيرات البيئة
+AGL Security — نظام الإعدادات المركزي
+Centralized Configuration (reads from environment / .env)
 
-Priority (highest first):
-  1. Environment variables
-  2. .env file in project root
-  3. Defaults
+Usage:
+    from agl_security_tool.config import settings
+    print(settings.LOG_LEVEL)
+    print(settings.Z3_TIMEOUT)
 """
 
-from __future__ import annotations
-
 import os
-import logging
-from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
+from dataclasses import dataclass, field
 
-_logger = logging.getLogger("AGL.config")
+# ── Load .env file if present ──
+_ENV_FILE = Path(__file__).parent.parent / ".env"
+if _ENV_FILE.exists():
+    for line in _ENV_FILE.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" in line:
+            key, _, value = line.partition("=")
+            key = key.strip()
+            value = value.strip().strip("\"'")
+            os.environ.setdefault(key, value)
 
 
-def _bool(val: str) -> bool:
-    return val.strip().lower() in ("1", "true", "yes", "on")
+def _env(key: str, default: str = "") -> str:
+    return os.environ.get(key, default)
 
 
-def _int(val: str, default: int) -> int:
+def _env_int(key: str, default: int = 0) -> int:
     try:
-        return int(val)
-    except (ValueError, TypeError):
+        return int(os.environ.get(key, str(default)))
+    except ValueError:
         return default
 
 
-def _load_dotenv(path: Optional[Path] = None) -> None:
-    """Load .env file into os.environ (no external dependency)."""
-    if path is None:
-        path = Path(__file__).resolve().parent / ".env"
-    if not path.is_file():
-        return
-    try:
-        with open(path, encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line or line.startswith("#"):
-                    continue
-                if "=" not in line:
-                    continue
-                key, _, value = line.partition("=")
-                key = key.strip()
-                value = value.strip()
-                # Don't override existing env vars
-                if key and key not in os.environ:
-                    os.environ[key] = value
-    except Exception as e:
-        _logger.debug("Failed to load .env: %s", e)
+def _env_bool(key: str, default: bool = False) -> bool:
+    val = os.environ.get(key, str(default)).lower()
+    return val in ("1", "true", "yes", "on")
 
 
 @dataclass(frozen=True)
-class AGLConfig:
-    """Immutable configuration for AGL Security Tool."""
+class Settings:
+    """Immutable application settings — loaded once at import time."""
+
+    # ── General ──
+    APP_NAME: str = "AGL Security Tool"
+    VERSION: str = "2.1.0"
+    DEBUG: bool = field(default_factory=lambda: _env_bool("AGL_DEBUG", False))
 
     # ── Logging ──
-    log_level: str = "INFO"
-    log_file: str = ""
-    log_format: str = "text"
+    LOG_LEVEL: str = field(default_factory=lambda: _env("AGL_LOG_LEVEL", "INFO"))
+    LOG_FILE: str = field(default_factory=lambda: _env("AGL_LOG_FILE", ""))
+    LOG_FORMAT: str = field(default_factory=lambda: _env("AGL_LOG_FORMAT", "text"))  # text | json
 
-    # ── Analysis Timeouts ──
-    mythril_timeout: int = 120
-    slither_timeout: int = 60
-    semgrep_timeout: int = 30
-    z3_timeout: int = 30
+    # ── Analysis Timeouts (seconds) ──
+    Z3_TIMEOUT: int = field(default_factory=lambda: _env_int("AGL_Z3_TIMEOUT", 30))
+    MYTHRIL_TIMEOUT: int = field(default_factory=lambda: _env_int("AGL_MYTHRIL_TIMEOUT", 120))
+    SLITHER_TIMEOUT: int = field(default_factory=lambda: _env_int("AGL_SLITHER_TIMEOUT", 60))
+    SEMGREP_TIMEOUT: int = field(default_factory=lambda: _env_int("AGL_SEMGREP_TIMEOUT", 60))
+    PIPELINE_TIMEOUT: int = field(default_factory=lambda: _env_int("AGL_PIPELINE_TIMEOUT", 300))
 
-    # ── Skip Flags ──
-    skip_llm: bool = True
-    skip_heikal: bool = False
-    skip_mythril: bool = False
-    skip_slither: bool = False
-    skip_semgrep: bool = False
+    # ── API Server ──
+    API_HOST: str = field(default_factory=lambda: _env("AGL_API_HOST", "0.0.0.0"))
+    API_PORT: int = field(default_factory=lambda: _env_int("AGL_API_PORT", 8000))
+    API_WORKERS: int = field(default_factory=lambda: _env_int("AGL_WORKERS", 2))
+    API_RATE_LIMIT: str = field(default_factory=lambda: _env("AGL_RATE_LIMIT", "30/minute"))
+    CORS_ORIGINS: str = field(default_factory=lambda: _env("AGL_CORS_ORIGINS", ""))
 
-    # ── PoC ──
-    generate_poc: bool = True
-    run_foundry: bool = False
+    # ── Auth ──
+    SECRET_KEY: str = field(default_factory=lambda: _env("AGL_SECRET_KEY", ""))
+    JWT_ALGORITHM: str = field(default_factory=lambda: _env("AGL_JWT_ALGORITHM", "HS256"))
+    JWT_EXPIRY_HOURS: int = field(default_factory=lambda: _env_int("AGL_JWT_EXPIRY_HOURS", 24))
 
-    # ── API ──
-    api_host: str = "0.0.0.0"
-    api_port: int = 8000
-    api_workers: int = 2
-    api_cors_origins: str = "*"
-    rate_limit: str = "10/minute"
+    # ── Database ──
+    DATABASE_URL: str = field(default_factory=lambda: _env("AGL_DATABASE_URL", "sqlite:///agl_security.db"))
+    MONGO_URI: str = field(default_factory=lambda: _env("AGL_MONGO_URI", ""))
 
-    # ── On-Chain ──
-    rpc_url: str = ""
-    etherscan_key: str = ""
+    # ── External Tools ──
+    SOLC_PATH: str = field(default_factory=lambda: _env("AGL_SOLC_PATH", ""))
+    RPC_URL: str = field(default_factory=lambda: _env("AGL_RPC_URL", ""))
+    ETHERSCAN_API_KEY: str = field(default_factory=lambda: _env("AGL_ETHERSCAN_API_KEY", ""))
 
-    # ── MongoDB ──
-    mongo_uri: str = ""
-    mongo_db: str = "agl_security"
-
-    def to_audit_kwargs(self) -> dict:
-        """Convert config to kwargs for run_audit()."""
-        return {
-            "mythril_timeout": self.mythril_timeout,
-            "skip_llm": self.skip_llm,
-            "skip_heikal": self.skip_heikal,
-            "generate_poc": self.generate_poc,
-            "run_poc": self.run_foundry,
-        }
-
-
-def load_config(env_file: Optional[Path] = None) -> AGLConfig:
-    """
-    Load configuration from environment + .env file.
-
-    Args:
-        env_file: Path to .env file (default: project root/.env)
-
-    Returns:
-        Frozen AGLConfig instance
-    """
-    _load_dotenv(env_file)
-
-    cfg = AGLConfig(
-        log_level=os.getenv("AGL_LOG_LEVEL", "INFO").upper(),
-        log_file=os.getenv("AGL_LOG_FILE", ""),
-        log_format=os.getenv("AGL_LOG_FORMAT", "text"),
-        mythril_timeout=_int(os.getenv("AGL_MYTHRIL_TIMEOUT", ""), 120),
-        slither_timeout=_int(os.getenv("AGL_SLITHER_TIMEOUT", ""), 60),
-        semgrep_timeout=_int(os.getenv("AGL_SEMGREP_TIMEOUT", ""), 30),
-        z3_timeout=_int(os.getenv("AGL_Z3_TIMEOUT", ""), 30),
-        skip_llm=_bool(os.getenv("AGL_SKIP_LLM", "true")),
-        skip_heikal=_bool(os.getenv("AGL_SKIP_HEIKAL", "false")),
-        skip_mythril=_bool(os.getenv("AGL_SKIP_MYTHRIL", "false")),
-        skip_slither=_bool(os.getenv("AGL_SKIP_SLITHER", "false")),
-        skip_semgrep=_bool(os.getenv("AGL_SKIP_SEMGREP", "false")),
-        generate_poc=_bool(os.getenv("AGL_GENERATE_POC", "true")),
-        run_foundry=_bool(os.getenv("AGL_RUN_FOUNDRY", "false")),
-        api_host=os.getenv("AGL_API_HOST", "0.0.0.0"),
-        api_port=_int(os.getenv("AGL_API_PORT", ""), 8000),
-        api_workers=_int(os.getenv("AGL_API_WORKERS", ""), 2),
-        api_cors_origins=os.getenv("AGL_API_CORS_ORIGINS", "*"),
-        rate_limit=os.getenv("AGL_RATE_LIMIT", "10/minute"),
-        rpc_url=os.getenv("AGL_RPC_URL", ""),
-        etherscan_key=os.getenv("AGL_ETHERSCAN_KEY", ""),
-        mongo_uri=os.getenv("AGL_MONGO_URI", ""),
-        mongo_db=os.getenv("AGL_MONGO_DB", "agl_security"),
+    # ── Paths ──
+    ARTIFACTS_DIR: str = field(
+        default_factory=lambda: _env("AGL_ARTIFACTS_DIR", str(Path(__file__).parent / "artifacts"))
+    )
+    REPORTS_DIR: str = field(
+        default_factory=lambda: _env("AGL_REPORTS_DIR", str(Path(__file__).parent / "reports"))
     )
 
-    _logger.debug("Config loaded: log_level=%s, mythril_timeout=%d", cfg.log_level, cfg.mythril_timeout)
-    return cfg
 
-
-# Singleton — loaded once on first import
-_config: Optional[AGLConfig] = None
-
-
-def get_config() -> AGLConfig:
-    """Get or create the global config singleton."""
-    global _config
-    if _config is None:
-        _config = load_config()
-    return _config
+# ── Singleton ──
+settings = Settings()

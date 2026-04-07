@@ -20,11 +20,14 @@ import os
 import json
 from pathlib import Path
 
-def main():
-    # Initialize logging + config from .env early
-    from agl_security_tool.logging_config import setup_from_config
-    setup_from_config()
+# ── Initialize logging ──
+try:
+    from agl_security_tool.logging_config import setup_logging
+    setup_logging()
+except Exception:
+    pass
 
+def main():
     parser = argparse.ArgumentParser(
         prog="agl-security",
         description="🛡️ AGL Smart Contract Security Auditor — أداة تحليل أمان العقود الذكية",
@@ -88,7 +91,7 @@ Examples:
     graph_parser.add_argument("-o", "--output", help="حفظ في ملف JSON")
 
     # ═══ version ═══
-    parser.add_argument("--version", action="version", version="AGL Security 1.1.0")
+    parser.add_argument("--version", action="version", version="AGL Security 2.1.0")
 
     args = parser.parse_args()
 
@@ -99,7 +102,7 @@ Examples:
     # ═══ تهيئة المحركات ═══
     from agl_security_tool import AGLSecurityAudit, ProjectScanner
 
-    print("🛡️ AGL Security Auditor v1.1.0")
+    print("🛡️ AGL Security Auditor v2.1.0")
     print("=" * 50)
 
     result = None

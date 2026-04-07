@@ -1,5 +1,7 @@
 # AGL Security Tool v2.1.0 — المتطلبات
 # ================================================
+# المصدر الأساسي: pyproject.toml
+# هذا الملف للتوافق مع pip install -r فقط
 
 # ── Core (مطلوبة) ──
 requests>=2.28.0
@@ -12,7 +14,7 @@ psutil>=5.9.0
 fastapi>=0.100.0
 uvicorn>=0.22.0
 python-jose[cryptography]>=3.3.0
-passlib[bcrypt]>=1.7.0
+bcrypt>=4.0.0
 sqlalchemy>=2.0.0
 slowapi>=0.1.0
 python-multipart>=0.0.5

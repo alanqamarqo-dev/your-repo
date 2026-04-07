@@ -42,18 +42,28 @@ _logger = logging.getLogger("AGL.risk_core")
 _WEIGHTS_PATH = os.path.join("artifacts", "risk_weights.json")
 
 # ═══════════════════════════════════════════════════════════════
-#  Calibrated Weights (Phase 1 defaults — will be tuned by benchmark)
+#  Calibrated Weights — Hand-tuned from accuracy test data
+#  Accuracy baseline: detectors 50%, exploit_reasoning 0%, heikal 0%
+#
+#  Design principles:
+#    bias = -2.0 → P(no evidence)     = σ(-2.0) = 0.12 → INFO/LOW
+#    heuristic only HIGH 0.7           → P = 0.35 → LOW  (single source = skeptical)
+#    heuristic + Z3 formal (0.8)       → P = 0.82 → HIGH (corroborated = confident)
+#    heuristic + Z3 + exploit proven   → P = 0.999 → CRITICAL (proven = decisive)
+#    heuristic + 2 negative evidence   → P = 0.09 → INFO (L3/L4 couldn't confirm)
 # ═══════════════════════════════════════════════════════════════
 DEFAULT_WEIGHTS = {
-    "w_formal": 3.5,  # Z3 proven findings carry highest weight
-    "w_heuristic": 1.38,  # Trained: heuristic alone insufficient — needs corroboration (↓ from 1.5)
-    "w_profit": 1.2,  # Economic viability signal
-    "w_exploit": 4.0,  # Exploit fully proven (Z3 + invariant) — decisive
-    "bias": -0.43,  # Trained: mild skepticism (↓ from -0.3, reduces FP severity inflation)
+    "w_formal": 3.5,  # Z3/symbolic proofs — strong reliable signal
+    "w_heuristic": 2.0,  # Detector patterns — moderate (50% precision alone)
+    "w_profit": 1.0,  # Economic viability — supporting signal
+    "w_exploit": 5.0,  # Proven exploit (Z3 SAT + invariant) — decisive
+    "bias": -2.0,  # Start skeptical — require evidence to promote
 }
 
 # Multiplier applied to heuristic_score based on original detector severity.
 # Ensures the model respects detector-assigned severity, not just confidence.
+# With bias=-2.0 and w_heuristic=2.0, a HIGH finding (conf=0.7 * 0.85) → P≈0.31 (LOW),
+# requiring Z3 or multi-source confirmation to reach HIGH/CRITICAL.
 SEVERITY_MULTIPLIER = {
     "critical": 1.0,
     "high": 0.85,

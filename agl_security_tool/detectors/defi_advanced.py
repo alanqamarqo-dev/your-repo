@@ -254,12 +254,29 @@ class SandwichVulnerable(BaseDetector):
         re.compile(r"require.*?msg\.sender\s*==", re.IGNORECASE),
     ]
 
+    # Pre-flight: contract must have a swap/liquidity/DEX operation
+    # فحص أولي: العقد يجب أن يحتوي على عملية swap/سيولة
+    _SWAP_EXISTENCE_PATTERNS = [
+        re.compile(r"\.swap\s*\(", re.IGNORECASE),
+        re.compile(r"swapExact|swapTokens|addLiquidity|removeLiquidity", re.IGNORECASE),
+        re.compile(r"IUniswap|IRouter|IPancake|ISushiSwap", re.IGNORECASE),
+        re.compile(r"amountOutMin|slippage|deadline", re.IGNORECASE),
+        re.compile(r"getAmountOut|getAmountsOut", re.IGNORECASE),
+    ]
+
     def detect(
         self, contract: ParsedContract, all_contracts: List[ParsedContract]
     ) -> List[Finding]:
         findings = []
 
         if contract.contract_type in ("interface", "library"):
+            return findings
+
+        # Pre-flight: skip entire contract if no swap/DEX keywords exist
+        # فحص أولي — العقد لا يحتوي على عمليات تبادل → لا يمكن هجوم ساندويتش
+        all_source = "".join((f.raw_body or "") for f in contract.functions.values())
+        has_swap_operations = any(p.search(all_source) for p in self._SWAP_EXISTENCE_PATTERNS)
+        if not has_swap_operations:
             return findings
 
         for fname, func in contract.functions.items():
@@ -293,10 +310,10 @@ class SandwichVulnerable(BaseDetector):
                     contract,
                     func,
                     f"Function `{fname}` reads on-chain price/balance data and then "
-                    f"performs an external call in the same transaction without commit-reveal "
-                    f"or access restrictions. This pattern is vulnerable to sandwich attacks "
-                    f"where an attacker can frontrun the transaction to manipulate the "
-                    f"price/state before it executes.",
+                    f"performs a swap/external call in the same transaction without "
+                    f"commit-reveal or access restrictions. This pattern is vulnerable "
+                    f"to sandwich attacks where an attacker can frontrun the transaction "
+                    f"to manipulate the price/state before it executes.",
                     line=func.line_start,
                     extra={"pattern": "read_then_act_public"},
                 )

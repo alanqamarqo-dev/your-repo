@@ -8,7 +8,7 @@ interface/library skipping, and _make_finding() correctness.
 """
 
 import pytest
-from detectors import (
+from agl_security_tool.detectors import (
     DetectorRunner,
     ParsedContract,
     ParsedFunction,
@@ -20,7 +20,7 @@ from detectors import (
     Finding,
     BaseDetector,
 )
-from detectors.solidity_parser import SoliditySemanticParser
+from agl_security_tool.detectors.solidity_parser import SoliditySemanticParser
 
 
 # ═══════════════════════════════════════════════════════════

@@ -48,8 +48,8 @@ except ImportError:
 # عدد الأبعاد للمتجه الهولوغرافي
 HOLOGRAM_DIM = 64
 
-# عتبة التطابق
-MATCH_THRESHOLD = 0.25
+# عتبة التطابق — raised from 0.25 to 0.55 to reduce false matches
+MATCH_THRESHOLD = 0.55
 
 # عامل تشفير الطور (phase modulation key)
 PHASE_KEY = 0.4671  # ξ — ثابت هيكل

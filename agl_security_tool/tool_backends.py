@@ -191,6 +191,65 @@ def _classify_category(name: str) -> str:
 
 
 # ═══════════════════════════════════════════════════════════════
+#  Pragma / Solc Version Helpers
+# ═══════════════════════════════════════════════════════════════
+
+
+def _detect_pragma_version(file_path: str) -> Optional[str]:
+    """Extract the pragma solidity version from a .sol file.
+    Returns the version string (e.g. '0.8.17') or None."""
+    try:
+        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                m = re.match(r'\s*pragma\s+solidity\s*[=^~<>]*\s*([0-9]+\.[0-9]+\.[0-9]+)', line)
+                if m:
+                    return m.group(1)
+    except Exception:
+        pass
+    return None
+
+
+def _find_compatible_solc(target_version: str) -> Optional[str]:
+    """Find the best compatible solc version from solc-select.
+    Returns the version string or None."""
+    try:
+        proc = subprocess.run(
+            ["solc-select", "versions"],
+            capture_output=True, text=True, timeout=10,
+        )
+        if proc.returncode != 0:
+            return None
+        installed = []
+        for line in proc.stdout.splitlines():
+            ver = line.strip().split()[0] if line.strip() else ""
+            if re.match(r'[0-9]+\.[0-9]+\.[0-9]+', ver):
+                installed.append(ver)
+        if not installed:
+            return None
+        # Exact match
+        if target_version in installed:
+            return target_version
+        # Find closest compatible (same major.minor, highest patch)
+        t_parts = target_version.split(".")
+        t_major_minor = f"{t_parts[0]}.{t_parts[1]}"
+        compatible = [v for v in installed if v.startswith(t_major_minor + ".")]
+        if compatible:
+            return max(compatible)
+        # Any >= target
+        from packaging.version import Version
+        try:
+            target_v = Version(target_version)
+            above = [v for v in installed if Version(v) >= target_v]
+            if above:
+                return min(above, key=Version)
+        except Exception:
+            pass
+        return max(installed) if installed else None
+    except Exception:
+        return None
+
+
+# ═══════════════════════════════════════════════════════════════
 #  Import Resolution Helper — auto-generates remappings for Slither/Mythril
 # ═══════════════════════════════════════════════════════════════
 
@@ -386,6 +445,20 @@ class SlitherRunner:
         if solc_remaps:
             cmd.extend(["--solc-remaps", ";".join(solc_remaps)])
 
+        # If forge is not available but project has foundry.toml, force solc framework
+        if project_root and (Path(project_root) / "foundry.toml").exists():
+            if not shutil.which("forge"):
+                cmd.extend(["--compile-force-framework", "solc"])
+                _logger.info("forge not in PATH — forcing solc framework for Slither")
+
+        # Detect required solc version and use --solc-solcs-select if needed
+        pragma_ver = _detect_pragma_version(file_path)
+        if pragma_ver:
+            best_solc = _find_compatible_solc(pragma_ver)
+            if best_solc:
+                cmd.extend(["--solc-solcs-select", best_solc])
+                _logger.info("Pragma %s — using solc %s for Slither", pragma_ver, best_solc)
+
         t0 = time.monotonic()
         try:
             proc = subprocess.run(
@@ -408,8 +481,28 @@ class SlitherRunner:
                     result.success = True
                 except json.JSONDecodeError as e:
                     result.error = f"JSON parse error: {e}"
+            elif proc.returncode != 0:
+                # Slither failed silently — try human-readable to get the error
+                _logger.warning(
+                    "Slither returned RC=%s with no JSON output — checking stderr",
+                    proc.returncode,
+                )
+                if not result.stderr:
+                    # Re-run without --json to capture error message
+                    try:
+                        retry = subprocess.run(
+                            ["slither", os.path.abspath(file_path)],
+                            capture_output=True, text=True,
+                            timeout=30, cwd=cwd,
+                        )
+                        result.stderr = retry.stderr[:2000] if retry.stderr else ""
+                        result.error = f"Slither failed (RC={proc.returncode}): {result.stderr[:300]}"
+                    except Exception:
+                        result.error = f"Slither failed silently (RC={proc.returncode})"
+                else:
+                    result.error = f"Slither failed (RC={proc.returncode}): {result.stderr[:300]}"
             else:
-                result.success = True  # No output = no findings
+                result.success = True  # RC=0, no output = genuinely no findings
 
         except subprocess.TimeoutExpired:
             result.duration_ms = int((time.monotonic() - t0) * 1000)
@@ -556,6 +649,13 @@ class MythrilRunner:
             "-o",
             "json",
         ]
+        # Detect required solc version and pass --solv
+        pragma_ver = _detect_pragma_version(file_path)
+        if pragma_ver:
+            best_solc = _find_compatible_solc(pragma_ver)
+            if best_solc:
+                cmd.extend(["--solv", best_solc])
+                _logger.info("Pragma %s — using solc %s for Mythril", pragma_ver, best_solc)
         # Pass remappings to Mythril via --solc-args
         if solc_remaps:
             remap_str = " ".join(f"--allow-paths {project_root}" for _ in [1])

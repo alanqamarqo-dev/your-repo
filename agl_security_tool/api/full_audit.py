@@ -33,10 +33,8 @@ from .database import get_db_session, Scan, _now
 
 _logger = logging.getLogger("AGL.api.full_audit")
 
-# Ensure project root is on path
+# Project root reference (no sys.path manipulation needed — installed as package)
 _ROOT = Path(__file__).resolve().parent.parent.parent
-if str(_ROOT) not in sys.path:
-    sys.path.insert(0, str(_ROOT))
 
 
 def _make_json_safe(obj, depth=0):
@@ -1014,6 +1012,22 @@ def generate_report(
     if all_results.get("heikal_math"):
         layers.append("Layer 7: Heikal Math")
     report["layers_used"] = layers
+
+    # Flatten all findings into a single top-level array for the frontend
+    all_findings = []
+    for _name, result in all_results.get("deep_scan", {}).items():
+        if isinstance(result, dict):
+            all_findings.extend(result.get("findings", []))
+    all_findings.extend(all_results.get("z3_symbolic", []))
+    all_findings.extend(all_results.get("detectors", []))
+    report["findings"] = all_findings
+
+    # Flatten attack simulations for the frontend
+    attack_sims = []
+    for _name, result in all_results.get("deep_scan", {}).items():
+        if isinstance(result, dict):
+            attack_sims.extend(result.get("attack_simulations", []))
+    report["attack_simulations"] = attack_sims
 
     return report
 

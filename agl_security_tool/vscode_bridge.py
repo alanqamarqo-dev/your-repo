@@ -47,10 +47,8 @@ def main():
     # ═══ Setup paths ═══
     tool_dir = os.path.dirname(os.path.abspath(__file__))
     agl_root = os.path.dirname(tool_dir)
-    engines_src = os.path.join(agl_root, "AGL_NextGen", "src")
-    for p in [agl_root, engines_src]:
-        if p not in sys.path:
-            sys.path.insert(0, p)
+    if agl_root not in sys.path:
+        sys.path.insert(0, agl_root)
 
     try:
         if action == "check":
@@ -102,31 +100,27 @@ def detect_engines() -> dict:
     """Check which engines are available."""
     engines = {}
     try:
-        from agl.engines.smart_contract_analyzer import SmartContractAnalyzer
-        engines["smart_contract_analyzer"] = True
+        from agl_security_tool.z3_symbolic_engine import Z3SymbolicEngine
+        engines["z3_symbolic"] = True
     except Exception:
-        engines["smart_contract_analyzer"] = False
+        engines["z3_symbolic"] = False
     try:
-        from agl.engines.agl_security import AGLSecuritySuite
-        engines["agl_security_suite"] = True
+        from agl_security_tool.tool_backends import ToolBackendRunner
+        tb = ToolBackendRunner()
+        engines["tool_backends"] = tb.status()
     except Exception:
-        engines["agl_security_suite"] = False
-    try:
-        from agl.engines.offensive_security import OffensiveSecurityEngine
-        engines["offensive_security"] = True
-    except Exception:
-        engines["offensive_security"] = False
-    try:
-        from agl.engines.formal_verifier import FormalVerificationEngine
-        engines["formal_verifier"] = True
-    except Exception:
-        engines["formal_verifier"] = False
+        engines["tool_backends"] = False
     try:
         from agl_security_tool.detectors import DetectorRunner
         dr = DetectorRunner()
         engines["detectors"] = len(dr.detectors)
     except Exception:
         engines["detectors"] = 0
+    try:
+        from agl_security_tool.exploit_reasoning import ExploitReasoner
+        engines["exploit_reasoning"] = True
+    except Exception:
+        engines["exploit_reasoning"] = False
     return engines
 
 

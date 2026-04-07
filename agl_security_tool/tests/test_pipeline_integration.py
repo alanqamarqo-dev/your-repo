@@ -9,6 +9,7 @@
 import sys
 import os
 import time
+import pytest
 
 # Add both parent dirs: agl_security_tool/ (for direct imports) and AGL/ (for package imports)
 _here = os.path.dirname(os.path.abspath(__file__))
@@ -284,6 +285,7 @@ def test_deduplicate_cross_layer():
 # ─────────────────────────────────────────
 # Test 5: Heikal Math with cross-layer data
 # ─────────────────────────────────────────
+@pytest.mark.slow
 def test_heikal_with_cross_layer():
     """Test that Heikal Math receives and uses cross-layer evidence."""
     from agl_security_tool.audit_pipeline import run_heikal_math, load_engines
@@ -363,6 +365,7 @@ def test_heikal_with_cross_layer():
 # ─────────────────────────────────────────
 # Test 6: Layer availability check
 # ─────────────────────────────────────────
+@pytest.mark.slow
 def test_layer_availability():
     """Verify all engines load with graceful degradation."""
     from agl_security_tool.audit_pipeline import load_engines
@@ -403,6 +406,7 @@ def test_layer_availability():
 # ─────────────────────────────────────────
 # Test 7: Shared parsing + safe functions
 # ─────────────────────────────────────────
+@pytest.mark.slow
 def test_shared_parsing():
     """Test that shared parsing correctly identifies safe functions."""
     from agl_security_tool.audit_pipeline import run_shared_parsing, load_engines, discover_project
@@ -446,6 +450,7 @@ def test_shared_parsing():
 # ─────────────────────────────────────────
 # Test 8: Full pipeline smoke test
 # ─────────────────────────────────────────
+@pytest.mark.slow
 def test_full_pipeline():
     """Run the full pipeline on a real vulnerable contract."""
     from agl_security_tool.audit_pipeline import run_audit

@@ -392,6 +392,8 @@ class AttackSimulationEngine:
                 for p in getattr(action, 'parameters', [])
             ],
             "msg_value": getattr(action, 'msg_value', None),
+            "balance_effects": dict(getattr(action, 'balance_effects', {})),
+            "tokens_involved": list(getattr(action, 'tokens_involved', [])),
         }
 
     def _convert_to_executable(
@@ -438,6 +440,8 @@ class AttackSimulationEngine:
             state_reads=step_info.get("state_reads", []),
             state_writes=step_info.get("state_writes", []),
             reentrancy_guarded=step_info.get("reentrancy_guarded", False),
+            balance_effects=step_info.get("balance_effects", {}),
+            tokens_involved=step_info.get("tokens_involved", []),
         )
 
         return exec_action

@@ -1,13 +1,11 @@
 """
-AGL Security Tool — Logging Setup
-إعداد السجلات — ملفات + دوران + JSON
+AGL Security — تهيئة نظام السجلات
+Logging Configuration — Rotating File + JSON Format
 
 Usage:
     from agl_security_tool.logging_config import setup_logging
-    setup_logging()  # Uses config from get_config()
+    setup_logging()  # call once at startup
 """
-
-from __future__ import annotations
 
 import logging
 import logging.handlers
@@ -15,11 +13,10 @@ import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional
 
 
 class JSONFormatter(logging.Formatter):
-    """Structured JSON log formatter."""
+    """Format log records as JSON lines."""
 
     def format(self, record: logging.LogRecord) -> str:
         log_entry = {
@@ -28,15 +25,12 @@ class JSONFormatter(logging.Formatter):
             "logger": record.name,
             "message": record.getMessage(),
             "module": record.module,
+            "function": record.funcName,
             "line": record.lineno,
         }
-        if record.exc_info and record.exc_info[0]:
+        if record.exc_info and record.exc_info[0] is not None:
             log_entry["exception"] = self.formatException(record.exc_info)
         return json.dumps(log_entry, ensure_ascii=False)
-
-
-_TEXT_FORMAT = "%(asctime)s [%(levelname)-8s] %(name)s: %(message)s"
-_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
 def setup_logging(
@@ -47,64 +41,59 @@ def setup_logging(
     backup_count: int = 5,
 ) -> None:
     """
-    Configure root logger with console + optional rotating file handler.
+    Configure application-wide logging.
 
     Args:
-        level:        Log level (DEBUG, INFO, WARNING, ERROR)
-        log_file:     Path for log file. Empty = console only.
-        log_format:   'text' or 'json'
-        max_bytes:    Max size per log file before rotation
-        backup_count: Number of rotated files to keep
+        level: Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+        log_file: Path to log file. Empty = stdout only.
+        log_format: 'text' for human-readable, 'json' for JSON lines.
+        max_bytes: Max size per log file before rotation.
+        backup_count: Number of rotated backup files to keep.
     """
+    # ── Try reading from config if available ──
+    try:
+        from agl_security_tool.config import settings
+        level = level or settings.LOG_LEVEL
+        log_file = log_file or settings.LOG_FILE
+        log_format = log_format or settings.LOG_FORMAT
+    except ImportError:
+        pass
+
     root = logging.getLogger()
     root.setLevel(getattr(logging, level.upper(), logging.INFO))
 
-    # Clear existing handlers to avoid duplicates
+    # Clear existing handlers
     root.handlers.clear()
 
-    # Console handler
-    console = logging.StreamHandler(sys.stderr)
-    console.setLevel(logging.DEBUG)
+    # ── Formatter ──
     if log_format == "json":
-        console.setFormatter(JSONFormatter())
+        formatter = JSONFormatter()
     else:
-        console.setFormatter(logging.Formatter(_TEXT_FORMAT, _DATE_FORMAT))
+        formatter = logging.Formatter(
+            fmt="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
+
+    # ── Console handler (always) ──
+    console = logging.StreamHandler(sys.stderr)
+    console.setFormatter(formatter)
     root.addHandler(console)
 
-    # File handler (rotating)
+    # ── File handler (optional) ──
     if log_file:
         log_path = Path(log_file)
         log_path.parent.mkdir(parents=True, exist_ok=True)
-
         file_handler = logging.handlers.RotatingFileHandler(
             filename=str(log_path),
             maxBytes=max_bytes,
             backupCount=backup_count,
             encoding="utf-8",
         )
-        file_handler.setLevel(logging.DEBUG)
-        if log_format == "json":
-            file_handler.setFormatter(JSONFormatter())
-        else:
-            file_handler.setFormatter(logging.Formatter(_TEXT_FORMAT, _DATE_FORMAT))
+        file_handler.setFormatter(formatter)
         root.addHandler(file_handler)
 
-        logging.getLogger("AGL.config").info(
-            "File logging enabled: %s (max=%dMB, keep=%d)",
-            log_path, max_bytes // (1024 * 1024), backup_count,
-        )
+    # ── Quiet noisy third-party loggers ──
+    for noisy in ("urllib3", "httpcore", "httpx", "asyncio", "watchfiles"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
 
-    # Quiet noisy third-party loggers
-    for name in ("urllib3", "asyncio", "httpcore"):
-        logging.getLogger(name).setLevel(logging.WARNING)
-
-
-def setup_from_config() -> None:
-    """Setup logging using the global AGLConfig."""
-    from agl_security_tool.config import get_config
-    cfg = get_config()
-    setup_logging(
-        level=cfg.log_level,
-        log_file=cfg.log_file,
-        log_format=cfg.log_format,
-    )
+    root.debug("Logging initialized: level=%s, file=%s, format=%s", level, log_file or "(stdout)", log_format)

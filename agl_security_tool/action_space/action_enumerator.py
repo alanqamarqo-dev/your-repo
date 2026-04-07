@@ -16,26 +16,10 @@ from typing import Dict, List, Any, Optional, Set
 
 from .models import Action, ActionParameter, ActionCategory, ParamDomain
 
-import sys
-from pathlib import Path
-
-_TOOL_DIR = Path(__file__).parent.parent.resolve()
-if str(_TOOL_DIR) not in sys.path:
-    sys.path.insert(0, str(_TOOL_DIR))
-
-try:
-    from detectors import ParsedContract, ParsedFunction, OpType
-except ImportError:
-    from agl_security_tool.detectors import ParsedContract, ParsedFunction, OpType
-
-try:
-    from state_extraction.models import (
-        FunctionEffect, StateMutation, TemporalAnalysis, ExecutionTimeline,
-    )
-except ImportError:
-    from agl_security_tool.state_extraction.models import (
-        FunctionEffect, StateMutation, TemporalAnalysis, ExecutionTimeline,
-    )
+from agl_security_tool.detectors import ParsedContract, ParsedFunction, OpType
+from agl_security_tool.state_extraction.models import (
+    FunctionEffect, StateMutation, TemporalAnalysis, ExecutionTimeline,
+)
 
 
 # ═══════════════════════════════════════════════════════════════

@@ -75,32 +75,14 @@ except ImportError:
     except ImportError:
         SearchOrchestrator = None
 
-# Import existing parsers — use package-qualified imports with fallback;
-# avoid sys.path manipulation which can cause import shadowing.
-try:
-    from agl_security_tool.detectors.solidity_parser import SoliditySemanticParser
-    from agl_security_tool.detectors import ParsedContract
-except ImportError:
-    try:
-        from detectors.solidity_parser import SoliditySemanticParser
-        from detectors import ParsedContract
-    except ImportError:
-        # Last resort: add parent to path (legacy compat)
-        import sys as _sys
-
-        _TOOL_DIR = Path(__file__).parent.parent.resolve()
-        if str(_TOOL_DIR) not in _sys.path:
-            _sys.path.insert(0, str(_TOOL_DIR))
-        from detectors.solidity_parser import SoliditySemanticParser
-        from detectors import ParsedContract
+# Import existing parsers
+from agl_security_tool.detectors.solidity_parser import SoliditySemanticParser
+from agl_security_tool.detectors import ParsedContract
 
 try:
-    from solidity_flattener import SolidityFlattener
+    from agl_security_tool.solidity_flattener import SolidityFlattener
 except ImportError:
-    try:
-        from agl_security_tool.solidity_flattener import SolidityFlattener
-    except ImportError:
-        SolidityFlattener = None
+    SolidityFlattener = None
 
 
 class StateExtractionEngine:

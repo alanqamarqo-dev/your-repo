@@ -79,7 +79,7 @@ class TrainingConfig:
     # Weight constraints (prevent explosion)
     w_min: float = -10.0
     w_max: float = 10.0
-    bias_min: float = -2.0   # Prevent bias from crushing all heuristic findings
+    bias_min: float = -5.0   # Allow strongly skeptical bias for high-FP pipelines
     bias_max: float = 1.0
 
 

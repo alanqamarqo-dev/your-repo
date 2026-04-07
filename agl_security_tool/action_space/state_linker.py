@@ -18,23 +18,10 @@ from typing import Dict, List, Any, Optional, Set, Tuple
 
 from .models import Action, ActionCategory
 
-import sys
-from pathlib import Path
-
-_TOOL_DIR = Path(__file__).parent.parent.resolve()
-if str(_TOOL_DIR) not in sys.path:
-    sys.path.insert(0, str(_TOOL_DIR))
-
-try:
-    from state_extraction.models import (
-        FinancialGraph, TemporalAnalysis, FundFlow, BalanceEntry,
-        StateMutation, FunctionEffect, ExecutionTimeline,
-    )
-except ImportError:
-    from agl_security_tool.state_extraction.models import (
-        FinancialGraph, TemporalAnalysis, FundFlow, BalanceEntry,
-        StateMutation, FunctionEffect, ExecutionTimeline,
-    )
+from agl_security_tool.state_extraction.models import (
+    FinancialGraph, TemporalAnalysis, FundFlow, BalanceEntry,
+    StateMutation, FunctionEffect, ExecutionTimeline,
+)
 
 
 class StateLinker:

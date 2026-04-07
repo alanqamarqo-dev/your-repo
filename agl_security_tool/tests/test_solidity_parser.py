@@ -7,8 +7,8 @@ modifier detection, inheritance resolution, edge cases.
 """
 
 import pytest
-from detectors.solidity_parser import SoliditySemanticParser
-from detectors import (
+from agl_security_tool.detectors.solidity_parser import SoliditySemanticParser
+from agl_security_tool.detectors import (
     ParsedContract,
     ParsedFunction,
     StateVar,

@@ -18,6 +18,8 @@ import time
 from pathlib import Path
 from collections import defaultdict
 
+import pytest
+
 _here = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(_here, "..")))
 sys.path.insert(0, os.path.abspath(os.path.join(_here, "..", "..")))
@@ -400,6 +402,7 @@ def compute_metrics(tp: int, fp: int, fn: int) -> dict:
 #  MAIN TEST
 # ═══════════════════════════════════════════════════════════
 
+@pytest.mark.slow
 def test_pipeline_accuracy():
     """
     Run the full pipeline, compare vs ground truth, measure accuracy.

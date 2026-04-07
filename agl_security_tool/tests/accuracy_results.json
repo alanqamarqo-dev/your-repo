@@ -1,43 +1,45 @@
 {
-  "timestamp": "2026-03-29 01:22:39",
-  "pipeline_time_s": 630.0,
+  "timestamp": "2026-04-04 01:26:10",
+  "pipeline_time_s": 381.1,
   "ground_truth_vulns": 17,
   "ground_truth_safe_contracts": 2,
   "overall": {
     "TP": 16,
-    "FP_vulnerable": 96,
-    "FP_safe": 17,
-    "FP_total": 113,
+    "FP_vulnerable": 81,
+    "FP_safe": 13,
+    "FP_total": 94,
     "FN": 1,
-    "precision": 12.4,
+    "precision": 14.5,
     "recall": 94.1,
-    "f1": 21.9
+    "f1": 25.2
   },
   "per_contract": {
     "reentrancy_vault.sol": {
       "TP": 2,
-      "FP": 12,
+      "FP": 11,
       "FN": 0,
-      "total_findings": 14,
+      "total_findings": 13,
       "missed": [],
       "per_layer_tp": {
         "deep_scan_other": 1,
         "detectors": 1
       },
       "per_layer_fp": {
-        "detectors": 3,
+        "detectors": 1,
         "action_space": 1,
         "attack_simulation": 1,
+        "search_engine": 1,
         "pattern_engine": 2,
-        "exploit_reasoning": 2,
-        "heikal_math": 3
+        "deep_scan_other": 1,
+        "exploit_reasoning": 3,
+        "heikal_math": 1
       }
     },
     "unchecked_call.sol": {
       "TP": 3,
-      "FP": 18,
+      "FP": 14,
       "FN": 0,
-      "total_findings": 21,
+      "total_findings": 17,
       "missed": [],
       "per_layer_tp": {
         "detectors": 2,
@@ -45,19 +47,18 @@
       },
       "per_layer_fp": {
         "action_space": 1,
-        "detectors": 4,
-        "deep_scan_other": 3,
+        "detectors": 1,
         "pattern_engine": 2,
+        "deep_scan_other": 4,
         "state_validator": 1,
-        "exploit_reasoning": 3,
-        "heikal_math": 4
+        "exploit_reasoning": 5
       }
     },
     "tx_origin_auth.sol": {
       "TP": 3,
-      "FP": 17,
+      "FP": 16,
       "FN": 0,
-      "total_findings": 20,
+      "total_findings": 19,
       "missed": [],
       "per_layer_tp": {
         "detectors": 2,
@@ -65,19 +66,20 @@
       },
       "per_layer_fp": {
         "action_space": 1,
-        "detectors": 3,
+        "detectors": 2,
         "deep_scan_other": 3,
+        "search_engine": 3,
         "pattern_engine": 1,
         "z3_symbolic": 2,
         "exploit_reasoning": 3,
-        "heikal_math": 4
+        "heikal_math": 1
       }
     },
     "delegatecall_proxy.sol": {
       "TP": 3,
-      "FP": 14,
+      "FP": 10,
       "FN": 0,
-      "total_findings": 17,
+      "total_findings": 13,
       "missed": [],
       "per_layer_tp": {
         "action_space": 1,
@@ -85,18 +87,16 @@
         "z3_symbolic": 1
       },
       "per_layer_fp": {
-        "deep_scan_other": 5,
         "pattern_engine": 2,
-        "detectors": 2,
-        "exploit_reasoning": 3,
-        "heikal_math": 2
+        "deep_scan_other": 5,
+        "exploit_reasoning": 3
       }
     },
     "unprotected_selfdestruct.sol": {
       "TP": 2,
-      "FP": 14,
+      "FP": 10,
       "FN": 0,
-      "total_findings": 16,
+      "total_findings": 12,
       "missed": [],
       "per_layer_tp": {
         "detectors": 1,
@@ -104,18 +104,19 @@
       },
       "per_layer_fp": {
         "action_space": 1,
-        "detectors": 4,
+        "detectors": 1,
+        "search_engine": 3,
         "deep_scan_other": 1,
         "state_validator": 1,
         "z3_symbolic": 2,
-        "heikal_math": 5
+        "heikal_math": 1
       }
     },
     "timestamp_lottery.sol": {
       "TP": 3,
-      "FP": 21,
+      "FP": 20,
       "FN": 1,
-      "total_findings": 24,
+      "total_findings": 23,
       "missed": [
         "block_number_dependence/isEligible"
       ],
@@ -123,13 +124,14 @@
         "detectors": 3
       },
       "per_layer_fp": {
-        "deep_scan_other": 7,
-        "detectors": 4,
+        "deep_scan_other": 6,
+        "detectors": 3,
         "action_space": 1,
-        "attack_simulation": 1,
         "pattern_engine": 1,
+        "attack_simulation": 1,
+        "search_engine": 4,
         "exploit_reasoning": 3,
-        "heikal_math": 4
+        "heikal_math": 1
       }
     }
   },
@@ -151,23 +153,28 @@
     },
     "detectors": {
       "TP": 10,
-      "FP": 26,
-      "precision": 27.8
+      "FP": 10,
+      "precision": 50.0
     },
     "exploit_reasoning": {
       "TP": 0,
-      "FP": 14,
+      "FP": 17,
       "precision": 0.0
     },
     "heikal_math": {
       "TP": 0,
-      "FP": 24,
+      "FP": 5,
       "precision": 0.0
     },
     "pattern_engine": {
       "TP": 1,
       "FP": 8,
       "precision": 11.1
+    },
+    "search_engine": {
+      "TP": 0,
+      "FP": 13,
+      "precision": 0.0
     },
     "state_validator": {
       "TP": 0,
@@ -183,34 +190,40 @@
   "heikal_hallucination": {
     "available": true,
     "total_functions": 32,
-    "total_attacks": 5,
+    "total_attacks": 3,
     "function_severity": {
-      "HIGH": 22,
-      "LOW": 8,
-      "MEDIUM": 2
+      "HIGH": 4,
+      "MEDIUM": 1,
+      "LOW": 4,
+      "INFO": 23
     },
     "attack_severity": {
-      "LOW": 1,
-      "CRITICAL": 4
+      "MEDIUM": 1,
+      "HIGH": 1,
+      "LOW": 1
     },
-    "hallucinated_attacks": 5,
-    "hallucination_pct": 13.5
+    "hallucinated_attacks": 3,
+    "hallucination_pct": 8.6
   },
   "dedup_stats": {
-    "deep_scan_findings": 91,
+    "deep_scan_findings": 89,
     "z3_standalone_raw": 0,
     "z3_standalone_kept": 0,
     "z3_duplicates_removed": 0,
     "detectors_standalone_raw": 0,
     "detectors_standalone_kept": 0,
     "detectors_duplicates_removed": 0,
-    "exploit_reasoning_findings": 14,
+    "exploit_reasoning_findings": 17,
     "exploit_reasoning_duplicates_removed": 0,
-    "heikal_findings": 28,
+    "heikal_findings": 7,
     "heikal_duplicates_removed": 0,
     "state_extraction_findings": 0,
-    "safe_function_suppressed": 0,
-    "total_unified": 133
+    "safe_function_suppressed": 1,
+    "known_pattern_classified": 0,
+    "known_risk": 5,
+    "intended_feature": 0,
+    "new_findings": 107,
+    "total_unified": 112
   },
-  "total_unified_findings": 133
+  "total_unified_findings": 112
 }

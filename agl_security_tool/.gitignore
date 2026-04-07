@@ -29,16 +29,15 @@ _*.log
 _*.md
 _*.sh
 _*.txt
+_*.sol
+_*/
 
-# Diagnostics scripts (dev-only)
-_diagnostics/
-
-# Reports with local paths (generated artifacts)
-reports/audit/
-reports/bounty/deep_scan_log.txt
-
-# Pipeline test results (contain local paths)
-artifacts/pipeline_test_result.json
+# Temp Solidity & build artifacts
+tmpaayb7lg5.sol
+graph.dot
+test_contracts/real_world/cache/
+test_contracts/real_world/out/
+artifacts/*.bak*
 
 # Artifacts - model files (large)
 artifacts/Qwen2.5-3B-Instruct/
@@ -46,17 +45,17 @@ artifacts/agl-solidity-expert/
 artifacts/holographic_llm/
 artifacts/training_master.jsonl
 
-# Foundry build artifacts (large)
-test_contracts/real_world/out/
-test_contracts/real_world/cache/
-test_contracts/vulnerable/out/
-test_contracts/vulnerable/cache/
+# Bounty contracts (large, fetched separately)
+bounty_contracts/
+
+# Foundry lib dependencies (fetched via forge install)
+shared_libs/lib/
 
 # OS
 Thumbs.db
 .DS_Store
 
-# Environment (secrets)
+# Environment secrets
 .env
 
 # Misc

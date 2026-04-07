@@ -186,12 +186,13 @@ class ActionExecutor:
         التسلسل الحقيقي:
         1. CHECK: require(deposits[sender] >= amount) ← يمر
         2. INTERACTION: sender.call{value: amount}  ← يرسل ETH
+           أو: token.transfer(msg.sender, amount)   ← يرسل Token
         3. المهاجم يعيد الدخول → يعود لـ 1
         4. يتكرر depth مرات
         5. EFFECT: deposits[sender] -= amount       ← مرة واحدة فقط!
 
         النتيجة:
-        - ETH المسحوبة = depth × amount
+        - القيمة المسحوبة = depth × amount
         - تغيير deposits = amount فقط (مرة واحدة)
         - الربح = (depth - 1) × amount
         ═══════════════════════════════════════════
@@ -199,13 +200,33 @@ class ActionExecutor:
         delta = StateDelta()
         contract = action.contract_name
 
-        # كم ETH يُرسل في كل استدعاء؟
-        amount_per_call = self._resolve_eth_amount(action, state)
+        # كم يُرسل في كل استدعاء؟
+        amount_per_call = self._resolve_transfer_amount(action, state)
         if amount_per_call <= 0:
             return self._execute_normal(action, state)
 
-        # رصيد العقد
-        contract_balance = state.get_account(contract).eth_balance
+        # === تحديد نوع القيمة المُرسلة (ETH أو Token) ===
+        is_erc20 = False
+        token_name = "ETH"
+        for ext_call in action.external_calls:
+            if ext_call.get("sends_eth", False):
+                target_name = ext_call.get("target", "")
+                raw_text = ext_call.get("raw_text", "")
+                call_type = ext_call.get("type", "")
+                is_erc20 = self._is_erc20_transfer(
+                    target_name, call_type, raw_text, action, state
+                )
+                if is_erc20 and action.tokens_involved:
+                    token_name = action.tokens_involved[0]
+                break
+
+        # رصيد العقد (ETH أو Token)
+        if is_erc20:
+            # لتحويلات Token: نستخدم ETH كتقدير (العقد يملك 100 ETH افتراضياً)
+            # الرصيد الفعلي للتوكن غير معروف — نستخدم ETH balance كتقدير
+            contract_balance = state.get_account(contract).eth_balance
+        else:
+            contract_balance = state.get_account(contract).eth_balance
 
         # عمق إعادة الدخول
         if action.reentrancy_depth > 0:
@@ -220,16 +241,16 @@ class ActionExecutor:
 
         total_drained = amount_per_call * depth
 
-        # === تحويلات ETH: العقد يفقد، المهاجم يكسب ===
+        # === تحويلات: العقد يفقد، المهاجم يكسب ===
         delta.balance_changes.append(BalanceChange(
             account=contract,
-            token="ETH",
+            token=token_name,
             amount=-total_drained,
             reason=f"reentrancy_drain_{depth}_calls",
         ))
         delta.balance_changes.append(BalanceChange(
             account=action.msg_sender,
-            token="ETH",
+            token=token_name,
             amount=total_drained,
             reason=f"reentrancy_receive_{depth}_calls",
         ))
@@ -388,7 +409,27 @@ class ActionExecutor:
         state: ProtocolState,
         delta: StateDelta,
     ) -> None:
-        """حساب تحويلات ETH من external_calls"""
+        """
+        حساب تحويلات القيمة (ETH أو Token) من external_calls.
+
+        ═══════════════════════════════════════════════════════════
+        التمييز بين أنواع التحويلات:
+
+        1. ETH الحقيقي    — .call{value:...}  / payable(x).transfer(amt)
+           → نوع العملية: external_call_eth
+           → يقرأ raw_text لتحديد المستلم الفعلي
+
+        2. ERC20 Token     — token.transfer(to, amount)
+           → نوع العملية: external_call (ليس _eth)
+           → أو external_call_eth بسبب تداخل regex مع .transfer()
+           → الدليل: target هو متغير حالة (مثل "token") وليس عنوان
+
+        القاعدة الأساسية لتحديد المستلم:
+        - في fund_outflow (withdraw): العقد يُرسل → المهاجم يستلم
+        - في fund_inflow (deposit): المهاجم يُرسل → العقد يستلم
+        - المستلم الحقيقي يُستنتج من الفئة (category) وليس من target
+        ═══════════════════════════════════════════════════════════
+        """
         if not action.sends_eth:
             return
 
@@ -396,28 +437,260 @@ class ActionExecutor:
             if not ext_call.get("sends_eth", False):
                 continue
 
-            # كم ETH يُرسل؟
-            amount = self._resolve_eth_amount(action, state)
-            if amount <= 0:
-                continue
+            raw_text = ext_call.get("raw_text", "")
+            target_name = ext_call.get("target", "")
+            call_type = ext_call.get("type", "")
 
-            target = ext_call.get("target", action.msg_sender)
-            target = self._resolve_address(target, action)
+            # === تصنيف نوع التحويل ===
+            is_erc20 = self._is_erc20_transfer(
+                target_name, call_type, raw_text, action, state
+            )
 
-            # العقد يفقد ETH
-            delta.balance_changes.append(BalanceChange(
-                account=action.contract_name,
-                token="ETH",
-                amount=-amount,
-                reason=f"external_call_to_{target}",
-            ))
-            # الهدف يكسب ETH
-            delta.balance_changes.append(BalanceChange(
-                account=target,
-                token="ETH",
-                amount=amount,
-                reason=f"received_from_{action.contract_name}",
-            ))
+            if is_erc20:
+                # === تحويل ERC20 Token ===
+                self._apply_erc20_transfer(
+                    action, state, delta, ext_call, target_name, raw_text
+                )
+            else:
+                # === تحويل ETH حقيقي ===
+                self._apply_native_eth_transfer(
+                    action, state, delta, ext_call, raw_text
+                )
+
+    def _is_erc20_transfer(
+        self,
+        target_name: str,
+        call_type: str,
+        raw_text: str,
+        action: ExecutableAction,
+        state: ProtocolState,
+    ) -> bool:
+        """
+        هل هذا الاستدعاء الخارجي هو تحويل ERC20 وليس ETH حقيقي؟
+
+        الأدلة على أنه ERC20:
+        1. target هو متغير حالة (state var) وليس عنوان مباشر
+        2. النص يحتوي .transfer(arg1, arg2) بمعاملين (ERC20 signature)
+        3. target في tokens_involved
+        4. ليس .call{value:...} (الذي هو ETH دائماً)
+        """
+        # .call{value:...} هو ETH حقيقي دائماً
+        if 'call{' in raw_text or 'call {' in raw_text:
+            return False
+        if call_type == "external_call" and "transfer" not in raw_text.lower():
+            return False
+
+        # إذا target هو متغير حالة في العقد → ERC20
+        if target_name in action.state_reads:
+            return True
+
+        # إذا الاسم يشبه متغير حالة (ليس عنوان)
+        storage = state.contract_storage.get(action.contract_name, {})
+        if target_name in storage:
+            return True
+
+        # تحقق من .transfer(addr, amount) بمعاملين → ERC20
+        # مقابل .transfer(amount) بمعامل واحد → ETH
+        transfer_match = re.search(
+            r'\.transfer\s*\(([^)]*)\)', raw_text
+        )
+        if transfer_match:
+            args = transfer_match.group(1)
+            # عدّ الفواصل خارج الأقواس
+            comma_count = self._count_top_level_commas(args)
+            if comma_count >= 1:
+                # معاملين+ → ERC20 (transfer(to, amount))
+                return True
+
+        # إذا target يشبه اسم توكن أو واجهة
+        target_lower = target_name.lower()
+        token_hints = ('token', 'erc20', 'ierc20', 'usdc', 'usdt',
+                       'weth', 'dai', 'wbtc', 'asset', 'coin',
+                       'reward', 'underlying')
+        if any(h in target_lower for h in token_hints):
+            return True
+
+        # إذا target في tokens_involved
+        for tok in action.tokens_involved:
+            if target_name in tok or tok in target_name:
+                return True
+
+        return False
+
+    def _count_top_level_commas(self, s: str) -> int:
+        """عدّ الفواصل خارج الأقواس المتداخلة"""
+        depth = 0
+        count = 0
+        for c in s:
+            if c in ('(', '[', '{'):
+                depth += 1
+            elif c in (')', ']', '}'):
+                depth -= 1
+            elif c == ',' and depth == 0:
+                count += 1
+        return count
+
+    def _apply_native_eth_transfer(
+        self,
+        action: ExecutableAction,
+        state: ProtocolState,
+        delta: StateDelta,
+        ext_call: Dict[str, Any],
+        raw_text: str,
+    ) -> None:
+        """
+        تنفيذ تحويل ETH حقيقي.
+        المستلم يُحدد من سياق الدالة:
+        - fund_outflow → العقد يُرسل للمهاجم (msg.sender)
+        - fund_inflow → المهاجم يُرسل للعقد (handled by msg.value)
+        """
+        amount = self._resolve_eth_amount(action, state)
+        if amount <= 0:
+            return
+
+        # تحديد المستلم الحقيقي
+        recipient = self._determine_transfer_recipient(
+            action, ext_call, raw_text
+        )
+
+        # العقد يفقد ETH
+        delta.balance_changes.append(BalanceChange(
+            account=action.contract_name,
+            token="ETH",
+            amount=-amount,
+            reason=f"eth_transfer_to_{recipient}",
+        ))
+        # المستلم يكسب ETH
+        delta.balance_changes.append(BalanceChange(
+            account=recipient,
+            token="ETH",
+            amount=amount,
+            reason=f"eth_received_from_{action.contract_name}",
+        ))
+
+    def _apply_erc20_transfer(
+        self,
+        action: ExecutableAction,
+        state: ProtocolState,
+        delta: StateDelta,
+        ext_call: Dict[str, Any],
+        token_var: str,
+        raw_text: str,
+    ) -> None:
+        """
+        تنفيذ تحويل ERC20 Token.
+        يحدد التوكن والمستلم والمبلغ من السياق.
+        """
+        amount = self._resolve_transfer_amount(action, state)
+        if amount <= 0:
+            return
+
+        # اسم التوكن (من tokens_involved أو target)
+        token_name = token_var
+        if action.tokens_involved:
+            token_name = action.tokens_involved[0]
+
+        # تحديد المستلم الحقيقي
+        recipient = self._determine_transfer_recipient(
+            action, ext_call, raw_text
+        )
+
+        # العقد يُرسل توكنات
+        delta.balance_changes.append(BalanceChange(
+            account=action.contract_name,
+            token=token_name,
+            amount=-amount,
+            reason=f"token_transfer_to_{recipient}",
+        ))
+        # المستلم يكسب توكنات
+        delta.balance_changes.append(BalanceChange(
+            account=recipient,
+            token=token_name,
+            amount=amount,
+            reason=f"token_received_from_{action.contract_name}",
+        ))
+
+    def _determine_transfer_recipient(
+        self,
+        action: ExecutableAction,
+        ext_call: Dict[str, Any],
+        raw_text: str,
+    ) -> str:
+        """
+        تحديد المستلم الحقيقي للتحويل.
+
+        الأولوية:
+        1. إذا raw_text يحتوي msg.sender → المهاجم
+        2. إذا category = fund_outflow → المهاجم (العقد يُرسل للمستخدم)
+        3. إذا raw_text يحتوي عنوان محدد → ذلك العنوان
+        4. fallback → msg_sender (المهاجم)
+        """
+        raw_lower = raw_text.lower() if raw_text else ""
+
+        # هل النص يُشير صراحة لـ msg.sender؟
+        if 'msg.sender' in raw_lower or '_msgsender()' in raw_lower:
+            return action.msg_sender
+
+        # هل الدالة من نوع سحب/إرسال للمستخدم؟
+        cat = action.category.lower() if action.category else ""
+        func_lower = action.function_name.lower()
+
+        outflow_cats = ("fund_outflow", "withdrawal", "transfer_out")
+        outflow_funcs = ("withdraw", "redeem", "claim", "exit",
+                         "emergencywithdraw", "unstake", "harvest")
+
+        if cat in outflow_cats or any(f in func_lower for f in outflow_funcs):
+            return action.msg_sender
+
+        # هل target في ext_call هو عنوان قابل للحل؟
+        target = ext_call.get("target", "")
+        resolved = self._resolve_address(target, action)
+        # إذا لم يتحول (أي ليس msg.sender/this) والهدف يشبه عنوان
+        if resolved != target:
+            return resolved
+
+        # fallback — في أغلب الحالات المهاجم هو المستلم
+        return action.msg_sender
+
+    def _resolve_transfer_amount(
+        self,
+        action: ExecutableAction,
+        state: ProtocolState,
+    ) -> int:
+        """
+        حساب مبلغ التحويل (ETH أو Token).
+        يبحث في المعاملات ثم net_delta ثم balance_effects.
+        """
+        # 1. معامل amount المحدد
+        amount = self._get_param_value(action, 'amount', state)
+        if amount and amount > 0:
+            return amount
+
+        # 2. balance (لـ emergencyWithdraw وما شابه)
+        balance = self._get_param_value(action, 'balance', state)
+        if balance and balance > 0:
+            return balance
+
+        # 3. استنتاج من net_delta (القيم السالبة = سحب)
+        for var, expr in action.net_delta.items():
+            resolved = self._resolve_expression(expr, action, state)
+            if resolved < 0:
+                return abs(resolved)
+
+        # 4. من balance_effects
+        for entity, expr in action.balance_effects.items():
+            resolved = self._resolve_expression(expr, action, state)
+            if resolved < 0:
+                return abs(resolved)
+
+        # 5. رصيد المهاجم في العقد
+        user_balance = self._find_user_balance(
+            action.msg_sender, action.contract_name, state
+        )
+        if user_balance and user_balance > 0:
+            return user_balance
+
+        return 0
 
     def _apply_token_transfers(
         self,
@@ -425,25 +698,40 @@ class ActionExecutor:
         state: ProtocolState,
         delta: StateDelta,
     ) -> None:
-        """حساب تحويلات Token من balance_effects"""
-        # تحقق من balance_effects في الـ action object
-        action_obj = action.action
-        if not action_obj:
+        """
+        حساب تحويلات Token من balance_effects.
+        يستخدم balance_effects و tokens_involved مباشرة
+        من ExecutableAction (بدون الحاجة لمرجع L2 Action).
+
+        يتخطى الإدخالات التي هي متغيرات تخزين (موجودة في net_delta)
+        أو التي تشير لعلاقات بين كيانات (تحتوي →).
+        """
+        if not action.balance_effects:
             return
 
-        balance_effects = getattr(action_obj, 'balance_effects', {})
-        for entity, expr in balance_effects.items():
-            # حل التعبير
+        token_name = "ETH"
+        if action.tokens_involved:
+            token_name = action.tokens_involved[0]
+
+        # جمع أسماء متغيرات التخزين للتخطي
+        storage_vars = set(action.net_delta.keys())
+        storage_vars.update(action.state_writes)
+
+        for entity, expr in action.balance_effects.items():
+            # تخطي متغيرات التخزين — هذه تُعالج بواسطة _apply_net_delta
+            if entity in storage_vars:
+                continue
+            # تخطي علاقات الكيانات (مثل "account:X→account:Y")
+            if '→' in entity or '->' in entity:
+                continue
+
             amount = self._resolve_expression(expr, action, state)
             if amount == 0:
                 continue
 
-            tokens = getattr(action_obj, 'tokens_involved', [])
-            token = tokens[0] if tokens else "ETH"
-
             delta.balance_changes.append(BalanceChange(
                 account=entity,
-                token=token,
+                token=token_name,
                 amount=amount,
                 reason=f"balance_effect_{action.function_name}",
             ))
@@ -565,23 +853,16 @@ class ActionExecutor:
         action: ExecutableAction,
         state: ProtocolState,
     ) -> int:
-        """حساب كمية ETH المُرسلة في external call"""
-        # أولاً: ابحث في المعاملات
-        amount = self._get_param_value(action, 'amount', state)
-        if amount and amount > 0:
-            return amount
+        """
+        حساب كمية ETH المُرسلة في external call.
 
-        # ثانياً: msg.value
-        if action.msg_value > 0:
-            return action.msg_value
-
-        # ثالثاً: ابحث في net_delta عن أي تعبير amount
-        for var, expr in action.net_delta.items():
-            resolved = self._resolve_expression(expr, action, state)
-            if resolved < 0:  # سحب → الكمية المسحوبة
-                return abs(resolved)
-
-        return 0
+        الترتيب:
+        1. معامل amount المحدد
+        2. msg.value
+        3. net_delta (القيم السالبة = سحب)
+        4. رصيد المهاجم في العقد (لـ withdraw(balance))
+        """
+        return self._resolve_transfer_amount(action, state)
 
     # ═══════════════════════════════════════════════════════
     #  Reentrancy Depth Estimation

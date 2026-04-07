@@ -19,7 +19,7 @@ Test Structure:
     - Search orchestrator finds profitable sequences
 
 Run:
-    cd <repo-root>
+    cd d:\\AGL
     python -m pytest agl_security_tool/tests/test_layers_1_to_4.py -v
     # Or directly:
     python agl_security_tool/tests/test_layers_1_to_4.py
@@ -32,7 +32,7 @@ import json
 from pathlib import Path
 
 # ── Ensure package is importable ──
-_ROOT = Path(__file__).resolve().parent.parent.parent  # repo root
+_ROOT = Path(__file__).resolve().parent.parent.parent  # d:\AGL
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 _PKG = Path(__file__).resolve().parent.parent  # agl_security_tool
@@ -183,9 +183,12 @@ contract SimpleLending {
 # ═══════════════════════════════════════════════════════════════
 #  Test Infrastructure
 # ═══════════════════════════════════════════════════════════════
+import pytest
 
-class TestResult:
-    """Simple test result tracker"""
+
+class _ResultTracker:  # pragma: no collect
+    """Simple test result tracker (not named Test* to avoid pytest collection)"""
+    __test__ = False  # Tell pytest not to collect this class
     def __init__(self):
         self.passed = 0
         self.failed = 0
@@ -221,6 +224,22 @@ class TestResult:
         print(f"Success Rate: {pct:.1f}%")
         print(f"{'='*60}")
         return self.failed == 0 and self.errors == 0
+
+
+# Keep old name for backward compat (main() entrypoint)
+TestResult = _ResultTracker
+
+
+@pytest.fixture
+def r():
+    """Provide _ResultTracker instance as a pytest fixture."""
+    tracker = _ResultTracker()
+    yield tracker
+    # Fail the pytest test if any sub-checks failed
+    assert tracker.failed == 0 and tracker.errors == 0, (
+        f"{tracker.failed} failures, {tracker.errors} errors out of "
+        f"{tracker.passed + tracker.failed + tracker.errors} checks"
+    )
 
 
 def parse_contract(source: str) -> list:

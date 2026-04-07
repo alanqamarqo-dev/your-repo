@@ -16,7 +16,7 @@
 ║    │ المرحلة 0: تحليل الهدف واستنساخه إن كان رابط Git               │           ║
 ║    │ المرحلة 1: تحميل جميع المحركات ديناميكياً                      │           ║
 ║    │ المرحلة 2: اكتشاف بنية المشروع (Foundry/Hardhat/Truffle/Bare)  │           ║
-║    │ المرحلة 2.5: التحليل الدلالي المشترك (تحليل مرة واحدة للجميع) │           ║
+║    │ المرحلة 2.5: التحليل الدلالي المشترك (التحليل مرة واحدة للجميع) │           ║
 ║    │ المرحلة 3: الفحص العميق Layer 0-5 (Z3 + أنماط + كواشف)        │           ║
 ║    │ المرحلة 4: Z3 على المكتبات فقط (العقود الرئيسية مُغطاة)       │           ║
 ║    │ المرحلة 5: استخراج الحالة المالية + محاكاة الهجمات             │           ║
@@ -76,6 +76,8 @@ from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
+from agl_security_tool.known_pattern_filter import classify_findings, print_classification_summary
+
 # === إعداد المسارات ===
 # الجذر = المستوى الأعلى للمشروع (أب مجلد الحزمة)
 ROOT = Path(__file__).resolve().parent.parent
@@ -89,43 +91,162 @@ ROOT = Path(__file__).resolve().parent.parent
 
 class AuditContext:
     """
-    كائن سياق مشترك يربط كل طبقات التدقيق.
+    النواة المركزية لخط التدقيق — كل طبقة تقرأ منه وتكتب إليه.
 
-    بدلاً من أن تعمل كل طبقة بمعزل وتُمرر النتائج في dicts متفرقة،
-    AuditContext يجمع:
-      - النتائج المحللة مسبقاً (shared_parse)
-      - النتائج التراكمية من كل طبقة
-      - الدوال الآمنة المعروفة (safe_funcs)
-      - Z3 proofs المُثبتة
-      - أي بيانات تحتاجها طبقة لاحقة من طبقة سابقة
+    يحل محل تمرير (engines, project, shared_parse, all_results) بين الدوال.
+    كل طبقة تستقبل ctx فقط وتقرأ ما تحتاجه وتخزن نتائجها فيه.
 
-    يتكامل مع النمط الحالي (dicts) بشكل تدريجي —
-    الطبقات التي لم تُحدَّث بعد تستمر بالعمل كالسابق.
+    الحقول الأساسية:
+      engines       — المحركات المُحمَّلة (core, z3, state, exploit, ...)
+      project       — بنية المشروع المُكتشفة (contracts, main_contracts, ...)
+      shared_parse  — التحليل الدلالي المشترك (parsed, source, function_blocks)
+      results       — نتائج كل طبقة (deep_scan, z3_symbolic, detectors, ...)
+      safe_functions — الدوال الآمنة (internal/private/view/pure)
+      z3_proven     — إثباتات Z3 لكل عقد
+      unified_findings — النتائج المُوحَّدة بعد إزالة التكرار
     """
 
-    def __init__(self):
-        # Shared parse data (from run_shared_parsing)
+    def __init__(self, engines: Dict[str, Any] = None, project: Dict[str, Any] = None,
+                 target_name: str = "", mode: str = "full"):
+        # ── Core references ──
+        self.engines: Dict[str, Any] = engines or {}
+        self.project: Dict[str, Any] = project or {}
+        self.target_name: str = target_name
+        self.mode: str = mode
+
+        # ── Shared parse data ──
         self.shared_parse: Dict[str, Dict] = {}
 
-        # Per-contract findings from each layer
-        self.deep_scan_results: Dict[str, Dict] = {}
-        self.z3_findings: List[Dict] = []
-        self.detector_findings: List[Dict] = []
-        self.exploit_results: Dict[str, Dict] = {}
-        self.heikal_results: Dict[str, Dict] = {}
-        self.state_results: Dict[str, Dict] = {}
+        # ── Layer results (replaces all_results dict) ──
+        self.results: Dict[str, Any] = {}
 
-        # Cross-layer intelligence
-        self.safe_functions: Dict[str, set] = {}  # contract -> {safe_func_names}
+        # ── Cross-layer intelligence ──
+        self.safe_functions: Dict[str, set] = {}   # contract -> {safe_func_names}
+        self._global_safe_funcs: set = set()        # flat set of all safe function names
         self.z3_proven: Dict[str, List[Dict]] = {}  # contract -> [proven findings]
-        self.remappings: List[str] = []  # Solidity import remappings
-
-        # Unified findings (after dedup)
+        self.remappings: List[str] = []             # Solidity import remappings
         self.unified_findings: List[Dict] = []
+
+    # ── Engine shortcuts ─────────────────────────────
+
+    @property
+    def core(self):
+        """AGLSecurityAudit engine (Layer 0-5)."""
+        return self.engines.get("core")
+
+    @property
+    def z3_engine(self):
+        """Z3 Symbolic Execution Engine."""
+        return self.engines.get("z3")
+
+    @property
+    def state_engine(self):
+        """State Extraction Engine (Layer 1-4)."""
+        return self.engines.get("state")
+
+    @property
+    def exploit_engine(self):
+        """Exploit Reasoning Engine (Layer 6)."""
+        return self.engines.get("exploit")
+
+    @property
+    def detector_runner(self):
+        """22 Semantic Detectors (Layer 5)."""
+        return self.engines.get("detectors")
+
+    @property
+    def parser(self):
+        """Solidity Semantic Parser."""
+        return self.engines.get("parser")
+
+    @property
+    def tunneling(self):
+        """Heikal Tunneling Scorer (Layer 7)."""
+        return self.engines.get("tunneling")
+
+    @property
+    def wave(self):
+        """Heikal Wave Domain Evaluator (Layer 7)."""
+        return self.engines.get("wave")
+
+    @property
+    def holographic(self):
+        """Heikal Holographic Vulnerability Memory (Layer 7)."""
+        return self.engines.get("holographic")
+
+    @property
+    def resonance(self):
+        """Heikal Resonance Profit Optimizer (Layer 7)."""
+        return self.engines.get("resonance")
+
+    # ── Project shortcuts ────────────────────────────
+
+    @property
+    def contracts(self) -> Dict:
+        """All contract files {name: Path}."""
+        return self.project.get("contracts", {})
+
+    @property
+    def main_contracts(self) -> List[str]:
+        """Main (non-library, non-interface) contract names."""
+        return self.project.get("main_contracts", [])
+
+    @property
+    def libraries(self) -> List[str]:
+        """Library contract names."""
+        return self.project.get("libraries", [])
+
+    @property
+    def contracts_dir(self) -> str:
+        """Root contracts directory path."""
+        return self.project.get("contracts_dir", "")
+
+    @property
+    def project_path(self) -> str:
+        """Project root path."""
+        return self.project.get("project_path", "")
+
+    # ── Results shortcuts ────────────────────────────
+
+    @property
+    def deep_scan_results(self) -> Dict:
+        return self.results.get("deep_scan", {})
+
+    @deep_scan_results.setter
+    def deep_scan_results(self, value):
+        self.results["deep_scan"] = value
+
+    @property
+    def z3_findings(self) -> List:
+        return self.results.get("z3_symbolic", [])
+
+    @property
+    def detector_findings(self) -> List:
+        return self.results.get("detectors", [])
+
+    @property
+    def exploit_results(self) -> Dict:
+        return self.results.get("exploit_reasoning", {})
+
+    @property
+    def heikal_results(self) -> Dict:
+        return self.results.get("heikal_math", {})
+
+    @property
+    def state_results(self) -> Dict:
+        return self.results.get("state_extraction", {})
+
+    # ── Z3 proof management ──────────────────────────
 
     def get_z3_proven_for(self, contract_name: str) -> List[Dict]:
         """Get Z3-proven findings for a specific contract."""
         return self.z3_proven.get(contract_name, [])
+
+    def add_z3_proof(self, contract_name: str, finding: Dict):
+        """Register a Z3-proven finding for cross-layer use."""
+        self.z3_proven.setdefault(contract_name, []).append(finding)
+
+    # ── Safe function management ─────────────────────
 
     def mark_safe_function(self, contract_name: str, func_name: str):
         """Mark a function as verified-safe (suppress FPs in later stages)."""
@@ -135,37 +256,37 @@ class AuditContext:
         """Check if a function has been marked as safe."""
         return func_name in self.safe_functions.get(contract_name, set())
 
-    def add_z3_proof(self, contract_name: str, finding: Dict):
-        """Register a Z3-proven finding for cross-layer use."""
-        self.z3_proven.setdefault(contract_name, []).append(finding)
-
-    # ── Integration helpers ──────────────────────────────
-
-    def populate_from_shared_parse(self, shared_parse: Dict):
-        """استيراد الدوال الآمنة والبيانات المشتركة من التحليل الدلالي."""
-        self.shared_parse = shared_parse
-        # _safe_funcs is a flat set of lowercase function names
-        self._global_safe_funcs: set = shared_parse.get("_safe_funcs", set())
-        self.remappings = shared_parse.get("_remappings", [])
-
     def is_globally_safe(self, func_name: str) -> bool:
         """Check if a function is safe (internal/private/view/pure) globally."""
-        return func_name.lower() in getattr(self, "_global_safe_funcs", set())
+        return func_name.lower() in self._global_safe_funcs
 
-    def store_layer_result(self, layer: str, results):
-        """تخزين نتائج طبقة تلقائياً في الحقل المناسب."""
-        if layer == "deep_scan":
-            self.deep_scan_results = results
-        elif layer == "z3_symbolic":
-            self.z3_findings = results if isinstance(results, list) else []
-        elif layer == "detectors":
-            self.detector_findings = results if isinstance(results, list) else []
-        elif layer == "exploit_reasoning":
-            self.exploit_results = results
-        elif layer == "heikal_math":
-            self.heikal_results = results
-        elif layer == "state_extraction":
-            self.state_results = results
+    # ── Layer result storage ─────────────────────────
+
+    def store_result(self, layer: str, data):
+        """Store a layer's results and update cross-layer intelligence."""
+        self.results[layer] = data
+
+        # Auto-extract Z3 proofs from deep_scan
+        if layer == "deep_scan" and isinstance(data, dict):
+            for cname, ds in data.items():
+                if not isinstance(ds, dict):
+                    continue
+                for sf in ds.get("symbolic_findings", []):
+                    if sf.get("is_proven") or sf.get("z3_result") == "SAT":
+                        self.add_z3_proof(cname, sf)
+
+    def populate_from_shared_parse(self, shared_parse: Dict):
+        """Import safe functions and shared data from semantic parsing."""
+        self.shared_parse = shared_parse
+        self._global_safe_funcs = shared_parse.get("_safe_funcs", set())
+        self.remappings = shared_parse.get("_remappings", [])
+
+    def get_all_safe_funcs(self) -> set:
+        """Get merged set of all safe functions (global + per-contract)."""
+        merged = set(self._global_safe_funcs)
+        for funcs in self.safe_functions.values():
+            merged |= {f.lower() for f in funcs}
+        return merged
 
 
 # ═══════════════════════════════════════════════════════════
@@ -653,8 +774,11 @@ def discover_project(project_path: str, config: Dict = None) -> Dict[str, Any]:
     else:
         project_type = "bare"
 
+    # RC-FIX-3: إضافة project_path للقاموس المُرجع — مطلوب من run_poc_generation وأي مُستدعٍ خارجي
+    # RC-FIX-3: include project_path so callers (e.g. run_poc_generation) don't need to add it manually
     return {
         "project_type": project_type,
+        "project_path": project_path,
         "contracts_dir": contracts_dir,
         "contracts": contracts,
         "main_contracts": list(set(main_contracts)),
@@ -671,9 +795,11 @@ def discover_project(project_path: str, config: Dict = None) -> Dict[str, Any]:
 # ═══════════════════════════════════════════════════════════
 
 
-def run_shared_parsing(engines: Dict, project: Dict) -> Dict[str, Any]:
+def run_shared_parsing(ctx_or_engines, project: Dict = None) -> Dict[str, Any]:
     """
     تحليل دلالي مسبق لجميع العقود — يُحلَّل مرة واحدة ويُشارَك الناتج مع كل طبقة.
+
+    يقبل AuditContext (الطريقة الجديدة) أو (engines, project) للتوافق.
 
     الفوائد:
       - يمنع تكرار عملية التحليل (كانت كل طبقة تُحلِّل مستقلة)
@@ -683,18 +809,17 @@ def run_shared_parsing(engines: Dict, project: Dict) -> Dict[str, Any]:
       - يُنشئ فهرس _all_contracts لأي طبقة تحتاج ParsedContract مباشرة
 
     يُرجع:
-        {
-            اسم_العقد: {
-                'parsed': [كائنات ParsedContract],
-                'source': الكود المصدري,
-                'path':   مسار الملف,
-                'function_blocks': {اسم_الدالة: الكود_الكامل},
-            },
-            '_safe_funcs': مجموعة أسماء الدوال الآمنة (بحروف صغيرة),
-            '_all_contracts': {اسم_العقد: [ParsedContract, ...]},
-            '_state_vars': {اسم_العقد: {متغير: StateVar}},
-        }
+        dict مع بيانات التحليل المشترك. إذا أُعطي ctx يُخزَّن فيه تلقائياً.
     """
+    # ── التوافق: قبول (ctx) أو (engines, project) ──
+    if isinstance(ctx_or_engines, AuditContext):
+        ctx = ctx_or_engines
+        engines = ctx.engines
+        project = ctx.project
+    else:
+        engines = ctx_or_engines
+        ctx = None
+
     banner("SHARED PARSING — التحليل الدلالي المشترك")
 
     parser = engines.get("parser")
@@ -769,6 +894,10 @@ def run_shared_parsing(engines: Dict, project: Dict) -> Dict[str, Any]:
     print(f"  📊 Safe functions (skip for external attacks): {len(safe_funcs)}")
     print(f"  📊 Indexed contracts: {len(all_contracts_index)} — State vars tracked: {sum(len(v) for v in all_state_vars.values())}")
 
+    # ── Auto-store in ctx if available ──
+    if ctx is not None:
+        ctx.populate_from_shared_parse(shared)
+
     return shared
 
 
@@ -779,112 +908,162 @@ def run_shared_parsing(engines: Dict, project: Dict) -> Dict[str, Any]:
 
 
 def deduplicate_cross_layer(
-    all_results: Dict,
-    shared_parse: Dict,
+    ctx_or_results,
+    shared_parse: Dict = None,
     audit_ctx: "AuditContext" = None,
 ) -> Dict:
     """
-    توحيد وتنقية النتائج عبر جميع الطبقات في مستوى الـ API.
+    توحيد وتنقية النتائج عبر جميع الطبقات — إصدار الإنتاج.
 
-    يقوم بـ:
-      1. جمع كل النتائج من deep_scan و Z3 المستقل والكواشف المستقلة
-      2. حذف النتائج المُكررة (نفس العنوان + نفس السطر ±5)
-      3. كبت النتائج على دوال آمنة (internal/private/view/pure)
-      4. حساب ملخص الخطورة المُوحَّد
+    Production-grade cross-layer deduplication with:
+      1. Unified fingerprinting: (function, base_category, line_bucket)
+      2. Internal pre-dedup for exploit_reasoning before cross-layer merge
+      3. Conflict resolution: keep highest severity, best proof, list all sources
+      4. Enrichment propagation: exploit/heikal flags on merged findings
+      5. Safe-function suppression for LOW/INFO findings
 
-    هذا يضمن أن كل ثغرة تظهر مرة واحدة فقط في التقرير النهائي،
-    حتى لو اكتشفتها عدة طبقات مستقلة.
-
-    يُرجع:
-        all_results مُحدَّث بإضافة:
-          - 'unified_findings': قائمة النتائج المُوحَّدة بدون تكرار
-          - 'dedup_stats':      إحصائيات التنقية (كم حُذف من كل طبقة)
-          - 'severity_unified': ملخص الخطورة النهائي
+    يقبل AuditContext (الطريقة الجديدة) أو (all_results, shared_parse) للتوافق.
     """
+    # ── التوافق: قبول (ctx) أو (all_results, shared_parse) ──
+    if isinstance(ctx_or_results, AuditContext):
+        ctx = ctx_or_results
+        all_results = ctx.results
+        shared_parse = ctx.shared_parse
+        audit_ctx = ctx
+    else:
+        all_results = ctx_or_results
+        ctx = audit_ctx
+
     banner("CROSS-LAYER DEDUPLICATION — تنقية التكرارات")
 
-    safe_funcs = set(shared_parse.get("_safe_funcs", set()))
-    # Merge per-contract safe functions from AuditContext (if layers marked extras)
-    if audit_ctx:
-        for funcs in audit_ctx.safe_functions.values():
-            safe_funcs |= {f.lower() for f in funcs}
+    safe_funcs = set((shared_parse or {}).get("_safe_funcs", set()))
+    if ctx:
+        safe_funcs |= ctx.get_all_safe_funcs()
 
-    # Collect ALL findings from every layer into one flat list
-    unified = []
-    sources_seen = {}  # (title_norm, line) -> list of sources
+    # ────────────────────────────────────────────────────────────
+    # Helper: Unified category normalization — maps any category string
+    # to a canonical base category for fingerprint matching.
+    # توحيد التصنيفات — يحوّل أي تصنيف إلى فئة أساسية موحدة
+    # ────────────────────────────────────────────────────────────
+    _CATEGORY_MAP = [
+        ("reentrancy", "reentrancy"), ("reentran", "reentrancy"),
+        ("access", "access_control"), ("unprotect", "access_control"),
+        ("overflow", "arithmetic"), ("underflow", "arithmetic"),
+        ("arithmetic", "arithmetic"), ("divide_before", "arithmetic"),
+        ("delegatecall", "delegatecall"),
+        ("timestamp", "timestamp"),
+        ("unchecked", "unchecked_call"), ("return_value", "unchecked_call"),
+        ("zero_address", "input_validation"),
+        ("oracle", "oracle"), ("price", "oracle"), ("stale", "oracle"),
+        ("flash", "flash_loan"), ("sandwich", "front_running"),
+        ("front", "front_running"), ("mev", "front_running"),
+        ("first_deposit", "first_depositor"), ("share_inflation", "first_depositor"),
+        ("token", "token"), ("erc20", "token"),
+        ("selfdestruct", "selfdestruct"), ("suicide", "selfdestruct"),
+        ("tx.origin", "tx_origin"), ("tx_origin", "tx_origin"),
+        ("dos", "dos"), ("loop", "dos"), ("gas", "dos"),
+        ("signature", "signature"), ("replay", "signature"),
+        ("proxy", "proxy"), ("storage_collision", "proxy"), ("upgrade", "proxy"),
+        ("heikal_tunneling", "heikal_risk"), ("heikal_attack", "heikal_risk"),
+        ("exploit_proven", "exploit_proven"),
+    ]
 
-    def normalize_title(t: str) -> str:
-        import re
-
-        t = re.sub(r"[^a-z0-9 ]", "", t.lower())
-        return " ".join(t.split()[:8])
+    def normalize_category(cat: str) -> str:
+        """Canonical base category from any category/detector string."""
+        cat_lower = cat.lower().replace("-", "_").replace(" ", "_")
+        for keyword, base in _CATEGORY_MAP:
+            if keyword in cat_lower:
+                return base
+        return cat_lower or "other"
 
     def extract_func_from_finding(f: Dict) -> str:
         """Try to extract function name from a finding."""
         fn = f.get("function", "")
         if fn:
-            return fn.lower()
+            return fn.lower().strip()
         title = f.get("title", "") + " " + f.get("description", "")
-        import re
-
-        # Match func=name or name() or (CFG: name) patterns
         m = re.search(r"func[=:]\s*(\w+)", title, re.IGNORECASE)
         if m:
             return m.group(1).lower()
         m = re.search(r"\b(\w+)\s*\(", title)
         if m:
             return m.group(1).lower()
-        # Match "in functionName" pattern (common in finding titles)
         m = re.search(r"\bin\s+(\w+)\b", title)
         return m.group(1).lower() if m else ""
 
-    # --- Gather findings from deep_scan (already deduped internally) ---
+    def make_fingerprint(f: Dict) -> tuple:
+        """
+        بصمة موحدة — Unified fingerprint for any finding.
+        A finding is a duplicate if it shares:
+          (function_name, normalized_base_category, line_bucket)
+        """
+        fn = extract_func_from_finding(f)
+        raw_cat = f.get("category", f.get("detector", f.get("detector_id", "")))
+        base_cat = normalize_category(raw_cat)
+        line_bucket = f.get("line", 0) // 10
+        return (fn, base_cat, line_bucket)
+
+    _SEV_RANK = {"CRITICAL": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3, "INFO": 4}
+
+    def _conf_float(val) -> float:
+        if isinstance(val, (int, float)):
+            return float(val)
+        return {"high": 0.9, "medium": 0.7, "low": 0.5}.get(str(val).lower(), 0.5)
+
+    # ────────────────────────────────────────────────────────────
+    # Stage 1: Gather raw findings from every layer
+    # المرحلة 1: جمع النتائج الخام من كل الطبقات
+    # ────────────────────────────────────────────────────────────
+
+    # --- deep_scan (already deduped internally) ---
     deep_findings = []
     for name, result in all_results.get("deep_scan", {}).items():
         if isinstance(result, dict) and not result.get("error"):
             for f in result.get("all_findings_unified", result.get("findings", [])):
-                f = dict(f)  # copy
+                f = dict(f)
                 f["_layer"] = "deep_scan"
                 f["_contract"] = name
                 deep_findings.append(f)
 
-    # --- Gather standalone Z3 findings ---
+    # --- standalone Z3 ---
     z3_standalone = []
     for f in all_results.get("z3_symbolic", []):
         f = dict(f)
         f["_layer"] = "z3_standalone"
         z3_standalone.append(f)
 
-    # --- Gather standalone detector findings ---
+    # --- standalone detectors ---
     det_standalone = []
     for f in all_results.get("detectors", []):
         f = dict(f)
         f["_layer"] = "detectors_standalone"
         det_standalone.append(f)
 
-    # --- Gather exploit reasoning findings (were previously ignored) ---
-    exploit_standalone = []
+    # --- exploit reasoning: gather + internal pre-dedup ---
+    # المرحلة 1.5: حذف التكرارات الداخلية من محرك الاستغلال
+    # Internal pre-dedup: keep best proof per (function, contract)
+    exploit_raw = []
     for name, result in all_results.get("exploit_reasoning", {}).items():
         if isinstance(result, dict) and not result.get("error"):
             for proof in result.get("exploit_proofs", []):
                 if proof.get("exploitable"):
-                    # Use the proof's actual confidence — don't hardcode
                     proof_conf = proof.get("confidence", 0.5)
-                    # Severity from confidence: aligned with RC3 fix
-                    # (exploitable threshold raised to 0.85 + >=3 attack_steps)
                     if proof_conf >= 0.85:
                         proof_sev = "CRITICAL"
                     elif proof_conf >= 0.70:
                         proof_sev = "HIGH"
                     else:
                         proof_sev = "MEDIUM"
-                    exploit_standalone.append(
+                    # Read category from proof (populated by ExploitAssembler)
+                    # and also add vulnerability_type for backward compat
+                    vuln_type = proof.get("category", "") or proof.get("vulnerability_type", "")
+                    if not vuln_type or vuln_type == "?":
+                        vuln_type = "exploit_proven"
+                    exploit_raw.append(
                         {
-                            "title": f"Proven exploit: {proof.get('vulnerability_type', 'unknown')} in {proof.get('function', '?')}()",
+                            "title": f"Proven exploit: {vuln_type} in {proof.get('function', '?')}()",
                             "severity": proof_sev,
-                            "category": proof.get(
-                                "vulnerability_type", "exploit_proven"
-                            ),
+                            "category": vuln_type,
                             "description": proof.get(
                                 "attack_steps", proof.get("description", "")
                             ),
@@ -901,7 +1080,27 @@ def deduplicate_cross_layer(
                         }
                     )
 
-    # --- Gather Heikal Math findings (were previously ignored) ---
+    # Internal dedup: keep best per (function, contract) — حذف التكرارات الداخلية
+    exploit_internal_dedup: Dict[tuple, Dict] = {}
+    exploit_internal_duped = 0
+    for f in exploit_raw:
+        fn = f.get("function", "").lower()
+        cn = f.get("_contract", "")
+        key = (fn, cn)
+        if key in exploit_internal_dedup:
+            existing = exploit_internal_dedup[key]
+            # Keep the one with higher confidence; on tie, keep higher severity
+            if (f["confidence"] > existing["confidence"]) or (
+                f["confidence"] == existing["confidence"]
+                and _SEV_RANK.get(f["severity"], 4) < _SEV_RANK.get(existing["severity"], 4)
+            ):
+                exploit_internal_dedup[key] = f
+            exploit_internal_duped += 1
+        else:
+            exploit_internal_dedup[key] = f
+    exploit_standalone = list(exploit_internal_dedup.values())
+
+    # --- Heikal Math findings ---
     heikal_standalone = []
     heikal_data = all_results.get("heikal_math", {})
     for key, item in heikal_data.get("functions", {}).items():
@@ -910,7 +1109,6 @@ def deduplicate_cross_layer(
             tunnel_conf = item.get("tunneling", {}).get("confidence", 0)
             wave_score = item.get("wave", {}).get("heuristic_score", 0)
             contract_name = item.get("_contract", "")
-            # Extract function name from "Contract::function" key
             func_name = key.split("::")[-1] if "::" in key else key
             heikal_standalone.append(
                 {
@@ -945,15 +1143,12 @@ def deduplicate_cross_layer(
                 }
             )
 
-    # --- Gather state extraction findings (project-level) ---
+    # --- state extraction (project-level) ---
     state_standalone = []
     state_data = all_results.get("state_extraction", {})
     if isinstance(state_data, dict) and not state_data.get("error"):
-        raw_state = state_data.get("raw", state_data)
-        # Fund flow findings from project-level state extraction
         for issue in state_data.get("validation_issues", []):
             if isinstance(issue, dict):
-                # Map validator severity (error/warning/info) to standard security severity
                 _val_sev_map = {"error": "HIGH", "warning": "MEDIUM", "info": "LOW"}
                 raw_sev = issue.get("severity", "MEDIUM")
                 mapped_sev = _val_sev_map.get(raw_sev.lower(), raw_sev.upper())
@@ -971,122 +1166,101 @@ def deduplicate_cross_layer(
                     }
                 )
 
-    # Build signature set from deep_scan to detect duplicates
-    # Function-based keys preferred (aligned with core.py RC4 fix)
-    deep_func_sigs = set()  # (func_name, category_norm) for function-based matching
-    deep_title_sigs = set() # (title_norm) for fallback title-only matching
+    # ────────────────────────────────────────────────────────────
+    # Stage 2: Unified fingerprint merge — all layers into one dict
+    # المرحلة 2: الدمج الموحد — كل الطبقات في قاموس واحد بالبصمة
+    # ────────────────────────────────────────────────────────────
+    merged: Dict[tuple, Dict] = {}  # fingerprint → best merged finding
+
+    def _merge_finding(f: Dict, source_label: str):
+        """Merge a finding into the unified dict by fingerprint.
+        If duplicate: keep highest severity, best description, best proof,
+        and list all confirming sources in confirmed_by.
+        """
+        fp = make_fingerprint(f)
+        if fp in merged:
+            existing = merged[fp]
+            # Track confirming sources — تسجيل المصادر المؤكدة
+            sources = existing.setdefault("confirmed_by", [])
+            if source_label not in sources:
+                sources.append(source_label)
+            # Keep higher severity — الاحتفاظ بالأعلى خطورة
+            if _SEV_RANK.get(str(f.get("severity", "INFO")).upper(), 4) < _SEV_RANK.get(
+                str(existing.get("severity", "INFO")).upper(), 4
+            ):
+                existing["severity"] = f["severity"]
+            # Boost confidence for multi-source — تعزيز الثقة
+            existing["confidence"] = min(
+                1.0, _conf_float(existing.get("confidence", 0.7)) + 0.05
+            )
+            # Keep longer (more detailed) description
+            if len(f.get("description", "")) > len(existing.get("description", "")):
+                existing["description"] = f["description"]
+            # Propagate exploit proof if the new finding has one
+            if f.get("exploit_proof") and not existing.get("exploit_proof"):
+                existing["exploit_proof"] = f["exploit_proof"]
+                existing["is_proven"] = True
+                existing["z3_proven"] = f.get("z3_proven", False)
+            # Propagate exploitable/heikal flags
+            if f.get("exploitable"):
+                existing["exploitable"] = True
+            if f.get("heikal_enriched"):
+                existing["heikal_enriched"] = True
+        else:
+            entry = dict(f)
+            entry["confirmed_by"] = [source_label]
+            entry["confidence"] = _conf_float(entry.get("confidence", 0.7))
+            entry.setdefault("source", source_label)
+            merged[fp] = entry
+
+    # Process layers in priority order — deep_scan first (most detailed findings)
     for f in deep_findings:
-        title_n = normalize_title(f.get("title", ""))
-        deep_title_sigs.add(title_n)
-        # Function-based dedup key (primary — aligned with core.py)
-        fn = extract_func_from_finding(f)
-        cat_n = normalize_title(f.get("category", ""))
-        if fn:
-            deep_func_sigs.add((fn, cat_n))
-
-    def _is_dup(f):
-        """Check if a finding duplicates one already in deep_scan."""
-        # Function-based match first (preferred — aligned with core.py RC4 fix)
-        fn = extract_func_from_finding(f)
-        cat_n = normalize_title(f.get("category", ""))
-        if fn and (fn, cat_n) in deep_func_sigs:
-            return True
-        # Fallback: exact title match (no line tolerance)
-        title_n = normalize_title(f.get("title", ""))
-        if title_n in deep_title_sigs:
-            return True
-        return False
-
-    # Filter standalone Z3: remove if already in deep_scan
-    z3_kept = []
-    z3_duped = 0
+        _merge_finding(f, f.get("source", "deep_scan"))
     for f in z3_standalone:
-        if _is_dup(f):
-            z3_duped += 1
-        else:
-            z3_kept.append(f)
-
-    # Filter standalone detectors: remove if already in deep_scan
-    det_kept = []
-    det_duped = 0
+        _merge_finding(f, "z3_symbolic")
     for f in det_standalone:
-        if _is_dup(f):
-            det_duped += 1
-        else:
-            det_kept.append(f)
-
-    # Filter exploit reasoning: remove if already in deep_scan
-    exploit_kept = []
-    exploit_duped = 0
+        _merge_finding(f, "detectors_standalone")
     for f in exploit_standalone:
-        if _is_dup(f):
-            exploit_duped += 1
-        else:
-            exploit_kept.append(f)
-
-    # Filter heikal: remove if already in deep_scan (by function match)
-    heikal_kept = []
-    heikal_duped = 0
+        _merge_finding(f, "exploit_reasoning")
     for f in heikal_standalone:
-        if _is_dup(f):
-            heikal_duped += 1
-        else:
-            heikal_kept.append(f)
+        _merge_finding(f, "heikal_math")
+    for f in state_standalone:
+        _merge_finding(f, "state_extraction")
 
-    # Merge all unique findings
-    unified = (
-        deep_findings
-        + z3_kept
-        + det_kept
-        + exploit_kept
-        + heikal_kept
-        + state_standalone
-    )
-
-    # --- Enrich deep_scan findings with exploit/heikal flags ---
-    # Build lookup: (function_lower, contract) → exploit proof data
-    exploit_func_set = set()
-    for ef in exploit_standalone:
-        fn = ef.get("function", "").lower()
-        cn = ef.get("_contract", "")
-        if fn:
-            exploit_func_set.add((fn, cn))
-
-    # Build lookup: function_lower → heikal data
-    heikal_func_set = set()
-    for hf in heikal_standalone:
-        fn = hf.get("function", "").lower()
-        if fn:
-            heikal_func_set.add(fn)
-
-    for f in unified:
-        fn = extract_func_from_finding(f)
-        cn = f.get("_contract", "")
-        # Propagate exploitable flag from exploit reasoning proofs
-        if fn and (fn, cn) in exploit_func_set and "exploitable" not in f:
-            f["exploitable"] = True
-        # Propagate heikal_enriched flag from heikal analysis
-        if fn and fn in heikal_func_set and "heikal_enriched" not in f:
-            f["heikal_enriched"] = True
-
-    # --- Suppress findings on safe functions ---
-    # Only suppress LOW/INFO findings on internal/private/view/pure functions.
-    # CRITICAL/HIGH/MEDIUM findings on safe functions are kept — real vulnerabilities
-    # can exist in internal helpers (e.g., reentrancy in _withdraw called by public fn).
+    # ────────────────────────────────────────────────────────────
+    # Stage 3: Suppress safe functions + normalize fields
+    # المرحلة 3: كبت الدوال الآمنة + توحيد الحقول
+    # ────────────────────────────────────────────────────────────
     suppressed = 0
     final = []
-    for f in unified:
+    for f in merged.values():
         fn = extract_func_from_finding(f)
         sev = str(f.get("severity", "MEDIUM")).upper()
         if fn and fn in safe_funcs and sev in ("LOW", "INFO"):
             suppressed += 1
             continue
-        # Normalize internal fields → public fields for downstream consumers
         if "_layer" in f and "layer" not in f:
             f["layer"] = f["_layer"]
         if "_contract" in f and "contract" not in f:
             f["contract"] = f["_contract"]
         final.append(f)
+
+    # --- Known Pattern Classification / تصنيف الأنماط المعروفة ---
+    contract_sources = {}
+    if shared_parse:
+        for name, entry in shared_parse.items():
+            if isinstance(entry, dict) and "source" in entry:
+                contract_sources[name] = entry["source"]
+    final, known_stats = classify_findings(final, contract_sources)
+    print_classification_summary(known_stats, final)
+
+    # Sort: severity ▶ confidence descending
+    final.sort(
+        key=lambda x: (
+            _SEV_RANK.get(str(x.get("severity", "INFO")).upper(), 4),
+            -x.get("confidence", 0),
+        )
+    )
 
     # --- Severity summary ---
     severity_total = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0, "INFO": 0}
@@ -1095,47 +1269,70 @@ def deduplicate_cross_layer(
         if sev in severity_total:
             severity_total[sev] += 1
 
+    # ── Compute dedup statistics ──
+    total_raw = (
+        len(deep_findings) + len(z3_standalone) + len(det_standalone)
+        + len(exploit_raw) + len(heikal_standalone) + len(state_standalone)
+    )
+    total_cross_duped = total_raw - len(merged)
+
     stats = {
         "deep_scan_findings": len(deep_findings),
         "z3_standalone_raw": len(z3_standalone),
-        "z3_standalone_kept": len(z3_kept),
-        "z3_duplicates_removed": z3_duped,
+        "z3_standalone_kept": sum(1 for f in merged.values() if f.get("_layer") == "z3_standalone"),
+        "z3_duplicates_removed": len(z3_standalone) - sum(1 for f in merged.values() if f.get("_layer") == "z3_standalone"),
         "detectors_standalone_raw": len(det_standalone),
-        "detectors_standalone_kept": len(det_kept),
-        "detectors_duplicates_removed": det_duped,
-        "exploit_reasoning_findings": len(exploit_kept),
-        "exploit_reasoning_duplicates_removed": exploit_duped,
-        "heikal_findings": len(heikal_kept),
-        "heikal_duplicates_removed": heikal_duped,
+        "detectors_standalone_kept": sum(1 for f in merged.values() if f.get("_layer") == "detectors_standalone"),
+        "detectors_duplicates_removed": len(det_standalone) - sum(1 for f in merged.values() if f.get("_layer") == "detectors_standalone"),
+        "exploit_reasoning_raw": len(exploit_raw),
+        "exploit_internal_deduped": exploit_internal_duped,
+        "exploit_reasoning_findings": sum(1 for f in merged.values() if f.get("_layer") == "exploit_reasoning"),
+        "exploit_reasoning_duplicates_removed": len(exploit_standalone) - sum(1 for f in merged.values() if f.get("_layer") == "exploit_reasoning"),
+        "heikal_raw": len(heikal_standalone),
+        "heikal_findings": sum(1 for f in merged.values() if f.get("_layer") == "heikal_math"),
+        "heikal_duplicates_removed": len(heikal_standalone) - sum(1 for f in merged.values() if f.get("_layer") == "heikal_math"),
         "state_extraction_findings": len(state_standalone),
         "safe_function_suppressed": suppressed,
+        "known_pattern_classified": known_stats.get("total_classified", 0),
+        "known_risk": known_stats.get("known_risk", 0),
+        "intended_feature": known_stats.get("intended_feature", 0),
+        "new_findings": known_stats.get("new", 0),
+        "total_raw_all_layers": total_raw,
+        "total_cross_layer_merged": total_cross_duped,
         "total_unified": len(final),
     }
 
     all_results["unified_findings"] = final
     all_results["dedup_stats"] = stats
     all_results["severity_unified"] = severity_total
+    all_results["known_pattern_stats"] = known_stats
 
     print(f"  Deep scan findings:            {len(deep_findings)}")
     print(
-        f"  Z3 standalone: {len(z3_standalone)} raw → {len(z3_kept)} kept ({z3_duped} duplicates removed)"
+        f"  Z3 standalone:                 {len(z3_standalone)} raw → {stats['z3_standalone_kept']} kept"
     )
     print(
-        f"  Detectors standalone: {len(det_standalone)} raw → {len(det_kept)} kept ({det_duped} duplicates removed)"
+        f"  Detectors standalone:          {len(det_standalone)} raw → {stats['detectors_standalone_kept']} kept"
     )
     print(
-        f"  Exploit reasoning: {len(exploit_standalone)} raw → {len(exploit_kept)} kept ({exploit_duped} duplicates removed)"
+        f"  Exploit reasoning:             {len(exploit_raw)} raw → {len(exploit_standalone)} after internal dedup → {stats['exploit_reasoning_findings']} after cross-layer"
     )
     print(
-        f"  Heikal math: {len(heikal_standalone)} raw → {len(heikal_kept)} kept ({heikal_duped} duplicates removed)"
+        f"  Heikal math:                   {len(heikal_standalone)} raw → {stats['heikal_findings']} kept"
     )
     print(f"  State extraction (project):    {len(state_standalone)}")
     print(f"  Safe-function suppressed:      {suppressed}")
     print(f"  ─────────────────────────────────")
+    print(f"  TOTAL RAW (all layers):        {total_raw}")
+    print(f"  CROSS-LAYER MERGED:            {total_cross_duped}")
     print(f"  TOTAL UNIFIED FINDINGS:        {len(final)}")
     for s in ["CRITICAL", "HIGH", "MEDIUM", "LOW"]:
         if severity_total.get(s, 0):
             print(f"    {s}: {severity_total[s]}")
+
+    # ── Store in ctx if available ──
+    if ctx:
+        ctx.unified_findings = all_results.get("unified_findings", [])
 
     return all_results
 
@@ -1147,9 +1344,11 @@ def deduplicate_cross_layer(
 # ═══════════════════════════════════════════════════════════
 
 
-def run_core_deep_scan(engines: Dict, project: Dict, shared_parse: Dict = None) -> Dict:
+def run_core_deep_scan(ctx_or_engines, project: Dict = None, shared_parse: Dict = None) -> Dict:
     """
     تشغيل الفحص العميق على العقود الرئيسية (بحد 20 عقد).
+
+    يقبل AuditContext أو (engines, project, shared_parse) للتوافق.
 
     يُشغِّل AGLSecurityAudit.deep_scan() الذي يمرر العقد عبر:
       - Layer 0: Solidity Flattener (تسطيح الاستيرادات)
@@ -1164,6 +1363,16 @@ def run_core_deep_scan(engines: Dict, project: Dict, shared_parse: Dict = None) 
     يُرجع:
         {اسم_العقد: نتيجة_الفحص, ...} — كل نتيجة تحوي findings و severity_summary
     """
+    # ── التوافق: قبول (ctx) أو (engines, project, shared_parse) ──
+    if isinstance(ctx_or_engines, AuditContext):
+        ctx = ctx_or_engines
+        engines = ctx.engines
+        project = ctx.project
+        shared_parse = ctx.shared_parse
+    else:
+        engines = ctx_or_engines
+        ctx = None
+
     banner("LAYER 0-5: DEEP SCAN (Flattener + Z3 + Patterns + Detectors)")
 
     core = engines.get("core")
@@ -1190,13 +1399,26 @@ def run_core_deep_scan(engines: Dict, project: Dict, shared_parse: Dict = None) 
             # Pass pre-parsed contracts to avoid duplicate SoliditySemanticParser call
             entry = shared_parse.get(name, {})
             pre_parsed = entry.get("parsed", None)
-            # Use thread-based timeout to prevent infinite hangs (e.g. Mythril on complex contracts)
-            from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeout
-            _mythril_t = 90  # default; core also reads from its config
-            _outer_timeout = _mythril_t + 180  # orchestrator wait + remaining layers overhead
-            with ThreadPoolExecutor(max_workers=1) as _executor:
-                _future = _executor.submit(core.deep_scan, str(path), pre_parsed=pre_parsed)
-                result = _future.result(timeout=_outer_timeout)
+            # Use daemon thread with timeout — ThreadPoolExecutor's __exit__
+            # always calls shutdown(wait=True) which defeats timeout. Daemon
+            # threads are abandoned on timeout without blocking.
+            import threading as _thr_deep
+            _mythril_t = getattr(core, 'config', {}).get('mythril_timeout', 90)
+            _outer_timeout = _mythril_t + 180
+            _ds_result = [None, None]  # [result, exception]
+            def _run_deep_scan():
+                try:
+                    _ds_result[0] = core.deep_scan(str(path), pre_parsed=pre_parsed)
+                except Exception as _ex:
+                    _ds_result[1] = _ex
+            _ds_thread = _thr_deep.Thread(target=_run_deep_scan, daemon=True)
+            _ds_thread.start()
+            _ds_thread.join(timeout=_outer_timeout)
+            if _ds_thread.is_alive():
+                raise TimeoutError(f"deep_scan timeout after {_outer_timeout}s")
+            if _ds_result[1]:
+                raise _ds_result[1]
+            result = _ds_result[0]
             elapsed = time.time() - t0
             result["_scan_time"] = round(elapsed, 2)
             results[name] = result
@@ -1213,7 +1435,7 @@ def run_core_deep_scan(engines: Dict, project: Dict, shared_parse: Dict = None) 
                 f"M={sev.get('MEDIUM',0)} L={sev.get('LOW',0)}"
             )
             print(f"        Z3 symbolic: {sym} | Detectors: {det} | Layers: {layers}")
-        except FuturesTimeout:
+        except TimeoutError:
             elapsed = time.time() - t0
             # Try to salvage partial results from core's incremental progress
             partial = getattr(core, "_last_partial_result", None)
@@ -1231,6 +1453,10 @@ def run_core_deep_scan(engines: Dict, project: Dict, shared_parse: Dict = None) 
             print(f"     ❌ {name}: {str(e)[:200]}")
             results[name] = {"error": str(e)[:300]}
 
+    # ── Store in ctx ──
+    if ctx:
+        ctx.store_result("deep_scan", results)
+
     return results
 
 
@@ -1241,7 +1467,7 @@ def run_core_deep_scan(engines: Dict, project: Dict, shared_parse: Dict = None) 
 
 
 def run_z3_symbolic(
-    engines: Dict, project: Dict, shared_parse: Dict = None
+    ctx_or_engines, project: Dict = None, shared_parse: Dict = None
 ) -> List[Dict]:
     """
     تشغيل Z3 Symbolic Execution على المكتبات فقط.
@@ -1259,6 +1485,16 @@ def run_z3_symbolic(
     يُرجع:
         قائمة من النتائج — كل نتيجة تحوي is_proven و counterexample
     """
+    # ── التوافق: قبول (ctx) أو (engines, project, shared_parse) ──
+    if isinstance(ctx_or_engines, AuditContext):
+        ctx = ctx_or_engines
+        engines = ctx.engines
+        project = ctx.project
+        shared_parse = ctx.shared_parse
+    else:
+        engines = ctx_or_engines
+        ctx = None
+
     banner("LAYER 0.5: Z3 SYMBOLIC EXECUTION — LIBRARIES (Mathematical Proofs)")
 
     z3_engine = engines.get("z3")
@@ -1306,6 +1542,11 @@ def run_z3_symbolic(
             print(f"     ⚠️  {path.name}: {str(e)[:150]}")
 
     print(f"\n  📊 Total Z3 library findings: {len(all_z3_findings)}")
+
+    # ── Store in ctx ──
+    if ctx:
+        ctx.store_result("z3_symbolic", all_z3_findings)
+
     return all_z3_findings
 
 
@@ -1315,9 +1556,11 @@ def run_z3_symbolic(
 # ═══════════════════════════════════════════════════════════
 
 
-def run_state_extraction(engines: Dict, project: Dict, shared_parse: Dict = None) -> Dict:
+def run_state_extraction(ctx_or_engines, project: Dict = None, shared_parse: Dict = None) -> Dict:
     """
     تشغيل محرك استخراج الحالة على المشروع.
+
+    يقبل AuditContext أو (engines, project, shared_parse) للتوافق.
 
     يقوم بـ:
       - بناء مُخطط التدفقات المالية (fund flow graph)
@@ -1332,6 +1575,15 @@ def run_state_extraction(engines: Dict, project: Dict, shared_parse: Dict = None
     يُرجع:
         قاموس يحوي نتائج الاستخراج أو {'error': رسالة} إذا فشل
     """
+    # ── التوافق: قبول (ctx) أو (engines, project) ──
+    if isinstance(ctx_or_engines, AuditContext):
+        ctx = ctx_or_engines
+        engines = ctx.engines
+        project = ctx.project
+    else:
+        engines = ctx_or_engines
+        ctx = None
+
     banner("LAYER 1-4: STATE EXTRACTION + ATTACK SIMULATION + SEARCH")
 
     state_engine = engines.get("state")
@@ -1343,7 +1595,22 @@ def run_state_extraction(engines: Dict, project: Dict, shared_parse: Dict = None
     print(f"  📊 Extracting financial state from: {contracts_dir}")
     t0 = time.time()
     try:
-        result = state_engine.extract_project(contracts_dir)
+        import threading as _thr_se
+        _se_timeout = 120  # 2 minutes max for state extraction
+        _se_holder = [None, None]  # [result, exception]
+        def _run_se():
+            try:
+                _se_holder[0] = state_engine.extract_project(contracts_dir)
+            except Exception as _ex:
+                _se_holder[1] = _ex
+        _se_thread = _thr_se.Thread(target=_run_se, daemon=True)
+        _se_thread.start()
+        _se_thread.join(timeout=_se_timeout)
+        if _se_thread.is_alive():
+            raise TimeoutError(f"state extraction timeout after {_se_timeout}s")
+        if _se_holder[1]:
+            raise _se_holder[1]
+        result = _se_holder[0]
         elapsed = time.time() - t0
 
         result_dict = (
@@ -1383,10 +1650,23 @@ def run_state_extraction(engines: Dict, project: Dict, shared_parse: Dict = None
             candidates = getattr(sr, "candidates", [])
             print(f"     Search Results:   {len(candidates)} candidates found")
 
+        _store = result_dict
         return result_dict
+    except TimeoutError:
+        elapsed = time.time() - t0
+        print(f"  ⏰ State extraction TIMEOUT after {elapsed:.0f}s — skipping")
+        _store = {"error": f"timeout after {elapsed:.0f}s"}
+        return _store
     except Exception as e:
         print(f"  ❌ State extraction failed: {str(e)[:300]}")
-        return {"error": str(e)[:300]}
+        _store = {"error": str(e)[:300]}
+        return _store
+    finally:
+        # ── Store in ctx ──
+        # RC-FIX-1: dir() غير مضمون للمتغيرات المحلية — locals() هي الطريقة الرسمية
+        # RC-FIX-1: dir() is unreliable for locals — use locals() per Python spec
+        if ctx and '_store' in locals():
+            ctx.store_result("state_extraction", _store)
 
 
 # ═══════════════════════════════════════════════════════════
@@ -1396,7 +1676,7 @@ def run_state_extraction(engines: Dict, project: Dict, shared_parse: Dict = None
 
 
 def run_detectors(
-    engines: Dict, project: Dict, shared_parse: Dict = None,
+    ctx_or_engines, project: Dict = None, shared_parse: Dict = None,
     audit_ctx: "AuditContext" = None,
 ) -> List[Dict]:
     """
@@ -1412,7 +1692,21 @@ def run_detectors(
     يُرجع:
         قائمة نتائج — كل نتيجة تحوي severity و category
     """
-    banner("LAYER 5: 22 SEMANTIC DETECTORS — LIBRARIES")
+    # ── التوافق: قبول (ctx) أو (engines, project, shared_parse, audit_ctx) ──
+    if isinstance(ctx_or_engines, AuditContext):
+        ctx = ctx_or_engines
+        engines = ctx.engines
+        project = ctx.project
+        shared_parse = ctx.shared_parse
+        audit_ctx = ctx
+    else:
+        engines = ctx_or_engines
+        ctx = audit_ctx
+
+    # Determine scan scope based on mode
+    mode = ctx.mode if ctx else "full"
+    banner_suffix = "ALL CONTRACTS (quick mode)" if mode == "quick" else "LIBRARIES"
+    banner(f"LAYER 5: 22 SEMANTIC DETECTORS — {banner_suffix}")
 
     runner = engines.get("detectors")
     parser = engines.get("parser")
@@ -1423,10 +1717,16 @@ def run_detectors(
     shared_parse = shared_parse or {}
     contracts = project["contracts"]
 
-    # Only scan libraries — main contracts already covered by deep_scan
-    target_keys = project["libraries"]
+    # Determine which contracts to scan
+    # In quick mode (no deep_scan), scan ALL contracts
+    # In full/deep mode, libraries only — main contracts covered by deep_scan
+    if mode == "quick":
+        target_keys = list(contracts.keys())
+    else:
+        target_keys = project["libraries"]
+
     if not target_keys:
-        print("  ℹ️  No library files to scan — main contracts covered by deep_scan")
+        print(f"  ℹ️  No files to scan — main contracts covered by deep_scan")
         return []
 
     all_findings = []
@@ -1458,9 +1758,14 @@ def run_detectors(
                     if hasattr(finding, "__dict__")
                     else {"text": str(finding)}
                 )
-                # Early suppression: skip findings on safe functions
+                # RC-FIX-5: كبت فقط LOW/INFO على الدوال الآمنة — متوافق مع deduplicate_cross_layer
+                # RC-FIX-5: only suppress LOW/INFO on safe functions — aligned with dedup layer
                 fn = f_dict.get("function", "").lower()
-                if fn and _safe and fn in _safe:
+                sev = str(f_dict.get("severity", "MEDIUM"))
+                if hasattr(f_dict.get("severity"), "value"):
+                    sev = f_dict["severity"].value
+                sev = sev.upper()
+                if fn and _safe and fn in _safe and sev in ("LOW", "INFO"):
                     continue
                 f_dict["_source_file"] = path.name
                 f_dict["_contract_key"] = name
@@ -1483,6 +1788,10 @@ def run_detectors(
     for s, c in sorted(sev_count.items()):
         print(f"     {s.upper()}: {c}")
 
+    # ── Store in ctx ──
+    if ctx:
+        ctx.store_result("detectors", all_findings)
+
     return all_findings
 
 
@@ -1493,11 +1802,13 @@ def run_detectors(
 
 
 def run_exploit_reasoning(
-    engines: Dict, project: Dict, deep_scan_results: Dict = None,
+    ctx_or_engines, project: Dict = None, deep_scan_results: Dict = None,
     shared_parse: Dict = None, audit_ctx: "AuditContext" = None,
 ) -> Dict:
     """
     تشغيل تحليل الاستغلال (Exploit Reasoning).
+
+    يقبل AuditContext أو (engines, project, deep_scan_results, shared_parse) للتوافق.
 
     العقود الرئيسية التي مرت عبر deep_scan لديها بالفعل نتائج
     exploit reasoning (Layer 5 في core.py). لذلك هذه الدالة:
@@ -1510,6 +1821,18 @@ def run_exploit_reasoning(
     يُرجع:
         {اسم_العقد: نتيجة_التحليل} — يحوي exploitable_count و exploit_proofs
     """
+    # ── التوافق: قبول (ctx) أو (engines, project, ...) ──
+    if isinstance(ctx_or_engines, AuditContext):
+        ctx = ctx_or_engines
+        engines = ctx.engines
+        project = ctx.project
+        deep_scan_results = ctx.deep_scan_results
+        shared_parse = ctx.shared_parse
+        audit_ctx = ctx
+    else:
+        engines = ctx_or_engines
+        ctx = audit_ctx
+
     banner("LAYER 6: EXPLOIT REASONING (Z3 Proof of Exploitability)")
 
     exploit = engines.get("exploit")
@@ -1544,6 +1867,8 @@ def run_exploit_reasoning(
     # Libraries and other contracts that deep_scan didn't cover
     if not exploit:
         print("  ❌ Exploit Reasoning Engine not available — skipping standalone analysis")
+        if ctx:
+            ctx.store_result("exploit_reasoning", all_exploits)
         return all_exploits
 
     contracts = project["contracts"]
@@ -1553,6 +1878,8 @@ def run_exploit_reasoning(
 
     if not uncovered:
         print(f"  ✅ All target contracts already analyzed by deep_scan — no additional work needed")
+        if ctx:
+            ctx.store_result("exploit_reasoning", all_exploits)
         return all_exploits
 
     print(f"\n  🔍 Running exploit reasoning on {len(uncovered)} uncovered contracts...")
@@ -1627,6 +1954,8 @@ def run_exploit_reasoning(
             print(f"     ⚠️  {name}: {str(e)[:200]}")
             all_exploits[name] = {"error": str(e)[:200]}
 
+    if ctx:
+        ctx.store_result("exploit_reasoning", all_exploits)
     return all_exploits
 
 
@@ -1841,17 +2170,9 @@ def analyze_function_security(
             )
         )
 
-    # If no barriers at all, add a default weak one
-    if not barriers:
-        barriers.append(
-            SecurityBarrier(
-                barrier_type="guard",
-                height=0.40,
-                thickness=0.5,
-                bypassable=True,
-                source=f"no explicit guards in {fname}",
-            )
-        )
+    # If no barriers at all, leave empty — tunneling returns baseline 0.10
+    # This correctly reflects "no security features analyzed" as neutral,
+    # not actively dangerous
 
     # --- Wave features ---
     wave_features = {
@@ -1987,6 +2308,7 @@ def build_attack_scenarios(
         fn
         for fn, fa in functions_analysis.items()
         if fa.get("wave_features", {}).get("not_guarded", False)
+        and fa.get("wave_features", {}).get("no_access_control", False)  # ← also needs no access control
     ]
 
     # --- Scenario 1: Reentrancy Attack ---
@@ -2020,14 +2342,28 @@ def build_attack_scenarios(
                 )
             )
 
+        # Derive actual features from fund-moving functions instead of hardcoding
+        any_cei = any(
+            functions_analysis[fn].get("wave_features", {}).get("cei_violation", False)
+            for fn in fund_movers
+        )
+        any_no_ac = any(
+            functions_analysis[fn].get("wave_features", {}).get("no_access_control", False)
+            for fn in fund_movers
+        )
+        any_sends_eth = any(
+            functions_analysis[fn].get("wave_features", {}).get("sends_eth", False)
+            for fn in fund_movers
+        )
+
         scenarios["Reentrancy_Attack"] = {
             "description": f"Re-enter via callback into {', '.join(fund_movers[:3])}",
             "barriers": barriers,
             "wave_features": {
                 "moves_funds": True,
-                "cei_violation": True,
-                "sends_eth": True,
-                "no_access_control": True,
+                "cei_violation": any_cei,          # ← was hardcoded True
+                "sends_eth": any_sends_eth,        # ← was hardcoded True
+                "no_access_control": any_no_ac,    # ← was hardcoded True
                 "not_guarded": not has_reentrancy_guard,
                 "reads_oracle": False,
                 "has_state_conflict": True,
@@ -2195,15 +2531,21 @@ def build_attack_scenarios(
 
     # --- Scenario 5: Governance Takeover ---
     if has_governance:
-        scenarios["Governance_Takeover"] = {
-            "description": "Compromise admin/owner → extract value or change rules",
-            "barriers": [
-                SecurityBarrier(
-                    barrier_type="access_control",
-                    height=0.80,
-                    thickness=1.0,
-                    source="owner/admin check",
-                ),
+        # Check if there's actually a weakness — no timelock or multi-sig
+        has_timelock = any(
+            "timelock" in fn.lower() or "delay" in fn.lower()
+            for fn in functions_analysis
+        )
+        gov_barriers = [
+            SecurityBarrier(
+                barrier_type="access_control",
+                height=0.80,
+                thickness=1.0,
+                source="owner/admin check",
+            ),
+        ]
+        if not has_timelock:
+            gov_barriers.append(
                 SecurityBarrier(
                     barrier_type="guard",
                     height=0.70,
@@ -2211,13 +2553,26 @@ def build_attack_scenarios(
                     bypassable=True,
                     source="no timelock detected",
                 ),
-            ],
+            )
+        else:
+            gov_barriers.append(
+                SecurityBarrier(
+                    barrier_type="guard",
+                    height=0.90,
+                    thickness=2.0,
+                    bypassable=False,
+                    source="timelock detected",
+                ),
+            )
+        scenarios["Governance_Takeover"] = {
+            "description": "Compromise admin/owner → extract value or change rules",
+            "barriers": gov_barriers,
             "wave_features": {
                 "moves_funds": False,
                 "cei_violation": False,
                 "sends_eth": False,
-                "no_access_control": False,
-                "not_guarded": True,
+                "no_access_control": False,  # governance → HAS access control
+                "not_guarded": False,         # ← was True: governance IS guarded
                 "reads_oracle": False,
                 "has_state_conflict": False,
                 "modifies_balances": False,
@@ -2308,32 +2663,26 @@ def build_attack_scenarios(
     return scenarios
 
 
-def run_heikal_math(engines: Dict, project: Dict, shared_parse: Dict = None,
+def run_heikal_math(ctx_or_engines, project: Dict = None, shared_parse: Dict = None,
                     deep_scan_results: Dict = None, exploit_results: Dict = None) -> Dict:
     """
     تشغيل خوارزميات هيكل الرياضية الأربع ديناميكياً على أي مشروع.
 
-    المراحل:
-      1. استخراج الدوال من جميع العقود (extract_function_blocks)
-      2. بناء سيناريوهات الهجوم (build_attack_scenarios)
-      3. تشغيل 4 خوارزميات على كل دالة (أخطر 50 فقط):
-         - Tunneling Scorer: احتمال اختراق الحواجز (WKB + Heikal)
-         - Wave Evaluator: تقييم خطورة بنمط تداخل الموجات
-         - Holographic Patterns: مطابقة أنماط هجمات معروفة
-         - Resonance Optimizer: تحسين مبلغ الهجوم لأقصى ربح
-      4. تشغيل الخوارزميات على سيناريوهات الهجوم
-
-    يستخدم shared_parse لتخطي الدوال الآمنة (view, pure, getters) تلقائياً.
-    يستخدم deep_scan_results و exploit_results لتعزيز تقييم الدوال التي
-    لديها أدلة رسمية (Z3 proven) أو استغلال مُثبت.
-
-    يُرجع:
-        {
-            "functions": {اسم::دالة: نتائج_4_خوارزميات},
-            "attacks": {اسم_السيناريو: نتائج_التحليل},
-            "summary": {severity_distribution, totals}
-        }
+    المعطيات:
+        ctx_or_engines: AuditContext أو engines dict
     """
+    # ── التوافق: ctx أو المعطيات القديمة ──
+    ctx = None
+    if isinstance(ctx_or_engines, AuditContext):
+        ctx = ctx_or_engines
+        engines = ctx.engines
+        project = ctx.project
+        shared_parse = ctx.shared_parse
+        deep_scan_results = ctx.deep_scan_results
+        exploit_results = ctx.exploit_results
+    else:
+        engines = ctx_or_engines
+
     banner("LAYER 7: HEIKAL MATH ALGORITHMS (Dynamic Analysis)")
 
     tunneling = engines.get("tunneling")
@@ -2343,6 +2692,8 @@ def run_heikal_math(engines: Dict, project: Dict, shared_parse: Dict = None,
 
     if not all([tunneling, wave, holographic, resonance]):
         print("  ❌ Heikal Math not fully available — skipping")
+        if ctx:
+            ctx.store_result("heikal_math", {})
         return {}
 
     shared_parse = shared_parse or {}
@@ -2519,11 +2870,13 @@ def run_heikal_math(engines: Dict, project: Dict, shared_parse: Dict = None,
         # 4. Resonance Optimizer
         try:
             WEI_PER_ETH = 10**18
+            ETH_PRICE_USD = 3000.0  # approximate market price
             current_value = int(model["energy"] * WEI_PER_ETH)
             fee_rate = 0.003
+            # Convert Wei→ETH→USD, then apply fee minus gas cost
             res_result = resonance.optimize_amount(
                 current_value=current_value,
-                evaluate_fn=lambda x: float(x) * fee_rate - 50.0,
+                evaluate_fn=lambda x: (float(x) / WEI_PER_ETH) * ETH_PRICE_USD * fee_rate - 50.0,
                 min_value=10**15,
                 max_value=10 * WEI_PER_ETH,
             )
@@ -2540,13 +2893,15 @@ def run_heikal_math(engines: Dict, project: Dict, shared_parse: Dict = None,
         # Determine severity (recalibrated for RC2/RC6 fixes)
         tunnel_conf = func_results.get("tunneling", {}).get("confidence", 0)
         wave_score = func_results.get("wave", {}).get("heuristic_score", 0)
-        combined = max(tunnel_conf, wave_score)
+        holo_matches = func_results.get("holographic", {}).get("matches", 0)
+        # Weighted: wave is most meaningful, tunneling confirms barrier weakness
+        combined = wave_score * 0.50 + tunnel_conf * 0.35 + min(holo_matches / 3.0, 1.0) * 0.15
 
-        if combined > 0.85:
+        if combined > 0.70:
             severity = "HIGH"
-        elif combined > 0.65:
+        elif combined > 0.50:
             severity = "MEDIUM"
-        elif combined > 0.45:
+        elif combined > 0.30:
             severity = "LOW"
         else:
             severity = "INFO"
@@ -2615,13 +2970,15 @@ def run_heikal_math(engines: Dict, project: Dict, shared_parse: Dict = None,
 
         tunnel_conf = attack_results.get("tunneling", {}).get("confidence", 0)
         wave_score = attack_results.get("wave", {}).get("heuristic_score", 0)
-        combined = max(tunnel_conf, wave_score)
+        holo_matches = attack_results.get("holographic", {}).get("matches", 0)
+        # Weighted combination: wave matters most, tunneling confirms, holo adds signal
+        combined = wave_score * 0.50 + tunnel_conf * 0.35 + min(holo_matches / 3.0, 1.0) * 0.15
 
-        if combined > 0.80:
+        if combined > 0.75:
             severity = "CRITICAL"
-        elif combined > 0.70:
+        elif combined > 0.55:
             severity = "HIGH"
-        elif combined > 0.50:
+        elif combined > 0.35:
             severity = "MEDIUM"
         else:
             severity = "LOW"
@@ -2648,6 +3005,8 @@ def run_heikal_math(engines: Dict, project: Dict, shared_parse: Dict = None,
         "severity_distribution": sev_dist,
     }
 
+    if ctx:
+        ctx.store_result("heikal_math", results)
     return results
 
 
@@ -2713,28 +3072,25 @@ def _link_pocs_to_findings(all_results: Dict) -> int:
 
 
 def run_poc_generation(
-    all_results: Dict,
-    project: Dict,
+    ctx_or_results,
+    project: Dict = None,
     run_forge: bool = False,
 ) -> Dict:
     """
     توليد اختبارات PoC ديناميكية وتشغيلها على Foundry.
 
-    خطوتين:
-      1. توليد ملفات .t.sol بناء على exploit_proofs والنتائج الموحدة
-      2. (اختياري) تشغيل forge test على الملفات المُولَّدة
-
     المُعطيات:
-        all_results:  نتائج التدقيق الكاملة (بعد إزالة التكرارات)
-        project:      معلومات المشروع (contracts, project_path, ...)
-        run_forge:    تشغيل Foundry تلقائياً على PoC المُولَّدة
-
-    يُرجع:
-        {
-            "poc_generation": {poc_files, count, skipped, errors},
-            "foundry_results": {forge_available, results, passed, failed, errors} أو None
-        }
+        ctx_or_results: AuditContext أو all_results dict
     """
+    # ── التوافق ──
+    ctx = None
+    if isinstance(ctx_or_results, AuditContext):
+        ctx = ctx_or_results
+        all_results = ctx.results
+        project = ctx.project
+    else:
+        all_results = ctx_or_results
+
     banner("LAYER 8.7: DYNAMIC PoC GENERATION — توليد إثبات المفهوم")
 
     project_path = project.get("project_path", "")
@@ -2748,10 +3104,13 @@ def run_poc_generation(
 
     if not project_path:
         print("  ❌ Cannot determine project path — skipping PoC generation")
-        return {
+        _r = {
             "poc_generation": {"poc_files": [], "count": 0},
             "foundry_results": None,
         }
+        if ctx:
+            ctx.store_result("poc_generation", _r)
+        return _r
 
     try:
         from agl_security_tool.poc_generator import PoCGenerator, run_foundry_pocs
@@ -2799,19 +3158,25 @@ def run_poc_generation(
             else:
                 print(f"  ℹ️  Forge not available: {foundry_results.get('message', '')}")
 
-        return {
+        _r = {
             "poc_generation": poc_result,
             "foundry_results": foundry_results,
         }
+        if ctx:
+            ctx.store_result("poc_generation", _r)
+        return _r
 
     except Exception as e:
         print(f"  ❌ PoC generation failed: {e}")
         _logger = logging.getLogger("AGL.audit_api")
         _logger.exception("PoC generation error")
-        return {
+        _r = {
             "poc_generation": {"poc_files": [], "count": 0, "error": str(e)},
             "foundry_results": None,
         }
+        if ctx:
+            ctx.store_result("poc_generation", _r)
+        return _r
 
 
 # ═══════════════════════════════════════════════════════════
@@ -2884,19 +3249,30 @@ def generate_final_report(
     else:
         total_findings = len(unified)
 
-    # Heikal findings (counted separately — different kind of output)
+    # RC-FIX-4: دمج Heikal findings في severity_total — كانت تُحسب لكن لا تُضاف للملخص
+    # RC-FIX-4: merge Heikal findings into severity_total — were counted but never scored
     heikal = all_results.get("heikal_math", {})
     heikal_count = 0
+    heikal_severity = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0, "INFO": 0}
     for item in list(heikal.get("functions", {}).values()) + list(
         heikal.get("attacks", {}).values()
     ):
-        s = item.get("severity", "INFO")
+        s = str(item.get("severity", "INFO")).upper()
         heikal_count += 1
+        if s in heikal_severity:
+            heikal_severity[s] += 1
+
+    # Merge heikal severity counts into the unified severity total
+    for sev_key, sev_val in heikal_severity.items():
+        if sev_val > 0:
+            severity_total[sev_key] = severity_total.get(sev_key, 0) + sev_val
+            total_findings += sev_val
 
     report["total_findings"] = total_findings
     report["severity_total"] = severity_total
     report["dedup_stats"] = dedup_stats
     report["heikal_analyses"] = heikal_count
+    report["heikal_severity"] = heikal_severity
 
     # PoC generation stats
     poc_gen = all_results.get("poc_generation", {})
@@ -3118,6 +3494,7 @@ def run_audit(
     no_deps_install: bool = False,
     generate_poc: bool = True,
     run_poc: bool = False,
+    core_config: Optional[Dict] = None,
 ) -> Dict:
     """
     واجهة التدقيق الرئيسية — تُشغِّل التدقيق الكامل على أي هدف.
@@ -3163,8 +3540,6 @@ def run_audit(
     )
 
     t_total = time.time()
-    all_results = {}
-    audit_ctx = AuditContext()
     is_temp = False
 
     try:
@@ -3184,10 +3559,13 @@ def run_audit(
         # Step 1: Load engines
         banner("LOADING ALL ENGINES")
         _core_cfg = {}
+        if core_config:
+            _core_cfg.update(core_config)
         if skip_llm:
             _core_cfg["skip_llm"] = True
             _core_cfg["skip_deep_analyzer"] = True
         _core_cfg["mythril_timeout"] = 90  # Cap Mythril to 90s per contract for benchmark reliability
+        _core_cfg.setdefault("enable_mythril", True)  # Allow callers to disable Mythril
         engines = load_engines(project_path, core_config=_core_cfg)
         print(f"\n  Loaded {len(engines)} engine components")
 
@@ -3218,101 +3596,71 @@ def run_audit(
             return {"error": "No Solidity files found", "target": target}
 
         # ═══════════════════════════════════════════════════
+        #  إنشاء AuditContext — المحور المركزي لكل الطبقات
+        # ═══════════════════════════════════════════════════
+        ctx = AuditContext(engines=engines, project=project,
+                           target_name=target_name, mode=mode)
+
+        # ═══════════════════════════════════════════════════
         #  Step 2.5: SHARED SEMANTIC PARSING  — مرحلة أولى
         #  Parse all contracts ONCE, share with every layer
         # ═══════════════════════════════════════════════════
-        shared_parse = run_shared_parsing(engines, project)
-        audit_ctx.populate_from_shared_parse(shared_parse)
+        run_shared_parsing(ctx)
 
         # Step 3: Core deep scan (Layer 0-5)
-        # This already includes: Flattener → Z3 → Patterns → Orchestrator → Detectors
         if mode in ("full", "deep"):
-            all_results["deep_scan"] = run_core_deep_scan(engines, project, shared_parse=shared_parse)
-            # Populate AuditContext with Z3-proven findings for cross-layer use
-            audit_ctx.deep_scan_results = all_results["deep_scan"]
-            for cname, ds in all_results["deep_scan"].items():
-                if not isinstance(ds, dict):
-                    continue
-                for sf in ds.get("symbolic_findings", []):
-                    if sf.get("is_proven") or sf.get("z3_result") == "SAT":
-                        audit_ctx.add_z3_proof(cname, sf)
+            run_core_deep_scan(ctx)
         else:
-            all_results["deep_scan"] = {}
+            ctx.results["deep_scan"] = {}
 
-        # Step 4: Z3 Symbolic — LIBRARIES ONLY (main contracts already in deep_scan)
+        # Step 4: Z3 Symbolic — LIBRARIES ONLY
         if mode in ("full", "deep"):
-            all_results["z3_symbolic"] = run_z3_symbolic(
-                engines, project, shared_parse=shared_parse
-            )
-            audit_ctx.store_layer_result("z3_symbolic", all_results["z3_symbolic"])
+            run_z3_symbolic(ctx)
         else:
-            all_results["z3_symbolic"] = []
+            ctx.results["z3_symbolic"] = []
 
         # Step 5: State Extraction (Layer 1-4)
-        # Note: L1-4 already run per-file inside deep_scan (core.py).
-        # This project-level call adds cross-contract fund-flow analysis.
         if mode in ("full", "deep"):
-            all_results["state_extraction"] = run_state_extraction(engines, project, shared_parse=shared_parse)
-            audit_ctx.store_layer_result("state_extraction", all_results["state_extraction"])
+            run_state_extraction(ctx)
         else:
-            all_results["state_extraction"] = {}
+            ctx.results["state_extraction"] = {}
 
-        # Step 6: 22 Semantic Detectors — LIBRARIES ONLY (main contracts in deep_scan)
-        all_results["detectors"] = run_detectors(
-            engines, project, shared_parse=shared_parse, audit_ctx=audit_ctx
-        )
-        audit_ctx.store_layer_result("detectors", all_results["detectors"])
+        # Step 6: 22 Semantic Detectors — LIBRARIES ONLY
+        run_detectors(ctx)
 
         # Step 7: Exploit Reasoning
         if mode in ("full", "deep"):
-            all_results["exploit_reasoning"] = run_exploit_reasoning(
-                engines, project, deep_scan_results=all_results.get("deep_scan", {}),
-                shared_parse=shared_parse, audit_ctx=audit_ctx
-            )
-            audit_ctx.store_layer_result("exploit_reasoning", all_results["exploit_reasoning"])
+            run_exploit_reasoning(ctx)
         else:
-            all_results["exploit_reasoning"] = {}
+            ctx.results["exploit_reasoning"] = {}
 
-        # Step 8: Heikal Math (Layer 7) — with shared context + cross-layer data
+        # Step 8: Heikal Math (Layer 7)
         if not skip_heikal and mode == "full":
-            all_results["heikal_math"] = run_heikal_math(
-                engines, project, shared_parse=shared_parse,
-                deep_scan_results=all_results.get("deep_scan", {}),
-                exploit_results=all_results.get("exploit_reasoning", {}),
-            )
-            audit_ctx.store_layer_result("heikal_math", all_results["heikal_math"])
+            run_heikal_math(ctx)
         else:
-            all_results["heikal_math"] = {}
+            ctx.results["heikal_math"] = {}
 
         # ═══════════════════════════════════════════════════
         #  Step 8.5: CROSS-LAYER DEDUPLICATION
-        #  Unify, deduplicate, suppress safe-function findings
         # ═══════════════════════════════════════════════════
-        all_results = deduplicate_cross_layer(all_results, shared_parse, audit_ctx=audit_ctx)
-        audit_ctx.unified_findings = all_results.get("unified_findings", [])
+        deduplicate_cross_layer(ctx)
 
         # ═══════════════════════════════════════════════════
         #  Step 8.7: DYNAMIC PoC GENERATION + FOUNDRY EXECUTION
-        #  توليد اختبارات إثبات المفهوم وتشغيلها على Foundry
         # ═══════════════════════════════════════════════════
         if generate_poc and mode in ("full", "deep"):
-            poc_results = run_poc_generation(
-                all_results=all_results,
-                project=project,
-                run_forge=run_poc,
-            )
-            all_results["poc_generation"] = poc_results.get("poc_generation", {})
-            all_results["foundry_results"] = poc_results.get("foundry_results")
-
+            poc_results = run_poc_generation(ctx, run_forge=run_poc)
             # Link PoC files back to individual unified findings
+            all_results = ctx.results
             linked = _link_pocs_to_findings(all_results)
             if linked:
                 print(f"  🔗 Linked {linked} PoC files to unified findings")
         else:
-            all_results["poc_generation"] = {}
-            all_results["foundry_results"] = None
+            ctx.results["poc_generation"] = {}
+            ctx.results["foundry_results"] = None
 
         # Step 9: Final report
+        all_results = ctx.results
         total_time = time.time() - t_total
         report = generate_final_report(all_results, project, target_name, total_time)
 

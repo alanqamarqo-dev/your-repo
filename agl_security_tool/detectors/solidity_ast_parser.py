@@ -887,6 +887,26 @@ _ACCESS_CHECKS = frozenset({
     "msg.sender ==", "msg.sender !=", "_msgSender() ==",
     "owner()", "hasRole(", "isOwner", "authorized",
 })
+# Internal function calls that act as access control guards
+_ACCESS_CALL_PREFIXES = ('_only', '_check', '_require', '_verify', '_ensure', '_validate')
+_ACCESS_CALL_KEYWORDS = ('owner', 'admin', 'auth', 'whitelist', 'whitelisted',
+                         'keeper', 'sentinel', 'guardian', 'governor', 'governance',
+                         'role', 'caller', 'access', 'permission', 'operator',
+                         'manager', 'minter', 'pauser', 'controller')
+
+
+def _has_access_control_call(internal_calls: list) -> bool:
+    """Check if any internal call acts as an access-control guard."""
+    for call in internal_calls:
+        cl = call.lower()
+        if any(cl.startswith(p) for p in _ACCESS_CALL_PREFIXES):
+            if any(kw in cl for kw in _ACCESS_CALL_KEYWORDS):
+                return True
+            if cl.startswith('_only'):
+                return True
+        if any(cl.replace('_', '').startswith(a) for a in _ACCESS_MODS):
+            return True
+    return False
 
 
 class ASTSemanticAnalyzer:
@@ -1023,7 +1043,7 @@ class ASTSemanticAnalyzer:
         ) or any(
             any(check in req for check in _ACCESS_CHECKS)
             for req in func.require_checks
-        )
+        ) or _has_access_control_call(func.internal_calls)
 
         # Enhance access control from contract-level modifiers
         if not func.has_access_control and contract_modifiers:

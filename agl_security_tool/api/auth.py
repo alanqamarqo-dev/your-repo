@@ -3,7 +3,7 @@ AGL Security — Authentication (JWT + API Key)
 نظام المصادقة — JWT + مفتاح API
 
 Handles:
-  - Password hashing (bcrypt via passlib)
+  - Password hashing (bcrypt direct)
   - JWT token creation / verification
   - API key generation / validation
 """
@@ -15,8 +15,8 @@ import datetime
 from pathlib import Path
 from typing import Optional
 
+import bcrypt as _bcrypt
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status, Security, Query, WebSocket
 from fastapi.security import (
     HTTPBearer,
@@ -65,7 +65,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = int(os.environ.get("AGL_TOKEN_HOURS", "24"))
 
 # ── Password hashing ──────────────────────────────────────
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Direct bcrypt — no passlib needed (avoids bcrypt>=4.1 incompatibility)
 
 # ── Security schemes ──────────────────────────────────────
 bearer_scheme = HTTPBearer(auto_error=False)
@@ -78,11 +78,11 @@ api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    return _bcrypt.hashpw(password.encode("utf-8"), _bcrypt.gensalt()).decode("utf-8")
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
+    return _bcrypt.checkpw(plain.encode("utf-8"), hashed.encode("utf-8"))
 
 
 # ═══════════════════════════════════════════════════════════

@@ -160,6 +160,12 @@ class SoliditySemanticParser:
                     'whenNotPaused', 'whenPaused', 'onlyProxy', 'onlyInitializing'}
     _ACCESS_CHECKS = {'msg.sender ==', 'msg.sender!=', '_checkOwner()', '_checkRole(',
                       'hasRole(', 'isOwner(', 'isAdmin(', 'require(msg.sender'}
+    # Internal function calls that act as access control guards
+    _ACCESS_CALL_PREFIXES = ('_only', '_check', '_require', '_verify', '_ensure', '_validate')
+    _ACCESS_CALL_KEYWORDS = ('owner', 'admin', 'auth', 'whitelist', 'whitelisted',
+                             'keeper', 'sentinel', 'guardian', 'governor', 'governance',
+                             'role', 'caller', 'access', 'permission', 'operator',
+                             'manager', 'minter', 'pauser', 'controller')
 
     def parse(self, source: str, file_path: str = "") -> List[ParsedContract]:
         """
@@ -892,7 +898,24 @@ class SoliditySemanticParser:
         ) or any(
             any(check in req for check in self._ACCESS_CHECKS)
             for req in func.require_checks
-        )
+        ) or self._has_access_control_call(func.internal_calls)
+
+    def _has_access_control_call(self, internal_calls: list) -> bool:
+        """Check if any internal call acts as an access-control guard."""
+        for call in internal_calls:
+            cl = call.lower()
+            # Match _onlyXxx, _checkXxx, _requireXxx patterns
+            if any(cl.startswith(p) for p in self._ACCESS_CALL_PREFIXES):
+                # Prefix alone is strong signal (e.g. _onlyWhitelisted, _checkCaller)
+                if any(kw in cl for kw in self._ACCESS_CALL_KEYWORDS):
+                    return True
+                # _onlyXxx without keyword still likely access control
+                if cl.startswith('_only'):
+                    return True
+            # Also check modifier-style names called as functions (onlyOwner())
+            if any(cl.replace('_', '').startswith(a.lower()) for a in self._ACCESS_MODS):
+                return True
+        return False
 
     def _check_state_assignment(self, stmt: str, line: int,
                                  state_var_names: Set[str],

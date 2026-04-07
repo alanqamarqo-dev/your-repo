@@ -202,17 +202,36 @@ class OracleManipulation(BaseDetector):
         re.compile(r"cumulativePrice"),
     ]
 
+    # Pre-flight: contract must contain at least one oracle-related keyword
+    # فحص أولي: العقد لازم يحتوي على كلمة مفتاحية للأوراكل
+    _ORACLE_EXISTENCE_KEYWORDS = re.compile(
+        r"latestRoundData|latestAnswer|slot0|getReserves|getAmountOut"
+        r"|IOracle|IPriceFeed|AggregatorV3|priceFeed|oracle"
+        r"|getPrice|getUnderlyingPrice|getReferenceData",
+        re.IGNORECASE,
+    )
+
     def detect(
         self, contract: ParsedContract, all_contracts: List[ParsedContract]
     ) -> List[Finding]:
         findings = []
 
+        if contract.contract_type in ("interface", "library"):
+            return findings
+
         all_source = "".join((f.raw_body or "") for f in contract.functions.values())
+
+        # Pre-flight: skip contract entirely if no oracle keywords exist
+        # فحص أولي — تخطى العقد إذا لم توجد كلمات أوراكل
+        if not self._ORACLE_EXISTENCE_KEYWORDS.search(all_source):
+            return findings
 
         # هل يستخدم العقد TWAP؟
         uses_twap = any(p.search(all_source) for p in self._TWAP_PROTECTION)
 
         for fname, func in contract.functions.items():
+            if func.mutability in ("view", "pure"):
+                continue
             body = func.raw_body or ""
 
             for pattern in self._SPOT_PRICE_PATTERNS:
@@ -220,6 +239,12 @@ class OracleManipulation(BaseDetector):
                 if match:
                     if uses_twap:
                         continue  # العقد يستخدم TWAP بالفعل
+
+                    # Access control downgrade: if onlyOwner, reduce to LOW
+                    # تخفيض للدوال المحمية بصلاحيات
+                    sev_override = None
+                    if func.has_access_control:
+                        sev_override = Severity.LOW
 
                     spot_call = match.group(0)
                     findings.append(
@@ -235,9 +260,11 @@ class OracleManipulation(BaseDetector):
                             f"(4) restore price and profit. "
                             f"Use TWAP (time-weighted average) or Chainlink oracles.",
                             line=func.line_start,
+                            severity=sev_override,
                             extra={
                                 "spot_call": spot_call,
                                 "mitigation": "TWAP or Chainlink",
+                                "has_access_control": func.has_access_control,
                             },
                         )
                     )

@@ -21,13 +21,6 @@ _logger = logging.getLogger("AGL.security_tool")
 # تهيئة مسارات الاستيراد — Setup import paths
 # ═══════════════════════════════════════════════════════
 _TOOL_DIR = Path(__file__).parent.resolve()
-_ENGINES_DIR = _TOOL_DIR.parent / "AGL_NextGen" / "src" / "agl" / "engines"
-_SRC_DIR = _TOOL_DIR.parent / "AGL_NextGen" / "src"
-
-# إضافة المسارات إلى sys.path
-for p in [str(_SRC_DIR), str(_ENGINES_DIR)]:
-    if p not in sys.path:
-        sys.path.insert(0, p)
 
 
 class AGLSecurityAudit:
@@ -54,8 +47,6 @@ class AGLSecurityAudit:
         """
         self.config = config or {}
         self._engine = None
-        self._suite = None
-        self._analyzer = None
         self._detector_runner = None
         self._parser = None
         self._last_partial_result = None  # For timeout recovery in audit_pipeline
@@ -87,79 +78,25 @@ class AGLSecurityAudit:
             self._load_warnings.append(f"Layer 0.5 (Z3): {e}")
             _logger.warning("Engine load failed — Layer 0.5 (Z3): %s", e)
 
-        # Layer 1: SmartContractAnalyzer (pattern scan + Lexer + CFG)
-        try:
-            from agl.engines.smart_contract_analyzer import SmartContractAnalyzer
-
-            self._analyzer = SmartContractAnalyzer()
-        except Exception as e:
-            self._load_warnings.append(f"Layer 1 (Analyzer): {e}")
-            _logger.warning("Engine load failed — Layer 1 (Analyzer): %s", e)
-
-        # Layer 2: AGLSecuritySuite (Slither/Mythril wrapper — fallback)
-        try:
-            from agl.engines.agl_security import AGLSecuritySuite
-
-            self._suite = AGLSecuritySuite(
-                self.config.get(
-                    "suite",
-                    {
-                        "severity_filter": ["critical", "high", "medium", "low"],
-                        "confidence_threshold": 0.5,
-                    },
-                )
-            )
-        except Exception as e:
-            self._load_warnings.append(f"Layer 2 (Suite): {e}")
-            _logger.warning("Engine load failed — Layer 2 (Suite): %s", e)
-
-        # Layer 2+: Security Orchestrator (parallel Slither + Mythril + Semgrep + Z3)
+        # Layer 2: Tool Backends (self-contained Slither/Mythril/Semgrep)
         self._orchestrator = None
         self._tool_backends = None
         try:
-            from agl.engines.security_orchestrator import (
-                AGLSecurityOrchestrator,
-                AnalysisConfig,
-            )
+            from agl_security_tool.tool_backends import ToolBackendRunner
 
-            _orch_cfg = AnalysisConfig(
-                enable_slither=True,
-                enable_mythril=True,
-                enable_semgrep=True,
-                enable_z3=True,
-                enable_llm=not self.config.get("skip_llm", False),
+            self._tool_backends = ToolBackendRunner(
                 mythril_timeout=self.config.get("mythril_timeout", 120),
-                generate_poc=self.config.get("generate_poc", True),
             )
-            self._orchestrator = AGLSecurityOrchestrator(_orch_cfg)
+            _logger.info(
+                "Tool Backends loaded — status: %s",
+                self._tool_backends.status(),
+            )
         except Exception as e:
-            self._load_warnings.append(f"Layer 2+ (Orchestrator): {e}")
-            _logger.warning("Engine load failed — Layer 2+ (Orchestrator): %s", e)
+            self._load_warnings.append(f"Tool Backends: {e}")
+            _logger.warning("Tool Backends load failed: %s", e)
 
-        # Layer 2+ fallback: Native Tool Backends (self-contained Slither/Mythril/Semgrep)
-        if self._orchestrator is None:
-            try:
-                from agl_security_tool.tool_backends import ToolBackendRunner
-
-                self._tool_backends = ToolBackendRunner(
-                    mythril_timeout=self.config.get("mythril_timeout", 120),
-                )
-                _logger.info(
-                    "Tool Backends loaded as orchestrator fallback — status: %s",
-                    self._tool_backends.status(),
-                )
-            except Exception as e:
-                self._load_warnings.append(f"Tool Backends: {e}")
-                _logger.warning("Tool Backends load failed: %s", e)
-
-        # Layer 3: OffensiveSecurityEngine (full pipeline)
-        try:
-            from agl.engines.offensive_security import OffensiveSecurityEngine
-
-            self._engine = OffensiveSecurityEngine()
-        except Exception as e:
-            self._load_warnings.append(f"Layer 3 (Offensive): {e}")
-            _logger.warning("Engine load failed — Layer 3 (Offensive): %s", e)
+        # Layer 3: OffensiveSecurityEngine — disabled (external dependency removed)
+        # self._engine remains None
 
         # Layer 4: AGL Semantic Detectors (22 detectors)
         try:
@@ -251,29 +188,40 @@ class AGLSecurityAudit:
 
         t0 = time.time()
 
-        # Use Layer 1 only (pattern scan)
-        if self._analyzer:
-            with open(target, "r", encoding="utf-8", errors="ignore") as f:
-                code = f.read()
-            result = self._analyzer.analyze(code)
-            result["time_seconds"] = round(time.time() - t0, 2)
-            result["scan_mode"] = "quick"
-            result["file"] = target
-            # Build severity_summary from findings (analyzer.analyze() doesn't include it)
-            _ss = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
-            for _f in result.get("findings", []):
-                _sev = str(_f.get("severity", "MEDIUM")).upper()
-                if _sev in _ss:
-                    _ss[_sev] += 1
-            result["severity_summary"] = _ss
-            return result
-
-        # Fallback to Layer 2
-        if self._suite:
-            result = self._suite.scan_file(target)
-            result["time_seconds"] = round(time.time() - t0, 2)
-            result["scan_mode"] = "quick"
-            return result
+        # Quick scan via AGL Detectors (always available)
+        if self._detector_runner and self._parser:
+            try:
+                with open(target, "r", encoding="utf-8", errors="ignore") as f:
+                    code = f.read()
+                parsed = self._parser.parse(code)
+                findings = self._detector_runner.run(parsed)
+                result_findings = [
+                    {
+                        "title": f.title,
+                        "severity": f.severity.value if hasattr(f.severity, "value") else str(f.severity),
+                        "category": f.detector_id,
+                        "description": f.description,
+                        "line": f.line,
+                        "confidence": f.confidence.value if hasattr(f.confidence, "value") else str(f.confidence),
+                        "source": "agl_detectors",
+                    }
+                    for f in findings
+                ]
+                _ss = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
+                for _f in result_findings:
+                    _sev = str(_f.get("severity", "MEDIUM")).upper()
+                    if _sev in _ss:
+                        _ss[_sev] += 1
+                return {
+                    "status": "COMPLETE",
+                    "file": target,
+                    "scan_mode": "quick",
+                    "findings": result_findings,
+                    "severity_summary": _ss,
+                    "time_seconds": round(time.time() - t0, 2),
+                }
+            except Exception as e:
+                return {"error": f"Quick scan failed: {e}", "status": "ERROR"}
 
         return {"error": "لا يوجد محرك تحليل متاح", "status": "ERROR"}
 
@@ -569,93 +517,8 @@ class AGLSecurityAudit:
             except Exception as e:
                 combined.setdefault("warnings", []).append(f"Symbolic engine: {e}")
 
-        # Layer 1: Pattern Scan + CFG Analysis (with Cross-File context when available)
-        if self._analyzer:
-            try:
-                # Try cross-file analysis if the file is part of a project
-                r = None
-                if file_path and os.path.isfile(file_path):
-                    project_root = self._find_project_root(file_path)
-                    if project_root:
-                        try:
-                            from agl.engines.smart_contract_analyzer import (
-                                ProjectContext,
-                            )
-
-                            ctx = ProjectContext(project_root)
-                            ctx.scan_project(project_root)
-                            self._analyzer.set_project_context(ctx)
-                            r = self._analyzer.analyze_file(file_path)
-                            combined["layers_used"].append("smart_contract_analyzer")
-                            combined["layers_used"].append("cross_file_context")
-                            if r.get("unprotected_functions"):
-                                combined.setdefault("cross_file", {})[
-                                    "unprotected_functions"
-                                ] = r["unprotected_functions"]
-                        except Exception:
-                            r = None  # Fall back to single-file
-                if r is None:
-                    r = self._analyzer.analyze(source_code or "")
-                    combined["layers_used"].append("smart_contract_analyzer")
-                combined["findings"].extend(r.get("findings", []))
-                combined["contracts"] = r.get("contracts", [])
-                combined["functions"] = r.get("functions", [])
-                if r.get("advanced_analysis"):
-                    combined["layers_used"].append("cfg_analysis")
-                for w in r.get("warnings", []):
-                    combined.setdefault("warnings", []).append(f"Layer 1: {w}")
-            except Exception as e:
-                combined.setdefault("warnings", []).append(f"Layer 1 error: {e}")
-
-        # Layer 2: Security Orchestrator (Slither + Mythril + Semgrep + Z3 parallel)
-        _orch_used = False
-        if self._orchestrator:
-            try:
-                from concurrent.futures import ThreadPoolExecutor, TimeoutError as _FT
-                with ThreadPoolExecutor(max_workers=1) as _oex:
-                    _ofut = _oex.submit(self._orchestrator.analyze_file, file_path, skip_llm=True)
-                    orch_findings = _ofut.result(timeout=self.config.get("mythril_timeout", 120) + 60)
-                for of in orch_findings:
-                    combined["suite_findings"].append(
-                        {
-                            "id": getattr(of, "id", ""),
-                            "title": getattr(of, "title", ""),
-                            "severity": (
-                                of.severity.value
-                                if hasattr(of.severity, "value")
-                                else str(getattr(of, "severity", "medium"))
-                            ),
-                            "category": (
-                                of.category.value
-                                if hasattr(of.category, "value")
-                                else str(getattr(of, "category", "unknown"))
-                            ),
-                            "line": getattr(of, "line_start", 0),
-                            "description": getattr(of, "description", ""),
-                            "confidence": getattr(of, "confidence", 0.7),
-                            "source": getattr(of, "source_tool", "orchestrator"),
-                            "recommendation": getattr(of, "recommendation", ""),
-                            "poc": getattr(of, "poc_code", ""),
-                        }
-                    )
-                combined["layers_used"].append("security_orchestrator")
-                _orch_used = True
-            except Exception as e:
-                combined.setdefault("warnings", []).append(f"Orchestrator error: {e}")
-
-        # Layer 2 fallback: Security Suite (if orchestrator unavailable)
-        if not _orch_used and self._suite:
-            try:
-                r = self._suite.scan_file(file_path)
-                suite_f = r.get("findings", [])
-                combined["suite_findings"].extend(suite_f)
-                combined["layers_used"].append("agl_security_suite")
-                _orch_used = True
-            except Exception as e:
-                combined.setdefault("warnings", []).append(f"Layer 2 error: {e}")
-
-        # Layer 2 fallback 2: Native Tool Backends (self-contained, no AGL_NextGen)
-        if not _orch_used and self._tool_backends:
+        # Layer 2: Tool Backends (Slither/Mythril/Semgrep)
+        if self._tool_backends:
             try:
                 tb_result = self._tool_backends.analyze(file_path)
                 for tf in tb_result.get("findings", []):
@@ -862,26 +725,88 @@ class AGLSecurityAudit:
                     # L4: Search Engine
                     if graph.search_results:
                         sr = graph.search_results
-                        profitable_seqs = getattr(sr, "profitable_sequences", [])
+                        profitable_seqs = getattr(sr, "profitable_sequences", None)
+                        if profitable_seqs is None:
+                            # SearchResult (Layer 4) uses profitable_attacks
+                            profitable_seqs = getattr(sr, "profitable_attacks", [])
+
+                        total_evaluated = getattr(sr, "total_evaluated", None)
+                        if total_evaluated is None:
+                            total_evaluated = getattr(sr, "candidates_tested", 0)
+
                         combined["search_results"] = {
                             "profitable_sequences": len(profitable_seqs),
-                            "total_evaluated": getattr(sr, "total_evaluated", 0),
+                            "total_evaluated": total_evaluated,
                             "strategies_used": [
                                 str(s) for s in getattr(sr, "strategies_used", [])
                             ],
                         }
                         combined["layers_used"].append("search_engine")
 
-                        # Best profitable sequence → finding
-                        for seq in profitable_seqs[:5]:
+                        # Profitable paths → findings (configurable cap)
+                        search_cap = int(self.config.get("search_findings_limit", 50))
+                        for seq in profitable_seqs[:search_cap]:
+                            # Support object-style and dict-style sequences
+                            desc = ""
+                            severity = "high"
+                            confidence = 0.85
+                            profit_usd = 0.0
+                            action_ids = []
+                            steps = []
+
+                            if isinstance(seq, dict):
+                                desc = seq.get("description", "")
+                                severity = seq.get("severity", "high")
+                                confidence = seq.get("confidence", 0.85)
+                                profit_usd = seq.get(
+                                    "profit_usd", seq.get("actual_profit_usd", 0)
+                                )
+                                action_ids = seq.get("action_ids", [])
+                                steps = seq.get("steps", [])
+                            else:
+                                desc = getattr(seq, "description", "")
+                                severity = getattr(seq, "severity", "high")
+                                confidence = getattr(seq, "confidence", 0.85)
+                                profit_usd = getattr(
+                                    seq,
+                                    "profit_usd",
+                                    getattr(seq, "actual_profit_usd", 0),
+                                )
+                                action_ids = getattr(seq, "action_ids", [])
+                                steps = getattr(seq, "steps", [])
+
+                            fn_candidates = []
+                            for st in steps:
+                                if isinstance(st, dict):
+                                    fn = st.get("function_name") or st.get("function")
+                                    if fn:
+                                        fn_candidates.append(str(fn))
+                            function_name = fn_candidates[0] if fn_candidates else ""
+
+                            if not desc:
+                                if fn_candidates:
+                                    path_str = " -> ".join(fn_candidates[:6])
+                                elif action_ids:
+                                    path_str = " -> ".join([str(a) for a in action_ids[:6]])
+                                else:
+                                    path_str = str(seq)[:120]
+                                desc = f"Path: {path_str}"
+
                             combined.setdefault("search_findings", []).append(
                                 {
-                                    "title": f"Search-found exploit: {getattr(seq, 'description', str(seq)[:120])}",
-                                    "severity": getattr(seq, "severity", "high"),
+                                    "title": f"Search-found exploit path: {desc[:140]}",
+                                    "description": desc,
+                                    "severity": severity,
                                     "category": "search_exploit",
-                                    "confidence": getattr(seq, "confidence", 0.85),
+                                    "confidence": confidence,
                                     "source": "search_engine",
-                                    "profit_usd": getattr(seq, "profit_usd", 0),
+                                    "profit_usd": profit_usd,
+                                    "function": function_name,
+                                    "search_path": {
+                                        "action_ids": action_ids,
+                                        "functions": fn_candidates,
+                                        "steps": steps,
+                                    },
                                 }
                             )
 
@@ -1448,6 +1373,8 @@ class AGLSecurityAudit:
         for f in combined.get("suite_findings", []):
             all_findings.append(f)
         for f in combined.get("detector_findings", []):
+            all_findings.append(f)
+        for f in combined.get("search_findings", []):
             all_findings.append(f)
 
         if not all_findings:

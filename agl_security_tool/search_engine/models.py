@@ -86,9 +86,9 @@ class SearchConfig:
     """إعدادات محرك البحث"""
 
     # === Budget ===
-    max_sequences_to_test: int = 500           # حد أقصى للتسلسلات
-    max_search_time_seconds: float = 60.0      # حد زمني
-    max_depth: int = 6                         # أقصى عمق تسلسل
+    max_sequences_to_test: int = 1500          # حد أقصى للتسلسلات (expanded)
+    max_search_time_seconds: float = 180.0     # حد زمني (expanded)
+    max_depth: int = 8                         # أقصى عمق تسلسل (was 6)
 
     # === Beam Search ===
     beam_width: int = 10                       # عرض الشعاع
@@ -121,6 +121,11 @@ class SearchConfig:
     enable_gradient_optimization: bool = True
     enable_weakness_seeding: bool = True
     enable_near_miss_mutation: bool = True
+    enable_full_project_coverage: bool = True  # seed from all project actions
+
+    # === Output / integration ===
+    max_seed_from_project_actions: int = 300   # cap for project-wide seed expansion
+    max_output_paths: int = 200                # paths exported to downstream layers
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -132,6 +137,9 @@ class SearchConfig:
             "population_size": self.population_size,
             "generations": self.generations,
             "gradient_steps": self.gradient_steps,
+            "enable_full_project_coverage": self.enable_full_project_coverage,
+            "max_seed_from_project_actions": self.max_seed_from_project_actions,
+            "max_output_paths": self.max_output_paths,
             "strategy": self.strategy.value,
         }
 
@@ -407,6 +415,7 @@ class CandidateSequence:
         return {
             "candidate_id": self.candidate_id,
             "action_ids": self.action_ids,
+            "steps": self.steps,
             "source": self.source.value,
             "weakness_ref": self.weakness_ref,
             "estimated_profit_usd": round(self.estimated_profit_usd, 2),

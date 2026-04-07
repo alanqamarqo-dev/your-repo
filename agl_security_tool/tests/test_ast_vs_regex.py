@@ -10,9 +10,9 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT.parent))
 
-from detectors.solidity_parser import SoliditySemanticParser
-from detectors.solidity_ast_parser import SolidityASTParserFull
-from detectors import ParsedContract
+from agl_security_tool.detectors.solidity_parser import SoliditySemanticParser
+from agl_security_tool.detectors.solidity_ast_parser import SolidityASTParserFull
+from agl_security_tool.detectors import ParsedContract
 
 CONTRACT_DIR = ROOT / "test_contracts" / "real_world"
 VULN_DIR = ROOT / "test_contracts" / "vulnerable"

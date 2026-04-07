@@ -16,16 +16,7 @@ from .models import (
     Entity, EntityType, Relationship, RelationType,
 )
 
-import sys
-from pathlib import Path
-_TOOL_DIR = Path(__file__).parent.parent.resolve()
-if str(_TOOL_DIR) not in sys.path:
-    sys.path.insert(0, str(_TOOL_DIR))
-
-try:
-    from detectors import ParsedContract, ParsedFunction, StateVar, OpType
-except ImportError:
-    from agl_security_tool.detectors import ParsedContract, ParsedFunction, StateVar, OpType
+from agl_security_tool.detectors import ParsedContract, ParsedFunction, StateVar, OpType
 
 
 # ═══════════════════════════════════════════════════════════════

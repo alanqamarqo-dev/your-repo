@@ -1,12 +1,13 @@
 # AGL Security Tool — Docker Compose
 # ====================================
 # Usage:
-#   docker compose up agl-cli        # CLI mode (one-shot scan)
-#   docker compose up agl-api        # API server on port 8000
-#   docker compose up agl-api -d     # API server (background)
+#   docker compose up agl-cli          # CLI mode (one-shot scan)
+#   docker compose up agl-audit        # Full pipeline audit
+#   docker compose up agl-api          # API server on port 8000
+#   docker compose up agl-api -d       # API server (background)
 
 services:
-  # ── CLI Scanner ──
+  # ── CLI Scanner (agl-security) ──
   agl-cli:
     build:
       context: .
@@ -20,6 +21,21 @@ services:
       - ./reports:/reports
     entrypoint: ["agl-security"]
     command: ["scan", "/contracts/", "-f", "json", "-o", "/reports/audit.json"]
+
+  # ── Full Pipeline Audit (agl-audit) ──
+  agl-audit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: audit
+      args:
+        INSTALL_SLITHER: "true"
+        INSTALL_SEMGREP: "true"
+    volumes:
+      - ./contracts:/contracts:ro
+      - ./reports:/reports
+    entrypoint: ["agl-audit"]
+    command: ["/contracts/", "--mode", "full", "--format", "json", "-o", "/reports/full_audit.json"]
 
   # ── API Server ──
   agl-api:
@@ -37,9 +53,11 @@ services:
       - AGL_LOG_FILE=/app/logs/agl.log
       - AGL_MYTHRIL_TIMEOUT=120
       - AGL_WORKERS=2
+      - AGL_SECRET_KEY=${AGL_SECRET_KEY:-changeme_use_secrets_token_hex_32}
     volumes:
       - ./logs:/app/logs
       - ./contracts:/contracts:ro
+      - ./reports:/reports
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]

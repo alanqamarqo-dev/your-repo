@@ -11,7 +11,7 @@ negative evidence, batch scoring, serialization.
 
 import math
 import pytest
-from risk_core import (
+from agl_security_tool.risk_core import (
     RiskCore,
     RiskBreakdown,
     DEFAULT_WEIGHTS,

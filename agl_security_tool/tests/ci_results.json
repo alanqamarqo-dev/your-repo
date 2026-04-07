@@ -1,7 +1,7 @@
 {
-  "total_duration": 149.7,
-  "passed": 7,
-  "failed": 3,
+  "total_duration": 211.0,
+  "passed": 4,
+  "failed": 6,
   "skipped": 3,
   "timeout": 0,
   "errors": 0,
@@ -10,50 +10,50 @@
       "test": "tests/_test_state_engine.py",
       "status": "PASS",
       "returncode": 0,
-      "duration": 4.1,
+      "duration": 0.4,
       "summary": "Errors: ['لا يمكن قراءة الملف: agl_security_tool/test_contracts/project/src/Vault.sol'] | Warnings: [] | ERROR: No graph generated"
     },
     {
       "test": "tests/_test_temporal_model.py",
       "status": "PASS",
       "returncode": 0,
-      "duration": 8.2,
-      "summary": "ALL CRITICAL TESTS PASSED | ====================================================================== | JSON output: _temporal_analysis_test.json (5546915 bytes)"
+      "duration": 4.3,
+      "summary": "ALL CRITICAL TESTS PASSED | ====================================================================== | JSON output: _temporal_analysis_test.json (5544935 bytes)"
     },
     {
       "test": "tests/_test_action_space.py",
       "status": "FAIL",
       "returncode": 1,
-      "duration": 4.8,
-      "summary": "with open( | ^^^^^ | FileNotFoundError: [Errno 2] No such file or directory: 'agl_security_tool/test_contracts/project/src/Vault.sol'"
+      "duration": 0.4,
+      "summary": ") as f: | ^ | FileNotFoundError: [Errno 2] No such file or directory: 'agl_security_tool/test_contracts/project/src/Vault.sol'"
     },
     {
       "test": "tests/_test_attack_engine.py",
       "status": "FAIL",
-      "returncode": 1,
-      "duration": 4.8,
-      "summary": "Total:    77 | ====================================================================== | ⚠ 1 tests failed!"
+      "returncode": 0,
+      "duration": 0.5,
+      "summary": "✓ All 77 tests passed! | Layer 3 Economic Physics Engine: OPERATIONAL | Engine v4.0.0 — Profit(attacker) = Value(final) - Value(initial) - Gas - Fees"
     },
     {
       "test": "tests/_test_search_engine.py",
-      "status": "PASS",
+      "status": "FAIL",
       "returncode": 0,
-      "duration": 5.3,
-      "summary": "RESULTS: 93/93 passed, 0 failed | ============================================================ | ✅ ALL TESTS PASSED!"
+      "duration": 1.1,
+      "summary": "❌ Weakness: reentrancy is critical | ❌ Weakness: critical first | ❌ SOME TESTS FAILED"
     },
     {
       "test": "tests/_test_exploit_reasoning.py",
-      "status": "PASS",
+      "status": "FAIL",
       "returncode": 0,
-      "duration": 28.4,
-      "summary": "Findings with exploit proofs: 0 | Time: Nones | WARNING:AGL.SecurityOrchestrator:⚠️ Semgrep غير مثبت! تثبيت: pip install semgrep"
+      "duration": 34.1,
+      "summary": "Time: Nones | WARNING:AGL.security_tool:Engine load failed — Layer 3 (Offensive): [WinError 193] %1 is not a valid Win32 application. Error loading \"C:\\Users\\Hossam\\AppData\\Local\\Programs\\Python\\Pytho"
     },
     {
       "test": "tests/_test_defi_detection.py",
-      "status": "PASS",
+      "status": "FAIL",
       "returncode": 0,
-      "duration": 30.7,
-      "summary": "INFO:AGL.SecurityOrchestrator:✅ Mythril found 0 issues | INFO:AGL.SecurityOrchestrator:  ✓ mythril: 0 findings | WARNING:agl.deep_analyzer:LLM not available — skipping deep analysis"
+      "duration": 64.2,
+      "summary": "INFO:AGL.weight_optimizer:Loaded saved weights from artifacts\\risk_weights.json: {'w_formal': 3.5012863911656513, 'w_heuristic': 1.3775392539582982, 'w_profit': 1.205819189577201, 'w_exploit': 4.00001"
     },
     {
       "test": "test_detector_system.py",
@@ -65,22 +65,22 @@
       "test": "tests/_test_l1_l4.py",
       "status": "PASS",
       "returncode": 0,
-      "duration": 17.3,
+      "duration": 34.1,
       "summary": "[L3] Attack Simulation: NOT ACTIVATED | [L4] Search Engine: NOT ACTIVATED | === DONE ==="
     },
     {
       "test": "tests/_test_tool_usability.py",
       "status": "FAIL",
       "returncode": 0,
-      "duration": 20.3,
-      "summary": "[OK] ExploitReasoningEngine importable | [OK] Reports: text=330 chars, md=161 chars, json=143 chars | === USABILITY TEST COMPLETE ==="
+      "duration": 35.6,
+      "summary": "[OK] ExploitReasoningEngine importable | [OK] Reports: text=330 chars, md=161 chars, json=145 chars | === USABILITY TEST COMPLETE ==="
     },
     {
       "test": "tests/_test_final.py",
       "status": "PASS",
       "returncode": 0,
-      "duration": 25.8,
-      "summary": "LLM-enriched findings: 0 | Time: ?s | TOTAL test time: 25.4s"
+      "duration": 36.3,
+      "summary": "LLM-enriched findings: 0 | Time: ?s | TOTAL test time: 36.2s"
     },
     {
       "test": "tests/_test_fix.py",

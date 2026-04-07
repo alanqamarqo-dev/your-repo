@@ -240,7 +240,7 @@ loader.configure_state(
 
 ## 6. Action Executor (Semantic Execution)
 
-**الملف**: `action_executor.py` (~715 سطر)
+**الملف**: `action_executor.py` (~846 سطر)
 
 ### الغرض
 **قلب المحرك** — يأخذ `ExecutableAction` + `ProtocolState` ويُنتج `StateDelta`.
@@ -253,7 +253,7 @@ execute(action, state)
     ├── _check_preconditions()  → إذا فشل → revert
     │
     ├── CEI violation + sends_eth + !guarded?
-    │   ├── نعم → _execute_reentrancy()    ← نمذجة إعادة الدخول
+    │   ├── نعم → _execute_reentrancy()    ← نمذجة إعادة الدخول (مع تمييز ETH/Token)
     │   └── لا  → _execute_normal()         ← تنفيذ عادي
 ```
 
@@ -263,8 +263,8 @@ execute(action, state)
 def _execute_normal(action, state) -> StateDelta:
     delta = StateDelta()
     _apply_net_delta(action, state, delta)    # 1. تأثيرات التخزين
-    _apply_eth_transfers(action, state, delta) # 2. تحويلات ETH
-    _apply_token_transfers(action, state, delta) # 3. تحويلات Token
+    _apply_eth_transfers(action, state, delta) # 2. تحويلات ETH/Token (ذكي)
+    _apply_token_transfers(action, state, delta) # 3. تحويلات Token من balance_effects
     # 4. msg.value handling
     if action.msg_value > 0:
         delta += BalanceChange(attacker, ETH, -msg_value)
@@ -273,7 +273,44 @@ def _execute_normal(action, state) -> StateDelta:
     return delta
 ```
 
-### نمذجة إعادة الدخول (`_execute_reentrancy`)
+### تصنيف نوع التحويل (`_classify_transfer_type`) — جديد
+
+Helper يميز بين تحويلات ETH الحقيقية وتحويلات ERC20 Token:
+
+```python
+def _classify_transfer_type(ext_call, action, state) -> str:
+    # 1. إذا نوع الاستدعاء external_call (ليس external_call_eth) → "token_transfer"
+    # 2. إذا الهدف target متغير حالة معروف → "token_transfer"
+    # 3. إذا tokens_involved تحتوي على tokens غير ETH → "token_transfer" مع اسم التوكن
+    # 4. وإلا → "eth_transfer" (تحويل ETH حقيقي)
+```
+
+| الحالة | المثال | التصنيف |
+|--------|--------|--------|
+| `token.transfer(msg.sender, amount)` | target="token" | `token_transfer` |
+| `msg.sender.call{value: amount}("")` | target="msg.sender" | `eth_transfer` |
+| `payable(to).transfer(amount)` | target="to" | `eth_transfer` |
+
+### `_apply_eth_transfers` — مُحدَّث
+
+يستخدم `_classify_transfer_type` لتحديد:
+- **ERC20 Token**: المستلم يُحدَّد من `action.category` (fund_outflow → msg.sender يكسب، fund_inflow → العقد يكسب)
+- **ETH حقيقي**: المستلم من `ext_call["target"]` مباشرة
+
+### `_apply_token_transfers` — أُعيد كتابته
+
+يستخدم `action.balance_effects` بدلاً من `action.action` (الذي كان `None` دائماً).
+يُصفّي متغيرات التخزين (deposits, totalDeposits) لمنع إنشاء أرصدة وهمية.
+
+### نمذجة إعادة الدخول (`_execute_reentrancy`) — مُحدَّث
+
+أصبح يميز بين استنزاف ETH و ERC20 Token:
+
+```python
+# إذا tokens_involved تحتوي توكنات غير ETH → token drain
+# Token drain: token_name من tokens_involved
+# ETH drain: يبقى السلوك الأصلي
+```
 
 هذا هو الجزء الأقوى — انظر [القسم 12](#12-نمذجة-إعادة-الدخول) للتفصيل.
 
@@ -692,7 +729,7 @@ Delta Models:
     StateDelta      — ★ مجموعة كل التغييرات لخطوة واحدة
 
 Execution Models:
-    ExecutableAction — فعل جاهز للتنفيذ
+    ExecutableAction — فعل جاهز للتنفيذ (+ balance_effects, tokens_involved)
     StepResult       — نتيجة خطوة واحدة
     AttackResult     — ★ نتيجة هجوم كامل (ربح + تصنيف + وصف)
 
@@ -723,7 +760,7 @@ class ProtocolState:
     get_account(address) → AccountState
     get_storage(contract, var) → Any                # يدعم mapping syntax
     set_storage(contract, var, value)               # يدعم mapping syntax
-    get_token_price(token) → float
+    get_token_price(token) → float                   # مع fuzzy matching + default fallback
     snapshot() → ProtocolState                       # deep copy
     summary() → Dict
 ```
@@ -1202,13 +1239,13 @@ class ProfitCalculator:
 agl_security_tool/
 └── attack_engine/                    # Layer 3
     ├── __init__.py                   # Exports + version (88 سطر)
-    ├── models.py                     # 17 data classes (737 سطر)
+    ├── models.py                     # 17 data classes (642 سطر) — مُحدَّث: balance_effects, tokens_involved, get_token_price fuzzy
     ├── protocol_state.py             # Component 1: State Loader (396 سطر)
-    ├── action_executor.py            # Component 2: Semantic Executor (715 سطر)
+    ├── action_executor.py            # Component 2: Semantic Executor (846 سطر) — مُحدَّث: _classify_transfer_type, token-aware reentrancy
     ├── state_mutator.py              # Component 3: Mutator + Stack (318 سطر)
     ├── economic_engine.py            # Component 4: Economic Physics (371 سطر)
     ├── profit_calculator.py          # Component 5: Profit Heart (383 سطر)
-    ├── engine.py                     # Orchestrator (545 سطر)
+    ├── engine.py                     # Orchestrator (477 سطر) — مُحدَّث: balance_effects/tokens_involved propagation
     └── ECONOMIC_PHYSICS_ENGINE.md    # هذا الملف
 ```
 
@@ -1216,21 +1253,21 @@ agl_security_tool/
 
 | الملف | الأسطر | الغرض |
 |-------|--------|-------|
-| `models.py` | 737 | نماذج البيانات (17 class) |
-| `action_executor.py` | 715 | محرك التنفيذ الدلالي |
-| `engine.py` | 545 | المنسق الرئيسي |
+| `action_executor.py` | 846 | محرك التنفيذ الدلالي (مُحدَّث: +131 سطر لـ token-aware execution) |
+| `models.py` | 642 | نماذج البيانات (17 class + حقول جديدة) |
+| `engine.py` | 477 | المنسق الرئيسي (مُحدَّث: propagation) |
 | `protocol_state.py` | 396 | محمّل الحالة |
 | `profit_calculator.py` | 383 | حاسب الأرباح |
 | `economic_engine.py` | 371 | محرك الفيزياء الاقتصادية |
 | `state_mutator.py` | 318 | محرك تحويل الحالة + StateStack |
 | `__init__.py` | 88 | التصديرات |
-| **المجموع** | **~3,553** | |
+| **المجموع** | **~3,521** | |
 
 ---
 
 ## 17. نتائج الاختبار
 
-جميع الاختبارات الـ 86 ناجحة بنسبة 100%.
+جميع الاختبارات الـ 310 ناجحة بنسبة 100% (+ 21 deselected slow tests).
 
 ### ملخص الاختبارات
 
@@ -1240,14 +1277,18 @@ agl_security_tool/
 | 2 | Models (AccountState, ProtocolState, StateDelta, ...) | 15 | ✅ |
 | 3 | ProtocolStateLoader | 6 | ✅ |
 | 4 | StateMutator + StateStack | 11 | ✅ |
-| 5 | ActionExecutor (Normal) | 6 | ✅ |
-| 5b | ActionExecutor (Reentrancy) | 8 | ✅ |
+| 5 | ActionExecutor (Normal + Token-Aware) | 8 | ✅ |
+| 5b | ActionExecutor (Reentrancy + Token Drain) | 10 | ✅ |
 | 6 | EconomicEngine | 6 | ✅ |
 | 7 | ProfitCalculator | 8 | ✅ |
 | 8 | AttackSimulationEngine (Standalone) | 9 | ✅ |
 | 9 | Full Integration (Layer 1+2+3) | 8 | ✅ |
 | 10 | JSON Export | 6 | ✅ |
-| | **المجموع** | **86** | **✅ 100%** |
+| 11 | Detectors (39 detectors) | 70+ | ✅ |
+| 12 | Solidity Parser | 40+ | ✅ |
+| 13 | Risk Core + Contract Intelligence | 50+ | ✅ |
+| 14 | Layers 1-4 Integration | 109 | ✅ |
+| | **المجموع** | **310** | **✅ 100%** |
 
 ### أبرز النتائج المحققة
 
@@ -1255,9 +1296,30 @@ agl_security_tool/
 |---------|---------|
 | Reentrancy Drain (Direct) | 100 ETH drained, 99 ETH profit |
 | Reentrancy Drain (Pipeline) | 100 reentrant calls, $197,874 net profit |
+| Token Vault Profit (End-to-End) | **$1,997.46 net profit** — تحويل ERC20 + سعر Token |
+| Token Vault L3 Integration | **220 profitable attack**, severity=critical |
 | Profit Calculator | $199,978 net profit, severity=critical, confidence=100% |
 | Full Integration (Vault.sol) | 84 sequences tested, 4 entities extracted |
-| JSON Export | 1.25 MB full result |
+
+### مخرج اختبار Profit End-to-End (جديد)
+
+```
+═══ Token Vault Profit Calculation (End-to-End) ═══
+  Balance Changes:
+    SimpleVault: token:token -1,000,000,000,000,000,000
+    attacker:    token:token +1,000,000,000,000,000,000
+
+  Token Price Check:
+    get_token_price('ETH')        = $2000.0
+    get_token_price('token:token') = $2000.0 (fuzzy match)
+
+  Profit by token: {'token:token': 1000000000000000000}
+  Profit USD: $2,000.00
+  Gas cost USD: $2.54
+  Net profit USD: $1,997.46
+  Is profitable: True
+  Severity: medium
+```
 
 ### مخرج اختبار Reentrancy
 
@@ -1335,4 +1397,4 @@ Future (Layer 4):
 ---
 
 *AGL Security Tool v4.0.0 — Layer 3: Economic Physics Engine*
-*86/86 tests passing — All engines operational*
+*310/310 tests passing — All engines operational — Token-aware profit calculation active*

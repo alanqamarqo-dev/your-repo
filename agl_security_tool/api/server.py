@@ -271,32 +271,32 @@ async def ws_scan_progress(
 @app.get("/", response_class=HTMLResponse)
 async def page_index(request: Request):
     """الواجهة الرئيسية — ChatGPT-style SPA."""
-    return templates.TemplateResponse("app.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="app.html")
 
 
 @app.get("/classic", response_class=HTMLResponse)
 async def page_classic(request: Request):
     """الصفحة الكلاسيكية — Classic landing page (legacy)."""
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="index.html")
 
 
 @app.get("/login", response_class=HTMLResponse)
 async def page_login(request: Request):
     """صفحة تسجيل الدخول — Login page."""
-    return templates.TemplateResponse("login.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="login.html")
 
 
 @app.get("/dashboard", response_class=HTMLResponse)
 async def page_dashboard(request: Request):
     """لوحة التحكم — Dashboard (scan history)."""
-    return templates.TemplateResponse("history.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="history.html")
 
 
 @app.get("/scan/{scan_id}/progress", response_class=HTMLResponse)
 async def page_scan_progress(request: Request, scan_id: str):
     """صفحة تقدم الفحص — Scan progress page."""
     return templates.TemplateResponse(
-        "scan.html", {"request": request, "scan_id": scan_id}
+        request=request, name="scan.html", context={"scan_id": scan_id}
     )
 
 
@@ -304,7 +304,7 @@ async def page_scan_progress(request: Request, scan_id: str):
 async def page_results(request: Request, scan_id: str):
     """لوحة النتائج — Results dashboard."""
     return templates.TemplateResponse(
-        "results.html", {"request": request, "scan_id": scan_id}
+        request=request, name="results.html", context={"scan_id": scan_id}
     )
 
 

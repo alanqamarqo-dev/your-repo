@@ -139,11 +139,13 @@ class HeikalTunnelingScorer:
         result.barriers_analyzed = len(barriers)
 
         if not barriers:
-            # لا حواجز → اختراق مضمون
+            # لا حواجز → غياب حماية لكن لا يعني خطورة بذاته
+            # Tunneling يقيس "صعوبة تجاوز الحواجز" — بدون حواجز
+            # النتيجة = محايدة (0.10) لأن الخطورة تأتي من wave/holo
             result.p_wkb = 1.0
             result.p_heikal = 1.0
             result.p_total = 1.0
-            result.confidence = 0.98
+            result.confidence = 0.10  # ← was 0.98: no barriers ≠ dangerous
             return result
 
         # ─── Step 1: WKB لكل حاجز ───
@@ -333,14 +335,17 @@ class HeikalTunnelingScorer:
         حيث:
             k = حدة التحول (steepness)
             p₀ = نقطة المنتصف
+
+        المعايرة: p₀=0.50 يعني أن 50% اختراق → ثقة متوسطة
+        k=6 يعطي انتقالاً سلساً بدل القفزة الحادة
         """
-        k = 8.0  # steepness — sharper transition for security scoring
-        p0 = 0.02  # midpoint — product of barrier transmissions is typically 0.001-0.1
+        k = 6.0   # steepness — smoother transition (↓ from 8.0)
+        p0 = 0.50  # midpoint — 50% penetration = 50% confidence (↑ from 0.02)
 
         raw = 1.0 / (1.0 + math.exp(-k * (p - p0)))
 
-        # Scale to (0.05 - 0.99) range
-        return round(0.05 + raw * 0.94, 4)
+        # Scale to (0.05 - 0.95) range — never give 0.99 from tunneling alone
+        return round(0.05 + raw * 0.90, 4)
 
     # ═══════════════════════════════════════════════════════
     #  Barrier Extraction from Security Context

@@ -51,6 +51,7 @@ from .models import (
     CandidateSequence,
     HeuristicTarget,
     EconomicWeakness,
+    SeedSource,
 )
 from .heuristic_prioritizer import HeuristicPrioritizer
 from .weakness_detector import EconomicWeaknessDetector
@@ -165,6 +166,13 @@ class SearchOrchestrator:
 
         # === 4. Merge seeds ===
         all_seeds = self._merge_seeds(heuristic_seeds, weakness_seeds)
+
+        # Optional: project-wide dynamic coverage (all actions as entry seeds)
+        if self.config.enable_full_project_coverage:
+            all_seeds = self._augment_seeds_with_project_actions(
+                all_seeds, action_graph, actions
+            )
+
         result.seeds_generated = len(all_seeds)
 
         # Count seeds by source
@@ -241,6 +249,15 @@ class SearchOrchestrator:
         for c in profitable:
             result.profitable_attacks.append(c.to_dict())
             result.total_profit_usd += c.actual_profit_usd
+
+        # Cap exported paths for downstream layers (risk/exploit reasoning)
+        if len(result.profitable_attacks) > self.config.max_output_paths:
+            result.profitable_attacks = result.profitable_attacks[
+                : self.config.max_output_paths
+            ]
+            result.warnings.append(
+                f"Search output capped to {self.config.max_output_paths} paths"
+            )
 
         if profitable:
             result.best_profit_usd = profitable[0].actual_profit_usd
@@ -321,6 +338,53 @@ class SearchOrchestrator:
         unique.sort(key=lambda s: s.priority, reverse=True)
 
         return unique
+
+    def _augment_seeds_with_project_actions(
+        self,
+        seeds: List[SearchSeed],
+        action_graph: Any,
+        actions: Dict[str, Any],
+    ) -> List[SearchSeed]:
+        """
+        Dynamic full-project coverage:
+        add one-hop seeds from all project actions so search isn't limited
+        to heuristic/weakness-discovered entries only.
+        """
+        expanded = list(seeds)
+
+        seen = {tuple(s.action_sequence) for s in expanded if s.action_sequence}
+
+        action_ids = list(actions.keys())
+        # Deterministic order: prioritize likely dangerous actions first
+        action_ids.sort(
+            key=lambda aid: self.search_engine._heuristic_score([aid], actions),
+            reverse=True,
+        )
+
+        added = 0
+        cap = max(0, int(self.config.max_seed_from_project_actions))
+        for aid in action_ids:
+            if added >= cap:
+                break
+            seq = (aid,)
+            if seq in seen:
+                continue
+            expanded.append(
+                SearchSeed(
+                    seed_id=f"project_{aid}",
+                    source=SeedSource.LAYER2_PATH,
+                    action_sequence=[aid],
+                    estimated_profit=0.0,
+                    priority=min(1.0, self.search_engine._heuristic_score([aid], actions)),
+                    notes="Dynamic project-wide seed",
+                )
+            )
+            seen.add(seq)
+            added += 1
+
+        # Keep higher-priority seeds first
+        expanded.sort(key=lambda s: s.priority, reverse=True)
+        return expanded
 
     def _make_simulate_fn(self, attack_engine: Any):
         """Create simulate_fn closure over attack_engine"""

@@ -1,45 +1,50 @@
+# Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*.so
 *.egg-info/
+*.egg
 dist/
 build/
-.eggs/
-*.egg
+
+# Virtual envs
+.venv/
+.venv_linux/
+venv/
 
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# Env
-.env
-.venv/
-venv/
-
-# Artifacts
-artifacts/
-logs/
-reports/
-*.log
-
-# Test artifacts
-_broken_poc/
+# Test/debug files
 _*.py
 _*.json
+_*.log
 _*.sh
+_*.txt
+_*.md
+_broken_poc/
+_diagnostics/
 
-# Node
-node_modules/
+# Artifacts (large models)
+artifacts/Qwen2.5-3B-Instruct/
+artifacts/agl-solidity-expert/
+artifacts/holographic_llm/
 
-# Docker build cache
-.docker/
-
-# Git
+# Cache & OS
+.pytest_cache/
 .git/
 .github/
-
-# OS
-.DS_Store
 Thumbs.db
+.DS_Store
+*.tar.gz
+
+# Docker
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Docs (not needed in image)
+docs/
+*.md
+!README.md

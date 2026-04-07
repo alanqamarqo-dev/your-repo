@@ -338,12 +338,22 @@ class ProtocolState:
         if token in ("ETH", "NATIVE", "eth"):
             return self.eth_price_usd
         if token in self.tokens:
-            return self.tokens[token].price_usd
+            price = self.tokens[token].price_usd
+            if price > 0:
+                return price
         # ابحث عن أوراكل
         for oracle in self.oracles.values():
             if oracle.token == token:
-                return oracle.price
-        return 0.0
+                if oracle.price > 0:
+                    return oracle.price
+        # ابحث بتطابق جزئي (مثلاً "token:token" ↔ "token")
+        token_lower = token.lower()
+        for tid, tstate in self.tokens.items():
+            if tid.lower() in token_lower or token_lower in tid.lower():
+                if tstate.price_usd > 0:
+                    return tstate.price_usd
+        # السعر الافتراضي — أفضل من 0 (يُتيح مقارنة نسبية)
+        return self.eth_price_usd
 
     def snapshot(self) -> 'ProtocolState':
         """إنشاء لقطة عميقة غير قابلة للتغيير"""
@@ -510,6 +520,8 @@ class ExecutableAction:
     state_reads: List[str] = field(default_factory=list)
     state_writes: List[str] = field(default_factory=list)
     reentrancy_guarded: bool = False
+    balance_effects: Dict[str, str] = field(default_factory=dict)  # {entity: ±expr}
+    tokens_involved: List[str] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
         return {

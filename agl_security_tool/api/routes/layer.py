@@ -31,13 +31,22 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from pydantic import BaseModel
 
 from ..auth import get_current_user
-from ..database_mongo import (
-    create_scan,
-    get_scan,
-    update_scan,
-    MongoScan,
-    is_mongo_available,
-)
+
+try:
+    from ..database_mongo import (
+        create_scan,
+        get_scan,
+        update_scan,
+        MongoScan,
+        is_mongo_available,
+    )
+except ImportError:
+    # pymongo not installed — provide stubs
+    def create_scan(*a, **kw): return None
+    def get_scan(*a, **kw): return None
+    def update_scan(*a, **kw): return None
+    class MongoScan: pass
+    def is_mongo_available(): return False
 
 _logger = logging.getLogger("AGL.api.layer")
 

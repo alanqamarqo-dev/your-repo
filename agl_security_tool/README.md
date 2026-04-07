@@ -1,22 +1,78 @@
-# AGL Security Tool
+# 🛡️ AGL Security Tool
 
-> **أداة تحليل أمان العقود الذكية — Smart Contract Security Analysis Tool**
+> **أداة تحليل أمان العقود الذكية — Smart Contract Security Analyzer**
 >
-> Version 2.1.0
+> Version 2.1.0 | April 2026
+
+[![CI](https://github.com/your-org/your-repo/actions/workflows/ci.yml/badge.svg?branch=agl_security)](https://github.com/your-org/your-repo/actions/workflows/ci.yml)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
 ## Overview | نظرة عامة
 
-**English:**
-AGL Security Tool is an **8-layer** smart contract security analyzer. It combines Solidity flattening, Z3 symbolic execution, financial state extraction, action space enumeration, attack simulation, 5-strategy guided search (Beam/MCTS/Evolutionary/Greedy/Hybrid), 22 semantic detectors, exploit reasoning with Z3 proofs, physics-inspired Heikal math scoring, probabilistic risk modeling, dynamic PoC generation, and optional LLM enrichment — plus integration with Slither, Mythril, Semgrep, and an offensive security engine when available.
+AGL Security Tool is an **8-layer** smart contract security analyzer combining:
+- **Layer 0:** Solidity flattening + Z3 symbolic execution (BitVec 256-bit proofs)
+- **Layer 1-4:** Financial state extraction → action space enumeration → attack simulation → 5-strategy guided search
+- **Layer 5:** 22+ semantic vulnerability detectors
+- **Layer 6:** Exploit reasoning with Z3 SAT proofs and invariant checking
+- **Layer 7:** Heikal Math physics-inspired scoring (tunneling + wave + holographic + resonance)
+- **Dedup + RiskCore:** Cross-layer deduplication with P(exploit) probability scoring
+- **PoC Generation:** Foundry `.t.sol` proof-of-concept generation and execution
 
-**العربية:**
-أداة AGL Security هي محلل أمان **بـ 8 طبقات** للعقود الذكية. تجمع بين: تسطيح Solidity، تنفيذ رمزي Z3، استخراج الحالة المالية، تعداد فضاء الأفعال، محاكاة الهجمات الاقتصادية، بحث ذكي بـ 5 استراتيجيات (Beam/MCTS/تطوري/جشع/هجين)، 22 كاشفاً دلالياً، إثبات الاستغلال بـ Z3 SAT، خوارزميات هيكل الرياضية (موجة + نفق كمومي + هولوغرام + رنين)، نموذج احتمالي للمخاطر، توليد PoC ديناميكي، وإثراء اختياري بالنموذج اللغوي — مع دعم Slither و Mythril و Semgrep ومحرك الأمن الهجومي عند توفرها.
+**E2E Verified** (April 2026): Full pipeline tested on real contracts — all 11 engines loaded, all 8 layers producing documented outputs, 45 unified findings with 28 exploitable proofs in 226s.
 
 ---
 
 ## Quick Start | البداية السريعة
+
+### Install — التثبيت
+
+```bash
+git clone https://github.com/your-org/your-repo.git
+cd your-repo/agl_security_tool
+pip install -e .            # Core only
+pip install -e ".[api]"     # + API server
+pip install -e ".[api,dev]" # + API + tests
+```
+
+### CLI — سطر الأوامر
+
+```bash
+# Standard scan — فحص قياسي
+agl-security scan contract.sol
+
+# Quick scan — فحص سريع (patterns only, seconds)
+agl-security quick contract.sol
+
+# Deep scan — فحص عميق (Z3 + all layers)
+agl-security deep contract.sol
+
+# Scan directory — فحص مجلد
+agl-security scan contracts/ --recursive
+
+# Full project scan (Foundry/Hardhat/Truffle)
+agl-security project ./my-defi-project
+agl-security project ./project -m deep -f markdown -o report.md
+```
+
+### Full Pipeline Audit — خط الأنابيب الكامل
+
+```bash
+# Full 8-layer audit with all engines (recommended for production audits)
+agl-audit ./my-defi-project
+agl-audit ./my-defi-project --mode full --format markdown -o report.md
+
+# Audit a GitHub repo directly
+agl-audit https://github.com/Uniswap/v3-core --mode full
+
+# Skip Heikal Math (faster)
+agl-audit ./project --skip-heikal
+
+# With PoC generation + Foundry execution
+agl-audit ./project --run-poc
+```
 
 ### Python API
 
@@ -24,79 +80,49 @@ AGL Security Tool is an **8-layer** smart contract security analyzer. It combine
 from agl_security_tool import AGLSecurityAudit
 
 audit = AGLSecurityAudit()
-result = audit.scan("path/to/contract.sol")
 
-# Quick scan — فحص سريع (patterns only)
+# Standard scan
+result = audit.scan("contract.sol")
+
+# Quick scan (patterns only)
 result = audit.quick_scan("contract.sol")
 
-# Deep scan — فحص عميق (Z3 + EVM + full pipeline)
+# Deep scan (full pipeline)
 result = audit.deep_scan("contract.sol")
+
+# Generate report
+report = audit.generate_report(result, format="markdown")
 ```
 
-### CLI — سطر الأوامر
-
-```bash
-# Standard scan — فحص قياسي
-python -m agl_security_tool scan contract.sol
-
-# Quick scan — فحص سريع
-python -m agl_security_tool quick contract.sol
-
-# Deep scan — فحص عميق
-python -m agl_security_tool deep contract.sol
-
-# Scan directory — فحص مجلد كامل
-python -m agl_security_tool scan contracts/ --recursive
-
-# Scan full project (Foundry / Hardhat / Truffle)
-python -m agl_security_tool project ./my-defi-project
-
-# Deep project scan + Markdown report
-python -m agl_security_tool project ./project -m deep -f markdown -o report.md
-
-# Project info (no scan) — معلومات المشروع
-python -m agl_security_tool info ./my-project
-
-# Dependency graph — رسم التبعيات
-python -m agl_security_tool graph ./my-project -o deps.json
-```
-
-### State Extraction Engine — محرك استخراج الحالة (Layer 1)
-
-```python
-from agl_security_tool.state_extraction import StateExtractionEngine
-
-engine = StateExtractionEngine()
-result = engine.extract("path/to/contract.sol")
-# result.graph contains the full financial state graph
-```
-
-### Full Project Audit Pipeline — خط الأنابيب الكامل (11 مرحلة)
+### Full Pipeline API
 
 ```python
 from agl_security_tool.audit_pipeline import run_audit
 
-# Audit a local project (Foundry/Hardhat/Truffle/Bare)
-result = run_audit("./my-defi-project", mode="deep", output_format="json")
+# Full 8-layer audit on local project
+result = run_audit("./my-defi-project", mode="full", output_format="json")
 
-# Audit a GitHub repo directly
+# Audit GitHub repo
 result = run_audit("https://github.com/Org/repo", mode="deep")
 
-# Audit a single .sol file
-result = run_audit("contract.sol", mode="deep", skip_heikal=True)
-
-# Generate Markdown report
-result = run_audit("./project", output_format="markdown", output_path="report.md")
-
-# With PoC generation + Foundry execution
+# With PoC generation
 result = run_audit("./project", generate_poc=True, run_poc=True)
+```
+
+### Docker — حاوية
+
+```bash
+# CLI scan (one-shot)
+docker compose up agl-cli
+
+# API server
+docker compose up agl-api -d
+curl http://localhost:8000/health
 ```
 
 ---
 
 ## Architecture | البنية المعمارية
-
-The tool operates as an **8-layer pipeline** (Layers 0–7). Each layer feeds the next:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -109,65 +135,72 @@ The tool operates as an **8-layer pipeline** (Layers 0–7). Each layer feeds th
 │  │ Import resolver +   │  │ 8 symbolic checks    │              │
 │  │ Inheritance chain   │  │ (overflow, access...) │              │
 │  └────────┬────────────┘  └──────────┬───────────┘              │
-│           │                          │                          │
-│  Layer 1: State Extraction ──────────┤                          │
-│  ┌────────▼──────────────────────────▼───────────┐              │
-│  │ StateExtractionEngine                         │              │
-│  │ Entity Extraction → Relationship Mapping →    │              │
-│  │ Fund Mapping → Financial Graph → Temporal     │              │
-│  │ Analysis → State Mutations → Function Effects │              │
-│  └────────────────────┬──────────────────────────┘              │
-│                       │                                         │
-│  Layer 2: Action Space                                          │
-│  ┌────────────────────▼──────────────────────────┐              │
-│  │ ActionSpaceBuilder                            │              │
-│  │ Action Enumeration → Parameter Generation →   │              │
-│  │ State Linking → Attack Classification →       │              │
-│  │ Action Graph                                  │              │
-│  └────────────────────┬──────────────────────────┘              │
-│                       │                                         │
-│  Layer 3: Attack Engine                                         │
-│  ┌────────────────────▼──────────────────────────┐              │
-│  │ AttackSimulationEngine                        │              │
-│  │ Protocol State → Action Execution →           │              │
-│  │ State Mutation → Economic Events →            │              │
-│  │ Profit = Value(final) - Value(initial) - Gas  │              │
-│  └────────────────────┬──────────────────────────┘              │
-│                       │                                         │
-│  Layer 4: Search Engine                                         │
-│  ┌────────────────────▼──────────────────────────┐              │
-│  │ SearchOrchestrator                            │              │
-│  │ Heuristic Priority → Weakness Detection →     │              │
-│  │ Guided Search (Beam/MCTS/Evolutionary) →      │              │
-│  │ Profit Gradient Optimization                  │              │
-│  └────────────────────┬──────────────────────────┘              │
-│                       │                                         │
-│  Layer 5: Detectors                                             │
-│  ┌────────────────────▼──────────────────────────┐              │
-│  │ DetectorRunner — 22 Semantic Detectors        │              │
-│  │ reentrancy (5) │ access_control (5) │         │              │
-│  │ defi (4) │ token (4) │ common (4)   │         │              │
-│  └────────────────────┬──────────────────────────┘              │
-│                       │                                         │
+│           ▼                          ▼                          │
+│  Layer 1-4: State + Action + Attack + Search                    │
+│  ┌──────────────────────────────────────────────────┐           │
+│  │ StateExtraction → ActionSpace → AttackEngine →   │           │
+│  │ SearchOrchestrator (Beam/MCTS/Evolutionary)      │           │
+│  └────────────────────┬─────────────────────────────┘           │
+│                       ▼                                         │
+│  Layer 5: 22+ Semantic Detectors                                │
+│  ┌──────────────────────────────────────────────────┐           │
+│  │ reentrancy(5) │ access_control(5) │ defi(4) │    │           │
+│  │ token(4) │ common(4) │ defi_advanced(2+)    │    │           │
+│  └────────────────────┬─────────────────────────────┘           │
+│                       ▼                                         │
 │  Layer 6: Exploit Reasoning                                     │
-│  ┌────────────────────▼──────────────────────────┐              │
-│  │ ExploitReasoningEngine                        │              │
-│  │ PathExtractor → Z3 SAT → InvariantChecker →   │              │
-│  │ ExploitAssembler → RiskCore P(exploit)        │              │
-│  └────────────────────┬──────────────────────────┘              │
-│                       │                                         │
-│  Layer 7: Heikal Math (Optional)                                │
-│  ┌────────────────────▼──────────────────────────┐              │
-│  │ HeikalTunnelingScorer │ WaveDomainEvaluator   │              │
-│  │ HolographicVulnMemory │ ResonanceOptimizer    │              │
-│  └────────────────────┬──────────────────────────┘              │
-│                       │                                         │
-│  Output: Dedup → RiskCore → PoC → LLM → Report                 │
-│                                                                 │
+│  ┌──────────────────────────────────────────────────┐           │
+│  │ PathExtractor → Z3 SAT → InvariantChecker(18) → │           │
+│  │ ExploitAssembler (14 vulnerability types)        │           │
+│  └────────────────────┬─────────────────────────────┘           │
+│                       ▼                                         │
+│  Layer 7: Heikal Math (Physics-Inspired)                        │
+│  ┌──────────────────────────────────────────────────┐           │
+│  │ Tunneling │ Wave │ Holographic │ Resonance       │           │
+│  └────────────────────┬─────────────────────────────┘           │
+│                       ▼                                         │
+│  Dedup → RiskCore P(exploit) → PoC Gen → Report                │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-> For detailed architecture documentation, see [ARCHITECTURE.md](ARCHITECTURE.md) (Arabic).
+> For detailed architecture documentation, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+---
+
+## CLI Reference — مرجع سطر الأوامر
+
+### `agl-security` — Standard CLI
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `scan` | Standard file/directory scan | `agl-security scan contract.sol` |
+| `quick` | Fast pattern-only scan (seconds) | `agl-security quick contract.sol` |
+| `deep` | Full pipeline (Z3 + all layers) | `agl-security deep contract.sol` |
+| `project` | Scan Foundry/Hardhat/Truffle project | `agl-security project ./my-project` |
+| `info` | Project stats (no scan) | `agl-security info ./my-project` |
+| `graph` | Dependency graph (JSON) | `agl-security graph ./my-project -o deps.json` |
+
+**Common flags:**
+- `-f json|markdown|text` — Output format (default: `text`)
+- `-o report.md` — Save to file
+- `-r, --recursive` — Scan subdirectories
+- `-m quick|scan|deep` — Scan mode (project command)
+
+**Exit codes:** `0` = clean, `1` = HIGH findings, `2` = CRITICAL findings
+
+### `agl-audit` — Full Pipeline CLI
+
+| Flag | Description |
+|------|-------------|
+| `--mode full\|deep\|quick` | Audit mode (default: `full`) |
+| `--format json\|markdown\|text` | Output format (default: `json`) |
+| `-o, --output PATH` | Output file path |
+| `-b, --branch BRANCH` | Git branch for GitHub URLs |
+| `--skip-heikal` | Skip Layer 7 Heikal Math |
+| `--include-deps` | Scan node_modules/lib/ |
+| `--include-tests` | Include test files |
+| `--no-poc` | Skip PoC generation |
+| `--run-poc` | Execute generated PoCs with Foundry |
 
 ---
 
@@ -175,90 +208,47 @@ The tool operates as an **8-layer pipeline** (Layers 0–7). Each layer feeds th
 
 ```
 agl_security_tool/
-├── __init__.py              # Package entry — exports AGLSecurityAudit, ProjectScanner
-├── __main__.py              # CLI interface (scan, quick, deep, project, info, graph)
-├── core.py                  # Main AGLSecurityAudit class — orchestrates all layers
-├── project_scanner.py       # Full project scanner (Foundry/Hardhat/Truffle)
-├── solidity_flattener.py    # Import resolver + inheritance chain builder
-├── z3_symbolic_engine.py    # Z3-based symbolic execution (8 check types)
-├── exploit_reasoning.py     # Attack chain reasoning engine
-├── vscode_bridge.py         # VS Code extension communication (stdin/stdout JSON)
+├── __init__.py                  # Package exports (AGLSecurityAudit, ProjectScanner, ...)
+├── __main__.py                  # CLI: agl-security (scan/quick/deep/project/info/graph)
+├── audit_pipeline.py            # CLI: agl-audit (full 8-layer pipeline orchestrator)
+├── core.py                      # AGLSecurityAudit — main analysis engine
+├── project_scanner.py           # Foundry/Hardhat/Truffle project detection
+├── solidity_flattener.py        # Import resolution + inheritance chain
+├── z3_symbolic_engine.py        # Z3 SMT solver (8 check types)
+├── exploit_reasoning.py         # Exploit proofs (14 vuln types, Z3 SAT)
+├── risk_core.py                 # P(exploit) = σ(w·x + β) probability scoring
+├── contract_intelligence.py     # Noisy-OR aggregation + MetaClassifier
+├── poc_generator.py             # Foundry .t.sol PoC templates (9 types)
+├── known_pattern_filter.py      # False positive suppression
+├── onchain_context.py           # On-chain data integration (9 chains)
+├── tool_backends.py             # Slither/Mythril/Semgrep wrappers
+├── benchmark_runner.py          # SWC ground truth evaluation
+├── weight_optimizer.py          # SGD risk weight training
+├── vscode_bridge.py             # VS Code extension bridge
 │
-├── state_extraction/        # Layer 1 — Financial state extraction
-│   ├── engine.py            # StateExtractionEngine (main orchestrator)
-│   ├── entity_extractor.py  # Extract tokens, pools, balances, debt, governance
-│   ├── relationship_mapper.py # Access control, fund flow, oracle links
-│   ├── fund_mapper.py       # Balance mapping per account/contract
-│   ├── financial_graph.py   # Dynamic financial graph
-│   ├── execution_semantics.py # Operation ordering + CEI violation detection
-│   ├── state_mutation.py    # State(t+1) = State(t) + Σ(deltas)
-│   ├── function_effects.py  # ΔState = f(inputs) with cross-function deps
-│   ├── temporal_graph.py    # Temporal dependency graph
-│   ├── validator.py         # Balance consistency + cycle detection
-│   └── models.py            # Data models
+├── detectors/                   # Layer 5 — 22+ semantic detectors
+├── state_extraction/            # Layer 1 — Financial state extraction
+├── action_space/                # Layer 2 — Attack action enumeration
+├── attack_engine/               # Layer 3 — Economic attack simulation
+├── search_engine/               # Layer 4 — Guided economic search
+├── heikal_math/                 # Layer 7 — Physics-inspired scoring
+├── api/                         # REST API (FastAPI + JWT + WebSocket)
+├── cli/                         # CLI utilities (manage, train)
 │
-├── action_space/            # Layer 2 — Attack space builder
-│   ├── builder.py           # ActionSpaceBuilder (main orchestrator)
-│   ├── action_enumerator.py # Extract all possible actions
-│   ├── parameter_generator.py # Generate strategic parameter variants
-│   ├── state_linker.py      # Link actions to ΔState effects
-│   ├── action_classifier.py # Classify by attack type + severity
-│   ├── action_graph.py      # Dependency graph: Nodes=Actions, Edges=Deps
-│   └── models.py            # Data models
+├── tests/                       # Test suite (175+ tests)
+├── training_contracts/          # Detector training data
+├── test_contracts/              # Test Solidity contracts
+├── bounty_contracts/            # Real-world audit targets
+├── docs/                        # Documentation
 │
-├── attack_engine/           # Layer 3 — Economic physics engine
-│   ├── engine.py            # AttackSimulationEngine (main orchestrator)
-│   ├── protocol_state.py    # Protocol state loader
-│   ├── action_executor.py   # Semantic action executor
-│   ├── state_mutator.py     # State transformer + rollback
-│   ├── economic_engine.py   # Economic event engine (flash loans, swaps, fees)
-│   ├── profit_calculator.py # Profit = Value(final) - Value(initial) - Gas - Fees
-│   └── models.py            # Data models
-│
-├── search_engine/           # Layer 4 — Intelligent economic search
-│   ├── engine.py            # SearchOrchestrator (main orchestrator)
-│   ├── heuristic_prioritizer.py # Where to start searching
-│   ├── weakness_detector.py # Economic weakness detection
-│   ├── guided_search.py     # Beam, MCTS, Evolutionary search
-│   ├── profit_gradient.py   # Parameter optimization via gradient
-│   └── models.py            # Data models
-│
-├── detectors/               # Layer 5 — 22 semantic detectors
-│   ├── __init__.py          # DetectorRunner + BaseDetector + Finding + Severity
-│   ├── solidity_parser.py   # Semantic Solidity parser (no external deps)
-│   ├── reentrancy.py        # 5 detectors: classic, cross-function, read-only...
-│   ├── access_control.py    # 5 detectors: missing checks, centralization...
-│   ├── defi.py              # 4 detectors: flash loan, oracle, MEV, governance
-│   ├── token.py             # 4 detectors: ERC20 compliance, fee-on-transfer...
-│   └── common.py            # 4 detectors: unchecked calls, integer issues...
-│
-├── heikal_math/             # Layer 7 — Physics-inspired scoring
-│   ├── tunneling_scorer.py  # WKB quantum tunneling probability
-│   ├── wave_evaluator.py    # Quantum wave superposition heuristic
-│   ├── holographic_patterns.py # FFT-based pattern matching (numpy)
-│   └── resonance_optimizer.py  # Breit-Wigner resonance optimization
-│
-├── audit_pipeline.py        # Project-level 11-step pipeline orchestrator
-├── risk_core.py             # P(exploit) = σ(w·x + β) unified scoring
-├── poc_generator.py         # Dynamic Foundry .t.sol PoC generation (9 templates)
-├── contract_intelligence.py # Noisy-OR + meta-classifier aggregation
-├── onchain_context.py       # On-chain data: proxy detection, 9 chains
-├── tool_backends.py         # Slither/Mythril/Semgrep unified wrappers
-├── benchmark_runner.py      # Evaluation vs SWC + DVDEFI ground truth
-├── weight_optimizer.py      # Risk weight training via mini-batch SGD
-│
-├── docs/                    # Detailed documentation
-│   ├── ARCHITECTURE.md      # Complete architecture reference
-│   ├── AUDIT_PIPELINE_TRACE.md # All 28 functions traced
-│   ├── BUGS.md              # 52 bugs: 19 fixed, 33 pending
-│   └── NEGATIVE_EVIDENCE.md # Negative evidence pipeline docs
-│
-├── ARCHITECTURE.md              # Full architecture documentation (Arabic)
-├── INTELLIGENT_SEARCH_ENGINE.md # Layer 4 deep-dive
-├── state_extraction/DYNAMIC_STATE_TRANSITION_MODEL.md  # Layer 1 deep-dive
-├── action_space/ACTION_SPACE_BUILDER.md                # Layer 2 deep-dive
-├── attack_engine/ECONOMIC_PHYSICS_ENGINE.md            # Layer 3 deep-dive
-└── heikal_math/HEIKAL_MATH_DOCUMENTATION.md            # Layer 7 deep-dive
+├── Dockerfile                   # Multi-stage (CLI + API)
+├── docker-compose.yml           # CLI + API services
+├── pyproject.toml               # Package configuration
+├── requirements.txt             # Dependencies
+├── requirements-lock.txt        # Pinned versions
+├── .env.example                 # Environment variables template
+├── CHANGELOG.md                 # Version history
+└── DEPLOYMENT.md                # Production deployment guide
 ```
 
 ---
@@ -266,70 +256,54 @@ agl_security_tool/
 ## Dependencies | المتطلبات
 
 ### Required — مطلوبة
+
 | Package | Version | Purpose |
 |---------|---------|---------|
-| `requests` | >= 2.28.0 | HTTP communication for external APIs |
-| `z3-solver` | >= 4.12.0 | Symbolic execution engine (Z3 SMT) |
+| `requests` | ≥ 2.28.0 | HTTP client |
+| `z3-solver` | ≥ 4.12.0 | Z3 SMT symbolic execution |
+| `numpy` | ≥ 1.24.0 | FFT for Holographic Memory |
+| `pydantic` | ≥ 2.0.0 | Data model validation |
+| `psutil` | ≥ 5.9.0 | System resource monitoring |
 
-### Optional — اختيارية (enhance results)
+### Optional — اختيارية
+
 | Package | Purpose |
 |---------|---------|
-| `slither-analyzer` | Slither integration for additional static analysis |
-| `mythril` | Mythril integration for EVM symbolic execution |
-| `semgrep` | Semgrep rule-based scanning |
+| `slither-analyzer` | Static analysis (80+ detectors) |
+| `mythril` | EVM symbolic execution |
+| `semgrep` | Pattern-based scanning |
+| `fastapi + uvicorn` | REST API server |
 
-### Install — التثبيت
+> See [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md) for full dependency documentation, Docker setup, and troubleshooting.
+
+---
+
+## Testing | الاختبار
 
 ```bash
-pip install -r requirements.txt
+# Fast tests only (~20s)
+python -m pytest tests/ -x --tb=short -q
+
+# All tests including integration (~5min)
+python -m pytest tests/ -m '' --timeout=300
+
+# Specific test file
+python -m pytest tests/test_detectors.py -v
 ```
 
-### Optional (enhance results) — اختيارية
-
-```bash
-pip install slither-analyzer mythril semgrep numpy
-```
-
 ---
 
-## External Engines (Optional) | المحركات الخارجية
+## Documentation | التوثيق
 
-**Important / مهم:**
-This tool works **100% standalone** without any external AGL engines. However, when the full AGL project is available, `core.py` optionally imports 4 additional engines from `AGL_NextGen/src/agl/engines/`:
-
-| Engine | Import Path | Purpose |
-|--------|-------------|---------|
-| `SmartContractAnalyzer` | `agl.engines.smart_contract_analyzer` | Pattern scan + Lexer + CFG (Layer 1) |
-| `AGLSecuritySuite` | `agl.engines.agl_security` | Slither/Mythril wrapper (Layer 2) |
-| `AGLSecurityOrchestrator` | `agl.engines.security_orchestrator` | Parallel analysis orchestration (Layer 2+) |
-| `OffensiveSecurityEngine` | `agl.engines.offensive_security` | Full offensive pipeline (Layer 3) |
-
-All 4 imports use `try/except` — if unavailable, the tool gracefully falls back to its internal engines. **No functionality is lost.**
-
-الأداة تعمل **مستقلة 100%** بدون محركات AGL الخارجية. لكن عند توفر مشروع AGL الكامل، يستورد `core.py` اختيارياً 4 محركات من `AGL_NextGen`. كل الاستيرادات محمية بـ `try/except` — إذا لم تتوفر تعمل الأداة بمحركاتها الداخلية بدون أي خسارة.
-
----
-
-## VS Code Extension | إضافة VS Code
-
-The `agl-security-vscode/` directory contains a VS Code extension that communicates with `vscode_bridge.py` via stdin/stdout JSON protocol. This provides real-time security analysis inside VS Code.
-
-مجلد `agl-security-vscode/` يحتوي إضافة VS Code التي تتواصل مع `vscode_bridge.py` عبر بروتوكول JSON عبر stdin/stdout.
-
----
-
-## Detailed Documentation | التوثيق التفصيلي
-
-| Document | Content |
-|----------|---------|
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Full pipeline architecture + data flow (Arabic) |
-| [DYNAMIC_STATE_TRANSITION_MODEL.md](state_extraction/DYNAMIC_STATE_TRANSITION_MODEL.md) | Layer 1: State extraction math model |
-| [ACTION_SPACE_BUILDER.md](action_space/ACTION_SPACE_BUILDER.md) | Layer 2: Action space construction |
-| [ECONOMIC_PHYSICS_ENGINE.md](attack_engine/ECONOMIC_PHYSICS_ENGINE.md) | Layer 3: Economic physics engine |
-| [INTELLIGENT_SEARCH_ENGINE.md](INTELLIGENT_SEARCH_ENGINE.md) | Layer 4: Search algorithms |
+| Document | Description |
+|----------|-------------|
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Full pipeline architecture & data flow |
+| [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md) | Dependencies, setup, Docker, troubleshooting |
+| [DEPLOYMENT.md](DEPLOYMENT.md) | Production deployment guide |
+| [CHANGELOG.md](CHANGELOG.md) | Version history |
 
 ---
 
 ## License
 
-Part of the AGL Project. See root [README.md](../README.md) for license information.
+Part of the AGL Project — MIT License. See root [README.md](../README.md) for details.
