@@ -1,0 +1,4796 @@
+{
+  "meta": {
+    "target": "bounty_contracts/ssv_network_immunefi",
+    "mode": "deep",
+    "timestamp": "20260407_155251",
+    "duration_seconds": 62.1,
+    "ram_gb": 15.614967346191406,
+    "cpus": 4
+  },
+  "results": [
+    {
+      "type": "project",
+      "target": "bounty_contracts/ssv_network_immunefi",
+      "result": {
+        "status": "COMPLETE",
+        "scan_mode": "deep",
+        "project_type": "bare",
+        "project_root": "/home/runner/work/your-repo/your-repo/bounty_contracts/ssv_network_immunefi",
+        "time_seconds": 0.72,
+        "files_scanned": 4,
+        "files_with_findings": 4,
+        "files_skipped": 0,
+        "total_findings": 25,
+        "severity_summary": {
+          "CRITICAL": 0,
+          "HIGH": 8,
+          "MEDIUM": 0,
+          "LOW": 17
+        },
+        "findings": [
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 113,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7,
+            "file": "SSVClusters.sol",
+            "contracts_in_file": [
+              "SSVClusters"
+            ]
+          },
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 113,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7,
+            "file": "SSVClusters.sol",
+            "contracts_in_file": [
+              "SSVClusters"
+            ]
+          },
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 181,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 181,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 93,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7,
+            "file": "SSVOperators.sol",
+            "contracts_in_file": [
+              "SSVOperators"
+            ]
+          },
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 93,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7,
+            "file": "SSVOperators.sol",
+            "contracts_in_file": [
+              "SSVOperators"
+            ]
+          },
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 84,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7,
+            "file": "SSVDAO.sol",
+            "contracts_in_file": [
+              "SSVDAO"
+            ]
+          },
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 84,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7,
+            "file": "SSVDAO.sol",
+            "contracts_in_file": [
+              "SSVDAO"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 325,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVClusters.sol",
+            "contracts_in_file": [
+              "SSVClusters"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 415,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVClusters.sol",
+            "contracts_in_file": [
+              "SSVClusters"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 325,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVClusters.sol",
+            "contracts_in_file": [
+              "SSVClusters"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 415,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVClusters.sol",
+            "contracts_in_file": [
+              "SSVClusters"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 312,
+            "description": "Address parameter 'ssvViews_' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 405,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 417,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 439,
+            "description": "Address parameter 'recipientAddress' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 447,
+            "description": "Address parameter 'moduleAddress' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 312,
+            "description": "Address parameter 'ssvViews_' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 405,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 417,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 439,
+            "description": "Address parameter 'recipientAddress' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 447,
+            "description": "Address parameter 'moduleAddress' not checked for zero address",
+            "confidence": 0.6,
+            "file": "SSVNetwork.sol",
+            "contracts_in_file": [
+              "SSVProxy",
+              "SSVNetwork"
+            ]
+          },
+          {
+            "id": "TIMESTAMP-001",
+            "title": "Block Timestamp Dependency",
+            "severity": "low",
+            "category": "timestamp",
+            "line": 216,
+            "description": "Contract logic depends on block.timestamp which can be manipulated",
+            "confidence": 0.8,
+            "file": "SSVOperators.sol",
+            "contracts_in_file": [
+              "SSVOperators"
+            ]
+          },
+          {
+            "id": "TIMESTAMP-001",
+            "title": "Block Timestamp Dependency",
+            "severity": "low",
+            "category": "timestamp",
+            "line": 216,
+            "description": "Contract logic depends on block.timestamp which can be manipulated",
+            "confidence": 0.8,
+            "file": "SSVOperators.sol",
+            "contracts_in_file": [
+              "SSVOperators"
+            ]
+          },
+          {
+            "id": "TIMESTAMP-001",
+            "title": "Block Timestamp Dependency",
+            "severity": "low",
+            "category": "timestamp",
+            "line": 216,
+            "description": "Contract logic depends on block.timestamp which can be manipulated",
+            "confidence": 0.8,
+            "file": "SSVOperators.sol",
+            "contracts_in_file": [
+              "SSVOperators"
+            ]
+          }
+        ],
+        "file_results": {
+          "SSVClusters.sol": {
+            "findings_count": 6,
+            "severity": {
+              "CRITICAL": 0,
+              "HIGH": 4,
+              "MEDIUM": 6,
+              "LOW": 0
+            },
+            "contracts": [
+              "SSVClusters"
+            ],
+            "loc": 411,
+            "time": 0.3
+          },
+          "SSVNetwork.sol": {
+            "findings_count": 12,
+            "severity": {
+              "CRITICAL": 0,
+              "HIGH": 5,
+              "MEDIUM": 6,
+              "LOW": 0
+            },
+            "contracts": [
+              "SSVProxy",
+              "SSVNetwork"
+            ],
+            "loc": 353,
+            "time": 0.23
+          },
+          "SSVOperators.sol": {
+            "findings_count": 5,
+            "severity": {
+              "CRITICAL": 0,
+              "HIGH": 4,
+              "MEDIUM": 1,
+              "LOW": 0
+            },
+            "contracts": [
+              "SSVOperators"
+            ],
+            "loc": 247,
+            "time": 0.13
+          },
+          "SSVDAO.sol": {
+            "findings_count": 2,
+            "severity": {
+              "CRITICAL": 0,
+              "HIGH": 3,
+              "MEDIUM": 1,
+              "LOW": 0
+            },
+            "contracts": [
+              "SSVDAO"
+            ],
+            "loc": 121,
+            "time": 0.06
+          }
+        },
+        "cross_contract_patterns": [
+          {
+            "vulnerability_type": "Other",
+            "occurrences": 22,
+            "files_affected": [
+              "SSVOperators.sol",
+              "SSVClusters.sol",
+              "SSVNetwork.sol",
+              "SSVDAO.sol"
+            ],
+            "systemic": true,
+            "recommendation": "تم اكتشاف Other في 4 ملف. يُنصح بمراجعة شاملة."
+          },
+          {
+            "vulnerability_type": "Timestamp Dependence",
+            "occurrences": 3,
+            "files_affected": [
+              "SSVOperators.sol"
+            ],
+            "systemic": false,
+            "recommendation": "اعتماد على الوقت في 1 ملف. يُنصح باستخدام Chainlink Keepers أو بدائل آمنة."
+          }
+        ],
+        "project_stats": {
+          "total_contracts": 5,
+          "total_loc": 1132,
+          "total_functions": 105,
+          "total_external_calls": 177
+        }
+      }
+    },
+    {
+      "type": "file",
+      "target": "SSVClusters.sol",
+      "result": {
+        "status": "COMPLETE",
+        "file": "/home/runner/work/your-repo/your-repo/bounty_contracts/ssv_network_immunefi/SSVClusters.sol",
+        "scan_mode": "deep",
+        "layers_used": [
+          "smart_contract_analyzer",
+          "agl_security_suite",
+          "agl_detectors",
+          "state_extraction",
+          "temporal_analysis",
+          "action_space",
+          "attack_simulation",
+          "search_engine",
+          "exploit_reasoning",
+          "risk_core_scoring",
+          "offensive_security_engine"
+        ],
+        "findings": [
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 113,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 325,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 415,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6
+          }
+        ],
+        "suite_findings": [
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 113,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 325,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 415,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6
+          }
+        ],
+        "detector_findings": [
+          {
+            "detector": "UNCHECKED-CALL",
+            "title": "Unchecked low-level call return value",
+            "description": "Function `deposit` has unchecked low-level call (line 2). The return value of `.call` / `.send` is not verified. If the call fails, execution continues silently. Capture and check: `(bool success,) = addr.call{...}(...); require(success);`",
+            "severity": "high",
+            "confidence": "high",
+            "contract": "CoreLib",
+            "function": "deposit",
+            "line": 2,
+            "end_line": 0,
+            "snippet": "\n        SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);\n    ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "call_text": "SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);"
+            }
+          },
+          {
+            "detector": "UNCHECKED-ERC20",
+            "title": "Unchecked ERC20 transfer return value",
+            "description": "Function `deposit` calls `token.transferFrom()` (line 2) without checking the return value. Some ERC20 tokens (USDT, BNB) return `false` instead of reverting on failure. The token transfer may silently fail. Use OpenZeppelin's `SafeERC20` library: `using SafeERC20 for IERC20; token.safeTransfer(...)`",
+            "severity": "high",
+            "confidence": "high",
+            "contract": "CoreLib",
+            "function": "deposit",
+            "line": 2,
+            "end_line": 0,
+            "snippet": "\n        SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);\n    ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "token": "token",
+              "method": "transferFrom",
+              "fix": "Use SafeERC20 library"
+            }
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `registerPublicKey` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": "medium",
+            "contract": "ValidatorLib",
+            "function": "registerPublicKey",
+            "line": 122,
+            "end_line": 0,
+            "snippet": "\n        bytes32 hashedValidator = keccak256(abi.encodePacked(publicKey, msg.sender));\n        if (s.validatorPKs[hashedValidator] != bytes32(0)) revert ISSVNetworkCore.IncorrectValidatorStateWithData",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "publicKey, msg.sender",
+              "dynamic_count": 1,
+              "is_hashed": true
+            }
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `validateHashedCluster` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": "medium",
+            "contract": "ClusterLib",
+            "function": "validateHashedCluster",
+            "line": 164,
+            "end_line": 0,
+            "snippet": "\n        hashedCluster = keccak256(abi.encodePacked(owner, operatorIds));\n        bytes32 hashedClusterData = hashClusterData(cluster);\n        bytes32 clusterData = s.clusters[hashedCluster];\n       ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "owner, operatorIds",
+              "dynamic_count": 0,
+              "is_hashed": true
+            }
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `hashClusterData` uses `abi.encodePacked` with multiple arguments (5 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": "medium",
+            "contract": "ClusterLib",
+            "function": "hashClusterData",
+            "line": 183,
+            "end_line": 0,
+            "snippet": "\n        return keccak256(abi.encodePacked(cluster.validatorCount, cluster.networkFeeIndex, cluster.index, cluster.balance, cluster.active));\n    ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "cluster.validatorCount, cluster.networkFeeIndex, cluster.index, cluster.balance, cluster.active",
+              "dynamic_count": 0,
+              "is_hashed": true
+            }
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `validateClusterOnRegistration` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": "medium",
+            "contract": "ClusterLib",
+            "function": "validateClusterOnRegistration",
+            "line": 187,
+            "end_line": 0,
+            "snippet": "\n        hashedCluster = keccak256(abi.encodePacked(msg.sender, operatorIds));\n        bytes32 clusterData = s.clusters[hashedCluster];\n        if (clusterData == bytes32(0)) {\n            if (cluster",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "msg.sender, operatorIds",
+              "dynamic_count": 0,
+              "is_hashed": true
+            }
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `removeValidator` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": "medium",
+            "contract": "SSVClusters",
+            "function": "removeValidator",
+            "line": 288,
+            "end_line": 0,
+            "snippet": "\n        StorageData storage s = SSVStorage.load();\n        bytes32 hashedCluster = cluster.validateHashedCluster(msg.sender, operatorIds, s);\n        bytes32 hashedOperatorIds = ValidatorLib.hashOper",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "publicKey, msg.sender",
+              "dynamic_count": 1,
+              "is_hashed": true
+            }
+          }
+        ],
+        "symbolic_findings": [],
+        "severity_summary": {
+          "CRITICAL": 0,
+          "HIGH": 4,
+          "MEDIUM": 6,
+          "LOW": 0
+        },
+        "inheritance_context": [
+          {
+            "contract": "SSVClusters",
+            "chain": [
+              "SSVClusters",
+              "ISSVNetworkCore"
+            ],
+            "inherited_state_vars": 0,
+            "inherited_functions": 7,
+            "has_delegatecall": false,
+            "has_selfdestruct": false
+          }
+        ],
+        "contracts": [
+          {
+            "type": "interface",
+            "name": "ISSVNetworkCore",
+            "inherits": [],
+            "line": 10
+          },
+          {
+            "type": "library",
+            "name": "Types64",
+            "inherits": [],
+            "line": 49
+          },
+          {
+            "type": "library",
+            "name": "SSVStorage",
+            "inherits": [],
+            "line": 68
+          },
+          {
+            "type": "library",
+            "name": "SSVStorageProtocol",
+            "inherits": [],
+            "line": 90
+          },
+          {
+            "type": "library",
+            "name": "ProtocolLib",
+            "inherits": [],
+            "line": 98
+          },
+          {
+            "type": "library",
+            "name": "CoreLib",
+            "inherits": [],
+            "line": 108
+          },
+          {
+            "type": "library",
+            "name": "ValidatorLib",
+            "inherits": [],
+            "line": 117
+          },
+          {
+            "type": "library",
+            "name": "ClusterLib",
+            "inherits": [],
+            "line": 135
+          },
+          {
+            "type": "contract",
+            "name": "SSVClusters",
+            "inherits": [
+              "ISSVNetworkCore"
+            ],
+            "line": 244
+          }
+        ],
+        "functions": [
+          {
+            "name": "expand",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 50
+          },
+          {
+            "name": "load",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 70
+          },
+          {
+            "name": "load",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 92
+          },
+          {
+            "name": "currentNetworkFeeIndex",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 99
+          },
+          {
+            "name": "updateDAO",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 102
+          },
+          {
+            "name": "deposit",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 109
+          },
+          {
+            "name": "transferBalance",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 112
+          },
+          {
+            "name": "validateOperatorsLength",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 118
+          },
+          {
+            "name": "registerPublicKey",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 122
+          },
+          {
+            "name": "hashOperatorIds",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 127
+          },
+          {
+            "name": "validateCorrectState",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 130
+          },
+          {
+            "name": "updateBalance",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 139
+          },
+          {
+            "name": "isLiquidatable",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 145
+          },
+          {
+            "name": "validateClusterIsNotLiquidated",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 160
+          },
+          {
+            "name": "validateHashedCluster",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 164
+          },
+          {
+            "name": "updateClusterData",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 177
+          },
+          {
+            "name": "hashClusterData",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 183
+          },
+          {
+            "name": "validateClusterOnRegistration",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 187
+          },
+          {
+            "name": "updateClusterOnRegistration",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 204
+          },
+          {
+            "name": "registerValidator",
+            "visibility": "external",
+            "mutability": "",
+            "line": 248
+          },
+          {
+            "name": "bulkRegisterValidator",
+            "visibility": "external",
+            "mutability": "",
+            "line": 266
+          },
+          {
+            "name": "removeValidator",
+            "visibility": "external",
+            "mutability": "",
+            "line": 288
+          },
+          {
+            "name": "liquidate",
+            "visibility": "external",
+            "mutability": "",
+            "line": 325
+          },
+          {
+            "name": "reactivate",
+            "visibility": "external",
+            "mutability": "",
+            "line": 378
+          },
+          {
+            "name": "deposit",
+            "visibility": "external",
+            "mutability": "",
+            "line": 415
+          },
+          {
+            "name": "withdraw",
+            "visibility": "external",
+            "mutability": "",
+            "line": 429
+          }
+        ],
+        "parsed_contracts": 9,
+        "state_extraction": {
+          "entities": 8,
+          "relationships": 18,
+          "fund_flows": 14,
+          "balances": 0
+        },
+        "temporal_analysis": {
+          "cei_violations": 0,
+          "reentrancy_risks": 0,
+          "write_conflicts": 0,
+          "effects_count": 7,
+          "mutations_count": 0
+        },
+        "action_space": {
+          "total_actions": 41,
+          "attack_sequences": 0,
+          "attack_surfaces": 1,
+          "high_value_targets": 0
+        },
+        "attack_simulation": {
+          "total_sequences_tested": 48,
+          "profitable_attacks": 0,
+          "total_profit_usd": 0.0,
+          "attack_types_found": {},
+          "severity_distribution": {},
+          "execution_time_ms": 8.399486541748047
+        },
+        "search_results": {
+          "profitable_sequences": 0,
+          "total_evaluated": 0,
+          "strategies_used": []
+        },
+        "validation_findings": [
+          {
+            "title": "Consistency: العقدة 'external:token' تستقبل تدفقات من توكن 'token' (2 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'contract:CoreLib' ترسل توكن 'token' (2 تدفقات) بدون تدفق داخلي — مصدر الأموال غير واضح",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'account:CoreLib' ترسل توكن 'token:token' (2 تدفقات) بدون تدفق داخلي — مصدر الأموال غير واضح",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'fee_collector:contract:ClusterLib' تستقبل تدفقات من توكن 'unknown' (2 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'external:CoreLib' تستقبل تدفقات من توكن 'unknown' (4 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'fee_collector:contract:SSVClusters' تستقبل تدفقات من توكن 'unknown' (3 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'contract:ClusterLib' ترسل توكن 'unknown' (2 تدفقات) بدون تدفق داخلي — مصدر الأموال غير واضح",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'contract:SSVClusters' ترسل توكن 'unknown' (7 تدفقات) بدون تدفق داخلي — مصدر الأموال غير واضح",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'SSVStorage' (protocol) معزولة — لا أضلاع داخلة أو خارجة",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'SSVStorageProtocol' (protocol) معزولة — لا أضلاع داخلة أو خارجة",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'ValidatorLib' (protocol) معزولة — لا أضلاع داخلة أو خارجة",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateBalance' بين 'contract:ClusterLib' → 'fee_collector:contract:ClusterLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateClusterOnRegistration' بين 'contract:ClusterLib' → 'fee_collector:contract:ClusterLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'registerValidator' بين 'contract:SSVClusters' → 'external:CoreLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'bulkRegisterValidator' بين 'contract:SSVClusters' → 'external:CoreLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'removeValidator' بين 'contract:SSVClusters' → 'fee_collector:contract:SSVClusters' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'liquidate' بين 'contract:SSVClusters' → 'fee_collector:contract:SSVClusters' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'reactivate' بين 'contract:SSVClusters' → 'external:CoreLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'reactivate' بين 'contract:SSVClusters' → 'fee_collector:contract:SSVClusters' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'account:CoreLib' → 'account:to' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateBalance' بين 'contract:ClusterLib' → 'fee_collector:contract:ClusterLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateClusterOnRegistration' بين 'contract:ClusterLib' → 'fee_collector:contract:ClusterLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'registerValidator' بين 'contract:SSVClusters' → 'external:CoreLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'bulkRegisterValidator' بين 'contract:SSVClusters' → 'external:CoreLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'removeValidator' بين 'contract:SSVClusters' → 'fee_collector:contract:SSVClusters' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'liquidate' بين 'contract:SSVClusters' → 'fee_collector:contract:SSVClusters' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'reactivate' بين 'contract:SSVClusters' → 'external:CoreLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'reactivate' بين 'contract:SSVClusters' → 'fee_collector:contract:SSVClusters' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: إيداعات في 'external:CoreLib' بدون مسار سحب مكتشف — قد تكون الأموال محتجزة",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          }
+        ],
+        "exploit_reasoning": {
+          "exploit_proofs": [
+            {
+              "exploitable": false,
+              "function": "transferBalance",
+              "severity": "high",
+              "confidence": 0.7000000000000001,
+              "verdict": "LIKELY EXPLOITABLE: transferBalance() — Z3 confirmed path feasibility but no invariant clearly violated.",
+              "z3_result": "SAT",
+              "counterexample": {
+                "balance_sender": "0",
+                "amount": "32",
+                "contract_balance": "1"
+              },
+              "invariant_violated": null,
+              "viable_path": "CALL→token",
+              "attack_steps": [
+                "1. Call transferBalance() with crafted parameters"
+              ],
+              "attack_profit": "",
+              "attack_cost": ""
+            }
+          ],
+          "exploitable_count": 0,
+          "total_analyzed": 4,
+          "time_seconds": 0.01
+        },
+        "all_findings_unified": [
+          {
+            "detector": "UNCHECKED-CALL",
+            "title": "Unchecked low-level call return value",
+            "description": "Function `deposit` calls `token.transferFrom()` (line 2) without checking the return value. Some ERC20 tokens (USDT, BNB) return `false` instead of reverting on failure. The token transfer may silently fail. Use OpenZeppelin's `SafeERC20` library: `using SafeERC20 for IERC20; token.safeTransfer(...)`",
+            "severity": "high",
+            "confidence": 1.0,
+            "contract": "CoreLib",
+            "function": "deposit",
+            "line": 2,
+            "end_line": 0,
+            "snippet": "\n        SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);\n    ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "call_text": "SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);"
+            },
+            "confirmed_by": [
+              "agl_22_detectors"
+            ],
+            "original_severity": "high",
+            "risk_breakdown": {
+              "exploit_probability": 0.7858,
+              "heuristic_score": 1.0,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.7858
+          },
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 113,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7999999999999999,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite"
+            ],
+            "original_severity": "high",
+            "risk_breakdown": {
+              "exploit_probability": 0.69,
+              "heuristic_score": 0.8,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.69
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `validateClusterOnRegistration` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "high",
+            "confidence": 0.7999999999999999,
+            "contract": "ClusterLib",
+            "function": "hashClusterData",
+            "line": 183,
+            "end_line": 0,
+            "snippet": "\n        return keccak256(abi.encodePacked(cluster.validatorCount, cluster.networkFeeIndex, cluster.index, cluster.balance, cluster.active));\n    ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "cluster.validatorCount, cluster.networkFeeIndex, cluster.index, cluster.balance, cluster.active",
+              "dynamic_count": 0,
+              "is_hashed": true
+            },
+            "confirmed_by": [
+              "agl_22_detectors"
+            ],
+            "original_severity": "medium",
+            "risk_breakdown": {
+              "exploit_probability": 0.69,
+              "heuristic_score": 0.8,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.69
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `registerPublicKey` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": 0.7,
+            "contract": "ValidatorLib",
+            "function": "registerPublicKey",
+            "line": 122,
+            "end_line": 0,
+            "snippet": "\n        bytes32 hashedValidator = keccak256(abi.encodePacked(publicKey, msg.sender));\n        if (s.validatorPKs[hashedValidator] != bytes32(0)) revert ISSVNetworkCore.IncorrectValidatorStateWithData",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "publicKey, msg.sender",
+              "dynamic_count": 1,
+              "is_hashed": true
+            },
+            "confirmed_by": [
+              "agl_22_detectors"
+            ],
+            "original_severity": "medium",
+            "risk_breakdown": {
+              "exploit_probability": 0.6341,
+              "heuristic_score": 0.7,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6341
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `validateHashedCluster` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": 0.7,
+            "contract": "ClusterLib",
+            "function": "validateHashedCluster",
+            "line": 164,
+            "end_line": 0,
+            "snippet": "\n        hashedCluster = keccak256(abi.encodePacked(owner, operatorIds));\n        bytes32 hashedClusterData = hashClusterData(cluster);\n        bytes32 clusterData = s.clusters[hashedCluster];\n       ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "owner, operatorIds",
+              "dynamic_count": 0,
+              "is_hashed": true
+            },
+            "confirmed_by": [
+              "agl_22_detectors"
+            ],
+            "original_severity": "medium",
+            "risk_breakdown": {
+              "exploit_probability": 0.6341,
+              "heuristic_score": 0.7,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6341
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `removeValidator` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": 0.7,
+            "contract": "SSVClusters",
+            "function": "removeValidator",
+            "line": 288,
+            "end_line": 0,
+            "snippet": "\n        StorageData storage s = SSVStorage.load();\n        bytes32 hashedCluster = cluster.validateHashedCluster(msg.sender, operatorIds, s);\n        bytes32 hashedOperatorIds = ValidatorLib.hashOper",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "publicKey, msg.sender",
+              "dynamic_count": 1,
+              "is_hashed": true
+            },
+            "confirmed_by": [
+              "agl_22_detectors"
+            ],
+            "original_severity": "medium",
+            "risk_breakdown": {
+              "exploit_probability": 0.6341,
+              "heuristic_score": 0.7,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6341
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "medium",
+            "category": "logic",
+            "line": 325,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.7,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.6341,
+              "heuristic_score": 0.7,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6341
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "medium",
+            "category": "logic",
+            "line": 415,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.7,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.6341,
+              "heuristic_score": 0.7,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6341
+          },
+          {
+            "title": "🔢 MATH ISSUES (21): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "severity": "medium",
+            "category": "offensive_heuristic",
+            "description": "🔢 MATH ISSUES (21): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "line": 0,
+            "confidence": 0.65,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": "",
+            "confirmed_by": [
+              "offensive_security"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.6047,
+              "heuristic_score": 0.65,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6047
+          },
+          {
+            "title": "Consistency: العقدة 'external:token' تستقبل تدفقات من توكن 'token' (2 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "high",
+            "category": "consistency_violation",
+            "confidence": 1.0,
+            "source": "state_validator",
+            "confirmed_by": [
+              "state_validator"
+            ],
+            "original_severity": "info",
+            "risk_breakdown": {
+              "exploit_probability": 0.7858,
+              "heuristic_score": 1.0,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.7858
+          }
+        ],
+        "duplicates_removed": 36,
+        "total_findings": 10,
+        "total_before_dedup": 13,
+        "time_seconds": 0.26,
+        "evm_simulation": {
+          "status": "SIMULATION_COMPLETE",
+          "contracts": [
+            {
+              "name": "ISSVNetworkCore",
+              "num_functions": 0,
+              "start": 402
+            },
+            {
+              "name": "Types64",
+              "num_functions": 1,
+              "start": 1509
+            },
+            {
+              "name": "SSVStorage",
+              "num_functions": 1,
+              "start": 2115
+            },
+            {
+              "name": "SSVStorageProtocol",
+              "num_functions": 1,
+              "start": 2780
+            },
+            {
+              "name": "ProtocolLib",
+              "num_functions": 2,
+              "start": 3086
+            },
+            {
+              "name": "CoreLib",
+              "num_functions": 2,
+              "start": 3582
+            },
+            {
+              "name": "ValidatorLib",
+              "num_functions": 4,
+              "start": 3866
+            },
+            {
+              "name": "ClusterLib",
+              "num_functions": 8,
+              "start": 4927
+            },
+            {
+              "name": "SSVClusters",
+              "num_functions": 7,
+              "start": 10180
+            }
+          ],
+          "state_variables": [
+            {
+              "type": "mapping(uint64 => ISSVNetworkCore.Operator)",
+              "visibility": "internal",
+              "name": "operators"
+            },
+            {
+              "type": "mapping(bytes32 => bytes32)",
+              "visibility": "internal",
+              "name": "clusters"
+            },
+            {
+              "type": "mapping(bytes32 => bytes32)",
+              "visibility": "internal",
+              "name": "validatorPKs"
+            },
+            {
+              "type": "mapping(bytes32 => uint64)",
+              "visibility": "internal",
+              "name": "operatorsPKs"
+            },
+            {
+              "type": "mapping(uint256 => address)",
+              "visibility": "internal",
+              "name": "ssvContracts"
+            },
+            {
+              "type": "mapping(uint64 => address)",
+              "visibility": "internal",
+              "name": "operatorsWhitelist"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "balance"
+            },
+            {
+              "type": "bool",
+              "visibility": "internal",
+              "name": "active"
+            },
+            {
+              "type": "address",
+              "visibility": "internal",
+              "name": "owner"
+            },
+            {
+              "type": "bool",
+              "visibility": "internal",
+              "name": "whitelisted"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "position"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "position"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedValidator"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedClusterData"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "clusterData"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "clusterData"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "operatorsLength"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "i"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedCluster"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "validatorsLength"
+            },
+            {
+              "type": "uint",
+              "visibility": "internal",
+              "name": "i"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedCluster"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedCluster"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedOperatorIds"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedValidator"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "validatorData"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "operatorsLength"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "i"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedCluster"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "operatorsLength"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "i"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "balanceLiquidatable"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedCluster"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "operatorsLength"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "i"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedCluster"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedCluster"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "operatorsLength"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "i"
+            }
+          ],
+          "functions_analyzed": 26,
+          "money_operations": 2,
+          "call_chains": [
+            {
+              "entry_function": "transferBalance",
+              "visibility": "internal",
+              "mutability": "nonpayable",
+              "modifiers": [],
+              "has_guard": false,
+              "has_require": false,
+              "has_write_after_call": false,
+              "money_operations": [
+                {
+                  "type": "transfer",
+                  "target": ".token",
+                  "amount": "to, amount",
+                  "line": 113,
+                  "raw": ".token.transfer(to, amount)"
+                }
+              ],
+              "steps": [
+                {
+                  "depth": 0,
+                  "description": "transferBalance(address to, uint256 amount)",
+                  "type": "entry"
+                },
+                {
+                  "depth": 1,
+                  "description": "SLOAD: i, i, i, i",
+                  "type": "state_read"
+                },
+                {
+                  "depth": 2,
+                  "description": ".token.transfer(to, amount)",
+                  "type": "money_transfer",
+                  "op": {
+                    "type": "transfer",
+                    "target": ".token",
+                    "amount": "to, amount",
+                    "line": 113,
+                    "raw": ".token.transfer(to, amount)"
+                  }
+                }
+              ],
+              "state_reads": [
+                "i",
+                "i",
+                "i",
+                "i",
+                "i",
+                "i"
+              ],
+              "z3_proof": {
+                "proven_dangerous": true,
+                "verdict": "❌ SAT: UNPROTECTED_FLOW",
+                "details": {
+                  "reentrancy": "False",
+                  "unprotected": "True",
+                  "has_guard": "False"
+                },
+                "time_ms": 1.7821788787841797
+              },
+              "logic_classification": {
+                "severity": "UNKNOWN",
+                "status": "LOGIC_UNAVAILABLE",
+                "trace": []
+              }
+            }
+          ],
+          "dangerous_chains": 1,
+          "safe_chains": 0
+        },
+        "offensive_findings": [
+          {
+            "title": "🔢 MATH ISSUES (21): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "severity": "low",
+            "category": "offensive_heuristic",
+            "description": "🔢 MATH ISSUES (21): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "line": 0,
+            "confidence": 0.65,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": ""
+          }
+        ],
+        "offensive_summary": {
+          "CRITICAL": 0,
+          "HIGH": 1,
+          "MEDIUM": 0,
+          "MATHEMATICALLY_PROVEN": 0,
+          "total_files_with_issues": 1,
+          "suite_findings_count": 3
+        }
+      }
+    },
+    {
+      "type": "file",
+      "target": "SSVDAO.sol",
+      "result": {
+        "status": "COMPLETE",
+        "file": "/home/runner/work/your-repo/your-repo/bounty_contracts/ssv_network_immunefi/SSVDAO.sol",
+        "scan_mode": "deep",
+        "layers_used": [
+          "smart_contract_analyzer",
+          "agl_security_suite",
+          "agl_detectors",
+          "state_extraction",
+          "temporal_analysis",
+          "action_space",
+          "attack_simulation",
+          "search_engine",
+          "exploit_reasoning",
+          "risk_core_scoring",
+          "offensive_security_engine"
+        ],
+        "findings": [
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 84,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7
+          }
+        ],
+        "suite_findings": [
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 84,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7
+          }
+        ],
+        "detector_findings": [],
+        "symbolic_findings": [],
+        "severity_summary": {
+          "CRITICAL": 0,
+          "HIGH": 3,
+          "MEDIUM": 1,
+          "LOW": 0
+        },
+        "inheritance_context": [
+          {
+            "contract": "SSVDAO",
+            "chain": [
+              "SSVDAO",
+              "ISSVNetworkCore"
+            ],
+            "inherited_state_vars": 1,
+            "inherited_functions": 8,
+            "has_delegatecall": false,
+            "has_selfdestruct": false
+          }
+        ],
+        "contracts": [
+          {
+            "type": "interface",
+            "name": "ISSVNetworkCore",
+            "inherits": [],
+            "line": 12
+          },
+          {
+            "type": "library",
+            "name": "Types64",
+            "inherits": [],
+            "line": 17
+          },
+          {
+            "type": "library",
+            "name": "Types256",
+            "inherits": [],
+            "line": 23
+          },
+          {
+            "type": "library",
+            "name": "SSVStorage",
+            "inherits": [],
+            "line": 33
+          },
+          {
+            "type": "library",
+            "name": "SSVStorageProtocol",
+            "inherits": [],
+            "line": 55
+          },
+          {
+            "type": "library",
+            "name": "ProtocolLib",
+            "inherits": [],
+            "line": 63
+          },
+          {
+            "type": "library",
+            "name": "CoreLib",
+            "inherits": [],
+            "line": 82
+          },
+          {
+            "type": "contract",
+            "name": "SSVDAO",
+            "inherits": [
+              "ISSVNetworkCore"
+            ],
+            "line": 92
+          }
+        ],
+        "functions": [
+          {
+            "name": "expand",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 18
+          },
+          {
+            "name": "shrink",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 24
+          },
+          {
+            "name": "load",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 35
+          },
+          {
+            "name": "load",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 57
+          },
+          {
+            "name": "currentNetworkFeeIndex",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 66
+          },
+          {
+            "name": "networkTotalEarnings",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 70
+          },
+          {
+            "name": "updateNetworkFee",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 74
+          },
+          {
+            "name": "transferBalance",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 83
+          },
+          {
+            "name": "updateNetworkFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 99
+          },
+          {
+            "name": "withdrawNetworkEarnings",
+            "visibility": "external",
+            "mutability": "",
+            "line": 106
+          },
+          {
+            "name": "updateOperatorFeeIncreaseLimit",
+            "visibility": "external",
+            "mutability": "",
+            "line": 117
+          },
+          {
+            "name": "updateDeclareOperatorFeePeriod",
+            "visibility": "external",
+            "mutability": "",
+            "line": 122
+          },
+          {
+            "name": "updateExecuteOperatorFeePeriod",
+            "visibility": "external",
+            "mutability": "",
+            "line": 127
+          },
+          {
+            "name": "updateLiquidationThresholdPeriod",
+            "visibility": "external",
+            "mutability": "",
+            "line": 132
+          },
+          {
+            "name": "updateMinimumLiquidationCollateral",
+            "visibility": "external",
+            "mutability": "",
+            "line": 138
+          },
+          {
+            "name": "updateMaximumOperatorFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 143
+          }
+        ],
+        "parsed_contracts": 8,
+        "state_extraction": {
+          "entities": 7,
+          "relationships": 10,
+          "fund_flows": 6,
+          "balances": 0
+        },
+        "temporal_analysis": {
+          "cei_violations": 0,
+          "reentrancy_risks": 0,
+          "write_conflicts": 0,
+          "effects_count": 8,
+          "mutations_count": 0
+        },
+        "action_space": {
+          "total_actions": 18,
+          "attack_sequences": 0,
+          "attack_surfaces": 1,
+          "high_value_targets": 7
+        },
+        "action_space_findings": [
+          {
+            "title": "High-value attack target: updateLiquidationThresholdPeriod",
+            "severity": "high",
+            "category": "attack_surface",
+            "confidence": 0.7,
+            "source": "action_space",
+            "line": 0,
+            "details": {
+              "action_id": "SSVDAO.updateLiquidationThresholdPeriod#v0",
+              "contract": "SSVDAO",
+              "function": "updateLiquidationThresholdPeriod",
+              "severity": "high",
+              "attack_types": [
+                "direct_profit",
+                "flash_loan",
+                "price_manipulation",
+                "liquidation",
+                "front_running"
+              ],
+              "profit_potential": "high",
+              "sends_eth": false,
+              "has_cei_violation": false,
+              "reentrancy_guarded": false,
+              "cross_function_risk": false,
+              "state_writes": [],
+              "tokens_involved": [],
+              "description": "flash loan amplifiable; price manipulation possible"
+            }
+          },
+          {
+            "title": "High-value attack target: updateMinimumLiquidationCollateral",
+            "severity": "high",
+            "category": "attack_surface",
+            "confidence": 0.7,
+            "source": "action_space",
+            "line": 0,
+            "details": {
+              "action_id": "SSVDAO.updateMinimumLiquidationCollateral#v0",
+              "contract": "SSVDAO",
+              "function": "updateMinimumLiquidationCollateral",
+              "severity": "high",
+              "attack_types": [
+                "direct_profit",
+                "flash_loan",
+                "price_manipulation",
+                "liquidation",
+                "front_running"
+              ],
+              "profit_potential": "high",
+              "sends_eth": false,
+              "has_cei_violation": false,
+              "reentrancy_guarded": false,
+              "cross_function_risk": false,
+              "state_writes": [],
+              "tokens_involved": [],
+              "description": "flash loan amplifiable; price manipulation possible"
+            }
+          },
+          {
+            "title": "High-value attack target: updateMinimumLiquidationCollateral",
+            "severity": "high",
+            "category": "attack_surface",
+            "confidence": 0.7,
+            "source": "action_space",
+            "line": 0,
+            "details": {
+              "action_id": "SSVDAO.updateMinimumLiquidationCollateral#v1",
+              "contract": "SSVDAO",
+              "function": "updateMinimumLiquidationCollateral",
+              "severity": "high",
+              "attack_types": [
+                "direct_profit",
+                "flash_loan",
+                "price_manipulation",
+                "liquidation",
+                "front_running"
+              ],
+              "profit_potential": "high",
+              "sends_eth": false,
+              "has_cei_violation": false,
+              "reentrancy_guarded": false,
+              "cross_function_risk": false,
+              "state_writes": [],
+              "tokens_involved": [],
+              "description": "flash loan amplifiable; price manipulation possible"
+            }
+          },
+          {
+            "title": "High-value attack target: updateMinimumLiquidationCollateral",
+            "severity": "high",
+            "category": "attack_surface",
+            "confidence": 0.7,
+            "source": "action_space",
+            "line": 0,
+            "details": {
+              "action_id": "SSVDAO.updateMinimumLiquidationCollateral#v2",
+              "contract": "SSVDAO",
+              "function": "updateMinimumLiquidationCollateral",
+              "severity": "high",
+              "attack_types": [
+                "direct_profit",
+                "flash_loan",
+                "price_manipulation",
+                "liquidation",
+                "front_running"
+              ],
+              "profit_potential": "high",
+              "sends_eth": false,
+              "has_cei_violation": false,
+              "reentrancy_guarded": false,
+              "cross_function_risk": false,
+              "state_writes": [],
+              "tokens_involved": [],
+              "description": "flash loan amplifiable; price manipulation possible"
+            }
+          },
+          {
+            "title": "High-value attack target: updateMinimumLiquidationCollateral",
+            "severity": "high",
+            "category": "attack_surface",
+            "confidence": 0.7,
+            "source": "action_space",
+            "line": 0,
+            "details": {
+              "action_id": "SSVDAO.updateMinimumLiquidationCollateral#v3",
+              "contract": "SSVDAO",
+              "function": "updateMinimumLiquidationCollateral",
+              "severity": "high",
+              "attack_types": [
+                "direct_profit",
+                "flash_loan",
+                "price_manipulation",
+                "liquidation",
+                "front_running"
+              ],
+              "profit_potential": "high",
+              "sends_eth": false,
+              "has_cei_violation": false,
+              "reentrancy_guarded": false,
+              "cross_function_risk": false,
+              "state_writes": [],
+              "tokens_involved": [],
+              "description": "flash loan amplifiable; price manipulation possible"
+            }
+          },
+          {
+            "title": "High-value attack target: updateMinimumLiquidationCollateral",
+            "severity": "high",
+            "category": "attack_surface",
+            "confidence": 0.7,
+            "source": "action_space",
+            "line": 0,
+            "details": {
+              "action_id": "SSVDAO.updateMinimumLiquidationCollateral#v4",
+              "contract": "SSVDAO",
+              "function": "updateMinimumLiquidationCollateral",
+              "severity": "high",
+              "attack_types": [
+                "direct_profit",
+                "flash_loan",
+                "price_manipulation",
+                "liquidation",
+                "front_running"
+              ],
+              "profit_potential": "high",
+              "sends_eth": false,
+              "has_cei_violation": false,
+              "reentrancy_guarded": false,
+              "cross_function_risk": false,
+              "state_writes": [],
+              "tokens_involved": [],
+              "description": "flash loan amplifiable; price manipulation possible"
+            }
+          },
+          {
+            "title": "High-value attack target: updateMinimumLiquidationCollateral",
+            "severity": "high",
+            "category": "attack_surface",
+            "confidence": 0.7,
+            "source": "action_space",
+            "line": 0,
+            "details": {
+              "action_id": "SSVDAO.updateMinimumLiquidationCollateral#v5",
+              "contract": "SSVDAO",
+              "function": "updateMinimumLiquidationCollateral",
+              "severity": "high",
+              "attack_types": [
+                "direct_profit",
+                "flash_loan",
+                "price_manipulation",
+                "liquidation",
+                "front_running"
+              ],
+              "profit_potential": "high",
+              "sends_eth": false,
+              "has_cei_violation": false,
+              "reentrancy_guarded": false,
+              "cross_function_risk": false,
+              "state_writes": [],
+              "tokens_involved": [],
+              "description": "flash loan amplifiable; price manipulation possible"
+            }
+          }
+        ],
+        "attack_simulation": {
+          "total_sequences_tested": 0,
+          "profitable_attacks": 0,
+          "total_profit_usd": 0.0,
+          "attack_types_found": {},
+          "severity_distribution": {},
+          "execution_time_ms": 0.06198883056640625
+        },
+        "search_results": {
+          "profitable_sequences": 0,
+          "total_evaluated": 0,
+          "strategies_used": []
+        },
+        "validation_findings": [
+          {
+            "title": "Consistency: العقدة 'fee_collector:contract:SSVDAO' تستقبل تدفقات من توكن 'unknown' (2 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'contract:SSVDAO' ترسل توكن 'unknown' (2 تدفقات) بدون تدفق داخلي — مصدر الأموال غير واضح",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'SSVStorage' (protocol) معزولة — لا أضلاع داخلة أو خارجة",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'SSVStorageProtocol' (protocol) معزولة — لا أضلاع داخلة أو خارجة",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateNetworkFee' بين 'contract:ProtocolLib' → 'fee_collector:contract:ProtocolLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateNetworkFee' بين 'contract:SSVDAO' → 'fee_collector:contract:SSVDAO' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateMaximumOperatorFee' بين 'contract:SSVDAO' → 'fee_collector:contract:SSVDAO' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'account:CoreLib' → 'account:to' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateNetworkFee' بين 'contract:ProtocolLib' → 'fee_collector:contract:ProtocolLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateNetworkFee' بين 'contract:SSVDAO' → 'fee_collector:contract:SSVDAO' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateMaximumOperatorFee' بين 'contract:SSVDAO' → 'fee_collector:contract:SSVDAO' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          }
+        ],
+        "exploit_reasoning": {
+          "exploit_proofs": [
+            {
+              "exploitable": false,
+              "function": "transferBalance",
+              "severity": "high",
+              "confidence": 0.7000000000000001,
+              "verdict": "LIKELY EXPLOITABLE: transferBalance() — Z3 confirmed path feasibility but no invariant clearly violated.",
+              "z3_result": "SAT",
+              "counterexample": {
+                "balance_sender": "0",
+                "amount": "4",
+                "contract_balance": "1"
+              },
+              "invariant_violated": null,
+              "viable_path": "CALL→token",
+              "attack_steps": [
+                "1. Call transferBalance() with crafted parameters"
+              ],
+              "attack_profit": "",
+              "attack_cost": ""
+            }
+          ],
+          "exploitable_count": 0,
+          "total_analyzed": 2,
+          "time_seconds": 0.009
+        },
+        "all_findings_unified": [
+          {
+            "title": "High-value attack target: updateLiquidationThresholdPeriod",
+            "severity": "high",
+            "category": "attack_surface",
+            "confidence": 1.0,
+            "source": "action_space",
+            "line": 0,
+            "details": {
+              "action_id": "SSVDAO.updateLiquidationThresholdPeriod#v0",
+              "contract": "SSVDAO",
+              "function": "updateLiquidationThresholdPeriod",
+              "severity": "high",
+              "attack_types": [
+                "direct_profit",
+                "flash_loan",
+                "price_manipulation",
+                "liquidation",
+                "front_running"
+              ],
+              "profit_potential": "high",
+              "sends_eth": false,
+              "has_cei_violation": false,
+              "reentrancy_guarded": false,
+              "cross_function_risk": false,
+              "state_writes": [],
+              "tokens_involved": [],
+              "description": "flash loan amplifiable; price manipulation possible"
+            },
+            "confirmed_by": [
+              "action_space"
+            ],
+            "original_severity": "high",
+            "risk_breakdown": {
+              "exploit_probability": 0.7858,
+              "heuristic_score": 1.0,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.7858
+          },
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 84,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7999999999999999,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite"
+            ],
+            "original_severity": "high",
+            "risk_breakdown": {
+              "exploit_probability": 0.69,
+              "heuristic_score": 0.8,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.69
+          },
+          {
+            "title": "🔢 MATH ISSUES (22): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "severity": "medium",
+            "category": "offensive_heuristic",
+            "description": "🔢 MATH ISSUES (22): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "line": 0,
+            "confidence": 0.65,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": "",
+            "confirmed_by": [
+              "offensive_security"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.6047,
+              "heuristic_score": 0.65,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6047
+          },
+          {
+            "title": "Consistency: العقدة 'fee_collector:contract:SSVDAO' تستقبل تدفقات من توكن 'unknown' (2 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "high",
+            "category": "consistency_violation",
+            "confidence": 1.0,
+            "source": "state_validator",
+            "confirmed_by": [
+              "state_validator"
+            ],
+            "original_severity": "info",
+            "risk_breakdown": {
+              "exploit_probability": 0.7858,
+              "heuristic_score": 1.0,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.7858
+          }
+        ],
+        "duplicates_removed": 20,
+        "total_findings": 4,
+        "total_before_dedup": 2,
+        "time_seconds": 0.06,
+        "evm_simulation": {
+          "status": "SIMULATION_COMPLETE",
+          "contracts": [
+            {
+              "name": "ISSVNetworkCore",
+              "num_functions": 0,
+              "start": 455
+            },
+            {
+              "name": "Types64",
+              "num_functions": 1,
+              "start": 561
+            },
+            {
+              "name": "Types256",
+              "num_functions": 1,
+              "start": 694
+            },
+            {
+              "name": "SSVStorage",
+              "num_functions": 1,
+              "start": 869
+            },
+            {
+              "name": "SSVStorageProtocol",
+              "num_functions": 1,
+              "start": 1534
+            },
+            {
+              "name": "ProtocolLib",
+              "num_functions": 3,
+              "start": 1840
+            },
+            {
+              "name": "CoreLib",
+              "num_functions": 1,
+              "start": 2593
+            },
+            {
+              "name": "SSVDAO",
+              "num_functions": 8,
+              "start": 2991
+            }
+          ],
+          "state_variables": [
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "position"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "position"
+            }
+          ],
+          "functions_analyzed": 16,
+          "money_operations": 1,
+          "call_chains": [
+            {
+              "entry_function": "transferBalance",
+              "visibility": "internal",
+              "mutability": "nonpayable",
+              "modifiers": [],
+              "has_guard": false,
+              "has_require": false,
+              "has_write_after_call": false,
+              "money_operations": [
+                {
+                  "type": "transfer",
+                  "target": ".token",
+                  "amount": "to, amount",
+                  "line": 84,
+                  "raw": ".token.transfer(to, amount)"
+                }
+              ],
+              "steps": [
+                {
+                  "depth": 0,
+                  "description": "transferBalance(address to, uint256 amount)",
+                  "type": "entry"
+                },
+                {
+                  "depth": 2,
+                  "description": ".token.transfer(to, amount)",
+                  "type": "money_transfer",
+                  "op": {
+                    "type": "transfer",
+                    "target": ".token",
+                    "amount": "to, amount",
+                    "line": 84,
+                    "raw": ".token.transfer(to, amount)"
+                  }
+                }
+              ],
+              "state_reads": [],
+              "z3_proof": {
+                "proven_dangerous": true,
+                "verdict": "❌ SAT: UNPROTECTED_FLOW",
+                "details": {
+                  "reentrancy": "False",
+                  "unprotected": "True",
+                  "has_guard": "False"
+                },
+                "time_ms": 1.676797866821289
+              },
+              "logic_classification": {
+                "severity": "UNKNOWN",
+                "status": "LOGIC_UNAVAILABLE",
+                "trace": []
+              }
+            }
+          ],
+          "dangerous_chains": 1,
+          "safe_chains": 0
+        },
+        "offensive_findings": [
+          {
+            "title": "🔢 MATH ISSUES (22): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "severity": "low",
+            "category": "offensive_heuristic",
+            "description": "🔢 MATH ISSUES (22): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "line": 0,
+            "confidence": 0.65,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": ""
+          }
+        ],
+        "offensive_summary": {
+          "CRITICAL": 0,
+          "HIGH": 1,
+          "MEDIUM": 0,
+          "MATHEMATICALLY_PROVEN": 0,
+          "total_files_with_issues": 1,
+          "suite_findings_count": 1
+        }
+      }
+    },
+    {
+      "type": "file",
+      "target": "SSVNetwork.sol",
+      "result": {
+        "status": "COMPLETE",
+        "file": "/home/runner/work/your-repo/your-repo/bounty_contracts/ssv_network_immunefi/SSVNetwork.sol",
+        "scan_mode": "deep",
+        "layers_used": [
+          "z3_symbolic_execution",
+          "smart_contract_analyzer",
+          "agl_security_suite",
+          "agl_detectors",
+          "state_extraction",
+          "temporal_analysis",
+          "action_space",
+          "attack_simulation",
+          "search_engine",
+          "exploit_reasoning",
+          "risk_core_scoring",
+          "offensive_security_engine"
+        ],
+        "findings": [
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 181,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 312,
+            "description": "Address parameter 'ssvViews_' not checked for zero address",
+            "confidence": 0.6
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 405,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 417,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 439,
+            "description": "Address parameter 'recipientAddress' not checked for zero address",
+            "confidence": 0.6
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 447,
+            "description": "Address parameter 'moduleAddress' not checked for zero address",
+            "confidence": 0.6
+          }
+        ],
+        "suite_findings": [
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 181,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 312,
+            "description": "Address parameter 'ssvViews_' not checked for zero address",
+            "confidence": 0.6
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 405,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 417,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.6
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 439,
+            "description": "Address parameter 'recipientAddress' not checked for zero address",
+            "confidence": 0.6
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "low",
+            "category": "logic",
+            "line": 447,
+            "description": "Address parameter 'moduleAddress' not checked for zero address",
+            "confidence": 0.6
+          }
+        ],
+        "detector_findings": [
+          {
+            "detector": "UNCHECKED-CALL",
+            "title": "Unchecked low-level call return value",
+            "description": "Function `deposit` has unchecked low-level call (line 2). The return value of `.call` / `.send` is not verified. If the call fails, execution continues silently. Capture and check: `(bool success,) = addr.call{...}(...); require(success);`",
+            "severity": "high",
+            "confidence": "high",
+            "contract": "CoreLib",
+            "function": "deposit",
+            "line": 2,
+            "end_line": 0,
+            "snippet": "\n        SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);\n    ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "call_text": "SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);"
+            }
+          },
+          {
+            "detector": "UNCHECKED-ERC20",
+            "title": "Unchecked ERC20 transfer return value",
+            "description": "Function `deposit` calls `token.transferFrom()` (line 2) without checking the return value. Some ERC20 tokens (USDT, BNB) return `false` instead of reverting on failure. The token transfer may silently fail. Use OpenZeppelin's `SafeERC20` library: `using SafeERC20 for IERC20; token.safeTransfer(...)`",
+            "severity": "high",
+            "confidence": "high",
+            "contract": "CoreLib",
+            "function": "deposit",
+            "line": 2,
+            "end_line": 0,
+            "snippet": "\n        SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);\n    ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "token": "token",
+              "method": "transferFrom",
+              "fix": "Use SafeERC20 library"
+            }
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `validateHashedCluster` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": "medium",
+            "contract": "ClusterLib",
+            "function": "validateHashedCluster",
+            "line": 226,
+            "end_line": 0,
+            "snippet": "\n        hashedCluster = keccak256(abi.encodePacked(owner, operatorIds));\n        bytes32 hashedClusterData = hashClusterData(cluster);\n        bytes32 clusterData = s.clusters[hashedCluster];\n       ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "owner, operatorIds",
+              "dynamic_count": 0,
+              "is_hashed": true
+            }
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `hashClusterData` uses `abi.encodePacked` with multiple arguments (5 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": "medium",
+            "contract": "ClusterLib",
+            "function": "hashClusterData",
+            "line": 252,
+            "end_line": 0,
+            "snippet": "\n        return keccak256(\n            abi.encodePacked(\n                cluster.validatorCount,\n                cluster.networkFeeIndex,\n                cluster.index,\n                cluster.balance",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "\n                cluster.validatorCount,\n                cluster.networkFeeIndex,\n                cluster.index,\n                cluster.balance,\n                cluster.active\n            ",
+              "dynamic_count": 0,
+              "is_hashed": true
+            }
+          }
+        ],
+        "symbolic_findings": [
+          {
+            "title": "Potential storage collision in proxy pattern",
+            "severity": "high",
+            "category": "storage-collision",
+            "description": "Contract uses delegatecall with 5 state variables but no fixed storage slots (ERC1967). State variables in proxy and implementation may collide in the same storage slots.",
+            "line": 106,
+            "function": "",
+            "confidence": 0.75,
+            "source": "z3_symbolic",
+            "is_proven": false,
+            "z3_model": "",
+            "counterexample": "",
+            "code_snippet": "State vars: SSV_STORAGE_POSITION, SSV_STORAGE_PROTOCOL_POSITION, publicKey, sharesData, publicKey",
+            "detector_id": "z3_symbolic"
+          }
+        ],
+        "severity_summary": {
+          "CRITICAL": 0,
+          "HIGH": 5,
+          "MEDIUM": 6,
+          "LOW": 0
+        },
+        "inheritance_context": [
+          {
+            "contract": "SSVNetwork",
+            "chain": [
+              "SSVNetwork",
+              "UUPSUpgradeable",
+              "Ownable2StepUpgradeable",
+              "ISSVNetworkCore",
+              "SSVProxy"
+            ],
+            "inherited_state_vars": 0,
+            "inherited_functions": 22,
+            "has_delegatecall": true,
+            "has_selfdestruct": false
+          }
+        ],
+        "contracts": [
+          {
+            "type": "interface",
+            "name": "ISSVNetworkCore",
+            "inherits": [],
+            "line": 15
+          },
+          {
+            "type": "library",
+            "name": "Types64",
+            "inherits": [],
+            "line": 68
+          },
+          {
+            "type": "library",
+            "name": "Types256",
+            "inherits": [],
+            "line": 74
+          },
+          {
+            "type": "library",
+            "name": "SSVStorage",
+            "inherits": [],
+            "line": 105
+          },
+          {
+            "type": "library",
+            "name": "SSVStorageProtocol",
+            "inherits": [],
+            "line": 130
+          },
+          {
+            "type": "library",
+            "name": "ProtocolLib",
+            "inherits": [],
+            "line": 144
+          },
+          {
+            "type": "library",
+            "name": "CoreLib",
+            "inherits": [],
+            "line": 171
+          },
+          {
+            "type": "library",
+            "name": "ClusterLib",
+            "inherits": [],
+            "line": 192
+          },
+          {
+            "type": "library",
+            "name": "OperatorLib",
+            "inherits": [],
+            "line": 268
+          },
+          {
+            "type": "contract",
+            "name": "SSVProxy",
+            "inherits": [],
+            "line": 287
+          },
+          {
+            "type": "contract",
+            "name": "SSVNetwork",
+            "inherits": [
+              "UUPSUpgradeable",
+              "Ownable2StepUpgradeable",
+              "ISSVNetworkCore",
+              "SSVProxy"
+            ],
+            "line": 304
+          }
+        ],
+        "functions": [
+          {
+            "name": "expand",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 69
+          },
+          {
+            "name": "shrink",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 75
+          },
+          {
+            "name": "load",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 108
+          },
+          {
+            "name": "load",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 133
+          },
+          {
+            "name": "currentNetworkFeeIndex",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 147
+          },
+          {
+            "name": "networkTotalEarnings",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 151
+          },
+          {
+            "name": "updateNetworkFee",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 155
+          },
+          {
+            "name": "updateDAO",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 162
+          },
+          {
+            "name": "getVersion",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 172
+          },
+          {
+            "name": "deposit",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 176
+          },
+          {
+            "name": "transferBalance",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 180
+          },
+          {
+            "name": "setModuleContract",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 184
+          },
+          {
+            "name": "updateBalance",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 196
+          },
+          {
+            "name": "isLiquidatable",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 206
+          },
+          {
+            "name": "validateClusterIsNotLiquidated",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 222
+          },
+          {
+            "name": "validateHashedCluster",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 226
+          },
+          {
+            "name": "updateClusterData",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 242
+          },
+          {
+            "name": "hashClusterData",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 252
+          },
+          {
+            "name": "updateSnapshot",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 271
+          },
+          {
+            "name": "checkOwner",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 278
+          },
+          {
+            "name": "_delegate",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 288
+          },
+          {
+            "name": "initialize",
+            "visibility": "external",
+            "mutability": "",
+            "line": 312
+          },
+          {
+            "name": "_authorizeUpgrade",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 347
+          },
+          {
+            "name": "registerOperator",
+            "visibility": "external",
+            "mutability": "",
+            "line": 354
+          },
+          {
+            "name": "removeOperator",
+            "visibility": "external",
+            "mutability": "",
+            "line": 358
+          },
+          {
+            "name": "declareOperatorFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 362
+          },
+          {
+            "name": "executeOperatorFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 366
+          },
+          {
+            "name": "cancelDeclaredOperatorFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 370
+          },
+          {
+            "name": "reduceOperatorFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 374
+          },
+          {
+            "name": "withdrawOperatorEarnings",
+            "visibility": "external",
+            "mutability": "",
+            "line": 378
+          },
+          {
+            "name": "withdrawAllOperatorEarnings",
+            "visibility": "external",
+            "mutability": "",
+            "line": 382
+          },
+          {
+            "name": "registerValidator",
+            "visibility": "external",
+            "mutability": "",
+            "line": 387
+          },
+          {
+            "name": "removeValidator",
+            "visibility": "external",
+            "mutability": "",
+            "line": 397
+          },
+          {
+            "name": "liquidate",
+            "visibility": "external",
+            "mutability": "",
+            "line": 405
+          },
+          {
+            "name": "reactivate",
+            "visibility": "external",
+            "mutability": "",
+            "line": 413
+          },
+          {
+            "name": "deposit",
+            "visibility": "external",
+            "mutability": "",
+            "line": 417
+          },
+          {
+            "name": "withdraw",
+            "visibility": "external",
+            "mutability": "",
+            "line": 426
+          },
+          {
+            "name": "updateNetworkFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 431
+          },
+          {
+            "name": "withdrawNetworkEarnings",
+            "visibility": "external",
+            "mutability": "",
+            "line": 435
+          },
+          {
+            "name": "setFeeRecipientAddress",
+            "visibility": "external",
+            "mutability": "",
+            "line": 439
+          },
+          {
+            "name": "getVersion",
+            "visibility": "external",
+            "mutability": "pure",
+            "line": 443
+          },
+          {
+            "name": "updateModule",
+            "visibility": "external",
+            "mutability": "",
+            "line": 447
+          }
+        ],
+        "parsed_contracts": 11,
+        "state_extraction": {
+          "entities": 10,
+          "relationships": 18,
+          "fund_flows": 8,
+          "balances": 0
+        },
+        "temporal_analysis": {
+          "cei_violations": 0,
+          "reentrancy_risks": 0,
+          "write_conflicts": 0,
+          "effects_count": 24,
+          "mutations_count": 0
+        },
+        "action_space": {
+          "total_actions": 60,
+          "attack_sequences": 0,
+          "attack_surfaces": 1,
+          "high_value_targets": 0
+        },
+        "attack_simulation": {
+          "total_sequences_tested": 152,
+          "profitable_attacks": 0,
+          "total_profit_usd": 0.0,
+          "attack_types_found": {},
+          "severity_distribution": {},
+          "execution_time_ms": 27.040481567382812
+        },
+        "search_results": {
+          "profitable_sequences": 0,
+          "total_evaluated": 0,
+          "strategies_used": []
+        },
+        "validation_findings": [
+          {
+            "title": "Consistency: العقدة 'external:token' تستقبل تدفقات من توكن 'token' (2 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'contract:CoreLib' ترسل توكن 'token' (2 تدفقات) بدون تدفق داخلي — مصدر الأموال غير واضح",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'account:CoreLib' ترسل توكن 'token:token' (2 تدفقات) بدون تدفق داخلي — مصدر الأموال غير واضح",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'SSVStorage' (protocol) معزولة — لا أضلاع داخلة أو خارجة",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'SSVStorageProtocol' (protocol) معزولة — لا أضلاع داخلة أو خارجة",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateNetworkFee' بين 'contract:ProtocolLib' → 'fee_collector:contract:ProtocolLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateBalance' بين 'contract:ClusterLib' → 'fee_collector:contract:ClusterLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateSnapshot' بين 'contract:OperatorLib' → 'fee_collector:contract:OperatorLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'account:CoreLib' → 'account:to' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateNetworkFee' بين 'contract:ProtocolLib' → 'fee_collector:contract:ProtocolLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateBalance' بين 'contract:ClusterLib' → 'fee_collector:contract:ClusterLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateSnapshot' بين 'contract:OperatorLib' → 'fee_collector:contract:OperatorLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          }
+        ],
+        "exploit_reasoning": {
+          "exploit_proofs": [
+            {
+              "exploitable": false,
+              "function": "transferBalance",
+              "severity": "high",
+              "confidence": 0.7000000000000001,
+              "verdict": "LIKELY EXPLOITABLE: transferBalance() — Z3 confirmed path feasibility but no invariant clearly violated.",
+              "z3_result": "SAT",
+              "counterexample": {
+                "balance_sender": "0",
+                "amount": "32",
+                "contract_balance": "1"
+              },
+              "invariant_violated": null,
+              "viable_path": "CALL→token",
+              "attack_steps": [
+                "1. Call transferBalance() with crafted parameters"
+              ],
+              "attack_profit": "",
+              "attack_cost": ""
+            }
+          ],
+          "exploitable_count": 0,
+          "total_analyzed": 4,
+          "time_seconds": 0.01
+        },
+        "all_findings_unified": [
+          {
+            "detector": "UNCHECKED-CALL",
+            "title": "Unchecked low-level call return value",
+            "description": "Function `deposit` calls `token.transferFrom()` (line 2) without checking the return value. Some ERC20 tokens (USDT, BNB) return `false` instead of reverting on failure. The token transfer may silently fail. Use OpenZeppelin's `SafeERC20` library: `using SafeERC20 for IERC20; token.safeTransfer(...)`",
+            "severity": "high",
+            "confidence": 1.0,
+            "contract": "CoreLib",
+            "function": "deposit",
+            "line": 2,
+            "end_line": 0,
+            "snippet": "\n        SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);\n    ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "call_text": "SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);"
+            },
+            "confirmed_by": [
+              "agl_22_detectors"
+            ],
+            "original_severity": "high",
+            "risk_breakdown": {
+              "exploit_probability": 0.7858,
+              "heuristic_score": 1.0,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.7858
+          },
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 181,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7999999999999999,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite"
+            ],
+            "original_severity": "high",
+            "risk_breakdown": {
+              "exploit_probability": 0.69,
+              "heuristic_score": 0.8,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.69
+          },
+          {
+            "title": "Potential storage collision in proxy pattern",
+            "severity": "high",
+            "category": "storage-collision",
+            "description": "Contract uses delegatecall with 5 state variables but no fixed storage slots (ERC1967). State variables in proxy and implementation may collide in the same storage slots.",
+            "line": 106,
+            "function": "",
+            "confidence": 0.75,
+            "source": "z3_symbolic",
+            "is_proven": false,
+            "z3_model": "",
+            "counterexample": "",
+            "code_snippet": "State vars: SSV_STORAGE_POSITION, SSV_STORAGE_PROTOCOL_POSITION, publicKey, sharesData, publicKey",
+            "detector_id": "z3_symbolic",
+            "confirmed_by": [
+              "z3_symbolic"
+            ],
+            "original_severity": "high",
+            "risk_breakdown": {
+              "exploit_probability": 0.6626,
+              "heuristic_score": 0.75,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6626
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `validateHashedCluster` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": 0.7,
+            "contract": "ClusterLib",
+            "function": "validateHashedCluster",
+            "line": 226,
+            "end_line": 0,
+            "snippet": "\n        hashedCluster = keccak256(abi.encodePacked(owner, operatorIds));\n        bytes32 hashedClusterData = hashClusterData(cluster);\n        bytes32 clusterData = s.clusters[hashedCluster];\n       ",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "owner, operatorIds",
+              "dynamic_count": 0,
+              "is_hashed": true
+            },
+            "confirmed_by": [
+              "agl_22_detectors"
+            ],
+            "original_severity": "medium",
+            "risk_breakdown": {
+              "exploit_probability": 0.6341,
+              "heuristic_score": 0.7,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6341
+          },
+          {
+            "detector": "ENCODE-PACKED-COLLISION",
+            "title": "Hash collision risk with abi.encodePacked",
+            "description": "Function `hashClusterData` uses `abi.encodePacked` with multiple arguments (5 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+            "severity": "medium",
+            "confidence": 0.7,
+            "contract": "ClusterLib",
+            "function": "hashClusterData",
+            "line": 252,
+            "end_line": 0,
+            "snippet": "\n        return keccak256(\n            abi.encodePacked(\n                cluster.validatorCount,\n                cluster.networkFeeIndex,\n                cluster.index,\n                cluster.balance",
+            "recommendation": "",
+            "references": [],
+            "related_locations": [],
+            "extra": {
+              "args": "\n                cluster.validatorCount,\n                cluster.networkFeeIndex,\n                cluster.index,\n                cluster.balance,\n                cluster.active\n            ",
+              "dynamic_count": 0,
+              "is_hashed": true
+            },
+            "confirmed_by": [
+              "agl_22_detectors"
+            ],
+            "original_severity": "medium",
+            "risk_breakdown": {
+              "exploit_probability": 0.6341,
+              "heuristic_score": 0.7,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6341
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "high",
+            "category": "logic",
+            "line": 405,
+            "description": "Address parameter 'clusterOwner' not checked for zero address",
+            "confidence": 0.8999999999999999,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.7408,
+              "heuristic_score": 0.9,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.7408
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "medium",
+            "category": "logic",
+            "line": 312,
+            "description": "Address parameter 'ssvViews_' not checked for zero address",
+            "confidence": 0.7,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.6341,
+              "heuristic_score": 0.7,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6341
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "medium",
+            "category": "logic",
+            "line": 439,
+            "description": "Address parameter 'recipientAddress' not checked for zero address",
+            "confidence": 0.7,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.6341,
+              "heuristic_score": 0.7,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6341
+          },
+          {
+            "id": "ZEROCHECK-001",
+            "title": "Missing Zero Address Check",
+            "severity": "medium",
+            "category": "logic",
+            "line": 447,
+            "description": "Address parameter 'moduleAddress' not checked for zero address",
+            "confidence": 0.7,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.6341,
+              "heuristic_score": 0.7,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6341
+          },
+          {
+            "title": "🔢 MATH ISSUES (40): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "severity": "medium",
+            "category": "offensive_heuristic",
+            "description": "🔢 MATH ISSUES (40): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "line": 0,
+            "confidence": 0.65,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": "",
+            "confirmed_by": [
+              "offensive_security"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.6047,
+              "heuristic_score": 0.65,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6047
+          },
+          {
+            "title": "Consistency: العقدة 'external:token' تستقبل تدفقات من توكن 'token' (2 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "high",
+            "category": "consistency_violation",
+            "confidence": 1.0,
+            "source": "state_validator",
+            "confirmed_by": [
+              "state_validator"
+            ],
+            "original_severity": "info",
+            "risk_breakdown": {
+              "exploit_probability": 0.7858,
+              "heuristic_score": 1.0,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.7858
+          }
+        ],
+        "duplicates_removed": 22,
+        "total_findings": 11,
+        "total_before_dedup": 17,
+        "time_seconds": 0.21,
+        "evm_simulation": {
+          "status": "SIMULATION_COMPLETE",
+          "contracts": [
+            {
+              "name": "ISSVNetworkCore",
+              "num_functions": 0,
+              "start": 661
+            },
+            {
+              "name": "Types64",
+              "num_functions": 1,
+              "start": 2164
+            },
+            {
+              "name": "Types256",
+              "num_functions": 1,
+              "start": 2297
+            },
+            {
+              "name": "SSVStorage",
+              "num_functions": 1,
+              "start": 3281
+            },
+            {
+              "name": "SSVStorageProtocol",
+              "num_functions": 1,
+              "start": 3967
+            },
+            {
+              "name": "ProtocolLib",
+              "num_functions": 4,
+              "start": 4443
+            },
+            {
+              "name": "CoreLib",
+              "num_functions": 4,
+              "start": 5558
+            },
+            {
+              "name": "ClusterLib",
+              "num_functions": 6,
+              "start": 6248
+            },
+            {
+              "name": "OperatorLib",
+              "num_functions": 2,
+              "start": 9150
+            },
+            {
+              "name": "SSVProxy",
+              "num_functions": 1,
+              "start": 10034
+            },
+            {
+              "name": "SSVNetwork",
+              "num_functions": 21,
+              "start": 10690
+            }
+          ],
+          "state_variables": [
+            {
+              "type": "mapping(uint64 => ISSVNetworkCore.Operator)",
+              "visibility": "internal",
+              "name": "operators"
+            },
+            {
+              "type": "mapping(bytes32 => bytes32)",
+              "visibility": "internal",
+              "name": "clusters"
+            },
+            {
+              "type": "mapping(bytes32 => bytes32)",
+              "visibility": "internal",
+              "name": "validatorPKs"
+            },
+            {
+              "type": "mapping(bytes32 => uint64)",
+              "visibility": "internal",
+              "name": "operatorsPKs"
+            },
+            {
+              "type": "mapping(SSVModules => address)",
+              "visibility": "internal",
+              "name": "ssvContracts"
+            },
+            {
+              "type": "mapping(uint64 => address)",
+              "visibility": "internal",
+              "name": "operatorsWhitelist"
+            },
+            {
+              "type": "mapping(uint64 => ISSVNetworkCore.OperatorFeeChangeRequest)",
+              "visibility": "internal",
+              "name": "operatorFeeChangeRequests"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "balance"
+            },
+            {
+              "type": "bool",
+              "visibility": "internal",
+              "name": "active"
+            },
+            {
+              "type": "address",
+              "visibility": "internal",
+              "name": "owner"
+            },
+            {
+              "type": "bool",
+              "visibility": "internal",
+              "name": "whitelisted"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "position"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "position"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedClusterData"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "clusterData"
+            }
+          ],
+          "functions_analyzed": 39,
+          "money_operations": 2,
+          "call_chains": [
+            {
+              "entry_function": "transferBalance",
+              "visibility": "internal",
+              "mutability": "nonpayable",
+              "modifiers": [],
+              "has_guard": false,
+              "has_require": false,
+              "has_write_after_call": false,
+              "money_operations": [
+                {
+                  "type": "transfer",
+                  "target": ".token",
+                  "amount": "to, amount",
+                  "line": 181,
+                  "raw": ".token.transfer(to, amount)"
+                }
+              ],
+              "steps": [
+                {
+                  "depth": 0,
+                  "description": "transferBalance(address to, uint256 amount)",
+                  "type": "entry"
+                },
+                {
+                  "depth": 2,
+                  "description": ".token.transfer(to, amount)",
+                  "type": "money_transfer",
+                  "op": {
+                    "type": "transfer",
+                    "target": ".token",
+                    "amount": "to, amount",
+                    "line": 181,
+                    "raw": ".token.transfer(to, amount)"
+                  }
+                }
+              ],
+              "state_reads": [],
+              "z3_proof": {
+                "proven_dangerous": true,
+                "verdict": "❌ SAT: UNPROTECTED_FLOW",
+                "details": {
+                  "reentrancy": "False",
+                  "unprotected": "True",
+                  "has_guard": "False"
+                },
+                "time_ms": 1.779794692993164
+              },
+              "logic_classification": {
+                "severity": "UNKNOWN",
+                "status": "LOGIC_UNAVAILABLE",
+                "trace": []
+              }
+            }
+          ],
+          "dangerous_chains": 1,
+          "safe_chains": 0
+        },
+        "offensive_findings": [
+          {
+            "title": "🔢 MATH ISSUES (40): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "severity": "low",
+            "category": "offensive_heuristic",
+            "description": "🔢 MATH ISSUES (40): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "line": 0,
+            "confidence": 0.65,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": ""
+          }
+        ],
+        "offensive_summary": {
+          "CRITICAL": 0,
+          "HIGH": 1,
+          "MEDIUM": 0,
+          "MATHEMATICALLY_PROVEN": 0,
+          "total_files_with_issues": 1,
+          "suite_findings_count": 6
+        }
+      }
+    },
+    {
+      "type": "file",
+      "target": "SSVOperators.sol",
+      "result": {
+        "status": "COMPLETE",
+        "file": "/home/runner/work/your-repo/your-repo/bounty_contracts/ssv_network_immunefi/SSVOperators.sol",
+        "scan_mode": "deep",
+        "layers_used": [
+          "z3_symbolic_execution",
+          "smart_contract_analyzer",
+          "agl_security_suite",
+          "agl_detectors",
+          "state_extraction",
+          "temporal_analysis",
+          "action_space",
+          "attack_simulation",
+          "search_engine",
+          "exploit_reasoning",
+          "risk_core_scoring",
+          "offensive_security_engine"
+        ],
+        "findings": [
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 93,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7
+          },
+          {
+            "id": "TIMESTAMP-001",
+            "title": "Block Timestamp Dependency",
+            "severity": "low",
+            "category": "timestamp",
+            "line": 216,
+            "description": "Contract logic depends on block.timestamp which can be manipulated",
+            "confidence": 0.8
+          },
+          {
+            "id": "TIMESTAMP-001",
+            "title": "Block Timestamp Dependency",
+            "severity": "low",
+            "category": "timestamp",
+            "line": 216,
+            "description": "Contract logic depends on block.timestamp which can be manipulated",
+            "confidence": 0.8
+          }
+        ],
+        "suite_findings": [
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 93,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7
+          },
+          {
+            "id": "TIMESTAMP-001",
+            "title": "Block Timestamp Dependency",
+            "severity": "low",
+            "category": "timestamp",
+            "line": 216,
+            "description": "Contract logic depends on block.timestamp which can be manipulated",
+            "confidence": 0.8
+          }
+        ],
+        "detector_findings": [],
+        "symbolic_findings": [
+          {
+            "title": "Timestamp dependency in executeOperatorFee()",
+            "severity": "low",
+            "category": "timestamp-dependency",
+            "description": "Function executeOperatorFee() uses block.timestamp in a conditional. This is usually safe but verify timing sensitivity.",
+            "line": 209,
+            "function": "executeOperatorFee",
+            "confidence": 0.4,
+            "source": "z3_symbolic",
+            "is_proven": false,
+            "z3_model": "",
+            "counterexample": "",
+            "code_snippet": "{\n        StorageData storage s = SSVStorage.load();\n        Operator memory operator = s.operators[operatorId];\n        operator.checkOwner();\n\n     ",
+            "detector_id": "z3_symbolic"
+          }
+        ],
+        "severity_summary": {
+          "CRITICAL": 0,
+          "HIGH": 4,
+          "MEDIUM": 1,
+          "LOW": 0
+        },
+        "inheritance_context": [
+          {
+            "contract": "SSVOperators",
+            "chain": [
+              "SSVOperators",
+              "ISSVNetworkCore"
+            ],
+            "inherited_state_vars": 2,
+            "inherited_functions": 12,
+            "has_delegatecall": false,
+            "has_selfdestruct": false
+          }
+        ],
+        "contracts": [
+          {
+            "type": "interface",
+            "name": "ISSVNetworkCore",
+            "inherits": [],
+            "line": 12
+          },
+          {
+            "type": "library",
+            "name": "Types64",
+            "inherits": [],
+            "line": 45
+          },
+          {
+            "type": "library",
+            "name": "Types256",
+            "inherits": [],
+            "line": 51
+          },
+          {
+            "type": "library",
+            "name": "SSVStorage",
+            "inherits": [],
+            "line": 67
+          },
+          {
+            "type": "library",
+            "name": "SSVStorageProtocol",
+            "inherits": [],
+            "line": 83
+          },
+          {
+            "type": "library",
+            "name": "CoreLib",
+            "inherits": [],
+            "line": 91
+          },
+          {
+            "type": "library",
+            "name": "OperatorLib",
+            "inherits": [],
+            "line": 97
+          },
+          {
+            "type": "contract",
+            "name": "SSVOperators",
+            "inherits": [
+              "ISSVNetworkCore"
+            ],
+            "line": 132
+          }
+        ],
+        "functions": [
+          {
+            "name": "expand",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 46
+          },
+          {
+            "name": "shrink",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 52
+          },
+          {
+            "name": "load",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 69
+          },
+          {
+            "name": "load",
+            "visibility": "internal",
+            "mutability": "pure",
+            "line": 85
+          },
+          {
+            "name": "transferBalance",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 92
+          },
+          {
+            "name": "updateSnapshot",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 100
+          },
+          {
+            "name": "checkOwner",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 107
+          },
+          {
+            "name": "updatePrivacyStatus",
+            "visibility": "internal",
+            "mutability": "",
+            "line": 112
+          },
+          {
+            "name": "checkOwner",
+            "visibility": "internal",
+            "mutability": "view",
+            "line": 122
+          },
+          {
+            "name": "registerOperator",
+            "visibility": "external",
+            "mutability": "",
+            "line": 140
+          },
+          {
+            "name": "removeOperator",
+            "visibility": "external",
+            "mutability": "",
+            "line": 166
+          },
+          {
+            "name": "declareOperatorFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 184
+          },
+          {
+            "name": "executeOperatorFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 209
+          },
+          {
+            "name": "cancelDeclaredOperatorFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 228
+          },
+          {
+            "name": "reduceOperatorFee",
+            "visibility": "external",
+            "mutability": "",
+            "line": 236
+          },
+          {
+            "name": "setOperatorsPrivateUnchecked",
+            "visibility": "external",
+            "mutability": "",
+            "line": 250
+          },
+          {
+            "name": "setOperatorsPublicUnchecked",
+            "visibility": "external",
+            "mutability": "",
+            "line": 255
+          },
+          {
+            "name": "withdrawOperatorEarnings",
+            "visibility": "external",
+            "mutability": "",
+            "line": 260
+          },
+          {
+            "name": "withdrawAllOperatorEarnings",
+            "visibility": "external",
+            "mutability": "",
+            "line": 264
+          },
+          {
+            "name": "_withdrawOperatorEarnings",
+            "visibility": "private",
+            "mutability": "",
+            "line": 268
+          },
+          {
+            "name": "_transferOperatorBalanceUnsafe",
+            "visibility": "private",
+            "mutability": "",
+            "line": 290
+          }
+        ],
+        "parsed_contracts": 8,
+        "state_extraction": {
+          "entities": 7,
+          "relationships": 14,
+          "fund_flows": 8,
+          "balances": 0
+        },
+        "temporal_analysis": {
+          "cei_violations": 0,
+          "reentrancy_risks": 0,
+          "write_conflicts": 0,
+          "effects_count": 12,
+          "mutations_count": 0
+        },
+        "action_space": {
+          "total_actions": 17,
+          "attack_sequences": 0,
+          "attack_surfaces": 1,
+          "high_value_targets": 0
+        },
+        "attack_simulation": {
+          "total_sequences_tested": 0,
+          "profitable_attacks": 0,
+          "total_profit_usd": 0.0,
+          "attack_types_found": {},
+          "severity_distribution": {},
+          "execution_time_ms": 0.06389617919921875
+        },
+        "search_results": {
+          "profitable_sequences": 0,
+          "total_evaluated": 0,
+          "strategies_used": []
+        },
+        "validation_findings": [
+          {
+            "title": "Consistency: العقدة 'fee_collector:contract:SSVOperators' تستقبل تدفقات من توكن 'unknown' (4 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'contract:SSVOperators' ترسل توكن 'unknown' (4 تدفقات) بدون تدفق داخلي — مصدر الأموال غير واضح",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'SSVStorage' (protocol) معزولة — لا أضلاع داخلة أو خارجة",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: العقدة 'SSVStorageProtocol' (protocol) معزولة — لا أضلاع داخلة أو خارجة",
+            "severity": "info",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateSnapshot' بين 'contract:OperatorLib' → 'fee_collector:contract:OperatorLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'removeOperator' بين 'contract:SSVOperators' → 'fee_collector:contract:SSVOperators' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'declareOperatorFee' بين 'contract:SSVOperators' → 'fee_collector:contract:SSVOperators' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'executeOperatorFee' بين 'contract:SSVOperators' → 'fee_collector:contract:SSVOperators' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'reduceOperatorFee' بين 'contract:SSVOperators' → 'fee_collector:contract:SSVOperators' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'account:CoreLib' → 'account:to' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'transferBalance' بين 'contract:CoreLib' → 'external:token' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'updateSnapshot' بين 'contract:OperatorLib' → 'fee_collector:contract:OperatorLib' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'removeOperator' بين 'contract:SSVOperators' → 'fee_collector:contract:SSVOperators' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'declareOperatorFee' بين 'contract:SSVOperators' → 'fee_collector:contract:SSVOperators' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'executeOperatorFee' بين 'contract:SSVOperators' → 'fee_collector:contract:SSVOperators' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          },
+          {
+            "title": "Consistency: تدفق مالي عبر 'reduceOperatorFee' بين 'contract:SSVOperators' → 'fee_collector:contract:SSVOperators' بدون حماية وصول (modifier/role)",
+            "severity": "warning",
+            "category": "consistency_violation",
+            "confidence": 0.75,
+            "source": "state_validator"
+          }
+        ],
+        "exploit_reasoning": {
+          "exploit_proofs": [
+            {
+              "exploitable": false,
+              "function": "transferBalance",
+              "severity": "high",
+              "confidence": 0.7000000000000001,
+              "verdict": "LIKELY EXPLOITABLE: transferBalance() — Z3 confirmed path feasibility but no invariant clearly violated.",
+              "z3_result": "SAT",
+              "counterexample": {
+                "balance_sender": "0",
+                "amount": "2",
+                "contract_balance": "2"
+              },
+              "invariant_violated": null,
+              "viable_path": "CALL→token",
+              "attack_steps": [
+                "1. Call transferBalance() with crafted parameters"
+              ],
+              "attack_profit": "",
+              "attack_cost": ""
+            }
+          ],
+          "exploitable_count": 0,
+          "total_analyzed": 2,
+          "time_seconds": 0.011
+        },
+        "all_findings_unified": [
+          {
+            "id": "ARBSEND-001",
+            "title": "Arbitrary ETH Send",
+            "severity": "high",
+            "category": "access-control",
+            "line": 93,
+            "description": "ETH sent to address that may be user-controlled",
+            "confidence": 0.7999999999999999,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite"
+            ],
+            "original_severity": "high",
+            "risk_breakdown": {
+              "exploit_probability": 0.69,
+              "heuristic_score": 0.8,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.69
+          },
+          {
+            "id": "TIMESTAMP-001",
+            "title": "Block Timestamp Dependency",
+            "severity": "high",
+            "category": "timestamp",
+            "line": 216,
+            "description": "Function executeOperatorFee() uses block.timestamp in a conditional. This is usually safe but verify timing sensitivity.",
+            "confidence": 1.0,
+            "confirmed_by": [
+              "pattern_engine",
+              "security_suite",
+              "z3_symbolic"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.7858,
+              "heuristic_score": 1.0,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.7858
+          },
+          {
+            "title": "Block Timestamp Dependency at line 216 — miner-manipulable",
+            "severity": "high",
+            "category": "offensive_heuristic",
+            "description": "Block Timestamp Dependency at line 216 — miner-manipulable",
+            "line": 216,
+            "confidence": 0.75,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": "",
+            "confirmed_by": [
+              "offensive_security"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.6626,
+              "heuristic_score": 0.75,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6626
+          },
+          {
+            "title": "🔢 MATH ISSUES (22): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "severity": "medium",
+            "category": "offensive_heuristic",
+            "description": "🔢 MATH ISSUES (22): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "line": 0,
+            "confidence": 0.65,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": "",
+            "confirmed_by": [
+              "offensive_security"
+            ],
+            "original_severity": "low",
+            "risk_breakdown": {
+              "exploit_probability": 0.6047,
+              "heuristic_score": 0.65,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "MEDIUM",
+              "model": "logistic_v1"
+            },
+            "probability": 0.6047
+          },
+          {
+            "title": "Consistency: العقدة 'fee_collector:contract:SSVOperators' تستقبل تدفقات من توكن 'unknown' (4 تدفقات) بدون تدفق خارجي — قد يكون بالتصميم (treasury) أو تسرب أموال",
+            "severity": "high",
+            "category": "consistency_violation",
+            "confidence": 1.0,
+            "source": "state_validator",
+            "confirmed_by": [
+              "state_validator"
+            ],
+            "original_severity": "info",
+            "risk_breakdown": {
+              "exploit_probability": 0.7858,
+              "heuristic_score": 1.0,
+              "formal_score": 0.0,
+              "prior_score": 0.0,
+              "severity": "HIGH",
+              "model": "logistic_v1"
+            },
+            "probability": 0.7858
+          }
+        ],
+        "duplicates_removed": 20,
+        "total_findings": 5,
+        "total_before_dedup": 6,
+        "time_seconds": 0.14,
+        "evm_simulation": {
+          "status": "SIMULATION_COMPLETE",
+          "contracts": [
+            {
+              "name": "ISSVNetworkCore",
+              "num_functions": 0,
+              "start": 461
+            },
+            {
+              "name": "Types64",
+              "num_functions": 1,
+              "start": 1302
+            },
+            {
+              "name": "Types256",
+              "num_functions": 1,
+              "start": 1435
+            },
+            {
+              "name": "SSVStorage",
+              "num_functions": 1,
+              "start": 1925
+            },
+            {
+              "name": "SSVStorageProtocol",
+              "num_functions": 1,
+              "start": 2400
+            },
+            {
+              "name": "CoreLib",
+              "num_functions": 1,
+              "start": 2706
+            },
+            {
+              "name": "OperatorLib",
+              "num_functions": 4,
+              "start": 2855
+            },
+            {
+              "name": "SSVOperators",
+              "num_functions": 12,
+              "start": 4622
+            }
+          ],
+          "state_variables": [
+            {
+              "type": "mapping(uint64 => ISSVNetworkCore.Operator)",
+              "visibility": "internal",
+              "name": "operators"
+            },
+            {
+              "type": "mapping(bytes32 => bytes32)",
+              "visibility": "internal",
+              "name": "clusters"
+            },
+            {
+              "type": "mapping(bytes32 => uint64)",
+              "visibility": "internal",
+              "name": "operatorsPKs"
+            },
+            {
+              "type": "mapping(uint64 => address)",
+              "visibility": "internal",
+              "name": "operatorsWhitelist"
+            },
+            {
+              "type": "mapping(uint64 => ISSVNetworkCore.OperatorFeeChangeRequest)",
+              "visibility": "internal",
+              "name": "operatorFeeChangeRequests"
+            },
+            {
+              "type": "address",
+              "visibility": "internal",
+              "name": "owner"
+            },
+            {
+              "type": "bool",
+              "visibility": "internal",
+              "name": "whitelisted"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "position"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "position"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "operatorsLength"
+            },
+            {
+              "type": "uint256",
+              "visibility": "internal",
+              "name": "i"
+            },
+            {
+              "type": "bytes32",
+              "visibility": "internal",
+              "name": "hashedPk"
+            }
+          ],
+          "functions_analyzed": 21,
+          "money_operations": 1,
+          "call_chains": [
+            {
+              "entry_function": "transferBalance",
+              "visibility": "internal",
+              "mutability": "nonpayable",
+              "modifiers": [],
+              "has_guard": false,
+              "has_require": false,
+              "has_write_after_call": false,
+              "money_operations": [
+                {
+                  "type": "transfer",
+                  "target": ".token",
+                  "amount": "to, amount",
+                  "line": 93,
+                  "raw": ".token.transfer(to, amount)"
+                }
+              ],
+              "steps": [
+                {
+                  "depth": 0,
+                  "description": "transferBalance(address to, uint256 amount)",
+                  "type": "entry"
+                },
+                {
+                  "depth": 1,
+                  "description": "SLOAD: i",
+                  "type": "state_read"
+                },
+                {
+                  "depth": 2,
+                  "description": ".token.transfer(to, amount)",
+                  "type": "money_transfer",
+                  "op": {
+                    "type": "transfer",
+                    "target": ".token",
+                    "amount": "to, amount",
+                    "line": 93,
+                    "raw": ".token.transfer(to, amount)"
+                  }
+                }
+              ],
+              "state_reads": [
+                "i"
+              ],
+              "z3_proof": {
+                "proven_dangerous": true,
+                "verdict": "❌ SAT: UNPROTECTED_FLOW",
+                "details": {
+                  "reentrancy": "False",
+                  "unprotected": "True",
+                  "has_guard": "False"
+                },
+                "time_ms": 1.7898082733154297
+              },
+              "logic_classification": {
+                "severity": "UNKNOWN",
+                "status": "LOGIC_UNAVAILABLE",
+                "trace": []
+              }
+            }
+          ],
+          "dangerous_chains": 1,
+          "safe_chains": 0
+        },
+        "offensive_findings": [
+          {
+            "title": "Block Timestamp Dependency at line 216 — miner-manipulable",
+            "severity": "low",
+            "category": "offensive_heuristic",
+            "description": "Block Timestamp Dependency at line 216 — miner-manipulable",
+            "line": 216,
+            "confidence": 0.65,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": ""
+          },
+          {
+            "title": "Block Timestamp Dependency at line 216 — miner-manipulable",
+            "severity": "low",
+            "category": "offensive_heuristic",
+            "description": "Block Timestamp Dependency at line 216 — miner-manipulable",
+            "line": 216,
+            "confidence": 0.65,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": ""
+          },
+          {
+            "title": "🔢 MATH ISSUES (22): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "severity": "low",
+            "category": "offensive_heuristic",
+            "description": "🔢 MATH ISSUES (22): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github",
+            "line": 0,
+            "confidence": 0.65,
+            "source": "offensive_security_engine",
+            "logic_trace": [
+              "Heuristic classification (strict logic unavailable)"
+            ],
+            "mathematically_proven": false,
+            "formal_verification": {},
+            "validation_status": ""
+          }
+        ],
+        "offensive_summary": {
+          "CRITICAL": 0,
+          "HIGH": 1,
+          "MEDIUM": 0,
+          "MATHEMATICALLY_PROVEN": 0,
+          "total_files_with_issues": 1,
+          "suite_findings_count": 2
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1062 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/main/sarif-2.1/schema/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "AGL Security Tool",
+          "version": "1.1.0",
+          "informationUri": "https://github.com/alanqamarqo-dev/your-repo"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 113
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 113
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 181
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 181
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 93
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 93
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 84
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 84
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 325
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 415
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 325
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 415
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 312
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 405
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 417
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 439
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 447
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 312
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 405
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 417
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 439
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "note",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 447
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "timestamp",
+          "level": "note",
+          "message": {
+            "text": "Block Timestamp Dependency"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 216
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "timestamp",
+          "level": "note",
+          "message": {
+            "text": "Block Timestamp Dependency"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 216
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "timestamp",
+          "level": "note",
+          "message": {
+            "text": "Block Timestamp Dependency"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "bounty_contracts/ssv_network_immunefi"
+                },
+                "region": {
+                  "startLine": 216
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "unknown",
+          "level": "error",
+          "message": {
+            "text": "Unchecked low-level call return value"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVClusters.sol"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVClusters.sol"
+                },
+                "region": {
+                  "startLine": 113
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "unknown",
+          "level": "error",
+          "message": {
+            "text": "Hash collision risk with abi.encodePacked"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVClusters.sol"
+                },
+                "region": {
+                  "startLine": 183
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "unknown",
+          "level": "warning",
+          "message": {
+            "text": "Hash collision risk with abi.encodePacked"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVClusters.sol"
+                },
+                "region": {
+                  "startLine": 122
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "unknown",
+          "level": "warning",
+          "message": {
+            "text": "Hash collision risk with abi.encodePacked"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVClusters.sol"
+                },
+                "region": {
+                  "startLine": 164
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "unknown",
+          "level": "warning",
+          "message": {
+            "text": "Hash collision risk with abi.encodePacked"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVClusters.sol"
+                },
+                "region": {
+                  "startLine": 288
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "warning",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVClusters.sol"
+                },
+                "region": {
+                  "startLine": 325
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "warning",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVClusters.sol"
+                },
+                "region": {
+                  "startLine": 415
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "offensive_heuristic",
+          "level": "warning",
+          "message": {
+            "text": "\ud83d\udd22 MATH ISSUES (21): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVClusters.sol"
+                },
+                "region": {
+                  "startLine": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "consistency_violation",
+          "level": "error",
+          "message": {
+            "text": "Consistency: \u0627\u0644\u0639\u0642\u062f\u0629 'external:token' \u062a\u0633\u062a\u0642\u0628\u0644 \u062a\u062f\u0641\u0642\u0627\u062a \u0645\u0646 \u062a\u0648\u0643\u0646 'token' (2 \u062a\u062f\u0641\u0642\u0627\u062a) \u0628\u062f\u0648\u0646 \u062a\u062f\u0641\u0642 \u062e\u0627\u0631\u062c\u064a \u2014 \u0642\u062f \u064a\u0643\u0648\u0646 \u0628\u0627\u0644\u062a\u0635\u0645\u064a\u0645 (treasury) \u0623\u0648 \u062a\u0633\u0631\u0628 \u0623\u0645\u0648\u0627\u0644"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVClusters.sol"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "attack_surface",
+          "level": "error",
+          "message": {
+            "text": "High-value attack target: updateLiquidationThresholdPeriod"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVDAO.sol"
+                },
+                "region": {
+                  "startLine": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVDAO.sol"
+                },
+                "region": {
+                  "startLine": 84
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "offensive_heuristic",
+          "level": "warning",
+          "message": {
+            "text": "\ud83d\udd22 MATH ISSUES (22): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVDAO.sol"
+                },
+                "region": {
+                  "startLine": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "consistency_violation",
+          "level": "error",
+          "message": {
+            "text": "Consistency: \u0627\u0644\u0639\u0642\u062f\u0629 'fee_collector:contract:SSVDAO' \u062a\u0633\u062a\u0642\u0628\u0644 \u062a\u062f\u0641\u0642\u0627\u062a \u0645\u0646 \u062a\u0648\u0643\u0646 'unknown' (2 \u062a\u062f\u0641\u0642\u0627\u062a) \u0628\u062f\u0648\u0646 \u062a\u062f\u0641\u0642 \u062e\u0627\u0631\u062c\u064a \u2014 \u0642\u062f \u064a\u0643\u0648\u0646 \u0628\u0627\u0644\u062a\u0635\u0645\u064a\u0645 (treasury) \u0623\u0648 \u062a\u0633\u0631\u0628 \u0623\u0645\u0648\u0627\u0644"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVDAO.sol"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "unknown",
+          "level": "error",
+          "message": {
+            "text": "Unchecked low-level call return value"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 181
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "storage-collision",
+          "level": "error",
+          "message": {
+            "text": "Potential storage collision in proxy pattern"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 106
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "unknown",
+          "level": "warning",
+          "message": {
+            "text": "Hash collision risk with abi.encodePacked"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 226
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "unknown",
+          "level": "warning",
+          "message": {
+            "text": "Hash collision risk with abi.encodePacked"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 252
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "error",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 405
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "warning",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 312
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "warning",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 439
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "logic",
+          "level": "warning",
+          "message": {
+            "text": "Missing Zero Address Check"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 447
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "offensive_heuristic",
+          "level": "warning",
+          "message": {
+            "text": "\ud83d\udd22 MATH ISSUES (40): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "consistency_violation",
+          "level": "error",
+          "message": {
+            "text": "Consistency: \u0627\u0644\u0639\u0642\u062f\u0629 'external:token' \u062a\u0633\u062a\u0642\u0628\u0644 \u062a\u062f\u0641\u0642\u0627\u062a \u0645\u0646 \u062a\u0648\u0643\u0646 'token' (2 \u062a\u062f\u0641\u0642\u0627\u062a) \u0628\u062f\u0648\u0646 \u062a\u062f\u0641\u0642 \u062e\u0627\u0631\u062c\u064a \u2014 \u0642\u062f \u064a\u0643\u0648\u0646 \u0628\u0627\u0644\u062a\u0635\u0645\u064a\u0645 (treasury) \u0623\u0648 \u062a\u0633\u0631\u0628 \u0623\u0645\u0648\u0627\u0644"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVNetwork.sol"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "access-control",
+          "level": "error",
+          "message": {
+            "text": "Arbitrary ETH Send"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVOperators.sol"
+                },
+                "region": {
+                  "startLine": 93
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "timestamp",
+          "level": "error",
+          "message": {
+            "text": "Block Timestamp Dependency"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVOperators.sol"
+                },
+                "region": {
+                  "startLine": 216
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "offensive_heuristic",
+          "level": "error",
+          "message": {
+            "text": "Block Timestamp Dependency at line 216 \u2014 miner-manipulable"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVOperators.sol"
+                },
+                "region": {
+                  "startLine": 216
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "offensive_heuristic",
+          "level": "warning",
+          "message": {
+            "text": "\ud83d\udd22 MATH ISSUES (22): Division by potentially zero variable: SPDX; Division by potentially zero variable: Source; Division by potentially zero variable: github"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVOperators.sol"
+                },
+                "region": {
+                  "startLine": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "consistency_violation",
+          "level": "error",
+          "message": {
+            "text": "Consistency: \u0627\u0644\u0639\u0642\u062f\u0629 'fee_collector:contract:SSVOperators' \u062a\u0633\u062a\u0642\u0628\u0644 \u062a\u062f\u0641\u0642\u0627\u062a \u0645\u0646 \u062a\u0648\u0643\u0646 'unknown' (4 \u062a\u062f\u0641\u0642\u0627\u062a) \u0628\u062f\u0648\u0646 \u062a\u062f\u0641\u0642 \u062e\u0627\u0631\u062c\u064a \u2014 \u0642\u062f \u064a\u0643\u0648\u0646 \u0628\u0627\u0644\u062a\u0635\u0645\u064a\u0645 (treasury) \u0623\u0648 \u062a\u0633\u0631\u0628 \u0623\u0645\u0648\u0627\u0644"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SSVOperators.sol"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
