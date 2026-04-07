@@ -1,6 +1,6 @@
 {
   "audit_metadata": {
-    "timestamp": "2026-03-26T16:47:06.251084+00:00",
+    "timestamp": "2026-04-07T15:47:12.761778+00:00",
     "pipeline_version": "1.2.0",
     "engines": [
       "deep_scan",
@@ -10,122 +10,22 @@
       "risk_core",
       "meta_classifier"
     ],
-    "total_duration_s": 0.2
+    "total_duration_s": 0.5
   },
   "summary": {
-    "contracts_scanned": 6,
-    "total_findings": 48,
+    "contracts_scanned": 4,
+    "total_findings": 26,
     "severity_counts": {
       "critical": 0,
-      "high": 22,
-      "medium": 26,
+      "high": 7,
+      "medium": 19,
       "low": 0,
       "info": 0
     }
   },
   "contracts": {
-    "vulnerable.sol": {
-      "file": "vulnerable.sol",
-      "deep_scan": {
-        "total_findings": 6,
-        "severity_summary": {},
-        "duration_s": 0.0
-      },
-      "detectors": [
-        {
-          "detector": "REENTRANCY-ETH",
-          "title": "Reentrancy vulnerability (ETH transfer before state update)",
-          "description": "Function `withdraw` sends ETH via `msg.sender` (line 5) before updating state variable `balances` (line 8). An attacker can re-enter during the ETH transfer to exploit the stale state. Apply checks-effects-interactions (CEI) pattern: update state BEFORE the external call, or use a reentrancy guard.",
-          "severity": "critical",
-          "confidence": "high",
-          "contract": "VulnerableBank",
-          "function": "withdraw",
-          "line": 5,
-          "end_line": 0,
-          "snippet": "\n        require(balances[msg.sender] >= amount, \"Insufficient balance\");\n\n        // External call before state update\n        (bool success, ) = msg.sender.call{value: amount}(\"\");\n        require(s",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "call_target": "msg.sender",
-            "call_line": 5,
-            "state_var": "balances",
-            "write_line": 8,
-            "pattern": "checks-effects-interactions violation"
-          }
-        },
-        {
-          "detector": "UNPROTECTED-WITHDRAW",
-          "title": "Unprotected withdrawal function",
-          "description": "Function `withdraw` transfers value (ETH or tokens) without access control. Any address can call this function to drain funds. Add `onlyOwner` modifier or `require(msg.sender == owner)` check.",
-          "severity": "critical",
-          "confidence": "high",
-          "contract": "VulnerableBank",
-          "function": "withdraw",
-          "line": 14,
-          "end_line": 0,
-          "snippet": "\n        require(balances[msg.sender] >= amount, \"Insufficient balance\");\n\n        // External call before state update\n        (bool success, ) = msg.sender.call{value: amount}(\"\");\n        require(s",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "sends_eth": true,
-            "visibility": "external",
-            "has_any_modifier": false
-          }
-        },
-        {
-          "detector": "TX-ORIGIN-AUTH",
-          "title": "Authentication via tx.origin",
-          "description": "Function `transferTo` uses `tx.origin` for authentication (line 2). This is vulnerable to phishing attacks: an attacker can trick the owner into calling a malicious contract, which then calls your contract with the owner's `tx.origin`. Use `msg.sender` instead.",
-          "severity": "high",
-          "confidence": "high",
-          "contract": "VulnerableBank",
-          "function": "transferTo",
-          "line": 2,
-          "end_line": 0,
-          "snippet": "\n        require(tx.origin == owner, \"Not owner\");\n        payable(to).transfer(amount);\n    ",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "condition": "tx.origin == owner",
-            "fix": "Replace tx.origin with msg.sender"
-          }
-        },
-        {
-          "detector": "UNCHECKED-CALL",
-          "title": "Unchecked low-level call return value",
-          "description": "Function `ping` has unchecked low-level call (line 2). The return value of `.call` / `.send` is not verified. If the call fails, execution continues silently. Capture and check: `(bool success,) = addr.call{...}(...); require(success);`",
-          "severity": "high",
-          "confidence": "high",
-          "contract": "VulnerableBank",
-          "function": "ping",
-          "line": 2,
-          "end_line": 0,
-          "snippet": "\n        target.call(abi.encodeWithSignature(\"pong()\"));\n    ",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "call_text": "target.call(abi.encodeWithSignature(\"pong()\"));"
-          }
-        }
-      ],
-      "z3_symbolic": [],
-      "exploit_reasoning": [],
-      "risk_scored": 10,
-      "contract_verdict": {
-        "p_contract": 1.0,
-        "is_vulnerable": true,
-        "method": "meta_logistic",
-        "threshold": 0.5
-      },
-      "total": 10,
-      "duration_s": 0.0
-    },
-    "test_project/src/Vault.sol": {
-      "file": "test_project/src/Vault.sol",
+    "bounty_contracts/ssv_network_immunefi/SSVClusters.sol": {
+      "file": "bounty_contracts/ssv_network_immunefi/SSVClusters.sol",
       "deep_scan": {
         "total_findings": 3,
         "severity_summary": {},
@@ -133,156 +33,34 @@
       },
       "detectors": [
         {
-          "detector": "REENTRANCY-ETH",
-          "title": "Reentrancy vulnerability (ETH transfer before state update)",
-          "description": "Function `withdraw` sends ETH via `msg.sender` (line 5) before updating state variable `deposits` (line 8). An attacker can re-enter during the ETH transfer to exploit the stale state. Apply checks-effects-interactions (CEI) pattern: update state BEFORE the external call, or use a reentrancy guard.",
-          "severity": "critical",
-          "confidence": "high",
-          "contract": "Vault",
-          "function": "withdraw",
-          "line": 5,
-          "end_line": 0,
-          "snippet": "rnal {\n        require(deposits[msg.sender] >= amount, \"Insufficient\");\n        \n        // ⚠️ الخطأ: التحويل قبل تحديث الرصيد\n        (bool success, ) = msg.sender.call{value: amount}(\"\");\n        re",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "call_target": "msg.sender",
-            "call_line": 5,
-            "state_var": "deposits",
-            "write_line": 8,
-            "pattern": "checks-effects-interactions violation"
-          }
-        },
-        {
-          "detector": "UNPROTECTED-WITHDRAW",
-          "title": "Unprotected withdrawal function",
-          "description": "Function `withdraw` transfers value (ETH or tokens) without access control. Any address can call this function to drain funds. Add `onlyOwner` modifier or `require(msg.sender == owner)` check.",
-          "severity": "critical",
-          "confidence": "high",
-          "contract": "Vault",
-          "function": "withdraw",
-          "line": 59,
-          "end_line": 0,
-          "snippet": "rnal {\n        require(deposits[msg.sender] >= amount, \"Insufficient\");\n        \n        // ⚠️ الخطأ: التحويل قبل تحديث الرصيد\n        (bool success, ) = msg.sender.call{value: amount}(\"\");\n        re",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "sends_eth": true,
-            "visibility": "external",
-            "has_any_modifier": false
-          }
-        },
-        {
-          "detector": "UNPROTECTED-WITHDRAW",
-          "title": "Unprotected withdrawal function",
-          "description": "Function `safeWithdraw` transfers value (ETH or tokens) without access control. Any address can call this function to drain funds. Add `onlyOwner` modifier or `require(msg.sender == owner)` check.",
-          "severity": "critical",
-          "confidence": "medium",
-          "contract": "Vault",
-          "function": "safeWithdraw",
-          "line": 74,
-          "end_line": 0,
-          "snippet": "ntrant {\n        require(deposits[msg.sender] >= amount, \"Insufficient\");\n        deposits[msg.sender] -= amount;\n        totalDeposits -= amount;\n        \n        (bool success, ) = msg.sender.call{v",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "sends_eth": true,
-            "visibility": "external",
-            "has_any_modifier": true
-          }
-        },
-        {
-          "detector": "UNPROTECTED-WITHDRAW",
-          "title": "Unprotected withdrawal function",
-          "description": "Function `emergencyWithdraw` transfers value (ETH or tokens) without access control. Any address can call this function to drain funds. Add `onlyOwner` modifier or `require(msg.sender == owner)` check.",
-          "severity": "critical",
-          "confidence": "high",
-          "contract": "Vault",
-          "function": "emergencyWithdraw",
-          "line": 113,
-          "end_line": 0,
-          "snippet": "raw() external {\n        require(tx.origin == owner, \"Not owner\");\n        uint256 balance = address(this).balance;\n        (bool sent, ) = owner.call{value: balance}(\"\");\n        require(sent,",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "sends_eth": true,
-            "visibility": "external",
-            "has_any_modifier": false
-          }
-        },
-        {
-          "detector": "TX-ORIGIN-AUTH",
-          "title": "Authentication via tx.origin",
-          "description": "Function `emergencyWithdraw` uses `tx.origin` for authentication (line 2). This is vulnerable to phishing attacks: an attacker can trick the owner into calling a malicious contract, which then calls your contract with the owner's `tx.origin`. Use `msg.sender` instead.",
-          "severity": "high",
-          "confidence": "high",
-          "contract": "Vault",
-          "function": "emergencyWithdraw",
-          "line": 2,
-          "end_line": 0,
-          "snippet": "raw() external {\n        require(tx.origin == owner, \"Not owner\");\n        uint256 balance = address(this).balance;\n        (bool sent, ) = owner.call{value: balance}(\"\");\n        require(sent,",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "condition": "tx.origin == owner",
-            "fix": "Replace tx.origin with msg.sender"
-          }
-        },
-        {
-          "detector": "REENTRANCY-NO-ETH",
-          "title": "Reentrancy vulnerability (external call before state update)",
-          "description": "Function `deposit` makes external call via `token.transferFrom` (line 3) before updating `deposits` (line 4). If the called contract has hooks (ERC777, ERC721 onReceived, etc.), an attacker can re-enter. Update state before external interactions.",
-          "severity": "high",
-          "confidence": "medium",
-          "contract": "Vault",
-          "function": "deposit",
-          "line": 3,
-          "end_line": 0,
-          "snippet": "al {\n        require(amount > 0, \"Zero amount\");\n        token.transferFrom(msg.sender, address(this), amount);\n        deposits[msg.sender] += amount;\n        lastDeposit[msg.sender] = block.timestam",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "call_target": "token",
-            "call_method": "transferFrom",
-            "state_var": "deposits",
-            "write_line": 4
-          }
-        },
-        {
           "detector": "UNCHECKED-CALL",
           "title": "Unchecked low-level call return value",
-          "description": "Function `deposit` has unchecked low-level call (line 3). The return value of `.call` / `.send` is not verified. If the call fails, execution continues silently. Capture and check: `(bool success,) = addr.call{...}(...); require(success);`",
+          "description": "Function `deposit` has unchecked low-level call (line 2). The return value of `.call` / `.send` is not verified. If the call fails, execution continues silently. Capture and check: `(bool success,) = addr.call{...}(...); require(success);`",
           "severity": "high",
           "confidence": "high",
-          "contract": "Vault",
+          "contract": "CoreLib",
           "function": "deposit",
-          "line": 3,
+          "line": 2,
           "end_line": 0,
-          "snippet": "al {\n        require(amount > 0, \"Zero amount\");\n        token.transferFrom(msg.sender, address(this), amount);\n        deposits[msg.sender] += amount;\n        lastDeposit[msg.sender] = block.timestam",
+          "snippet": "\n        SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);\n    ",
           "recommendation": "",
           "references": [],
           "related_locations": [],
           "extra": {
-            "call_text": "token.transferFrom(msg.sender, address(this), amount);"
+            "call_text": "SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);"
           }
         },
         {
           "detector": "UNCHECKED-ERC20",
           "title": "Unchecked ERC20 transfer return value",
-          "description": "Function `deposit` calls `token.transferFrom()` (line 3) without checking the return value. Some ERC20 tokens (USDT, BNB) return `false` instead of reverting on failure. The token transfer may silently fail. Use OpenZeppelin's `SafeERC20` library: `using SafeERC20 for IERC20; token.safeTransfer(...)`",
+          "description": "Function `deposit` calls `token.transferFrom()` (line 2) without checking the return value. Some ERC20 tokens (USDT, BNB) return `false` instead of reverting on failure. The token transfer may silently fail. Use OpenZeppelin's `SafeERC20` library: `using SafeERC20 for IERC20; token.safeTransfer(...)`",
           "severity": "high",
           "confidence": "high",
-          "contract": "Vault",
+          "contract": "CoreLib",
           "function": "deposit",
-          "line": 3,
+          "line": 2,
           "end_line": 0,
-          "snippet": "al {\n        require(amount > 0, \"Zero amount\");\n        token.transferFrom(msg.sender, address(this), amount);\n        deposits[msg.sender] += amount;\n        lastDeposit[msg.sender] = block.timestam",
+          "snippet": "\n        SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);\n    ",
           "recommendation": "",
           "references": [],
           "related_locations": [],
@@ -293,385 +71,120 @@
           }
         },
         {
-          "detector": "REENTRANCY-READ-ONLY",
-          "title": "Read-only reentrancy (view function reads inconsistent state)",
-          "description": "View function `calculateReward` reads state variables `lastDeposit` that are modified by `deposit`, which also makes external calls. During the external call in `deposit`, an attacker can call `calculateReward` and observe inconsistent state (read-only reentrancy). Use a reentrancy guard on view functions that read sensitive state, or ensure state is updated before external calls.",
-          "severity": "high",
-          "confidence": "medium",
-          "contract": "Vault",
-          "function": "calculateReward",
-          "line": 87,
-          "end_line": 0,
-          "snippet": "uint256) {\n        uint256 duration = block.timestamp - lastDeposit[user];\n        return (deposits[user] * rewardRate * duration) / (365 days * 10",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "view_function": "calculateReward",
-            "caller_function": "deposit",
-            "shared_vars": [
-              "lastDeposit"
-            ],
-            "pattern": "read-only reentrancy"
-          }
-        },
-        {
-          "detector": "REENTRANCY-CROSS-FUNCTION",
-          "title": "Cross-function reentrancy",
-          "description": "Function `deposit` makes external calls without reentrancy protection and shares state variables `lastDeposit` with public function `calculateReward`. An attacker can re-enter via `calculateReward` during the external call and manipulate shared state. Apply nonReentrant modifier to both functions.",
-          "severity": "high",
-          "confidence": "medium",
-          "contract": "Vault",
-          "function": "calculateReward",
-          "line": 87,
-          "end_line": 0,
-          "snippet": "uint256) {\n        uint256 duration = block.timestamp - lastDeposit[user];\n        return (deposits[user] * rewardRate * duration) / (365 days * 10",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "caller_function": "deposit",
-            "target_function": "calculateReward",
-            "shared_vars": [
-              "lastDeposit"
-            ],
-            "vars_stale_during_call": [
-              "lastDeposit"
-            ]
-          }
-        },
-        {
-          "detector": "REENTRANCY-CROSS-FUNCTION",
-          "title": "Cross-function reentrancy",
-          "description": "Function `deposit` makes external calls without reentrancy protection and shares state variables `lastDeposit` with public function `claimReward`. An attacker can re-enter via `claimReward` during the external call and manipulate shared state. Apply nonReentrant modifier to both functions.",
-          "severity": "high",
-          "confidence": "medium",
-          "contract": "Vault",
-          "function": "claimReward",
-          "line": 95,
-          "end_line": 0,
-          "snippet": ") external {\n        uint256 reward = calculateReward(msg.sender);\n        require(reward > 0, \"No reward\");\n        lastDeposit[msg.sender] = block.timestamp;\n        token.mint(msg.sender, reward);\n",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "caller_function": "deposit",
-            "target_function": "claimReward",
-            "shared_vars": [
-              "lastDeposit"
-            ],
-            "vars_stale_during_call": [
-              "lastDeposit"
-            ]
-          }
-        },
-        {
-          "detector": "MISSING-EVENT",
-          "title": "State change without event emission",
-          "description": "Admin function `setRewardRate` modifies state variables `rewardRate` without emitting an event. Events are essential for off-chain monitoring, UI updates, and detecting suspicious admin actions. Add an event emission.",
-          "severity": "low",
-          "confidence": "medium",
-          "contract": "Vault",
-          "function": "setRewardRate",
-          "line": 106,
-          "end_line": 0,
-          "snippet": "al onlyOwner {\n        rewardRate",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "state_writes": [
-              "rewardRate"
-            ],
-            "is_admin": true,
-            "is_setter": true
-          }
-        }
-      ],
-      "z3_symbolic": [],
-      "exploit_reasoning": [],
-      "risk_scored": 15,
-      "contract_verdict": {
-        "p_contract": 1.0,
-        "is_vulnerable": true,
-        "method": "meta_logistic",
-        "threshold": 0.5
-      },
-      "total": 15,
-      "duration_s": 0.0
-    },
-    "test_project/src/VaultToken.sol": {
-      "file": "test_project/src/VaultToken.sol",
-      "deep_scan": {
-        "total_findings": 6,
-        "severity_summary": {},
-        "duration_s": 0.0
-      },
-      "detectors": [
-        {
-          "detector": "TX-ORIGIN-AUTH",
-          "title": "Authentication via tx.origin",
-          "description": "Function `emergencyTransfer` uses `tx.origin` for authentication (line 2). This is vulnerable to phishing attacks: an attacker can trick the owner into calling a malicious contract, which then calls your contract with the owner's `tx.origin`. Use `msg.sender` instead.",
-          "severity": "high",
-          "confidence": "high",
-          "contract": "VaultToken",
-          "function": "emergencyTransfer",
-          "line": 2,
-          "end_line": 0,
-          "snippet": " {\n        require(tx.origin == owner, \"Not owner\");\n        balanceOf[owner] -= amount;\n        balanceOf[to] += amount;\n  ",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "condition": "tx.origin == owner",
-            "fix": "Replace tx.origin with msg.sender"
-          }
-        },
-        {
-          "detector": "MISSING-EVENT",
-          "title": "State change without event emission",
-          "description": "Admin function `pause` modifies state variables `paused` without emitting an event. Events are essential for off-chain monitoring, UI updates, and detecting suspicious admin actions. Add an event emission.",
-          "severity": "low",
-          "confidence": "medium",
-          "contract": "VaultToken",
-          "function": "pause",
-          "line": 74,
-          "end_line": 0,
-          "snippet": " {\n        paused = true;\n  ",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "state_writes": [
-              "paused"
-            ],
-            "is_admin": true,
-            "is_setter": false
-          }
-        },
-        {
-          "detector": "MISSING-EVENT",
-          "title": "State change without event emission",
-          "description": "Admin function `unpause` modifies state variables `paused` without emitting an event. Events are essential for off-chain monitoring, UI updates, and detecting suspicious admin actions. Add an event emission.",
-          "severity": "low",
-          "confidence": "medium",
-          "contract": "VaultToken",
-          "function": "unpause",
-          "line": 78,
-          "end_line": 0,
-          "snippet": " {\n        paused = false;\n  ",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "state_writes": [
-              "paused"
-            ],
-            "is_admin": true,
-            "is_setter": false
-          }
-        }
-      ],
-      "z3_symbolic": [],
-      "exploit_reasoning": [],
-      "risk_scored": 9,
-      "contract_verdict": {
-        "p_contract": 0.9978,
-        "is_vulnerable": true,
-        "method": "meta_logistic",
-        "threshold": 0.5
-      },
-      "total": 9,
-      "duration_s": 0.0
-    },
-    "test_project/src/RewardDistributor.sol": {
-      "file": "test_project/src/RewardDistributor.sol",
-      "deep_scan": {
-        "total_findings": 3,
-        "severity_summary": {},
-        "duration_s": 0.0
-      },
-      "detectors": [
-        {
-          "detector": "REENTRANCY-ETH",
-          "title": "Reentrancy vulnerability (ETH transfer before state update)",
-          "description": "Function `claim` sends ETH via `msg.sender` (line 6) before updating state variable `pendingRewards` (line 9). An attacker can re-enter during the ETH transfer to exploit the stale state. Apply checks-effects-interactions (CEI) pattern: update state BEFORE the external call, or use a reentrancy guard.",
-          "severity": "critical",
-          "confidence": "high",
-          "contract": "RewardDistributor",
-          "function": "claim",
-          "line": 6,
-          "end_line": 0,
-          "snippet": "ternal {\n        uint256 amount = pendingRewards[msg.sender];\n        require(amount > 0, \"Nothing to claim\");\n        \n        // ⚠️ التحويل قبل التصفير — Reentrancy\n        (bool success, ) = msg.se",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "call_target": "msg.sender",
-            "call_line": 6,
-            "state_var": "pendingRewards",
-            "write_line": 9,
-            "pattern": "checks-effects-interactions violation"
-          }
-        },
-        {
-          "detector": "UNPROTECTED-WITHDRAW",
-          "title": "Unprotected withdrawal function",
-          "description": "Function `claim` transfers value (ETH or tokens) without access control. Any address can call this function to drain funds. Add `onlyOwner` modifier or `require(msg.sender == owner)` check.",
-          "severity": "critical",
-          "confidence": "high",
-          "contract": "RewardDistributor",
-          "function": "claim",
-          "line": 49,
-          "end_line": 0,
-          "snippet": "ternal {\n        uint256 amount = pendingRewards[msg.sender];\n        require(amount > 0, \"Nothing to claim\");\n        \n        // ⚠️ التحويل قبل التصفير — Reentrancy\n        (bool success, ) = msg.se",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "sends_eth": true,
-            "visibility": "external",
-            "has_any_modifier": false
-          }
-        },
-        {
-          "detector": "REENTRANCY-CROSS-FUNCTION",
-          "title": "Cross-function reentrancy",
-          "description": "Function `claim` makes external calls without reentrancy protection and shares state variables `pendingRewards` with public function `distributeRewards`. An attacker can re-enter via `distributeRewards` during the external call and manipulate shared state. Apply nonReentrant modifier to both functions.",
-          "severity": "high",
-          "confidence": "medium",
-          "contract": "RewardDistributor",
-          "function": "distributeRewards",
-          "line": 37,
-          "end_line": 0,
-          "snippet": "rnal {\n        // ⚠️ حلقة على كل المستلمين — DoS إذا كان العدد كبيراً\n        for (uint256 i = 0; i < recipients.length; i++) {\n            uint256 share = totalReward / recipients.length;\n           ",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "caller_function": "claim",
-            "target_function": "distributeRewards",
-            "shared_vars": [
-              "pendingRewards"
-            ],
-            "vars_stale_during_call": [
-              "pendingRewards"
-            ]
-          }
-        },
-        {
-          "detector": "UNBOUNDED-LOOP",
-          "title": "Unbounded loop over storage array (DoS risk)",
-          "description": "Function `distributeRewards` loops over storage array `recipients` without a maximum iteration limit. As the array grows, the function may exceed the block gas limit, making it permanently uncallable (DoS). Add a maximum iteration limit or use pagination.",
+          "detector": "ENCODE-PACKED-COLLISION",
+          "title": "Hash collision risk with abi.encodePacked",
+          "description": "Function `registerPublicKey` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
           "severity": "medium",
           "confidence": "medium",
-          "contract": "RewardDistributor",
-          "function": "distributeRewards",
-          "line": 37,
+          "contract": "ValidatorLib",
+          "function": "registerPublicKey",
+          "line": 122,
           "end_line": 0,
-          "snippet": "rnal {\n        // ⚠️ حلقة على كل المستلمين — DoS إذا كان العدد كبيراً\n        for (uint256 i = 0; i < recipients.length; i++) {\n            uint256 share = totalReward / recipients.length;\n           ",
+          "snippet": "\n        bytes32 hashedValidator = keccak256(abi.encodePacked(publicKey, msg.sender));\n        if (s.validatorPKs[hashedValidator] != bytes32(0)) revert ISSVNetworkCore.IncorrectValidatorStateWithData",
           "recommendation": "",
           "references": [],
           "related_locations": [],
           "extra": {
-            "array": "recipients",
-            "bound": "recipients.length",
-            "has_external_calls": false
+            "args": "publicKey, msg.sender",
+            "dynamic_count": 1,
+            "is_hashed": true
           }
         },
         {
           "detector": "ENCODE-PACKED-COLLISION",
           "title": "Hash collision risk with abi.encodePacked",
-          "description": "Function `getRandomBonus` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+          "description": "Function `validateHashedCluster` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
           "severity": "medium",
           "confidence": "medium",
-          "contract": "RewardDistributor",
-          "function": "getRandomBonus",
-          "line": 66,
+          "contract": "ClusterLib",
+          "function": "validateHashedCluster",
+          "line": 164,
           "end_line": 0,
-          "snippet": "uint256) {\n        // ⚠️ استخدام block.timestamp كعشوائية — قابل للتلاعب\n        uint256 random = uint256(keccak256(abi.encodePacked(block.timestamp, user))) % 100;\n        return pendingRewards[user]",
+          "snippet": "\n        hashedCluster = keccak256(abi.encodePacked(owner, operatorIds));\n        bytes32 hashedClusterData = hashClusterData(cluster);\n        bytes32 clusterData = s.clusters[hashedCluster];\n       ",
           "recommendation": "",
           "references": [],
           "related_locations": [],
           "extra": {
-            "args": "block.timestamp, user",
+            "args": "owner, operatorIds",
             "dynamic_count": 0,
+            "is_hashed": true
+          }
+        },
+        {
+          "detector": "ENCODE-PACKED-COLLISION",
+          "title": "Hash collision risk with abi.encodePacked",
+          "description": "Function `hashClusterData` uses `abi.encodePacked` with multiple arguments (5 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+          "severity": "medium",
+          "confidence": "medium",
+          "contract": "ClusterLib",
+          "function": "hashClusterData",
+          "line": 183,
+          "end_line": 0,
+          "snippet": "\n        return keccak256(abi.encodePacked(cluster.validatorCount, cluster.networkFeeIndex, cluster.index, cluster.balance, cluster.active));\n    ",
+          "recommendation": "",
+          "references": [],
+          "related_locations": [],
+          "extra": {
+            "args": "cluster.validatorCount, cluster.networkFeeIndex, cluster.index, cluster.balance, cluster.active",
+            "dynamic_count": 0,
+            "is_hashed": true
+          }
+        },
+        {
+          "detector": "ENCODE-PACKED-COLLISION",
+          "title": "Hash collision risk with abi.encodePacked",
+          "description": "Function `validateClusterOnRegistration` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+          "severity": "medium",
+          "confidence": "medium",
+          "contract": "ClusterLib",
+          "function": "validateClusterOnRegistration",
+          "line": 187,
+          "end_line": 0,
+          "snippet": "\n        hashedCluster = keccak256(abi.encodePacked(msg.sender, operatorIds));\n        bytes32 clusterData = s.clusters[hashedCluster];\n        if (clusterData == bytes32(0)) {\n            if (cluster",
+          "recommendation": "",
+          "references": [],
+          "related_locations": [],
+          "extra": {
+            "args": "msg.sender, operatorIds",
+            "dynamic_count": 0,
+            "is_hashed": true
+          }
+        },
+        {
+          "detector": "ENCODE-PACKED-COLLISION",
+          "title": "Hash collision risk with abi.encodePacked",
+          "description": "Function `removeValidator` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+          "severity": "medium",
+          "confidence": "medium",
+          "contract": "SSVClusters",
+          "function": "removeValidator",
+          "line": 288,
+          "end_line": 0,
+          "snippet": "\n        StorageData storage s = SSVStorage.load();\n        bytes32 hashedCluster = cluster.validateHashedCluster(msg.sender, operatorIds, s);\n        bytes32 hashedOperatorIds = ValidatorLib.hashOper",
+          "recommendation": "",
+          "references": [],
+          "related_locations": [],
+          "extra": {
+            "args": "publicKey, msg.sender",
+            "dynamic_count": 1,
             "is_hashed": true
           }
         }
       ],
       "z3_symbolic": [],
       "exploit_reasoning": [],
-      "risk_scored": 8,
+      "risk_scored": 10,
       "contract_verdict": {
-        "p_contract": 0.9994,
+        "p_contract": 0.9978,
         "is_vulnerable": true,
         "method": "meta_logistic",
         "threshold": 0.5
       },
-      "total": 8,
-      "duration_s": 0.0
+      "total": 10,
+      "duration_s": 0.1
     },
-    "test_project/src/VaultFactory.sol": {
-      "file": "test_project/src/VaultFactory.sol",
-      "deep_scan": {
-        "total_findings": 3,
-        "severity_summary": {},
-        "duration_s": 0.0
-      },
-      "detectors": [
-        {
-          "detector": "DANGEROUS-DELEGATECALL",
-          "title": "Delegatecall to user-controlled address",
-          "description": "Function `execute` uses `delegatecall` to user-supplied address `target` (line 3). An attacker can point this to a malicious contract that executes arbitrary code in the context of this contract (including stealing all funds). Validate the target address against a whitelist.",
-          "severity": "critical",
-          "confidence": "medium",
-          "contract": "VaultFactory",
-          "function": "execute",
-          "line": 3,
-          "end_line": 0,
-          "snippet": ") external {\n        require(msg.sender == admin, \"Not admin\");\n        (bool success, ) = target.delegatecall(data);\n        require(success, \"Execution fa",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "target": "target",
-            "source": "parameter"
-          }
-        },
-        {
-          "detector": "UNCHECKED-CALL",
-          "title": "Unchecked low-level call return value",
-          "description": "Function `collectFees` has unchecked low-level call (line 3). The return value of `.call` / `.send` is not verified. If the call fails, execution continues silently. Capture and check: `(bool success,) = addr.call{...}(...); require(success);`",
-          "severity": "high",
-          "confidence": "high",
-          "contract": "VaultFactory",
-          "function": "collectFees",
-          "line": 3,
-          "end_line": 0,
-          "snippet": "external {\n        require(msg.sender == admin, \"Not admin\");\n        to.call{value: address(this).balance}(\"\");\n        // ⚠️ لا يتحقق من نجاح ال",
-          "recommendation": "",
-          "references": [],
-          "related_locations": [],
-          "extra": {
-            "call_text": "to.call{value: address(this).balance}(\"\");"
-          }
-        }
-      ],
-      "z3_symbolic": [],
-      "exploit_reasoning": [],
-      "risk_scored": 5,
-      "contract_verdict": {
-        "p_contract": 0.9921,
-        "is_vulnerable": true,
-        "method": "meta_logistic",
-        "threshold": 0.5
-      },
-      "total": 5,
-      "duration_s": 0.0
-    },
-    "test_project/src/interfaces/IVault.sol": {
-      "file": "test_project/src/interfaces/IVault.sol",
+    "bounty_contracts/ssv_network_immunefi/SSVDAO.sol": {
+      "file": "bounty_contracts/ssv_network_immunefi/SSVDAO.sol",
       "deep_scan": {
         "total_findings": 1,
         "severity_summary": {},
@@ -682,12 +195,153 @@
       "exploit_reasoning": [],
       "risk_scored": 1,
       "contract_verdict": {
-        "p_contract": 0.8637,
+        "p_contract": 0.9033,
         "is_vulnerable": true,
         "method": "meta_logistic",
         "threshold": 0.5
       },
       "total": 1,
+      "duration_s": 0.0
+    },
+    "bounty_contracts/ssv_network_immunefi/SSVNetwork.sol": {
+      "file": "bounty_contracts/ssv_network_immunefi/SSVNetwork.sol",
+      "deep_scan": {
+        "total_findings": 6,
+        "severity_summary": {},
+        "duration_s": 0.0
+      },
+      "detectors": [
+        {
+          "detector": "UNCHECKED-CALL",
+          "title": "Unchecked low-level call return value",
+          "description": "Function `deposit` has unchecked low-level call (line 2). The return value of `.call` / `.send` is not verified. If the call fails, execution continues silently. Capture and check: `(bool success,) = addr.call{...}(...); require(success);`",
+          "severity": "high",
+          "confidence": "high",
+          "contract": "CoreLib",
+          "function": "deposit",
+          "line": 2,
+          "end_line": 0,
+          "snippet": "\n        SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);\n    ",
+          "recommendation": "",
+          "references": [],
+          "related_locations": [],
+          "extra": {
+            "call_text": "SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);"
+          }
+        },
+        {
+          "detector": "UNCHECKED-ERC20",
+          "title": "Unchecked ERC20 transfer return value",
+          "description": "Function `deposit` calls `token.transferFrom()` (line 2) without checking the return value. Some ERC20 tokens (USDT, BNB) return `false` instead of reverting on failure. The token transfer may silently fail. Use OpenZeppelin's `SafeERC20` library: `using SafeERC20 for IERC20; token.safeTransfer(...)`",
+          "severity": "high",
+          "confidence": "high",
+          "contract": "CoreLib",
+          "function": "deposit",
+          "line": 2,
+          "end_line": 0,
+          "snippet": "\n        SSVStorage.load().token.transferFrom(msg.sender, address(this), amount);\n    ",
+          "recommendation": "",
+          "references": [],
+          "related_locations": [],
+          "extra": {
+            "token": "token",
+            "method": "transferFrom",
+            "fix": "Use SafeERC20 library"
+          }
+        },
+        {
+          "detector": "ENCODE-PACKED-COLLISION",
+          "title": "Hash collision risk with abi.encodePacked",
+          "description": "Function `validateHashedCluster` uses `abi.encodePacked` with multiple arguments (2 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+          "severity": "medium",
+          "confidence": "medium",
+          "contract": "ClusterLib",
+          "function": "validateHashedCluster",
+          "line": 226,
+          "end_line": 0,
+          "snippet": "\n        hashedCluster = keccak256(abi.encodePacked(owner, operatorIds));\n        bytes32 hashedClusterData = hashClusterData(cluster);\n        bytes32 clusterData = s.clusters[hashedCluster];\n       ",
+          "recommendation": "",
+          "references": [],
+          "related_locations": [],
+          "extra": {
+            "args": "owner, operatorIds",
+            "dynamic_count": 0,
+            "is_hashed": true
+          }
+        },
+        {
+          "detector": "ENCODE-PACKED-COLLISION",
+          "title": "Hash collision risk with abi.encodePacked",
+          "description": "Function `hashClusterData` uses `abi.encodePacked` with multiple arguments (5 args). encodePacked doesn't pad dynamic types, causing potential hash collisions: `encodePacked(\"ab\",\"cd\") == encodePacked(\"abc\",\"d\")`. Use `abi.encode` instead of `abi.encodePacked`.",
+          "severity": "medium",
+          "confidence": "medium",
+          "contract": "ClusterLib",
+          "function": "hashClusterData",
+          "line": 252,
+          "end_line": 0,
+          "snippet": "\n        return keccak256(\n            abi.encodePacked(\n                cluster.validatorCount,\n                cluster.networkFeeIndex,\n                cluster.index,\n                cluster.balance",
+          "recommendation": "",
+          "references": [],
+          "related_locations": [],
+          "extra": {
+            "args": "\n                cluster.validatorCount,\n                cluster.networkFeeIndex,\n                cluster.index,\n                cluster.balance,\n                cluster.active\n            ",
+            "dynamic_count": 0,
+            "is_hashed": true
+          }
+        }
+      ],
+      "z3_symbolic": [
+        {
+          "title": "Potential storage collision in proxy pattern",
+          "severity": "high",
+          "category": "storage-collision",
+          "line": 106,
+          "function": "",
+          "confidence": 0.75,
+          "is_proven": false,
+          "description": "Contract uses delegatecall with 5 state variables but no fixed storage slots (ERC1967). State variables in proxy and implementation may collide in the same storage slots."
+        }
+      ],
+      "exploit_reasoning": [],
+      "risk_scored": 11,
+      "contract_verdict": {
+        "p_contract": 0.9979,
+        "is_vulnerable": true,
+        "method": "meta_logistic",
+        "threshold": 0.5
+      },
+      "total": 11,
+      "duration_s": 0.0
+    },
+    "bounty_contracts/ssv_network_immunefi/SSVOperators.sol": {
+      "file": "bounty_contracts/ssv_network_immunefi/SSVOperators.sol",
+      "deep_scan": {
+        "total_findings": 3,
+        "severity_summary": {},
+        "duration_s": 0.0
+      },
+      "detectors": [],
+      "z3_symbolic": [
+        {
+          "title": "Timestamp dependency in executeOperatorFee()",
+          "severity": "low",
+          "category": "timestamp-dependency",
+          "line": 209,
+          "function": "executeOperatorFee",
+          "confidence": 0.4,
+          "is_proven": false,
+          "description": "Function executeOperatorFee() uses block.timestamp in a conditional. This is usually safe but verify timing sensitivity."
+        }
+      ],
+      "exploit_reasoning": [],
+      "risk_scored": 4,
+      "contract_verdict": {
+        "p_contract": 0.9683,
+        "is_vulnerable": true,
+        "method": "meta_logistic",
+        "threshold": 0.5
+      },
+      "total": 4,
       "duration_s": 0.0
     }
   }
